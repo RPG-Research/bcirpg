@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player_Settings_Button.gd" type="Script" id=1]
+[ext_resource path="res://HostAndJoinGame.gd" type="Script" id=2]
+[ext_resource path="res://Start Game.gd" type="Script" id=3]
+
+[node name="GUI" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.418091
+margin_bottom = -0.418091
+custom_constants/margin_right = 120
+custom_constants/margin_top = 80
+custom_constants/margin_left = 120
+custom_constants/margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 904.0
+margin_bottom = 520.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 112.0
+margin_bottom = 440.0
+
+[node name="MenuOptions" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_right = 112.0
+margin_bottom = 440.0
+size_flags_vertical = 3
+custom_constants/separation = 30
+alignment = 1
+
+[node name="Start Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+margin_top = 169.0
+margin_right = 112.0
+margin_bottom = 183.0
+mouse_filter = 1
+text = "Start Game"
+script = ExtResource( 3 )
+
+[node name="HostAndJoinGame" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+margin_top = 213.0
+margin_right = 112.0
+margin_bottom = 227.0
+mouse_filter = 1
+text = "Host /  Join Game"
+script = ExtResource( 2 )
+
+[node name="Player Settings" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+margin_top = 257.0
+margin_right = 112.0
+margin_bottom = 271.0
+mouse_filter = 1
+text = "Player Settings"
+script = ExtResource( 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 116.0
+margin_right = 784.0
+margin_bottom = 440.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer"]
+margin_left = 300.0
+margin_top = 213.0
+margin_right = 367.0
+margin_bottom = 227.0
+text = "Test Menu"
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Start Game" to="HBoxContainer/VBoxContainer/MenuOptions/Start Game" method="_on_Start_Game_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" to="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" method="_on_HostAndJoinGame_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" to="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" method="_on_Player_Settings_gui_input"]
