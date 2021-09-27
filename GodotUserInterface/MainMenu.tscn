@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://NewGame.gd" type="Script" id=1]
+[ext_resource path="res://new_dynamicfont.tres" type="DynamicFont" id=2]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 120
+custom_constants/margin_top = 80
+custom_constants/margin_left = 120
+custom_constants/margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 904.0
+margin_bottom = 520.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 784.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 2 )
+text = "Title"
+align = 1
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 23.0
+margin_right = 784.0
+margin_bottom = 42.0
+
+[node name="NewGame" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_right = 258.0
+margin_bottom = 19.0
+mouse_filter = 1
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "New Game"
+align = 1
+script = ExtResource( 1 )
+
+[node name="StartGame" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 262.0
+margin_right = 521.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Start Game"
+align = 1
+
+[node name="Settings" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 525.0
+margin_right = 784.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Settings"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="gui_input" from="VBoxContainer/HBoxContainer/NewGame" to="VBoxContainer/HBoxContainer/NewGame" method="_on_NewGame_gui_input"]
