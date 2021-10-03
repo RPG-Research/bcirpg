@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://SaveSystem/GameSave.gd"
+}, {
+"base": "Node",
+"class": "WorldObject",
+"language": "GDScript",
+"path": "res://SaveSystem/SceneObject.gd"
+} ]
 _global_script_class_icons={
-
+"SaveGame": "",
+"WorldObject": ""
 }
 
 [application]
@@ -18,6 +29,15 @@ _global_script_class_icons={
 config/name="Godot Ui"
 run/main_scene="res://GUI.tscn"
 config/icon="res://icon.png"
+config/Version="0.001"
+
+[config]
+
+description=""
+
+[global]
+
+description=""
 
 [rendering]
 
