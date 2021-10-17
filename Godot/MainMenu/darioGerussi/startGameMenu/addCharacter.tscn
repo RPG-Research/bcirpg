@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Button.tscn" type="PackedScene" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.933333, 0.917647, 0.74902, 1 )
+
+[node name="Panel" type="Panel"]
+margin_right = 480.0
+margin_bottom = 360.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 0.840881
+margin_right = 480.841
+margin_bottom = 60.0
+custom_colors/font_color = Color( 0.403922, 0.243137, 0.0156863, 1 )
+text = "Add Character"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" parent="." instance=ExtResource( 1 )]
