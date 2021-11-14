@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player_Settings_Button.gd" type="Script" id=1]
 [ext_resource path="res://HostAndJoinGame.gd" type="Script" id=2]
 [ext_resource path="res://Start Game.gd" type="Script" id=3]
+[ext_resource path="res://GUI.gd" type="Script" id=4]
 
 [node name="GUI" type="MarginContainer"]
 anchor_right = 1.0
@@ -13,6 +14,7 @@ custom_constants/margin_right = 120
 custom_constants/margin_top = 80
 custom_constants/margin_left = 120
 custom_constants/margin_bottom = 80
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -79,6 +81,7 @@ margin_top = 213.0
 margin_right = 367.0
 margin_bottom = 227.0
 text = "Test Menu"
+
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Start Game" to="HBoxContainer/VBoxContainer/MenuOptions/Start Game" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Load Game" to="HBoxContainer/VBoxContainer/MenuOptions/Load Game" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" to="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" method="_on_HostAndJoinGame_gui_input"]
