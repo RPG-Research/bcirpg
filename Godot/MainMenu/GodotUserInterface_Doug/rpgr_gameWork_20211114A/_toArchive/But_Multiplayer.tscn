@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="But_Multiplayer" type="Button"]
+margin_top = 56.0
+margin_right = 130.0
+margin_bottom = 81.0
+size_flags_vertical = 3
+text = "Multiplayer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
