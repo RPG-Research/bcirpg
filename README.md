@@ -237,7 +237,9 @@ Phase 2c - Replicate the NWN Tempest adventure using our Toolset to play in the 
 
 More scope details and full documents in Brain Computer Interface Role-Playing Game BCI RPG Github repository.
 
-PC / NPC interaction dialog menues for BCI RPG text-based wireframe and example flow
+
+
+## PC / NPC interaction dialog menues for BCI RPG text-based wireframe and example flow
 
 
 
@@ -249,7 +251,7 @@ PC / NPC interaction dialog menues for BCI RPG text-based wireframe and example 
 
 
 
-d20 RPG extended conflict overview flowchart. Included Dungeons & Dragons 5th edition (D&D 5e), and open d20 variants.
+## d20 RPG extended conflict overview flowchart. Included Dungeons & Dragons 5th edition (D&D 5e), and open d20 variants.
 
 
 
@@ -257,27 +259,21 @@ d20 RPG extended conflict overview flowchart. Included Dungeons & Dragons 5th ed
 
 
 
-General UI for BCI RPG
+## General UI for BCI RPG
 
 
 
 
 
 
-
-
-Graphical User Interface (GUI) for server management of BCI RPG. The use case assumes players are in LIS CLIS, but that DM / GM / Therapist or server admin are able to use full GUI for server administration.
-
+## Graphical User Interface (GUI) for server management of BCI RPG. The use case assumes players are in LIS CLIS, but that DM / GM / Therapist or server admin are able to use full GUI for server administration.
 
 
 
 
 
 
-
-
-
-## Phase 2b - Develop Module Creation Tools with UI
+## Phase 2b - Develop Module Creation Tools with UI (in-progress)
 The module creation toolset is not designed for BCI or LIS/CLIS users. The assumption is that Game Master / Dungeon Master, Educator, or Therapist will use this toolset to create new custom adventures (like the Aurora Toolset is used to create adventures for NWN).
 
 This requires full graphical tools at this point. (Would love down the road to create a BCI-controlled toolset, but that is much more advanced than our current team is ready for. Hopefully we can circle back to this down the road.
@@ -291,54 +287,12 @@ This requires full graphical tools at this point. (Would love down the road to c
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Phase 2c - Create Tempest Adventure Using New Custom-built Toolset
+# Phase 2c - Create Tempest Adventure Using New Custom-built Toolset (pending)
 In Phase 2 all the basic play mechanics, and the module creation tools are built.
 
 
 
-# Phase 3 (pending)
+# Phase 3 (in-progress August 2021)
 Add graphical interface (instead of just text interface) with audio and video pre-recorded events tied into the text-based events (a la Dragon's Lair). Later add more dynamic graphics/audio/video for smoother experience.Planned to begin early hooks around late 2021.
 
 
