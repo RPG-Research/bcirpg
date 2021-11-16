@@ -47,7 +47,7 @@ Program phases and updates on our live streams and Github: https://github.com/RP
 
 
 
-Ultimate in RPG Accessibility and Immersion 
+# Ultimate in RPG Accessibility and Immersion 
 The ultimate in accessibility potential is through the Brain-Computer Interface (BCI) technologies based on Electroencephalogram (EEG) technologies, integrating with AR & VR, (and eventually back into the physical world through robotics), literally allowing a person to interface with computer systems purely with the thoughts of their brain.
 
 Also, when linked with haptics, robotics, AR, VR, and other technologies it is the potential in ultimate immersive experiences.
@@ -86,6 +86,7 @@ Create from scratch a text-only multiplayer online turn-based cooperative RPG th
 
 ## Phase 3 - Add GUI
 Add basic graphics real-time gaphics or pre-recorded action videos triggered like Dirk the Daring from Dragon's Lair - on top of existing TUI-based game.
+August 2021: The GUI development has begun for the GM, adventure module, content creation, and server administrator tools. We are remainging with TUI interface for players for now.
 
 
 ## Phase 4 - Add VR
@@ -129,10 +130,10 @@ Not using EEG or BCI equipment at this phase. Creating prototype adventure that 
 Development prototyping and team training / team building, ue NWN:EE Aurora Toolset to create custom adventure. Began August 2019, completed August 2020 successfully (still adding enhancements over time). Later see if newer generation OpenBCI can be used.
 
 
-# Phase 1b - (pending) - OpenBCI
-Is it possible to configure OpenBCI to run this game at, or better than, OpenEEG did for NWN Diamon Edition in Phase 0?
+# Phase 1b - (in-progress) - OpenBCI
+Is it possible to configure OpenBCI to run this game at, or better than, OpenEEG did for NWN Diamon Edition in Phase 0? - Yes.
 
-It is not expected that full functionality, or multiplayer features will work. But hoping that the 16-channel higher quality setup may make solo play viable.
+It is not expected that full functionality, or multiplayer features will work. But hoping that the 16-channel higher quality setup may make solo play viable. - Yes, especially if taking menu-driven approach rather than free-range movement approach (at least initially).
 
 
 
