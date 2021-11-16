@@ -1,9 +1,14 @@
-# erpg
-# The BCI RPG Project
-# Electronic role-playing game development efforts by the RPG Research community
+# BCI RPG
+## Brain-Computer Interface Role-Playing Game
+### Electronic Role-playing Game (ERPG) development efforts by the RPG Research community
 
+...
+...
 
 # Brain-Computer Interface Controlled Role-Playing Games
+...
+...
+
 
 # Introduction
 RPG Research is a huge advocate for accessibility and inclusiveness in gaming. Not only through all of our training, advocacy, and accessible mobile facilities, but through our active projects to make gaming accessible to all. RPG Research is a 501(c)3 100% volunteer-run non-profit research charitable research and human services organization. More about RPG Research.
