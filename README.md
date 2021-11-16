@@ -191,9 +191,27 @@ Turn-selection process in noncombat situations for online multi-player turned ba
 ...
 
 
+## Cross-platform
+
+At a minimum must be playable on:
+ * Linux
+ * Windows
+ * Mac
+ * Online web browser
+ * Android
+
+Nice-to-have's but not required:
+ * iOS
+ * Consoles
+ * AR devices
+ * VR devices
+
+
 
 ## Menu-driven
 
+Due the goal of being playable by LIS/CLIS participants purely through BCI, and since BCI text pick lists are so slow, the game needs to be BCI menu-driven, rather than typed text or keyboard controller driven.
+A BCI text pick list feature can be added later for chatroom functionality if someone wants to take on adding that feature at some point.
 
 
 ## Non-QWERTY-chat-based social interaction
