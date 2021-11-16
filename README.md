@@ -140,50 +140,82 @@ It is not expected that full functionality, or multiplayer features will work. B
 Scope and build from ground-up electronic role-playing game (ERPG) that can be controlled by accessibility equipment, especially newer generation EEG/BCI equipment, such as the OpenBCI hardware (among others).
 
 ## OpenBCI
-
+...
 
 
 ## GoDot
+...
 
 
+## Text-based UI (TUI)
+...
 
-Text-based UI (TUI)
 
-Brain-computer Interface controlled text-only turn-based menu-driven.
+## Brain-computer Interface controlled text-only turn-based menu-driven.
+...
 
-BCI RPG Game player, Player Text User Interface
+
+### BCI RPG Game player, Player Text User Interface
 
  
 
 
+# Features Scope
 
-
-Game is:
-
-online
-
-multi-player
-
-team-focused
-
-turn-based
-
-initially text-only
-
-menu-driven
-
-non-chat (use other chat solutions as needed) (not a MUD/MUSH/MOO) - using Matrix-synapse as underlying network communication infrastructure, especially for chat
-
-electronic role-playing game that can be played with many different adaptive devices but MUST be fully playable (without chat) using only the human brain of the player(s) (BCI). Ultimately must be playable by LIS/CLIS population.
-
-Opensource
+Electronic role-playing game that can be played with many different adaptive devices but MUST be fully playable (without chat) using only the human brain of the player(s) (BCI). Ultimately must be playable by LIS/CLIS population.
 
 
 
+## BCI-controlled
+
+
+## Online
+...
+
+
+## Multi-player
+...
+
+
+# Cooperative Team-focused
+...
+
+
+## Turn-based
 Turn-selection process in noncombat situations for online multi-player turned based life real-time brain-computer interface controlled role-playing game.
 
 
-Began scoping August 2020, currently actively in progress.
+
+## Initially text-only - Later add GUI, AR, VR, and Robtic interfaces
+...
+
+
+
+## Menu-driven
+
+
+
+## Non-QWERTY-chat-based social interaction
+(use other chat solutions as needed)
+(not a MUD/MUSH/MOO)
+
+
+## Use the [matrix]?
+
+Potentially using Matrix-synapse as underlying network communication infrastructure, especially for chat
+
+
+
+## Opensource
+
+
+
+
+# HISTORY
+
+
+
+Began scoping Phase 1 in August 2019, currently actively in progress.
 
 
 Meeting weekly (broadcast live).
