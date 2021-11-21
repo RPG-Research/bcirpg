@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.129412, 0.129412, 0.129412, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.309804, 0.305882, 0.305882, 1 )
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="Background/MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 580.0
+custom_constants/separation = 20
+
+[node name="GameInfo" type="PanelContainer" parent="Background/MarginContainer/Rows"]
+margin_right = 984.0
+margin_bottom = 480.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="InputArea" type="PanelContainer" parent="Background/MarginContainer/Rows"]
+margin_top = 500.0
+margin_right = 984.0
+margin_bottom = 560.0
+rect_min_size = Vector2( 0, 60 )
+custom_styles/panel = SubResource( 3 )
