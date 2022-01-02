@@ -1,0 +1,144 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game.gd" type="Script" id=2]
+[ext_resource path="res://assets/base_dynamicfont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://CommandProcessor.gd" type="Script" id=4]
+[ext_resource path="res://Locale.tscn" type="PackedScene" id=5]
+[ext_resource path="res://LocaleManager.gd" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.117647, 0.117647, 0.117647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.243137, 0.235294, 0.235294, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.286275, 0.286275, 0.286275, 1 )
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CommandProcessor" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="LocaleManager" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="HouseLocale" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 41.38
+margin_top = -513.913
+margin_right = 291.381
+margin_bottom = -313.913
+locale_name = "a house."
+locale_description = "The house has no windows, but is illuminated by an odd-looking lamp. There is a staircase descending, and a door made of stone. "
+option1 = "Go east"
+option2 = "Try to open stone door?"
+option3 = "Descend the stair in the floor?"
+
+[node name="HouseOutside" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 509.38
+margin_top = -512.913
+margin_right = 759.381
+margin_bottom = -312.913
+locale_name = "outside a house"
+locale_description = "You are standing outside a house."
+option1 = "Go west"
+option2 = "Try to open stone door?"
+option3 = "Descend the stair in the floor?"
+
+[node name="Background" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 10
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="Background/MarginContainer"]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 1004.0
+margin_bottom = 580.0
+custom_constants/separation = 10
+
+[node name="ItemList" type="ItemList" parent="Background/MarginContainer/Rows"]
+margin_right = 984.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="But_ChangeScene" parent="Background/MarginContainer/Rows/ItemList" instance=ExtResource( 1 )]
+margin_right = 82.0
+margin_bottom = 30.0
+text = "Menu"
+next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="GameInfo" type="PanelContainer" parent="Background/MarginContainer/Rows"]
+margin_top = 50.0
+margin_right = 984.0
+margin_bottom = 436.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/MarginContainer/Rows/GameInfo"]
+margin_right = 984.0
+margin_bottom = 386.0
+scroll_horizontal_enabled = false
+
+[node name="HistoryRows" type="VBoxContainer" parent="Background/MarginContainer/Rows/GameInfo/ScrollContainer"]
+margin_right = 984.0
+margin_bottom = 386.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="InputArea" type="PanelContainer" parent="Background/MarginContainer/Rows"]
+margin_top = 446.0
+margin_right = 984.0
+margin_bottom = 570.0
+rect_min_size = Vector2( 0, 120 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer/Rows/InputArea"]
+margin_right = 984.0
+margin_bottom = 124.0
+custom_constants/separation = 5
+
+[node name="option1" type="LinkButton" parent="Background/MarginContainer/Rows/InputArea/VBoxContainer"]
+margin_right = 984.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 3 )
+text = "Option 1"
+
+[node name="option2" type="LinkButton" parent="Background/MarginContainer/Rows/InputArea/VBoxContainer"]
+margin_top = 43.0
+margin_right = 984.0
+margin_bottom = 81.0
+focus_mode = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Option 2"
+
+[node name="option3" type="LinkButton" parent="Background/MarginContainer/Rows/InputArea/VBoxContainer"]
+margin_top = 86.0
+margin_right = 984.0
+margin_bottom = 124.0
+focus_mode = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Option 3"
+
+[connection signal="button_down" from="Background/MarginContainer/Rows/InputArea/VBoxContainer/option1" to="." method="_on_option1_button_down"]
+[connection signal="button_down" from="Background/MarginContainer/Rows/InputArea/VBoxContainer/option2" to="." method="_on_option2_button_down"]
+[connection signal="button_down" from="Background/MarginContainer/Rows/InputArea/VBoxContainer/option3" to="." method="_on_option3_button_down"]
