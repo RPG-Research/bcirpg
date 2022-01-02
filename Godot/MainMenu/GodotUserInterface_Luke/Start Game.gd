@@ -14,4 +14,3 @@ func _on_Start_Game_gui_input(event):
 			print("Clicked Start Game")
 			get_tree().change_scene("res://TestNode2D.tscn")
 	# Start Game button opens a new node for that purpose
-	

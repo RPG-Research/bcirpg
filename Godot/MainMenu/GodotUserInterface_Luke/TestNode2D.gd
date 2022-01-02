@@ -5,10 +5,24 @@ extends Node2D
 # var a = 2
 # var b = "text"
 var isPaused = false
+var wantsNewGame = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+
+func CreateNewGame():
+	print("Create World Object to save")
+
+
+
+func _wantsNewGame():
+	if wantsNewGame == true:
+		print("Yes")
+	if wantsNewGame == false:
+		print("No")
+	return wantsNewGame
 
 # Make this function return a boolean.
 func _isPaused():

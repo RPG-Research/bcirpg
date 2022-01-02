@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Date",
+"language": "GDScript",
+"path": "res://Date.gd"
+}, {
+"base": "Node",
+"class": "Die",
+"language": "GDScript",
+"path": "res://Die.gd"
+}, {
 "base": "Resource",
 "class": "SaveGame",
 "language": "GDScript",
@@ -20,6 +30,8 @@ _global_script_classes=[ {
 "path": "res://SaveSystem/SceneObject.gd"
 } ]
 _global_script_class_icons={
+"Date": "",
+"Die": "",
 "SaveGame": "",
 "WorldObject": ""
 }
