@@ -1,0 +1,201 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://menuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Gothica/Gothica-Bold.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.537255, 0.67451, 0.529412, 1 )
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color( 0.658824, 0.588235, 0.427451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.890196, 0.890196, 0.65098, 1 )
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color( 0.658824, 0.588235, 0.427451, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.933333, 0.929412, 0.776471, 1 )
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color( 0.658824, 0.588235, 0.427451, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="DynamicFont" id=4]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.890196, 0.890196, 0.65098, 1 )
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color( 0.658824, 0.588235, 0.427451, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="DynamicFont" id=10]
+size = 14
+font_data = ExtResource( 2 )
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mainContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="mainContainer"]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 1018.0
+margin_bottom = 594.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="mainVBox" type="VBoxContainer" parent="mainContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 992.0
+margin_bottom = 568.0
+custom_constants/separation = 20
+
+[node name="topContainer" type="PanelContainer" parent="mainContainer/MarginContainer/mainVBox"]
+margin_right = 972.0
+margin_bottom = 468.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="mainContainer/MarginContainer/mainVBox/topContainer"]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 966.0
+margin_bottom = 462.0
+custom_constants/margin_right = 360
+custom_constants/margin_top = 20
+custom_constants/margin_left = 360
+custom_constants/margin_bottom = 60
+
+[node name="menuContainer" type="PanelContainer" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer"]
+margin_left = 360.0
+margin_top = 20.0
+margin_right = 600.0
+margin_bottom = 396.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="menuVBox" type="VBoxContainer" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer"]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 234.0
+margin_bottom = 370.0
+
+[node name="newGame" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer/menuVBox" instance=ExtResource( 1 )]
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color_disabled = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_hover = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_pressed = Color( 0.482353, 0.388235, 0.2, 1 )
+action_mode = 0
+text = "New Game"
+
+[node name="loadGame" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer/menuVBox" instance=ExtResource( 1 )]
+margin_top = 73.0
+margin_bottom = 143.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color_disabled = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_hover = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_pressed = Color( 0.482353, 0.388235, 0.2, 1 )
+text = "Load Game"
+
+[node name="multiplayer" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer/menuVBox" instance=ExtResource( 1 )]
+margin_top = 147.0
+margin_bottom = 216.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_disabled = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_hover = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_pressed = Color( 0.482353, 0.388235, 0.2, 1 )
+text = "Multiplayer"
+
+[node name="addCharacter" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer/menuVBox" instance=ExtResource( 1 )]
+margin_top = 220.0
+margin_bottom = 290.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_disabled = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_hover = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_pressed = Color( 0.482353, 0.388235, 0.2, 1 )
+text = "Add Character"
+
+[node name="settings" parent="mainContainer/MarginContainer/mainVBox/topContainer/MarginContainer/menuContainer/menuVBox" instance=ExtResource( 1 )]
+margin_top = 294.0
+margin_bottom = 364.0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color_disabled = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_hover = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_pressed = Color( 0.482353, 0.388235, 0.2, 1 )
+text = "Settings"
+
+[node name="bottomContainer" type="PanelContainer" parent="mainContainer/MarginContainer/mainVBox"]
+margin_top = 488.0
+margin_right = 972.0
+margin_bottom = 548.0
+rect_min_size = Vector2( 0, 60 )
+custom_styles/panel = SubResource( 9 )
+
+[node name="Label" type="Label" parent="mainContainer/MarginContainer/mainVBox/bottomContainer"]
+margin_left = 6.0
+margin_top = 21.0
+margin_right = 946.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_outline_modulate = Color( 0.482353, 0.388235, 0.2, 1 )
+custom_colors/font_color_shadow = Color( 0.482353, 0.388235, 0.2, 1 )
+text = "Version 0.1"
+align = 2
