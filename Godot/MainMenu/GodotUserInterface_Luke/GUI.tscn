@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player_Settings_Button.gd" type="Script" id=1]
 [ext_resource path="res://HostAndJoinGame.gd" type="Script" id=2]
 [ext_resource path="res://Start Game.gd" type="Script" id=3]
 [ext_resource path="res://GUI.gd" type="Script" id=4]
+[ext_resource path="res://Die.gd" type="Script" id=5]
 
 [node name="GUI" type="MarginContainer"]
 anchor_right = 1.0
@@ -37,33 +38,41 @@ custom_constants/separation = 30
 alignment = 1
 
 [node name="Start Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
-margin_top = 147.0
+margin_top = 125.0
 margin_right = 112.0
-margin_bottom = 161.0
+margin_bottom = 139.0
 mouse_filter = 1
 text = "Start Game"
 script = ExtResource( 3 )
 
-[node name="Load Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
-margin_top = 191.0
+[node name="DieTest" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+margin_top = 169.0
 margin_right = 112.0
-margin_bottom = 205.0
+margin_bottom = 183.0
+mouse_filter = 1
+text = "Die Test"
+script = ExtResource( 5 )
+
+[node name="Load Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+margin_top = 213.0
+margin_right = 112.0
+margin_bottom = 227.0
 mouse_filter = 1
 text = "Load Game"
 script = ExtResource( 3 )
 
 [node name="HostAndJoinGame" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
-margin_top = 235.0
+margin_top = 257.0
 margin_right = 112.0
-margin_bottom = 249.0
+margin_bottom = 271.0
 mouse_filter = 1
 text = "Host /  Join Game"
 script = ExtResource( 2 )
 
 [node name="Player Settings" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
-margin_top = 279.0
+margin_top = 301.0
 margin_right = 112.0
-margin_bottom = 293.0
+margin_bottom = 315.0
 mouse_filter = 1
 text = "Player Settings"
 script = ExtResource( 1 )
@@ -83,6 +92,7 @@ margin_bottom = 227.0
 text = "Test Menu"
 
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Start Game" to="HBoxContainer/VBoxContainer/MenuOptions/Start Game" method="_on_Start_Game_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/DieTest" to="HBoxContainer/VBoxContainer/MenuOptions/DieTest" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Load Game" to="HBoxContainer/VBoxContainer/MenuOptions/Load Game" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" to="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" method="_on_HostAndJoinGame_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" to="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" method="_on_Player_Settings_gui_input"]
