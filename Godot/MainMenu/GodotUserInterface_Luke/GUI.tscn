@@ -20,6 +20,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.858824, 0.333333, 0.129412, 1 )
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 120.0
 margin_top = 80.0
@@ -37,10 +42,11 @@ size_flags_vertical = 3
 custom_constants/separation = 30
 alignment = 1
 
-[node name="Start Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+[node name="StartGame" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
 margin_top = 125.0
 margin_right = 112.0
 margin_bottom = 139.0
+rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Start Game"
 script = ExtResource( 3 )
@@ -49,14 +55,16 @@ script = ExtResource( 3 )
 margin_top = 169.0
 margin_right = 112.0
 margin_bottom = 183.0
+rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Die Test"
 script = ExtResource( 5 )
 
-[node name="Load Game" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+[node name="LoadGame" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
 margin_top = 213.0
 margin_right = 112.0
 margin_bottom = 227.0
+rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Load Game"
 script = ExtResource( 3 )
@@ -65,14 +73,16 @@ script = ExtResource( 3 )
 margin_top = 257.0
 margin_right = 112.0
 margin_bottom = 271.0
+rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Host /  Join Game"
 script = ExtResource( 2 )
 
-[node name="Player Settings" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
+[node name="PlayerSettings" type="Label" parent="HBoxContainer/VBoxContainer/MenuOptions"]
 margin_top = 301.0
 margin_right = 112.0
 margin_bottom = 315.0
+rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Player Settings"
 script = ExtResource( 1 )
@@ -89,10 +99,11 @@ margin_left = 300.0
 margin_top = 213.0
 margin_right = 367.0
 margin_bottom = 227.0
+rect_scale = Vector2( 4, 4 )
 text = "Test Menu"
 
-[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Start Game" to="HBoxContainer/VBoxContainer/MenuOptions/Start Game" method="_on_Start_Game_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/StartGame" to="HBoxContainer/VBoxContainer/MenuOptions/StartGame" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/DieTest" to="HBoxContainer/VBoxContainer/MenuOptions/DieTest" method="_on_Start_Game_gui_input"]
-[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Load Game" to="HBoxContainer/VBoxContainer/MenuOptions/Load Game" method="_on_Start_Game_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/LoadGame" to="HBoxContainer/VBoxContainer/MenuOptions/LoadGame" method="_on_Start_Game_gui_input"]
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" to="HBoxContainer/VBoxContainer/MenuOptions/HostAndJoinGame" method="_on_HostAndJoinGame_gui_input"]
-[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" to="HBoxContainer/VBoxContainer/MenuOptions/Player Settings" method="_on_Player_Settings_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/PlayerSettings" to="HBoxContainer/VBoxContainer/MenuOptions/PlayerSettings" method="_on_Player_Settings_gui_input"]

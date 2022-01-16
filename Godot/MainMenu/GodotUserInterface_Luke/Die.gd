@@ -1,9 +1,6 @@
 extends Node
 class_name Die
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 enum DieCategory{
 	D4 = 4,
@@ -17,7 +14,6 @@ enum DieCategory{
 
 var DieType = DieCategory
 var NumberOfFaces = 0
-
 
 func RollDie(InputDie):
 	#InputDie is supposed to be DieType for example.
@@ -45,15 +41,8 @@ func RollDie(InputDie):
 	print("Die Success Rate")
 	print(DieSuccessPercentage)
 
-
 func SetNumberOfSides():
 	var DSides = DieType
-# For 7 Die Set, testing purposes	
-
-
-########################################
-# Need to Seed Random Number Generator #
-########################################
 
 	match DSides:
 		4:
@@ -72,16 +61,8 @@ func SetNumberOfSides():
 			NumberOfFaces = 20
 				
 	print(NumberOfFaces)
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	DieType = DieCategory.D00
 	SetNumberOfSides()
 	RollDie(NumberOfFaces)
-	# Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
