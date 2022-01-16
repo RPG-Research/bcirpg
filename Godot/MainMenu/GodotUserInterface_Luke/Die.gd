@@ -24,22 +24,26 @@ func RollDie(InputDie):
 	var DieFaceResult = 0;
 	var LowestPossibleNumberOnDie = 0
 	var rng = RandomNumberGenerator.new()
+	rng.randomize()
 	
 	var NoOfSides = NumberOfFaces
 	
 	match NoOfSides:
 		100:
-			LowestPossibleNumberOnDie  = 0
-			#Will need to come up with a solution just for 00 Dice.
-	
+			LowestPossibleNumberOnDie = 1
+			DieFaceResult = rng.randi_range(LowestPossibleNumberOnDie, 10)
+			DieFaceResult *= 10
+			
 		_:
 			LowestPossibleNumberOnDie = 1
 			DieFaceResult = rng.randi_range(LowestPossibleNumberOnDie, NumberOfFaces)
 	
-	var DieSuccessPercentage = DieFaceResult/NumberOfFaces
+	var DieSuccessPercentage = (float(DieFaceResult)/float(NumberOfFaces))
 	
 	print("DieFace:")
 	print(DieFaceResult)
+	print("Die Success Rate")
+	print(DieSuccessPercentage)
 
 
 func SetNumberOfSides():
@@ -72,7 +76,7 @@ func SetNumberOfSides():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	DieType = DieCategory.D20
+	DieType = DieCategory.D00
 	SetNumberOfSides()
 	RollDie(NumberOfFaces)
 	# Replace with function body.
