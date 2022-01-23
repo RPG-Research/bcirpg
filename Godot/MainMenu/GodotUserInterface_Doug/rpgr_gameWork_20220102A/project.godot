@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://Locale.gd"
 }, {
 "base": "Node",
+"class": "OutputHistory",
+"language": "GDScript",
+"path": "res://globalScripts/outputHistory.gd"
+}, {
+"base": "Node",
 "class": "PlayerSettingsTemplate",
 "language": "GDScript",
 "path": "res://globalScripts/playerSettingsTemplate.gd"
 } ]
 _global_script_class_icons={
 "Locale": "",
+"OutputHistory": "",
 "PlayerSettingsTemplate": ""
 }
 

@@ -11,6 +11,8 @@ func initialize(starting_locale) -> String:
 	current_opt1 = get_node("../Background/MarginContainer/Rows/InputArea/VBoxContainer/option1")
 	current_opt2 = get_node("../Background/MarginContainer/Rows/InputArea/VBoxContainer/option2")
 	current_opt3 = get_node("../Background/MarginContainer/Rows/InputArea/VBoxContainer/option3")
+	
+	current_opt1.grab_focus()
 	return change_room(starting_locale)
 
 #Function that loads response from the option string chosen
