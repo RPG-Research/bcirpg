@@ -21,8 +21,10 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 904.0
+margin_bottom = 520.0
 color = Color( 0.858824, 0.333333, 0.129412, 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -46,7 +48,6 @@ alignment = 1
 margin_top = 125.0
 margin_right = 112.0
 margin_bottom = 139.0
-rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Start Game"
 script = ExtResource( 3 )
@@ -55,7 +56,6 @@ script = ExtResource( 3 )
 margin_top = 169.0
 margin_right = 112.0
 margin_bottom = 183.0
-rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Die Test"
 script = ExtResource( 5 )
@@ -64,7 +64,6 @@ script = ExtResource( 5 )
 margin_top = 213.0
 margin_right = 112.0
 margin_bottom = 227.0
-rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Load Game"
 script = ExtResource( 3 )
@@ -73,7 +72,6 @@ script = ExtResource( 3 )
 margin_top = 257.0
 margin_right = 112.0
 margin_bottom = 271.0
-rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Host /  Join Game"
 script = ExtResource( 2 )
@@ -82,7 +80,6 @@ script = ExtResource( 2 )
 margin_top = 301.0
 margin_right = 112.0
 margin_bottom = 315.0
-rect_scale = Vector2( 2, 2 )
 mouse_filter = 1
 text = "Player Settings"
 script = ExtResource( 1 )
@@ -99,7 +96,6 @@ margin_left = 300.0
 margin_top = 213.0
 margin_right = 367.0
 margin_bottom = 227.0
-rect_scale = Vector2( 4, 4 )
 text = "Test Menu"
 
 [connection signal="gui_input" from="HBoxContainer/VBoxContainer/MenuOptions/StartGame" to="HBoxContainer/VBoxContainer/MenuOptions/StartGame" method="_on_Start_Game_gui_input"]
