@@ -19,26 +19,39 @@ func _get_configuration_warning() -> String:
 		return "next_scene_path must be set for this button to work" if next_scene_path == "" else ""
 		
 		
-func _saveSettings(inputSettings : String, riskFactor : String) -> void:	
+#CONFIG/INI SAVE:
+func _saveSettings(inputSettings : String, riskFactor : String) -> void:
 	var player_settings = get_node("/root/PlayerSettings")
 	player_settings.playerSettingsSingleton.inputName = inputSettings
 	player_settings.playerSettingsSingleton.riskFactor = riskFactor	
-	#Temp:
-	var temp_manual_JSON = {
-		"playerSettingsTemplate": {
-			"inputName": inputSettings,
-			"riskFactor": riskFactor
-		}
-	}
+	var config = ConfigFile.new()
 	
-	#Save to file (JSON for now)
-	var settings_file = "user://testPlayerSettings.sav"
-	var file = File.new()
-	if file.open(settings_file, File.WRITE) != 0:
-		print("Cannot write temporary file to: " + settings_file)
-	else:
-		file.store_line(to_json(temp_manual_JSON))
-		file.close()
+	config.set_value("Temp player","InputSettings", inputSettings)
+	config.set_value("Temp player","RiskFactor", riskFactor)
+
+	config.save("user://settings.cfg")
+
+#JSON SAVE:
+#func _saveSettings(inputSettings : String, riskFactor : String) -> void:	
+#	var player_settings = get_node("/root/PlayerSettings")
+#	player_settings.playerSettingsSingleton.inputName = inputSettings
+#	player_settings.playerSettingsSingleton.riskFactor = riskFactor	
+#	#Temp:
+#	var temp_manual_JSON = {
+#		"playerSettingsTemplate": {
+#			"inputName": inputSettings,
+#			"riskFactor": riskFactor
+#		}
+#	}
+#
+#	#Save to file (JSON for now)
+#	var settings_file = "user://testPlayerSettings.sav"
+#	var file = File.new()
+#	if file.open(settings_file, File.WRITE) != 0:
+#		print("Cannot write temporary file to: " + settings_file)
+#	else:
+#		file.store_line(to_json(temp_manual_JSON))
+#		file.close()
 
 		
 #****This save Settings functions as designed; but modified to work with alternate approach of loading

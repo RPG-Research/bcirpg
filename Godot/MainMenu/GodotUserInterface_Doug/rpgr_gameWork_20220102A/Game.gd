@@ -3,30 +3,37 @@ extends Control
 #Abstract class we instance when wanted in game as child of HistoryReference
 const TextOutput = preload("res://UserInterface/Response.tscn")
 const InputResponse = preload("res://UserInterface/InputResponse.tscn")
-#Limit the length of our history:
-var max_scroll_length := 0
+
+#TODO: offload this to file
+#For storing history selections 
+var output_history_singleton = OutputHistory.new()
+var history_array = output_history_singleton.output_history_array
+
+#TODO: change 'HistoryRows' to better name for current use
+var history_screens_array = Array()
 
 onready var command_processor = $CommandProcessor
-onready var history_rows = $Background/MarginContainer/Rows/GameInfo/ScrollContainer/HistoryRows
-onready var scroll = $Background/MarginContainer/Rows/GameInfo/ScrollContainer
-onready var scrollbar = scroll.get_v_scrollbar()
+onready var current_text = $Background/MarginContainer/Rows/GameInfo/CurrentText
+onready var history_rows = $Background/MarginContainer/Rows/GameInfo/HistoryRows
+onready var history_pager = $Background/MarginContainer/Rows/ItemList/But_History_Page
 onready var locale_manager = $LocaleManager
+onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option1
+onready var option_two= $Background/MarginContainer/Rows/InputArea/VBoxContainer/option2
+onready var option_three = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option3
 
-#Ensure that the latest added input is in focus on scroll
+
 func _ready() -> void:
-	scrollbar.connect("changed", self, "handle_scrollbar_changed")
-	max_scroll_length = scrollbar.max_value
-	
+	history_pager.hide()
+	history_rows.hide()
+	current_text.show()
+	option_one.show()
+	option_two.show()
+	option_three.show()
+
 	create_response("The game has begun! You can select from the available options below.")	
 
 	var starting_locale_response = command_processor.initialize(locale_manager.get_child(0))
-	create_response(starting_locale_response)
-		
-		
-func handle_scrollbar_changed():
-	if max_scroll_length != scrollbar.max_value:
-		max_scroll_length = scrollbar.max_value
-		scroll.scroll_vertical = max_scroll_length		
+	create_response(starting_locale_response)	
 
 #Below temporarily takes user selection and appends it to responses; adding new isntances 
 #	of our input row with an input and response pair for each
@@ -45,7 +52,10 @@ func create_response(response_text: String):
 
 
 func add_response_to_game(response: Control):
-	history_rows.add_child(response)
+	var response_history = response.duplicate()
+	history_array.append(response_history)
+	current_text.remove_child(current_text.get_child(0))
+	current_text.add_child(response)
 
 
 func _on_option1_button_down() -> void:
