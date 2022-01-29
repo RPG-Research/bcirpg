@@ -34,7 +34,7 @@ func SetMenuSelections(CurrentSelection):
 		0:
 			currentSelection_PlayerSettings.set("custom_colors/default_color", Color(1,1,1,1))
 			currentSelection_Start.set_uppercase(true)
-			currentSelection_Start.set("custom_colors/default_color", Color(0,0,0,1))	
+			get_node("HBoxContainer/VBoxContainer/MenuOptions/StartGame").set("custom_colors/default_color", Color(0,0,0,1))	
 		1:
 			currentSelection_Start.set("custom_colors/default_color", Color(1,1,1,1))
 			currentSelection_DieTest.set_uppercase(true)
