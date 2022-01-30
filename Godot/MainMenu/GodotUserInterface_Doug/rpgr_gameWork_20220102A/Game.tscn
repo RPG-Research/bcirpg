@@ -103,7 +103,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -103.0
 margin_bottom = 33.0
-text = "History Page"
+text = "Next Page"
 script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false

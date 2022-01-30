@@ -1,3 +1,6 @@
+#COMMAND PROCESSOR: 
+# Handles player input, including navigation on the map
+
 extends Node
 
 
@@ -32,14 +35,6 @@ func go(destination: String) -> String:
 	else:
 		return "That is not a valid place to go!"			
 		
-#DKM TEMP: string outputter
-func optionResponse(optInt: int) -> String:
-	if(optInt == 1):
-		return "First option leads you down a hallway!"
-	if(optInt == 2):
-		return "Second option drops you in a pit!"
-	else:
-		return "Third option leads you to a hallway full of great food!"	
 
 #Helper:
 func change_room(new_room: Locale) -> String:

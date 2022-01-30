@@ -1,8 +1,0 @@
-[gd_scene format=2]
-
-[node name="But_Settings" type="Button"]
-margin_top = 113.0
-margin_right = 130.0
-margin_bottom = 138.0
-size_flags_vertical = 3
-text = "Settings"

@@ -1,3 +1,8 @@
+#SETTINGSINITIALIZE:
+# 	Temp: manual connector between the input fields and the player settings
+#		singleton.
+#
+
 extends Control
 
 onready var psCurrentSettings = get_node("/root/PlayerSettings")

@@ -9,15 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "HistoryScreensTemplateSingleton",
+"language": "GDScript",
+"path": "res://globalScripts/historyScreensTemplate.gd"
+}, {
 "base": "PanelContainer",
 "class": "Locale",
 "language": "GDScript",
 "path": "res://Locale.gd"
-}, {
-"base": "Node",
-"class": "OutputHistory",
-"language": "GDScript",
-"path": "res://globalScripts/outputHistory.gd"
 }, {
 "base": "Node",
 "class": "PlayerSettingsTemplate",
@@ -25,8 +25,8 @@ _global_script_classes=[ {
 "path": "res://globalScripts/playerSettingsTemplate.gd"
 } ]
 _global_script_class_icons={
+"HistoryScreensTemplateSingleton": "",
 "Locale": "",
-"OutputHistory": "",
 "PlayerSettingsTemplate": ""
 }
 
@@ -39,6 +39,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerSettings="*res://globalScripts/playerSettings.gd"
+History="*res://globalScripts/history.gd"
 
 [physics]
 

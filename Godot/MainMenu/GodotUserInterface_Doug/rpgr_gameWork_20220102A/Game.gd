@@ -1,16 +1,15 @@
+#GAME: 
+# Controls output space, loading descriptions and options for each locale and 
+#	appending to the history array.
+
 extends Control
+
+onready var HISTORY_SOURCE = get_node("/root/History").historyScreensSingleton
 
 #Abstract class we instance when wanted in game as child of HistoryReference
 const TextOutput = preload("res://UserInterface/Response.tscn")
 const InputResponse = preload("res://UserInterface/InputResponse.tscn")
 
-#TODO: offload this to file
-#For storing history selections 
-var output_history_singleton = OutputHistory.new()
-var history_array = output_history_singleton.output_history_array
-
-#TODO: change 'HistoryRows' to better name for current use
-var history_screens_array = Array()
 
 onready var command_processor = $CommandProcessor
 onready var current_text = $Background/MarginContainer/Rows/GameInfo/CurrentText
@@ -35,7 +34,7 @@ func _ready() -> void:
 	var starting_locale_response = command_processor.initialize(locale_manager.get_child(0))
 	create_response(starting_locale_response)	
 
-#Below temporarily takes user selection and appends it to responses; adding new isntances 
+#Below temporarily takes user selection and appends it to responses; adding new instances 
 #	of our input row with an input and response pair for each
 func handleUserInput(user_choice: String) -> void:
 	var input_response = InputResponse.instance()
@@ -44,16 +43,20 @@ func handleUserInput(user_choice: String) -> void:
 	input_response.set_text(inputText, response)
 	add_response_to_game(input_response)
 	
-	
+#Handles input text
 func create_response(response_text: String):
 	var response = TextOutput.instance()
 	response.text = response_text
 	add_response_to_game(response)	
 
-
+#Copies the response output to add to both current game output, and the 
+#	history array. 
 func add_response_to_game(response: Control):
 	var response_history = response.duplicate()
-	history_array.append(response_history)
+	var history_page_number = HISTORY_SOURCE.output_history_array.size() + 1
+	#DKM TEMP: stopped here, trying to add page number to history text
+	#var history_string = "Page " + str(history_page_number) + "; " 
+	HISTORY_SOURCE.output_history_array.append(response_history)
 	current_text.remove_child(current_text.get_child(0))
 	current_text.add_child(response)
 

@@ -1,4 +1,7 @@
-#Script for settings save button
+#BUT_SAVESETTINGS:
+#	Unique script for saving settings on player settings scene.
+
+
 #Tool lets you any code in editor, such as plugins
 tool
 extends Button

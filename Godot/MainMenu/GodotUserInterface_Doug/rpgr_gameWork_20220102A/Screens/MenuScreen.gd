@@ -1,3 +1,6 @@
+#MENUSCREEN:
+#	Script purely to grab focus for tabbing control
+
 extends Control
 
 

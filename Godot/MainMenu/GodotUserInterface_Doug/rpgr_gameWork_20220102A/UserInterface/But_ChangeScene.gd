@@ -1,4 +1,6 @@
-#Tool lets you any code in editor, such as plugins
+#BUT_CHANGESCENE:
+#	Generic template script allowing GUI linking of scenes by button press.
+
 tool
 extends Button
 

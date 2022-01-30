@@ -1,6 +1,6 @@
-#***PLAYER SETTINGS: a singleton to hold settings in-game. Currently for test
-#	purposes, initializes a playerSettingsTemplate class, and attempts to
-#	load in a saved player settings file. This then updates the singleton.
+#PLAYER SETTINGS: 
+#	Unique handler script for reading from file or saving to, using the 
+#	playerSettingsTemplateSingleton object.
 
 extends Node
  
