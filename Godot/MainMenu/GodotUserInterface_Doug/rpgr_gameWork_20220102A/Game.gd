@@ -4,7 +4,7 @@
 
 extends Control
 
-onready var HISTORY_SOURCE = get_node("/root/History").historyScreensSingleton
+onready var history_source = get_node("/root/History").historyScreensSingleton
 
 #Abstract class we instance when wanted in game as child of HistoryReference
 const TextOutput = preload("res://UserInterface/Response.tscn")
@@ -29,10 +29,11 @@ func _ready() -> void:
 	option_two.show()
 	option_three.show()
 
-	create_response("The game has begun! You can select from the available options below.")	
+	var opening_text = "The game has begun! You can select from the available options below. "
+	#create_response("The game has begun! You can select from the available options below.")	
 
 	var starting_locale_response = command_processor.initialize(locale_manager.get_child(0))
-	create_response(starting_locale_response)	
+	create_response(opening_text + " " + starting_locale_response)	
 
 #Below temporarily takes user selection and appends it to responses; adding new instances 
 #	of our input row with an input and response pair for each
@@ -53,11 +54,14 @@ func create_response(response_text: String):
 #	history array. 
 func add_response_to_game(response: Control):
 	var response_history = response.duplicate()
-	var history_page_number = HISTORY_SOURCE.output_history_array.size() + 1
+
 	#DKM TEMP: stopped here, trying to add page number to history text
+	#var history_page_number = HISTORY_SOURCE.output_history_array.size() + 1
 	#var history_string = "Page " + str(history_page_number) + "; " 
-	HISTORY_SOURCE.output_history_array.append(response_history)
-	current_text.remove_child(current_text.get_child(0))
+	if(history_source.output_history_array != null):
+		history_source.output_history_array.append(response_history)
+	if(current_text.get_child_count() > 0):
+		current_text.remove_child(current_text.get_child(0))
 	current_text.add_child(response)
 
 

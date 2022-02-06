@@ -6,25 +6,26 @@ extends Node
  
 
 #DKM TEMP: not a cfg?
-var history_file = "user://history.cfg"
-var historyScreensSingleton = HistoryScreensTemplateSingleton.new()
-
+var history_file = "user://history.tres"
+var historyScreensSingleton 
+var testing = false
 
 func _ready() -> void:
-	pass
-	#load_history_file()
+	if(testing):
+		historyScreensSingleton = load_history_file()
+	if (historyScreensSingleton == null):
+			historyScreensSingleton = HistoryScreensTemplateSingleton.new()
 	
-#Config/ini:
-func load_history_file():
-	var config = ConfigFile.new()
-	# Load data from a file.
-	var err = config.load(history_file)
-	# If the file didn't load, ignore it.
-	if err != OK:
-		return
-	for player in config.get_sections():
-		var history_zero = config.get_value(player, "HistoryArray[0]")
-		
-		print("HistoryArray[0] loaded as: " + history_zero)
-		
-		historyScreensSingleton.output_history_array[0] = history_zero
+	#DKM temp:
+	print("Loaded history array size is: " + str(historyScreensSingleton.output_history_array.size()))
+
+#DKM TEMP: tres format:
+func load_history_file() -> HistoryScreensTemplateSingleton:
+	if ResourceLoader.exists(history_file):
+		var history = ResourceLoader.load(history_file)
+		if history is HistoryScreensTemplateSingleton:
+			return history		
+		else: return null
+	else:
+		return null
+

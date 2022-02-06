@@ -1,7 +1,7 @@
 #PLAYERSETTINGSTEMPLATE:
 #	Class for holding history screens 
+extends Resource
 
-extends Node
 class_name HistoryScreensTemplateSingleton
 
 var output_history_array = Array()

@@ -32,27 +32,71 @@ script = ExtResource( 4 )
 [node name="LocaleManager" type="Node" parent="."]
 script = ExtResource( 6 )
 
-[node name="HouseLocale" parent="LocaleManager" instance=ExtResource( 5 )]
+[node name="Loc_Boat" parent="LocaleManager" instance=ExtResource( 5 )]
 margin_left = 41.38
 margin_top = -513.913
 margin_right = 291.381
 margin_bottom = -313.913
-locale_name = "a house."
-locale_description = "The house has no windows, but is illuminated by an odd-looking lamp. There is a staircase descending, and a door made of stone. "
-option1 = "Go east"
-option2 = "Try to open stone door?"
-option3 = "Descend the stair in the floor?"
+locale_name = "a boat"
+locale_description = "You have been shipwrecked."
+option1 = "Go: east off the boat"
+option2 = "Examine: this boat"
+option3 = "Wait: a while"
 
-[node name="HouseOutside" parent="LocaleManager" instance=ExtResource( 5 )]
+[node name="Loc_Shore" parent="LocaleManager" instance=ExtResource( 5 )]
 margin_left = 509.38
 margin_top = -512.913
 margin_right = 759.381
 margin_bottom = -312.913
-locale_name = "outside a house"
-locale_description = "You are standing outside a house."
-option1 = "Go west"
-option2 = "Try to open stone door?"
-option3 = "Descend the stair in the floor?"
+locale_name = "the beach outside the wrecked ship"
+locale_description = "You are standing on a white sand beach beside the crashing waves.  You can go west, back onto the boat, or go north into the woods."
+option1 = "Go: west to boat"
+option2 = "Go: north to woods"
+option3 = "Talk: to yourself"
+
+[node name="Loc_WoodsA1" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 510.439
+margin_top = -806.384
+margin_right = 760.44
+margin_bottom = -606.384
+locale_name = "the island woods"
+locale_description = "These woods get thick!"
+option1 = "Go: south back to the beach"
+option2 = "Go: north deeper in"
+option3 = "Scream: for help"
+
+[node name="Loc_WoodsA2" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 509.439
+margin_top = -1083.38
+margin_right = 759.44
+margin_bottom = -883.384
+locale_name = "deeper into the woods"
+locale_description = "The woods are very thick. You feel like someone -- or something, may be watching you."
+option1 = "Go: south back in the direction of the beach"
+option2 = "Go: east into the thicket"
+option3 = "Examine: the woods"
+
+[node name="Loc_WoodsA3" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 882.439
+margin_top = -1084.38
+margin_right = 1132.44
+margin_bottom = -884.38
+locale_name = "a clearing"
+locale_description = "There is a clearing here in the woods.  You hear strange sounds, and musics. Something skitters north into the woods"
+option1 = "Go: north after the creature"
+option2 = "Go: west back into the thicket"
+option3 = "Listen: to the sounds"
+
+[node name="Loc_WoodsA4" parent="LocaleManager" instance=ExtResource( 5 )]
+margin_left = 878.439
+margin_top = -1361.38
+margin_right = 1128.44
+margin_bottom = -1161.38
+locale_name = "a cliff top"
+locale_description = "The strange animal darts through and vanishes in front of you.  There is a serious drop off here, plunging a long ways to rocks below.  A figure moves along the rocks, moaning and cursing, grumpily."
+option1 = "Go: south back to the clearing  "
+option2 = "Talk: to the grumpy figure"
+option3 = "Examine: the grumpy figure"
 
 [node name="Background" type="PanelContainer" parent="."]
 anchor_right = 1.0
