@@ -1,7 +1,6 @@
 extends Node
 class_name Die
 
-
 enum DieCategory{
 	D4 = 4,
 	D6 = 6,
