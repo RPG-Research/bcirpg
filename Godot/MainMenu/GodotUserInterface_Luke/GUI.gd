@@ -14,7 +14,10 @@ func _ready():
 	SetMenuSelections(currentSelectionIndex)
 	
 func _process(delta):	
-	if Input.is_action_just_pressed("ui_down"):
+	
+	## Tab is ui_focus_next. Check Input Maps under project settings
+	## To find the usable map names, for the keys.
+	if Input.is_action_just_pressed("ui_focus_next"):
 		currentSelectionIndex +=1;
 		if(currentSelectionIndex == 5):
 			currentSelectionIndex = 0
