@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/background_demo.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=3]
+[ext_resource path="res://assets/ui_title_theme.tres" type="Theme" id=4]
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Screens/inputText.gd" type="Script" id=6]
+[ext_resource path="res://assets/base_dynamicfont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://UserInterface/But_SaveSettings.gd" type="Script" id=8]
+[ext_resource path="res://Screens/SettingsInitialize.gd" type="Script" id=9]
+
+[node name="SettingsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background_demo" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 296.0
+margin_bottom = 135.0
+theme = ExtResource( 4 )
+text = "   Player Settings
+"
+
+[node name="Hbox_buttons" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -426.0
+margin_top = -67.0
+grow_vertical = 0
+rect_scale = Vector2( 1.04675, 1.07389 )
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="But_SaveSettings" parent="Hbox_buttons" instance=ExtResource( 5 )]
+margin_right = 164.0
+margin_bottom = 67.0
+text = "Save Settings"
+script = ExtResource( 8 )
+next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="But_CloseWithoutSaving" parent="Hbox_buttons" instance=ExtResource( 5 )]
+margin_left = 168.0
+margin_right = 426.0
+margin_bottom = 67.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Close Without Saving"
+next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -187.879
+margin_right = 605.0
+margin_bottom = -115.879
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 605.0
+margin_bottom = 48.0
+
+[node name="label_disName" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 175.0
+margin_bottom = 43.0
+size_flags_horizontal = 2
+text = "Display Name: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="input_name" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 304.0
+margin_right = 605.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
+max_length = 48
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 52.0
+margin_right = 605.0
+margin_bottom = 100.0
+
+[node name="label_risk" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 300.0
+margin_bottom = 43.0
+size_flags_horizontal = 3
+text = "Risk Factor Threshold: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="input_risk" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 304.0
+margin_right = 605.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
