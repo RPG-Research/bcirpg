@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/ui_theme.tres" type="Theme" id=4]
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/background_demo.png" type="Texture" id=7]
+[ext_resource path="res://assets/Backgrounds/Background_black.png" type="Texture" id=6]
 [ext_resource path="res://UserInterface/But_Quit.tscn" type="PackedScene" id=10]
 
 [node name="MenuScreen" type="Control"]
@@ -17,11 +17,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="background_demo" type="TextureRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 7 )
-expand = true
+[node name="Background" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -576.0
+margin_top = -324.0
+margin_right = 576.0
+margin_bottom = 324.0
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -47,39 +52,39 @@ __meta__ = {
 
 [node name="But_NewGame" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 238.0
-margin_bottom = 48.0
+margin_bottom = 49.0
 next_scene_path = "res://screens/NewGame_temp.tscn"
 
 [node name="But_LoadGame" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 52.0
+margin_top = 53.0
 margin_right = 238.0
-margin_bottom = 101.0
+margin_bottom = 103.0
 text = "Load Game"
 next_scene_path = "res://screens/LoadGame_temp.tscn"
 
 [node name="But_Multiplayer" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 105.0
+margin_top = 107.0
 margin_right = 238.0
-margin_bottom = 154.0
+margin_bottom = 156.0
 text = "Multiplayer"
 next_scene_path = "res://Screens/Multiplayer_temp.tscn"
 
 [node name="But_AddChar" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 158.0
+margin_top = 160.0
 margin_right = 238.0
-margin_bottom = 207.0
+margin_bottom = 210.0
 text = "Add Character"
 next_scene_path = "res://Screens/AddCharacter_temp.tscn"
 
 [node name="But_Settings" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 211.0
+margin_top = 214.0
 margin_right = 238.0
-margin_bottom = 259.0
+margin_bottom = 263.0
 text = "Settings"
 next_scene_path = "res://Screens/Settings_temp.tscn"
 
 [node name="But_Quit" parent="VBoxContainer" instance=ExtResource( 10 )]
-margin_top = 263.0
+margin_top = 267.0
 margin_right = 238.0
 margin_bottom = 303.0
 
