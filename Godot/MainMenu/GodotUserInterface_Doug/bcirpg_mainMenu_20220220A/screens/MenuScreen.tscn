@@ -1,32 +1,24 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/MenuScreen.gd" type="Script" id=2]
 [ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=4]
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/Backgrounds/Background_black.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=6]
 [ext_resource path="res://UserInterface/But_Quit.tscn" type="PackedScene" id=10]
 
 [node name="MenuScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 4 )
+theme = ExtResource( 6 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="TextureRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -576.0
-margin_top = -324.0
-margin_right = 576.0
-margin_bottom = 324.0
-texture = ExtResource( 6 )
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -34,6 +26,7 @@ __meta__ = {
 [node name="Title" parent="." instance=ExtResource( 5 )]
 margin_top = 51.8676
 margin_bottom = 117.868
+theme = null
 custom_fonts/font = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
