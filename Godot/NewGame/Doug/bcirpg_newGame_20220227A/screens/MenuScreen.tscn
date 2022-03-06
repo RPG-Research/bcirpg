@@ -26,7 +26,6 @@ __meta__ = {
 [node name="Title" parent="." instance=ExtResource( 5 )]
 margin_top = 51.8676
 margin_bottom = 117.868
-theme = null
 custom_fonts/font = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

@@ -10,7 +10,6 @@ onready var history_source = get_node("/root/History").historyScreensSingleton
 const TextOutput = preload("res://UserInterface/Response.tscn")
 const InputResponse = preload("res://UserInterface/InputResponse.tscn")
 
-
 onready var command_processor = $CommandProcessor
 onready var current_text = $Background/MarginContainer/Rows/GameInfo/CurrentText
 onready var history_rows = $Background/MarginContainer/Rows/GameInfo/HistoryRows
@@ -20,8 +19,14 @@ onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContaine
 onready var option_two= $Background/MarginContainer/Rows/InputArea/VBoxContainer/option2
 onready var option_three = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option3
 
+#DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
+#	or desired load approach
+onready var module_map = "user://temp_map.save"
 
 func _ready() -> void:
+	load_module()
+	#DKM TEMP: for testing only -- this will be set in settings
+	theme=load("res://assets/ui_controlNode_dark_theme.tres")
 	history_pager.hide()
 	history_rows.hide()
 	current_text.show()
@@ -78,3 +83,17 @@ func _on_option2_button_down() -> void:
 func _on_option3_button_down() -> void:
 	var option3 = get_node("Background/MarginContainer/Rows/InputArea/VBoxContainer/option3")
 	handleUserInput(option3.get_text())
+
+# DKM TEMP: Load module map needs to:
+#	1. Add the needed Locale.tsns to the Locale Manager
+#	2. Populate their names
+#	3. Populate their descriptions
+#	4. Populate their options
+#	5. Link them directionally 
+#This will all be part of loading a set game -- built in the toolset. Also 
+# will need to have dialogues, combats, etc. 
+func load_module():
+	var file = File.net()
+	if file.file_exists(module_map):
+		file.open(module_map, File.READ)
+		file.close()

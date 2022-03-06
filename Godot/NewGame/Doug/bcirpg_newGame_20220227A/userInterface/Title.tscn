@@ -1,10 +1,4 @@
-[gd_scene load_steps=4 format=2]
-
-[ext_resource path="res://assets/base_dynamicFont_BIG.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=2]
-
-[sub_resource type="Theme" id=1]
-default_font = ExtResource( 2 )
+[gd_scene format=2]
 
 [node name="Title" type="Label"]
 anchor_left = 0.5
@@ -13,8 +7,6 @@ margin_left = -110.5
 margin_top = 114.422
 margin_right = 110.5
 margin_bottom = 180.422
-theme = SubResource( 1 )
-custom_fonts/font = ExtResource( 1 )
 text = "Main Menu"
 align = 1
 __meta__ = {
