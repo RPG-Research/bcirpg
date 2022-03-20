@@ -54,12 +54,12 @@ func load_settings_file():
 
 
 
-func EnableGlobalThemes(bDark):
-	if (bDark == true):
-		controlNode.theme=load("res://assets/ui_controlNode_dark_theme.tres")
+#func EnableGlobalThemes(bDark):
+	#if (bDark == true):
+		##controlNode.theme=load("res://assets/ui_controlNode_dark_theme.tres")
 		
-	if (bDark == false):
-		controlNode.theme=load("res://assets/ui_controlNode_light_theme.tres")
+	#if (bDark == false):
+		##controlNode.theme=load("res://assets/ui_controlNode_light_theme.tres")
 
 func _ready():
 	pass # Replace with function body.

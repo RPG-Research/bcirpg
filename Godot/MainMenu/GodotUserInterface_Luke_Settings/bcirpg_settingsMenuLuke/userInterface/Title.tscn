@@ -15,7 +15,7 @@ margin_right = 110.5
 margin_bottom = 180.422
 theme = SubResource( 1 )
 custom_fonts/font = ExtResource( 1 )
-text = "Main Menu"
+text = "Settings Menu"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
