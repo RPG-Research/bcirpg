@@ -33,7 +33,7 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -77.5
-margin_top = 40.0
+margin_top = 30.0
 margin_right = 77.5
 margin_bottom = 52.0
 __meta__ = {
@@ -87,7 +87,7 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -77.5
-margin_top = 40.0
+margin_top = 30.0
 margin_right = 77.5
 margin_bottom = 52.0
 __meta__ = {
@@ -131,8 +131,10 @@ anchor_right = 0.5
 margin_left = -52.5
 margin_top = 220.0
 margin_right = 52.5
-margin_bottom = 14.0
 text = "General Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Label3"]
 anchor_left = 0.5
@@ -145,19 +147,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxVolume" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
-margin_right = 157.0
+[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer"]
+margin_right = 155.0
 margin_bottom = 14.0
+rect_pivot_offset = Vector2( 62, 14 )
+text = "Volume:"
 
-[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxVolume"]
-margin_right = 57.0
-margin_bottom = 14.0
-text = "Volume::"
+[node name="HSlider2" type="HSlider" parent="Panel/Label3/VBoxContainer"]
+margin_top = 18.0
+margin_right = 155.0
+margin_bottom = 34.0
+max_value = 10.0
+tick_count = 10
+ticks_on_borders = true
 
 [node name="HBoxClosedCaptions" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
-margin_top = 18.0
-margin_right = 157.0
-margin_bottom = 42.0
+margin_top = 38.0
+margin_right = 155.0
+margin_bottom = 62.0
 
 [node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxClosedCaptions"]
 margin_top = 5.0
@@ -171,17 +178,17 @@ margin_right = 134.0
 margin_bottom = 24.0
 
 [node name="HBoxDevConsole" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
-margin_top = 46.0
-margin_right = 157.0
-margin_bottom = 70.0
+margin_top = 66.0
+margin_right = 155.0
+margin_bottom = 90.0
 
 [node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxDevConsole"]
 margin_top = 5.0
-margin_right = 129.0
+margin_right = 125.0
 margin_bottom = 19.0
-text = "Developer Console::"
+text = "Developer Console:"
 
 [node name="CheckBox" type="CheckBox" parent="Panel/Label3/VBoxContainer/HBoxDevConsole"]
-margin_left = 133.0
-margin_right = 157.0
+margin_left = 129.0
+margin_right = 153.0
 margin_bottom = 24.0
