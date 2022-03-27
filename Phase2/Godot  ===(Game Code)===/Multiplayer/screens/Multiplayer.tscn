@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=1]
+[ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://screens/grabFocus.gd" type="Script" id=4]
+[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=5]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+theme = ExtResource( 5 )
+
+[node name="Title" parent="." instance=ExtResource( 2 )]
+margin_top = 51.8676
+margin_bottom = 117.868
+theme = null
+custom_fonts/font = ExtResource( 1 )
+text = "Multiplayer"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -119.0
+margin_top = -152.0
+margin_right = 119.0
+
+[node name="But_NewRoom" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 238.0
+margin_bottom = 48.0
+theme = ExtResource( 5 )
+text = "New Room"
+next_scene_path = "res://screens/NewRoom.tscn"
+
+[node name="But_JoinRoom" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 52.0
+margin_right = 238.0
+margin_bottom = 100.0
+theme = ExtResource( 5 )
+text = "Join Room"
+next_scene_path = "res://screens/JoinRoom.tscn"
+
+[node name="But_ChBut_BackToMenu" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 238.0
+margin_bottom = 152.0
+theme = ExtResource( 5 )
+text = "Back to Menu"
+next_scene_path = "res://Screens/MenuScreen.tscn"
