@@ -1,8 +1,13 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://SettingsMenuConfig.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -14,6 +19,7 @@ margin_left = -12.9719
 margin_top = -2.0755
 margin_right = -12.9719
 margin_bottom = -2.0755
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -107,7 +113,9 @@ text = "Font Size:"
 margin_top = 18.0
 margin_right = 155.0
 margin_bottom = 34.0
-max_value = 10.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
 tick_count = 10
 ticks_on_borders = true
 
@@ -121,7 +129,9 @@ text = "Brightness:"
 margin_top = 56.0
 margin_right = 155.0
 margin_bottom = 72.0
-max_value = 10.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
 tick_count = 10
 ticks_on_borders = true
 
