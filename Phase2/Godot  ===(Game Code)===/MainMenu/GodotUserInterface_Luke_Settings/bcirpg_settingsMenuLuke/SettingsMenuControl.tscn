@@ -13,12 +13,13 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-anchor_right = 1.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -12.9719
-margin_top = -2.0755
-margin_right = -12.9719
-margin_bottom = -2.0755
+margin_left = -512.0
+margin_top = -600.0
+margin_right = 512.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -202,3 +203,16 @@ text = "Developer Console:"
 margin_left = 129.0
 margin_right = 153.0
 margin_bottom = 24.0
+
+[node name="SaveButton" type="Button" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -146.0
+margin_top = -20.0
+margin_right = 193.0
+text = "Save Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
