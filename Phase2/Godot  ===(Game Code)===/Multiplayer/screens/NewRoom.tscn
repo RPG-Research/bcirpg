@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=3]
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sbf_black.tres" type="StyleBox" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -19,3 +21,35 @@ margin_bottom = 117.868
 theme = null
 custom_fonts/font = ExtResource( 1 )
 text = "New Room"
+
+[node name="PanelContainer" type="PanelContainer" parent="Background"]
+margin_left = 112.0
+margin_top = 148.0
+margin_right = 126.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 800, 304 )
+custom_styles/panel = ExtResource( 5 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+margin_left = 393.0
+margin_top = 501.0
+margin_right = 631.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 0, 51 )
+
+[node name="But_Multiplayer" parent="Background/VBoxContainer" instance=ExtResource( 4 )]
+margin_right = 238.0
+margin_bottom = 51.0
+text = "Go Back"
+next_scene_path = "res://Screens/Multiplayer.tscn"
+
+[node name="Version" type="Label" parent="Background"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -177.0
+margin_top = -44.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Version: 0.0.0"
