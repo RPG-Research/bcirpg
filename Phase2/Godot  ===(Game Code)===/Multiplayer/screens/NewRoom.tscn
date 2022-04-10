@@ -13,7 +13,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 theme = ExtResource( 3 )
 
-[node name="Title" parent="." instance=ExtResource( 2 )]
+[node name="Title" parent="Background" instance=ExtResource( 2 )]
 margin_top = 51.8676
 margin_bottom = 117.868
 theme = null

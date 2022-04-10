@@ -54,3 +54,14 @@ margin_bottom = 152.0
 theme = ExtResource( 5 )
 text = "Back to Menu"
 next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -177.0
+margin_top = -44.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Version: 0.0.0"
