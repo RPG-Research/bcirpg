@@ -24,8 +24,8 @@ onready var option_three = $Background/MarginContainer/Rows/InputArea/VBoxContai
 onready var module_map = "user://temp_map.save"
 
 func _ready() -> void:
-	load_module()
 	#DKM TEMP: for testing only -- this will be set in settings
+	save_module()
 	theme=load("res://assets/ui_controlNode_dark_theme.tres")
 	history_pager.hide()
 	history_rows.hide()
@@ -84,16 +84,13 @@ func _on_option3_button_down() -> void:
 	var option3 = get_node("Background/MarginContainer/Rows/InputArea/VBoxContainer/option3")
 	handleUserInput(option3.get_text())
 
-# DKM TEMP: Load module map needs to:
-#	1. Add the needed Locale.tsns to the Locale Manager
-#	2. Populate their names
-#	3. Populate their descriptions
-#	4. Populate their options
-#	5. Link them directionally 
-#This will all be part of loading a set game -- built in the toolset. Also 
-# will need to have dialogues, combats, etc. 
-func load_module():
-	var file = File.net()
-	if file.file_exists(module_map):
-		file.open(module_map, File.READ)
-		file.close()
+
+#func load_module():
+#	var scene = load("user://save_01.tscn")
+#	get_tree().change_scene_to(scene)
+
+#DKM TEMP: saves the entire scene in one packed scene file
+func save_module():
+		var scene = PackedScene.new()
+		scene.pack(self)
+		ResourceSaver.save("user://game_01.tscn", scene)

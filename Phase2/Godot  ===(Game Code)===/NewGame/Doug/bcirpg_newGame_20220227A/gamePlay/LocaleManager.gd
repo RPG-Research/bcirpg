@@ -7,6 +7,7 @@ extends Node
 
 #DKM TEMP: must load from toolset
 func _ready() -> void:
+	#load_module()
 	$Loc_Boat.connect_exit("east", $Loc_Shore)
 	$Loc_Shore.connect_exit("north", $Loc_WoodsA1)
 	$Loc_WoodsA1.connect_exit("north", $Loc_WoodsA2)

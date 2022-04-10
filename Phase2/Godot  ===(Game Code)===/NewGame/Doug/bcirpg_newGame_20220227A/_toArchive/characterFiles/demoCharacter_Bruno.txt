@@ -1,0 +1,14 @@
+Name: Bruno
+Class: Seer
+Level: 22
+
+S: 9
+I: 11
+W: 16
+D: 14
+C: 10
+Chr: 8
+
+HP: 31
+
+Description: slight, anxious seer who hides from view whenever possible, due to the negative ramifications of his prophetic abilities. 

@@ -45,7 +45,7 @@ __meta__ = {
 [node name="But_NewGame" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 238.0
 margin_bottom = 49.0
-next_scene_path = "res://gamePlay/Game.tscn"
+next_scene_path = "res://screens/PlayerSelection.tscn"
 
 [node name="But_LoadGame" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 53.0
@@ -66,7 +66,7 @@ margin_top = 160.0
 margin_right = 238.0
 margin_bottom = 210.0
 text = "Add Character"
-next_scene_path = "res://Screens/AddCharacter_temp.tscn"
+next_scene_path = "res://Screens/Character_Add.tscn"
 
 [node name="But_Settings" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 214.0
