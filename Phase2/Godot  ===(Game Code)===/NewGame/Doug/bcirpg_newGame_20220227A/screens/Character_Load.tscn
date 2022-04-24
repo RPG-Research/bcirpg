@@ -17,6 +17,7 @@ margin_left = 189.0
 margin_top = 18.0
 margin_right = 989.0
 margin_bottom = 461.0
+readonly = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,14 +42,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
-margin_left = 25.0
-margin_top = 111.0
-margin_right = 168.0
-margin_bottom = 135.0
-text = "Temp: Main Menu "
-next_scene_path = "res://Screens/MenuScreen.tscn"
-
 [node name="But_StartNewGame" parent="Title" instance=ExtResource( 2 )]
 margin_left = 22.0
 margin_top = 71.0
@@ -56,6 +49,14 @@ margin_right = 181.0
 margin_bottom = 95.0
 text = "Temp: Start New Game"
 next_scene_path = "res://gamePlay/Game.tscn"
+
+[node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
+margin_left = 21.0
+margin_top = 109.0
+margin_right = 164.0
+margin_bottom = 133.0
+text = "Temp: Main Menu "
+next_scene_path = "res://Screens/MenuScreen.tscn"
 
 [node name="LoadCharacter_FileDialog" type="FileDialog" parent="."]
 margin_left = 193.0

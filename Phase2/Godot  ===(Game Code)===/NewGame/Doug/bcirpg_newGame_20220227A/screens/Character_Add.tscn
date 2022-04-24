@@ -17,6 +17,9 @@ margin_left = 215.0
 margin_top = 23.0
 margin_right = 997.0
 margin_bottom = 447.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.0

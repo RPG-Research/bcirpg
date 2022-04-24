@@ -13,6 +13,7 @@ const InputResponse = preload("res://UserInterface/InputResponse.tscn")
 onready var command_processor = $CommandProcessor
 onready var current_text = $Background/MarginContainer/Rows/GameInfo/CurrentText
 onready var history_rows = $Background/MarginContainer/Rows/GameInfo/HistoryRows
+onready var history_on= $Background/MarginContainer/Rows/ItemList/But_History
 onready var history_pager = $Background/MarginContainer/Rows/ItemList/But_History_Page
 onready var locale_manager = $LocaleManager
 onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option1
@@ -29,6 +30,7 @@ func _ready() -> void:
 	theme=load("res://assets/ui_controlNode_dark_theme.tres")
 	history_pager.hide()
 	history_rows.hide()
+	history_on.hide()
 	current_text.show()
 	option_one.show()
 	option_two.show()
