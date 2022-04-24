@@ -4,7 +4,7 @@
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=3]
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sbf_black.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -28,7 +28,24 @@ margin_top = 148.0
 margin_right = 126.0
 margin_bottom = 162.0
 rect_min_size = Vector2( 800, 304 )
-custom_styles/panel = ExtResource( 5 )
+theme = ExtResource( 5 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 797.0
+margin_bottom = 297.0
+
+[node name="LeftColumn" type="VBoxContainer" parent="Background/PanelContainer/HBoxContainer"]
+margin_right = 393.0
+margin_bottom = 290.0
+rect_min_size = Vector2( 393, 290 )
+
+[node name="RightColumn" type="VBoxContainer" parent="Background/PanelContainer/HBoxContainer"]
+margin_left = 397.0
+margin_right = 790.0
+margin_bottom = 290.0
+rect_min_size = Vector2( 393, 290 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
 margin_left = 393.0
