@@ -19,6 +19,9 @@ onready var locale_manager = $LocaleManager
 onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option1
 onready var option_two= $Background/MarginContainer/Rows/InputArea/VBoxContainer/option2
 onready var option_three = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option3
+onready var pc = get_node("/root/PlayerCharacter")
+onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSheet
+
 
 #DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
 #	or desired load approach
@@ -35,6 +38,9 @@ func _ready() -> void:
 	option_one.show()
 	option_two.show()
 	option_three.show()
+	
+	#Load character sheet:
+	charSheet.text = pc.playerCharacterSingleton.pcText
 
 	var opening_text = "The game has begun! You can select from the available options below. "
 	#create_response("The game has begun! You can select from the available options below.")	

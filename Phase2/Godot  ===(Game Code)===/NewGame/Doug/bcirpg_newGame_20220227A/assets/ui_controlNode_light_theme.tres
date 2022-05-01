@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=4 format=2]
+[gd_resource type="Theme" load_steps=5 format=2]
 
 [ext_resource path="res://assets/sbf_white.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/liberation_serif_30pt.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/liberation_serif_20pt.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=4]
 
 [resource]
 Button/colors/font_color = Color( 0, 0, 0, 1 )
@@ -37,7 +38,7 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = null
+Label/fonts/font = ExtResource( 3 )
 Label/styles/normal = ExtResource( 1 )
 LineEdit/colors/clear_button_color = Color( 0.88, 0.88, 0.88, 1 )
 LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
@@ -92,7 +93,7 @@ TextEdit/colors/completion_selected_color = Color( 0.26, 0.26, 0.27, 1 )
 TextEdit/colors/current_line_color = Color( 0.25, 0.25, 0.26, 0.8 )
 TextEdit/colors/executing_line_color = Color( 0.2, 0.8, 0.2, 0.4 )
 TextEdit/colors/font_color = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
-TextEdit/colors/font_color_readonly = Color( 0.88, 0.88, 0.88, 0.5 )
+TextEdit/colors/font_color_readonly = Color( 0.0588235, 0.0588235, 0.0588235, 0.501961 )
 TextEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
 TextEdit/colors/function_color = Color( 0.4, 0.64, 0.81, 1 )
 TextEdit/colors/line_number_color = Color( 0.67, 0.67, 0.67, 0.4 )
@@ -107,13 +108,13 @@ TextEdit/constants/completion_lines = 7
 TextEdit/constants/completion_max_width = 50
 TextEdit/constants/completion_scroll_width = 3
 TextEdit/constants/line_spacing = 4
-TextEdit/fonts/font = ExtResource( 3 )
+TextEdit/fonts/font = ExtResource( 4 )
 TextEdit/icons/fold = null
 TextEdit/icons/folded = null
 TextEdit/icons/space = null
 TextEdit/icons/tab = null
-TextEdit/styles/completion = null
-TextEdit/styles/focus = null
+TextEdit/styles/completion = ExtResource( 1 )
+TextEdit/styles/focus = ExtResource( 1 )
 TextEdit/styles/normal = ExtResource( 1 )
-TextEdit/styles/read_only = null
+TextEdit/styles/read_only = ExtResource( 1 )
 VBoxContainer/constants/separation = 4

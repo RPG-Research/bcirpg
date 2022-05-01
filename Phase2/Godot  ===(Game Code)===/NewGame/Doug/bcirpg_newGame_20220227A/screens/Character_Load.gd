@@ -17,4 +17,6 @@ func _on_LoadCharacter_FileDialog_file_selected(path: String) -> void:
 	print(path)
 	var charFile = File.new()
 	charFile.open(path, 1)
-	$TextEdit.text = charFile.get_as_text()
+	var pc = get_node("/root/PlayerCharacter")
+	pc.playerCharacterSingleton.pcText = charFile.get_as_text()
+	$TextEdit.text = pc.playerCharacterSingleton.pcText 

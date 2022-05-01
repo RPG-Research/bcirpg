@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Locale",
 "language": "GDScript",
 "path": "res://userInterface/Locale.gd"
+}, {
+"base": "Resource",
+"class": "playerCharacterTemplate",
+"language": "GDScript",
+"path": "res://globalScripts/playerCharacterTemplate.gd"
 } ]
 _global_script_class_icons={
 "HistoryScreensTemplateSingleton": "",
-"Locale": ""
+"Locale": "",
+"playerCharacterTemplate": ""
 }
 
 [application]
@@ -33,6 +39,7 @@ config/icon="res://icon.png"
 [autoload]
 
 History="*res://globalScripts/history.gd"
+PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
 
 [physics]
 
