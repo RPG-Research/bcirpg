@@ -12,8 +12,6 @@ const InputResponse = preload("res://UserInterface/InputResponse.tscn")
 
 onready var command_processor = $CommandProcessor
 onready var current_text = $Background/MarginContainer/Rows/GameInfo/CurrentText
-onready var history_rows = $Background/MarginContainer/Rows/GameInfo/HistoryRows
-onready var history_on= $Background/MarginContainer/Rows/ItemList/But_History
 onready var history_pager = $Background/MarginContainer/Rows/ItemList/But_History_Page
 onready var locale_manager = $LocaleManager
 onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option1
@@ -31,9 +29,6 @@ func _ready() -> void:
 	#DKM TEMP: for testing only -- this will be set in settings
 	save_module()
 	theme=load("res://assets/ui_controlNode_dark_theme.tres")
-	history_pager.hide()
-	history_rows.hide()
-	history_on.hide()
 	current_text.show()
 	option_one.show()
 	option_two.show()
@@ -66,16 +61,18 @@ func create_response(response_text: String):
 #Copies the response output to add to both current game output, and the 
 #	history array. 
 func add_response_to_game(response: Control):
-	var response_history = response.duplicate()
-
-	#DKM TEMP: stopped here, trying to add page number to history text
-	#var history_page_number = HISTORY_SOURCE.output_history_array.size() + 1
-	#var history_string = "Page " + str(history_page_number) + "; " 
-	if(history_source.output_history_array != null):
-		history_source.output_history_array.append(response_history)
+	add_response_to_history(response)
 	if(current_text.get_child_count() > 0):
 		current_text.remove_child(current_text.get_child(0))
 	current_text.add_child(response)
+
+func add_response_to_history(response: Control) -> void:
+	#DKM TEMP: so here we
+	#1. var response_history = response.duplicate()
+	#2. get the history array from the singleton, 
+	#3. Add this to the history array
+	#
+	pass
 
 
 func _on_option1_button_down() -> void:

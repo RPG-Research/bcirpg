@@ -40,6 +40,7 @@ config/icon="res://icon.png"
 
 History="*res://globalScripts/history.gd"
 PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
+GameCurrent="*res://globalScripts/gameCurrent.gd"
 
 [physics]
 
