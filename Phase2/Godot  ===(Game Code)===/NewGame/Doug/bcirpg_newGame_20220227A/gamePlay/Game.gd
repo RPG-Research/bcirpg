@@ -69,10 +69,10 @@ func add_response_to_game(response: Control):
 func add_response_to_history(response: Control) -> void:
 	#DKM TEMP: so here we
 	#1. var response_history = response.duplicate()
-	#2. get the history array from the singleton, 
+	var response_for_history = response.duplicate()
+	#2. get the history array from the singleton,
 	#3. Add this to the history array
-	#
-	pass
+	history_source.output_history_array.append(response_for_history)
 
 
 func _on_option1_button_down() -> void:

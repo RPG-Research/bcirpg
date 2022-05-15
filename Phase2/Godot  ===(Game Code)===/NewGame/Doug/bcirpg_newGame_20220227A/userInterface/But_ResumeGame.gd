@@ -8,6 +8,7 @@ func _on_But_ResumeGame_button_up():
 	var gameSingleton = get_node("/root/GameCurrent")
 	var gameScene = gameSingleton.gameCurrent_scene 
 	root.remove_child(thisScene)
+	#DKM TEMP: cleanup this scene!
 	thisScene.queue_free()
 	root.add_child(gameScene)
 

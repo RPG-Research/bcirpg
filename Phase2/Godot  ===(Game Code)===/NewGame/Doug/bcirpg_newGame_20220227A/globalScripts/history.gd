@@ -19,7 +19,7 @@ func _ready() -> void:
 	#DKM temp:
 	print("Loaded history array size is: " + str(historyScreensSingleton.output_history_array.size()))
 
-#DKM TEMP: tres format:
+#DKM TEMP: load using tres format:
 func load_history_file() -> HistoryScreensTemplateSingleton:
 	if ResourceLoader.exists(history_file):
 		var history = ResourceLoader.load(history_file)

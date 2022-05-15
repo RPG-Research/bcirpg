@@ -49,7 +49,7 @@ margin_top = 40.0
 margin_right = 238.0
 margin_bottom = 125.0
 text = "Show History"
-next_scene_path = "res://screens/MenuScreen.tscn"
+next_scene_path = "res://screens/HistoryViewer.tscn"
 
 [node name="But_Chat" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 129.0
