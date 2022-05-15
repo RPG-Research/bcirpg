@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=3]
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui_theme.tres" type="Theme" id=5]
+[ext_resource path="res://assets/base_dynamicfont.tres" type="DynamicFont" id=6]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -30,18 +31,161 @@ margin_bottom = 162.0
 rect_min_size = Vector2( 800, 304 )
 theme = ExtResource( 5 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/PanelContainer"]
+[node name="SettingsMenu" type="HBoxContainer" parent="Background/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 797.0
 margin_bottom = 297.0
 
-[node name="LeftColumn" type="VBoxContainer" parent="Background/PanelContainer/HBoxContainer"]
+[node name="LeftColumn" type="VBoxContainer" parent="Background/PanelContainer/SettingsMenu"]
 margin_right = 393.0
 margin_bottom = 290.0
 rect_min_size = Vector2( 393, 290 )
 
-[node name="RightColumn" type="VBoxContainer" parent="Background/PanelContainer/HBoxContainer"]
+[node name="ServerName" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_right = 393.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 36 )
+rect_pivot_offset = Vector2( -404, -103 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerName"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Server Name"
+
+[node name="LineEdit" type="LineEdit" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerName"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+custom_fonts/font = ExtResource( 6 )
+
+[node name="ServerType" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 40.0
+margin_right = 393.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerType"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Server Type"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerType"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="NAT_Type" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 80.0
+margin_right = 393.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/NAT_Type"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "NAT Type"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/LeftColumn/NAT_Type"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="GM_Password" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 120.0
+margin_right = 393.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/GM_Password"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "GM Password"
+
+[node name="LineEdit" type="LineEdit" parent="Background/PanelContainer/SettingsMenu/LeftColumn/GM_Password"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+custom_fonts/font = ExtResource( 6 )
+
+[node name="PlayerPassword" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 160.0
+margin_right = 393.0
+margin_bottom = 196.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/PlayerPassword"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Player Password"
+
+[node name="LineEdit" type="LineEdit" parent="Background/PanelContainer/SettingsMenu/LeftColumn/PlayerPassword"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+custom_fonts/font = ExtResource( 6 )
+
+[node name="TypeOfGame" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 200.0
+margin_right = 393.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/TypeOfGame"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Type of Game"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/LeftColumn/TypeOfGame"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="ServerStatus" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/LeftColumn"]
+margin_top = 240.0
+margin_right = 393.0
+margin_bottom = 276.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerStatus"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Server Status"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/LeftColumn/ServerStatus"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="RightColumn" type="VBoxContainer" parent="Background/PanelContainer/SettingsMenu"]
 margin_left = 397.0
 margin_right = 790.0
 margin_bottom = 290.0
