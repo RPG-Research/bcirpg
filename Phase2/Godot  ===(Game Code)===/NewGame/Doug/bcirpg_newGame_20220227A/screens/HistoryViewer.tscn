@@ -17,7 +17,6 @@ __meta__ = {
 [node name="Background" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -274.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -25,7 +24,7 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="Background"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 749.0
+margin_right = 1023.0
 margin_bottom = 599.0
 custom_constants/margin_right = 20
 custom_constants/margin_top = 10
@@ -35,12 +34,12 @@ custom_constants/margin_bottom = 20
 [node name="Rows" type="VBoxContainer" parent="Background/MarginContainer"]
 margin_left = 20.0
 margin_top = 10.0
-margin_right = 728.0
+margin_right = 1002.0
 margin_bottom = 578.0
 custom_constants/separation = 10
 
 [node name="ItemList" type="ItemList" parent="Background/MarginContainer/Rows"]
-margin_right = 708.0
+margin_right = 982.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
@@ -49,29 +48,48 @@ text = "More Options"
 next_scene_path = "res://screens/MoreOptions.tscn"
 
 [node name="But_HistoryPager" type="Button" parent="Background/MarginContainer/Rows/ItemList"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -168.0
-margin_top = -18.0
-margin_bottom = 18.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -84.0
+margin_right = 84.0
+margin_bottom = 36.0
 text = "History Pager"
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="Background/MarginContainer/Rows/ItemList"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -194.94
+margin_top = -1.12247
+margin_right = -81.9397
+margin_bottom = 23.8775
+text = "History Page:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Page_Display" type="Label" parent="Background/MarginContainer/Rows/ItemList"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GameInfo" type="PanelContainer" parent="Background/MarginContainer/Rows"]
 margin_top = 50.0
-margin_right = 708.0
+margin_right = 982.0
 margin_bottom = 568.0
 size_flags_vertical = 3
 
-[node name="CurrentText" type="VBoxContainer" parent="Background/MarginContainer/Rows/GameInfo"]
+[node name="CurrentHistory" type="VBoxContainer" parent="Background/MarginContainer/Rows/GameInfo"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 707.0
+margin_right = 981.0
 margin_bottom = 517.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
