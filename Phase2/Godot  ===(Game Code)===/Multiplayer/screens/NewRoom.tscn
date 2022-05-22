@@ -191,18 +191,147 @@ margin_right = 790.0
 margin_bottom = 290.0
 rect_min_size = Vector2( 393, 290 )
 
+[node name="ModuleSelection" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_right = 393.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/ModuleSelection"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Module Selection"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/ModuleSelection"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="ChatLimit" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 40.0
+margin_right = 393.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/ChatLimit"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Char. Chat Limit"
+
+[node name="CheckButton" type="CheckButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/ChatLimit"]
+margin_left = 154.0
+margin_right = 220.0
+margin_bottom = 36.0
+
+[node name="CharacterLimit" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 80.0
+margin_right = 393.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/CharacterLimit"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Character Limit"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/CharacterLimit"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="PlayersAllowed" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 120.0
+margin_right = 393.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/PlayersAllowed"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Players Allowed"
+
+[node name="OptionButton" type="OptionButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/PlayersAllowed"]
+margin_left = 154.0
+margin_right = 379.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 225, 0 )
+
+[node name="SaveGame" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 160.0
+margin_right = 393.0
+margin_bottom = 196.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/SaveGame"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Save Game"
+
+[node name="CheckButton" type="CheckButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/SaveGame"]
+margin_left = 154.0
+margin_right = 220.0
+margin_bottom = 36.0
+
+[node name="PlayerPause" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 200.0
+margin_right = 393.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/PlayerPause"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Player Pause"
+
+[node name="CheckButton" type="CheckButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/PlayerPause"]
+margin_left = 154.0
+margin_right = 220.0
+margin_bottom = 36.0
+
+[node name="StartAndStop" type="HBoxContainer" parent="Background/PanelContainer/SettingsMenu/RightColumn"]
+margin_top = 240.0
+margin_right = 393.0
+margin_bottom = 276.0
+rect_min_size = Vector2( 0, 36 )
+
+[node name="Label" type="Label" parent="Background/PanelContainer/SettingsMenu/RightColumn/StartAndStop"]
+margin_top = 5.0
+margin_right = 150.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 6 )
+text = "Start and Stop"
+
+[node name="CheckButton" type="CheckButton" parent="Background/PanelContainer/SettingsMenu/RightColumn/StartAndStop"]
+margin_left = 154.0
+margin_right = 220.0
+margin_bottom = 36.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
 margin_left = 393.0
 margin_top = 501.0
 margin_right = 631.0
 margin_bottom = 552.0
 rect_min_size = Vector2( 0, 51 )
-
-[node name="But_Multiplayer" parent="Background/VBoxContainer" instance=ExtResource( 4 )]
-margin_right = 238.0
-margin_bottom = 51.0
-text = "Go Back"
-next_scene_path = "res://Screens/Multiplayer.tscn"
 
 [node name="Version" type="Label" parent="Background"]
 anchor_left = 1.0
@@ -214,3 +343,24 @@ margin_top = -44.0
 margin_right = -5.0
 margin_bottom = -6.0
 text = "Version: 0.0.0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background"]
+margin_left = 273.0
+margin_top = 501.0
+margin_right = 753.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 476, 51 )
+
+[node name="But_Multiplayer" parent="Background/HBoxContainer" instance=ExtResource( 4 )]
+margin_right = 238.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 238, 51 )
+text = "Go Back"
+next_scene_path = "res://Screens/Multiplayer.tscn"
+
+[node name="But_Multiplayer2" parent="Background/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 242.0
+margin_right = 480.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 238, 51 )
+text = "Create New Room"
