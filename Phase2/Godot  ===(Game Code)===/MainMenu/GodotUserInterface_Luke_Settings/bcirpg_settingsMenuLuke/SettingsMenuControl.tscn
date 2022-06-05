@@ -11,9 +11,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 3 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="."]
 anchor_left = 0.5
@@ -21,223 +18,247 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
-margin_top = -300.0
+margin_top = -302.0
 margin_right = 512.0
-margin_bottom = 300.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 298.0
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -59.0
-margin_right = 59.0
-margin_bottom = 14.0
-text = "Player Preferances"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_left = -219.5
+margin_right = 219.5
+margin_bottom = 19.0
+custom_constants/separation = 60
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Label"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -77.5
-margin_top = 30.0
-margin_right = 77.5
-margin_bottom = 52.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxDisplayName" type="HBoxContainer" parent="Panel/Label/VBoxContainer"]
-margin_right = 157.0
-margin_bottom = 29.0
-
-[node name="Label" type="Label" parent="Panel/Label/VBoxContainer/HBoxDisplayName"]
-margin_top = 5.0
-margin_right = 95.0
-margin_bottom = 24.0
-text = "Display Name:"
-
-[node name="LineEdit" type="LineEdit" parent="Panel/Label/VBoxContainer/HBoxDisplayName"]
-margin_left = 99.0
-margin_right = 157.0
-margin_bottom = 29.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Label/VBoxContainer"]
-margin_top = 33.0
-margin_right = 157.0
-margin_bottom = 72.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxFontSize" type="HBoxContainer" parent="Panel/Label/VBoxContainer/VBoxContainer"]
-margin_right = 157.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_right = 98.0
 margin_bottom = 19.0
 
-[node name="Label" type="Label" parent="Panel/Label/VBoxContainer/VBoxContainer/HBoxFontSize"]
-margin_right = 145.0
+[node name="Label2" type="Label" parent="Panel/HBoxContainer/VBoxContainer2"]
+margin_right = 98.0
 margin_bottom = 19.0
-text = "Risk Factor Threshold:"
-
-[node name="RiskSlider" type="HSlider" parent="Panel/Label/VBoxContainer/VBoxContainer"]
-margin_top = 23.0
-margin_right = 157.0
-margin_bottom = 39.0
-min_value = 1.0
-max_value = 5.0
-value = 5.0
-tick_count = 10
-ticks_on_borders = true
-
-[node name="Label2" type="Label" parent="Panel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -47.5
-margin_top = 100.0
-margin_right = 47.5
-margin_bottom = 14.0
 text = "Visual Controls"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Label2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer2/Label2"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -77.5
 margin_top = 30.0
 margin_right = 77.5
 margin_bottom = 52.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="HBoxFontSize" type="HBoxContainer" parent="Panel/Label2/VBoxContainer"]
+[node name="HBoxFontSize" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer2/Label2/VBoxContainer"]
 margin_right = 155.0
 margin_bottom = 19.0
 
-[node name="Label" type="Label" parent="Panel/Label2/VBoxContainer/HBoxFontSize"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer2/Label2/VBoxContainer/HBoxFontSize"]
 margin_right = 64.0
 margin_bottom = 19.0
 text = "Font Size:"
 
-[node name="HSlider2" type="HSlider" parent="Panel/Label2/VBoxContainer"]
+[node name="HSlider2" type="HSlider" parent="Panel/HBoxContainer/VBoxContainer2/Label2/VBoxContainer"]
 margin_top = 23.0
 margin_right = 155.0
 margin_bottom = 39.0
 min_value = 1.0
 max_value = 5.0
 value = 5.0
+rounded = true
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Label" type="Label" parent="Panel/Label2/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer2/Label2/VBoxContainer"]
 margin_top = 43.0
 margin_right = 155.0
 margin_bottom = 62.0
 text = "Brightness:"
 
-[node name="HSlider3" type="HSlider" parent="Panel/Label2/VBoxContainer"]
+[node name="HSlider3" type="HSlider" parent="Panel/HBoxContainer/VBoxContainer2/Label2/VBoxContainer"]
 margin_top = 66.0
 margin_right = 155.0
 margin_bottom = 82.0
 min_value = 1.0
 max_value = 5.0
 value = 5.0
+rounded = true
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Label3" type="Label" parent="Panel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -52.5
-margin_top = 210.0
-margin_right = 52.5
-text = "General Settings"
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 158.0
+margin_right = 275.0
+margin_bottom = 19.0
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_right = 117.0
+margin_bottom = 19.0
+text = "Player Preferances"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Label"]
+margin_left = -18.5
+margin_top = 30.0
+margin_right = 126.5
+margin_bottom = 125.0
+
+[node name="HBoxDisplayName" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer/HBoxDisplayName"]
+margin_right = 95.0
+margin_bottom = 19.0
+text = "Display Name:"
+
+[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 52.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer"]
+margin_top = 56.0
+margin_right = 145.0
+margin_bottom = 95.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Label3"]
+[node name="HBoxFontSize" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer/VBoxContainer"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer/VBoxContainer/HBoxFontSize"]
+margin_right = 145.0
+margin_bottom = 19.0
+text = "Risk Factor Threshold:"
+
+[node name="RiskSlider" type="HSlider" parent="Panel/HBoxContainer/VBoxContainer/Label/VBoxContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 39.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 335.0
+margin_right = 439.0
+margin_bottom = 19.0
+
+[node name="Label3" type="Label" parent="Panel/HBoxContainer/VBoxContainer3"]
+margin_right = 104.0
+margin_bottom = 19.0
+text = "General Settings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -77.5
 margin_top = 30.0
 margin_right = 77.5
 margin_bottom = 120.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
 margin_right = 155.0
 margin_bottom = 19.0
 rect_pivot_offset = Vector2( 62, 14 )
 text = "Volume:"
 
-[node name="HSlider2" type="HSlider" parent="Panel/Label3/VBoxContainer"]
+[node name="HSlider2" type="HSlider" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
 margin_top = 23.0
 margin_right = 155.0
 margin_bottom = 39.0
 max_value = 10.0
+rounded = true
 tick_count = 10
 ticks_on_borders = true
 
-[node name="HBoxClosedCaptions" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
+[node name="HBoxClosedCaptions" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
 margin_top = 43.0
 margin_right = 155.0
 margin_bottom = 70.0
 
-[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxClosedCaptions"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxClosedCaptions"]
 margin_top = 4.0
 margin_right = 108.0
 margin_bottom = 23.0
 text = "Closed Captions:"
 
-[node name="CheckBox" type="CheckBox" parent="Panel/Label3/VBoxContainer/HBoxClosedCaptions"]
+[node name="CheckBox" type="CheckBox" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxClosedCaptions"]
 margin_left = 112.0
 margin_right = 136.0
 margin_bottom = 27.0
 
-[node name="HBoxDevConsole" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
+[node name="HBoxDevConsole" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
 margin_top = 74.0
 margin_right = 155.0
 margin_bottom = 101.0
 
-[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxDevConsole"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxDevConsole"]
 margin_top = 4.0
 margin_right = 126.0
 margin_bottom = 23.0
 text = "Developer Console:"
 
-[node name="CheckBox" type="CheckBox" parent="Panel/Label3/VBoxContainer/HBoxDevConsole"]
+[node name="CheckBox" type="CheckBox" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxDevConsole"]
 margin_left = 130.0
 margin_right = 154.0
 margin_bottom = 27.0
 
-[node name="HBoxDarkMode" type="HBoxContainer" parent="Panel/Label3/VBoxContainer"]
+[node name="HBoxDarkMode" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
 margin_top = 105.0
 margin_right = 155.0
-margin_bottom = 132.0
+margin_bottom = 124.0
 
-[node name="Label" type="Label" parent="Panel/Label3/VBoxContainer/HBoxDarkMode"]
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxDarkMode"]
+margin_right = 119.0
+margin_bottom = 19.0
+text = "Theme Preferance:"
+
+[node name="ItemList2" type="ItemList" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
+margin_top = 128.0
+margin_right = 155.0
+margin_bottom = 137.0
+auto_height = true
+
+[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
+margin_top = 141.0
+margin_right = 155.0
+margin_bottom = 168.0
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxVirtualKeyboardEnabled"]
 margin_top = 4.0
-margin_right = 77.0
+margin_right = 110.0
 margin_bottom = 23.0
-text = "Dark Mode:"
+text = "Virtual Keyboard"
 
-[node name="CheckBox" type="CheckBox" parent="Panel/Label3/VBoxContainer/HBoxDarkMode"]
-margin_left = 81.0
-margin_right = 105.0
+[node name="CheckBox" type="CheckBox" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxVirtualKeyboardEnabled"]
+margin_left = 114.0
+margin_right = 138.0
 margin_bottom = 27.0
 
-[node name="SaveButton" type="Button" parent="Panel/Label3/VBoxContainer"]
-margin_top = 136.0
+[node name="HBoxKeyboardLayout" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
+margin_top = 172.0
 margin_right = 155.0
-margin_bottom = 161.0
+margin_bottom = 191.0
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxKeyboardLayout"]
+margin_right = 120.0
+margin_bottom = 19.0
+text = "Layout Preferance:"
+
+[node name="ItemList" type="ItemList" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
+margin_top = 195.0
+margin_right = 155.0
+margin_bottom = 204.0
+auto_height = true
+
+[node name="SaveButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer"]
+margin_top = 208.0
+margin_right = 155.0
+margin_bottom = 233.0
 text = "Save Settings"
 __meta__ = {
 "_edit_use_anchors_": false

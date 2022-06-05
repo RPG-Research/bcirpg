@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-SettingsMenuConfig="*res://SettingsMenuConfig.gd"
+GlobalSaveInstance="*res://globalSaveInstance.gd"
 
 [physics]
 

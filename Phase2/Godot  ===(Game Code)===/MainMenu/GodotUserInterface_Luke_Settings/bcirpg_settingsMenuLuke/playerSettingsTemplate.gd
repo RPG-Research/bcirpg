@@ -21,8 +21,9 @@ var volume = 6
 var bClosedCaptions = true
 var bdevConsole = false
 var bVirtualKeyboard = false
-var visualKeyboardLayout = KeyboardLayout.QWERTY
-var preferredTheme = ThemeChoice.DARKHIGHCONTRAST
+var visualKeyboardLayout = 0
+var themeChoice = 0
+#var preferredTheme = ThemeChoice.DARKHIGHCONTRAST
 
 
 # Declare member variables here. Examples:
