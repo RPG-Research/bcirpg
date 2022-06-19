@@ -7,27 +7,27 @@ onready var themeContents = ["White and Black", "Black and White"]
 
 onready var saveObject = get_node('/root/GlobalSaveInstance') 
 
-onready var NameVar = get_node('Panel/HBoxContainer/VBoxContainer2/Label/VBoxContainer/LineEdit')
+onready var NameVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
 
-onready var NRiskVar = get_node('Panel/HBoxContainer/VboxContainer2/Label/VBoxContainer/VBoxContainer/RiskSlider')
+onready var NRiskVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/RiskSlider')
 
-onready var FontVar = get_node("Panel/HBoxContainer/VBoxContainer/Label2/VBoxContainer/HSlider2")
+onready var FontVar = get_node("Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/FontSizeSlider")
 
-onready var BrightnessVar = get_node('Panel/HBoxContainer/VBoxContainer/Label2/VBoxContainer/HSlider3')
+onready var BrightnessVar = get_node('Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/BrightnessSlider')
 
-onready var VolumeVar = get_node("Panel/HBoxContainer/Label3/VBoxContainer/HSlider2")
+onready var VolumeVar = get_node("Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/VolumeSlider")
 
-onready var ConsoleCommandVar = get_node('Panel/HBoxContainer/VBoxContainer3//Label3/VBoxContainer/HBoxDevConsole/CheckBox')
+onready var ClosedCaptionsVar = get_node('Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions/ClosedCaptionsCheckBox')
 
-onready var ClosedCaptionsVar = get_node('Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/HBoxClosedCaptions/CheckBox')
+onready var ConsoleCommandVar = get_node('Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole/DevConsoleCheckbox')
 
-onready var saveButton = get_node("Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/SaveButton")
+onready var saveButton = get_node("Panel/HBoxBottomRow/SaveButton")
 
-onready var bKeyboardEnabled = get_node("Panel/HBoxContainer/VBoxContainer3//Label3/VBoxContainer/HBoxVirtualKeyboardEnabled/CheckBox")
+onready var bKeyboardEnabled = get_node("Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled/VisualKeyboardCheckBox")
 
-onready var keyboardLayoutList = get_node('Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/ItemList') 
+onready var keyboardLayoutList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/LayoutItemList') 
 
-onready var themeChoiceList = get_node('Panel/HBoxContainer/VBoxContainer3/Label3/VBoxContainer/ItemList2')
+onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/ThemeItemList')
 
 var iniFile = ConfigFile.new()
 
@@ -36,14 +36,13 @@ func saveToInstance():
 	#Save to Singleton, so saveFile does not need to be constantly read
 	saveObject.settingsInstance.inputName = NameVar.text
 	saveObject.settingsInstance.riskFactor = NRiskVar.value
-	saveObject.settingsInstance.fontSize = FontVar.Value
+	saveObject.settingsInstance.fontSize = FontVar.value
 	saveObject.settingsInstance.volume = VolumeVar.value
 	saveObject.settingsInstance.bClosedCaptions = ClosedCaptionsVar.is_pressed()
 	saveObject.settingsInstance.bdevConsole = ConsoleCommandVar.is_pressed()
 	saveObject.settingsInstance.bVirtualKeyboard = bKeyboardEnabled.is_pressed()
-	
-#	saveObject.settingsInstance.visualKeyboardLayout =
-#	saveobject.settingsInstance.themeChoice = 
+	saveObject.settingsInstance.visualKeyboardLayout = keyboardLayoutList.get_selected_items()
+	saveObject.settingsInstance.themeChoice = themeChoiceList.get_selected_items()
 	
 	
 	## TO DO
@@ -51,7 +50,7 @@ func saveToInstance():
 	## Make Theme and Keyboard Options Tie To Their Enunms
 
 	#Add Theme and Keyboard Selections to singeton
-
+	print("Save Object Below!!!")
 	print(saveObject)
 	
 
@@ -64,7 +63,6 @@ func saveFile():
 	iniFile.set_value("general_settings", "volume", VolumeVar.value)
 	iniFile.set_value("general_settings", "closed_captions", ClosedCaptionsVar.is_pressed())
 	iniFile.set_value("general_settings", "dev_console", ConsoleCommandVar.is_pressed())	
-	
 	
 	print(keyboardLayoutList.get_selected_items())
 	
@@ -97,6 +95,7 @@ func _process(delta):
 		print('saveFileRan')
 		
 func _ready():
+	theme=load("res://assets/ui_controlNode_dark_theme.tres") 
 	
 	for i in range(3):
 		keyboardLayoutList.add_item(keyboardContents[i],null,true)
