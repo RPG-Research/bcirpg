@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DieManager.gd" type="Script" id=1]
+[ext_resource path="res://Die.gd" type="Script" id=2]
+
+[node name="DieManager" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Die" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -95.0
+margin_top = 2.0
+margin_right = 92.0
+margin_bottom = 91.0
+text = "Roll Die/Dice"
+script = ExtResource( 2 )
+
+[node name="RolledValues" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -299.0
+margin_top = 6.0
+margin_right = 297.0
+margin_bottom = 86.0
+text = "Rolled Values:"
+align = 1
+autowrap = true
+
+[node name="Outcome" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -296.0
+margin_top = 173.0
+margin_right = 300.0
+margin_bottom = 253.0
+text = "Success!
+"
+align = 1
+autowrap = true
+
+[node name="PercentNeeded" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -286.0
+margin_top = 210.0
+margin_right = 310.0
+margin_bottom = 290.0
+text = "Percent Needed to Pass: 0%"
+align = 1
+autowrap = true
+
+[node name="PercentRolled" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -293.0
+margin_top = 241.0
+margin_right = 303.0
+margin_bottom = 321.0
+text = "Percent Rolled: 0%"
+align = 1
+autowrap = true
+
+[node name="DegreeOfSuccess" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -295.0
+margin_top = 272.0
+margin_right = 301.0
+margin_bottom = 352.0
+text = "Degree of Success: 0%"
+align = 1
+autowrap = true
+
+[node name="Reset" type="Button" parent="."]
+margin_left = 457.0
+margin_top = 421.0
+margin_right = 567.0
+margin_bottom = 469.0
+text = "Reset"
+
+[connection signal="button_down" from="Die" to="." method="_on_Die_button_down"]
+[connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]
