@@ -2,17 +2,7 @@ extends Node
 
 class_name PlayerSettingsTemplate
 
-enum KeyboardLayout {
-	QWERTY,
-	ALPHABETICAL,
-	DVORAK
-}
-
-enum ThemeChoice {
-	DARKHIGHCONTRAST,
-	LIGHTHIGHCONTRAST
-}
-
+# Declare Setting Options, to be used inside of the settings menu
 var inputName = "none"
 var riskFactor = 0
 var brightness = 3
@@ -21,21 +11,12 @@ var volume = 6
 var bClosedCaptions = true
 var bdevConsole = false
 var bVirtualKeyboard = false
+
+# Setting of 0 is Qwerty, Setting of 1 is Davorak, Setting of 2 is Alphabetical 
 var visualKeyboardLayout = 0
+
+# Setting of 0 is dark, setting of 1 is light, and so on
 var themeChoice = 0
-#var preferredTheme = ThemeChoice.DARKHIGHCONTRAST
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	pass 

@@ -29,6 +29,13 @@ onready var keyboardLayoutList = get_node('Panel/HBoxContainer/RootVboxVisualCon
 
 onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/ThemeItemList')
 
+
+# Imports related to error handling and popups for said errors
+
+#onready var errorPopup = get_node("Panel/HBoxErrorSignRow/Popup")
+#
+#onready var errorLabel = get_node("Panel/HBoxErrorSignRow/Popup/ErrorLabel")
+
 var iniFile = ConfigFile.new()
 
 func saveToInstance():
@@ -44,14 +51,6 @@ func saveToInstance():
 	saveObject.settingsInstance.visualKeyboardLayout = keyboardLayoutList.get_selected_items()
 	saveObject.settingsInstance.themeChoice = themeChoiceList.get_selected_items()
 	
-	
-	## TO DO
-
-	## Make Theme and Keyboard Options Tie To Their Enunms
-
-	#Add Theme and Keyboard Selections to singeton
-	print("Save Object Below!!!")
-	print(saveObject)
 	
 
 func saveFile():
@@ -87,15 +86,19 @@ func loadFile():
 	
 func _process(delta):
 	if saveButton.pressed == true:
-		
-		# Save to the template instance
-		saveToInstance()
-		
-		saveFile()
-		print('saveFileRan')
+		if NameVar.text == "":
+			print("Please input a name")
+			#errorLabel.text = "Please input a name!"
+			#errorPopup.popup()	
+		else:
+			# Save to the template instance
+			saveToInstance()
+			
+			saveFile()
+			print('saveFileRan')
 		
 func _ready():
-	theme=load("res://assets/ui_controlNode_dark_theme.tres") 
+	theme=load("res://assets/ui_controlNode_light_theme.tres") 
 	
 	for i in range(3):
 		keyboardLayoutList.add_item(keyboardContents[i],null,true)
