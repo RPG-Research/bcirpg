@@ -5,6 +5,14 @@ extends Control
 
 export var desiredDice = [20, 8]
 
+var validDieTypes = [4, 6, 8, 10, 12, 20]
+
+
+#boolean for if a percentageroll is taking place
+#we need a boolean for this because the way a percentage roll is calculated
+#with two D10s is different than if one were using other dice
+var isPercentageRoll = false
+
 #diceUsed holds the dice objects that are rolled
 var diceUsed = []
 
@@ -29,7 +37,15 @@ var degreeOfSuccess
 #Load the diceInPlay array
 func _ready():
 	for elem in desiredDice:
-		diceInPlay.append(Die.new(elem))
+		if elem in validDieTypes:
+			diceInPlay.append(Die.new(elem))
+	
+	#conditional to check if two D10s are being used
+	#if so, we know that a percentage roll is taking place
+	if len(desiredDice) == 2 && desiredDice[0] == 10 && desiredDice[1] == 10:
+		isPercentageRoll = true
+			
+	
 
 #This is the function that returns the percentage of a rolled die (rolled val / total sides)
 #The UML showed that this function only had one parameter, "inputedDie," so I assumed that
@@ -37,12 +53,23 @@ func _ready():
 #As a result, I would get the total sides by ensuring that the inputedDie corresponds to the die at index 0
 #of the diceInPlay array.   
 func returnDiePercentage(inputedDie):
+	
 	var totalSides = diceInPlay[0].numFaces
 	
 	#ensuring we don't lose the die objects in memory by storing them in another array
 	diceUsed.append(diceInPlay[0])
 	diceInPlay.remove(0)
-
+	
+	#Checks if a percentageroll is being done
+	if isPercentageRoll:
+		
+		#This conditional is used to detemrine if the rolled value is
+		#for the tens or ones digit
+		if (len(diceUsed) == 1):
+			return float(inputedDie % 10) / 10.0
+		else:
+			return float(inputedDie % 10) / 100.0
+	
 	var result = float(inputedDie) / float(totalSides)
 	return result
 	
@@ -102,8 +129,13 @@ func _on_Die_button_down():
 		#increment denominator
 		denominator += 1
 	
-	#result is average of sum of percentages
-	var result = sumOfPercentages / denominator		
+	var result
+	if isPercentageRoll:
+		#Percentage roll result remains the sum of the rolls
+		result = sumOfPercentages
+	else:
+		#result is average of sum of percentages otherwise
+		result = sumOfPercentages / denominator		
 	
 	passedRoll = (result >= neededPercentageToPass)
 	
