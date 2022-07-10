@@ -1,12 +1,19 @@
 extends Control
 
 
+# https://stackoverflow.com/a/65774028 
+# Be Sure to make these Vars as OnReadys; you can read up on it here.
+
+# Items to Fill the dropdown Lists
 onready var keyboardContents = ["Qwerty", "Dvorak", "Alphabetical"]
 
-onready var themeContents = ["White and Black", "Black and White"]
+onready var themeContents = ["White on Black", "Black on White"]
+
 
 onready var saveObject = get_node('/root/GlobalSaveInstance') 
 
+
+# Vars For UI Widgets
 onready var NameVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
 
 onready var NRiskVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/RiskSlider')
@@ -32,9 +39,9 @@ onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualContro
 
 # Imports related to error handling and popups for said errors
 
-#onready var errorPopup = get_node("Panel/HBoxErrorSignRow/Popup")
-#
-#onready var errorLabel = get_node("Panel/HBoxErrorSignRow/Popup/ErrorLabel")
+onready var errorPopup = get_node("Panel/HBoxErrorRow/CenterContainer/ErrorPopup")
+
+onready var errorLabel = get_node("Panel/HBoxErrorRow/CenterContainer/ErrorPopup/ErrorLabel")
 
 var iniFile = ConfigFile.new()
 
@@ -88,9 +95,11 @@ func _process(delta):
 	if saveButton.pressed == true:
 		if NameVar.text == "":
 			print("Please input a name")
-			#errorLabel.text = "Please input a name!"
-			#errorPopup.popup()	
-		else:
+			errorLabel.text = str("Please Input A Name")
+			errorPopup.popup()	
+			
+			
+		if NameVar.text != "":
 			# Save to the template instance
 			saveToInstance()
 			
@@ -100,11 +109,14 @@ func _process(delta):
 func _ready():
 	theme=load("res://assets/ui_controlNode_light_theme.tres") 
 	
+#	Init Keyboard Layout List
 	for i in range(3):
 		keyboardLayoutList.add_item(keyboardContents[i],null,true)
 	
 	keyboardLayoutList.select(0,true)
 	
+# 	Init Theme Choice List
+
 	for i in range(2):
 		themeChoiceList.add_item(themeContents[i],null,true)
 	

@@ -1,22 +1,30 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://assets/sbf_white.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/liberation_serif_30pt.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/liberation_serif_20pt.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/darktheme_opacity.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/lighttheme_opacity.tres" type="StyleBox" id=6]
 
 [resource]
 Button/colors/font_color = Color( 0, 0, 0, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
-Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/colors/font_color_focus = Color( 0, 0, 0, 0.666667 )
+Button/colors/font_color_hover = Color( 0, 0, 0, 0.666667 )
+Button/colors/font_color_pressed = Color( 0, 0, 0, 0.666667 )
 Button/constants/hseparation = 2
 Button/fonts/font = ExtResource( 2 )
-Button/styles/disabled = null
+Button/styles/disabled = ExtResource( 6 )
 Button/styles/focus = null
 Button/styles/hover = null
-Button/styles/normal = ExtResource( 1 )
-Button/styles/pressed = ExtResource( 1 )
+Button/styles/normal = ExtResource( 6 )
+Button/styles/pressed = ExtResource( 6 )
+CheckBox/styles/disabled = ExtResource( 5 )
+CheckBox/styles/normal = ExtResource( 5 )
+HSlider/styles/grabber_area = ExtResource( 6 )
+HSlider/styles/grabber_area_highlight = ExtResource( 6 )
+HSlider/styles/slider = ExtResource( 6 )
 ItemList/colors/font_color = Color( 0, 0, 0, 1 )
 ItemList/colors/font_color_selected = Color( 0.227451, 0.227451, 0.227451, 1 )
 ItemList/colors/guide_color = Color( 0.235294, 0.231373, 0.231373, 0.847059 )
@@ -25,7 +33,7 @@ ItemList/constants/icon_margin = 4
 ItemList/constants/line_separation = 2
 ItemList/constants/vseparation = 2
 ItemList/fonts/font = null
-ItemList/styles/bg = ExtResource( 1 )
+ItemList/styles/bg = ExtResource( 5 )
 ItemList/styles/bg_focus = ExtResource( 1 )
 ItemList/styles/cursor = ExtResource( 1 )
 ItemList/styles/cursor_unfocused = ExtResource( 1 )

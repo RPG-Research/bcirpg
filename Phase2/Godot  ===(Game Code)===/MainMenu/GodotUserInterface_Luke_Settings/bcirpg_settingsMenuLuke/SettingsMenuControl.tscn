@@ -280,24 +280,33 @@ anchor_right = 0.5
 margin_left = -48.5
 margin_top = 200.0
 margin_right = 48.5
-margin_bottom = 25.0
+margin_bottom = 225.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="SaveButton" type="Button" parent="Panel/HBoxBottomRow"]
 margin_right = 97.0
 margin_bottom = 25.0
 text = "Save Settings"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxErrorRow" type="HBoxContainer" parent="Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -100.0
+margin_right = 20.0
+margin_bottom = -100.0
+alignment = 1
 
-[node name="ErrorPopup" type="Popup" parent="Panel/HBoxErrorRow"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="CenterContainer" type="CenterContainer" parent="Panel/HBoxErrorRow"]
+margin_left = 20.0
+margin_right = 20.0
 
-[node name="ErrorLabel" type="Label" parent="Panel/HBoxErrorRow/ErrorPopup"]
+[node name="ErrorPopup" type="Popup" parent="Panel/HBoxErrorRow/CenterContainer"]
+
+[node name="ErrorLabel" type="Label" parent="Panel/HBoxErrorRow/CenterContainer/ErrorPopup"]
 margin_right = 40.0
 margin_bottom = 19.0
