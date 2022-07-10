@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://DieManager.gd" type="Script" id=1]
-[ext_resource path="res://Die.gd" type="Script" id=2]
+[ext_resource path="res://DiceRoller.gd" type="Script" id=1]
 
 [node name="DieManager" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+desiredDice = [ 10, 4, 6, 20 ]
+neededPercentageToPass = 0.4
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -23,7 +24,6 @@ margin_top = 2.0
 margin_right = 92.0
 margin_bottom = 91.0
 text = "Roll Die/Dice"
-script = ExtResource( 2 )
 
 [node name="RolledValues" type="Label" parent="."]
 visible = false
@@ -94,4 +94,4 @@ margin_bottom = 469.0
 text = "Reset"
 
 [connection signal="button_down" from="Die" to="." method="_on_Die_button_down"]
-[connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]
+[connection signal="button_down" from="Reset" to="." method="_on_Reset_button_down"]

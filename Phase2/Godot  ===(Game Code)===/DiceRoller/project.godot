@@ -9,13 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Button",
+"base": "Node2D",
 "class": "Die",
 "language": "GDScript",
 "path": "res://Die.gd"
+}, {
+"base": "Node2D",
+"class": "DieManager",
+"language": "GDScript",
+"path": "res://DieManager.gd"
 } ]
 _global_script_class_icons={
-"Die": ""
+"Die": "",
+"DieManager": ""
 }
 
 [application]
@@ -23,6 +29,10 @@ _global_script_class_icons={
 config/name="GodotDiceRoller_Andrew"
 run/main_scene="res://DiceRoller.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+DiceRoller="*res://DiceRoller.gd"
 
 [physics]
 
