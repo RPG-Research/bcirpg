@@ -1,11 +1,11 @@
 #Die class
-
-extends Button
+extends Node2D
 
 class_name Die
 
 #value of selected die type
 var numFaces: int
+
 #Class constructor
 func _init(value):
 	numFaces = value
@@ -19,3 +19,6 @@ func rollDie():
 	return rolledNum
 		
 		
+#Returns the number of faces on this die
+func getNumFaces():
+	return numFaces
