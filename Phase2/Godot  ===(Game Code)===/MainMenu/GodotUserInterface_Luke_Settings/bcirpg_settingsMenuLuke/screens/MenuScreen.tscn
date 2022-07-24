@@ -42,36 +42,36 @@ __meta__ = {
 
 [node name="But_NewGame" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 238.0
-margin_bottom = 49.0
+margin_bottom = 50.0
 
 [node name="But_LoadGame" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 53.0
+margin_top = 54.0
 margin_right = 238.0
-margin_bottom = 103.0
+margin_bottom = 104.0
 text = "Load Game"
 
 [node name="But_Multiplayer" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 107.0
+margin_top = 108.0
 margin_right = 238.0
-margin_bottom = 156.0
+margin_bottom = 158.0
 text = "Multiplayer"
 
 [node name="But_AddChar" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 160.0
+margin_top = 162.0
 margin_right = 238.0
-margin_bottom = 210.0
+margin_bottom = 212.0
 text = "Add Character"
 
 [node name="But_Settings" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 214.0
+margin_top = 216.0
 margin_right = 238.0
-margin_bottom = 263.0
+margin_bottom = 266.0
 text = "Settings"
 
 [node name="But_Quit" parent="VBoxContainer" instance=ExtResource( 10 )]
-margin_top = 267.0
+margin_top = 270.0
 margin_right = 238.0
-margin_bottom = 303.0
+margin_bottom = 304.0
 
 [node name="Version" type="Label" parent="."]
 anchor_left = 1.0

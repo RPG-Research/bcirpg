@@ -9,9 +9,10 @@ onready var keyboardContents = ["Qwerty", "Dvorak", "Alphabetical"]
 
 onready var themeContents = ["White on Black", "Black on White"]
 
-
 onready var saveObject = get_node('/root/GlobalSaveInstance') 
 
+
+#res://SettingsMenuControl.tscn
 
 # Vars For UI Widgets
 onready var NameVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
@@ -36,12 +37,6 @@ onready var keyboardLayoutList = get_node('Panel/HBoxContainer/RootVboxVisualCon
 
 onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/ThemeItemList')
 
-
-# Imports related to error handling and popups for said errors
-
-onready var errorPopup = get_node("Panel/HBoxErrorRow/CenterContainer/ErrorPopup")
-
-onready var errorLabel = get_node("Panel/HBoxErrorRow/CenterContainer/ErrorPopup/ErrorLabel")
 
 var iniFile = ConfigFile.new()
 
@@ -95,9 +90,6 @@ func _process(delta):
 	if saveButton.pressed == true:
 		if NameVar.text == "":
 			print("Please input a name")
-			errorLabel.text = str("Please Input A Name")
-			errorPopup.popup()	
-			
 			
 		if NameVar.text != "":
 			# Save to the template instance
@@ -107,7 +99,9 @@ func _process(delta):
 			print('saveFileRan')
 		
 func _ready():
-	theme=load("res://assets/ui_controlNode_light_theme.tres") 
+	theme=load("res://assets/ui_controlNode_dark_theme.tres") 
+	
+	print(NameVar.get_path())
 	
 #	Init Keyboard Layout List
 	for i in range(3):

@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "PlayerSettingsTemplate",
 "language": "GDScript",
-"path": "res://playerSettingsTemplate.gd"
+"path": "res://settings/playerSettingsTemplate.gd"
 } ]
 _global_script_class_icons={
 "PlayerSettingsTemplate": ""
@@ -21,12 +21,14 @@ _global_script_class_icons={
 [application]
 
 config/name="BCIRPGR_mainMenu"
-run/main_scene="res://Screens/MenuScreen.tscn"
+run/main_scene="res://screens/MenuScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 GlobalSaveInstance="*res://globalSaveInstance.gd"
+SettingsMenuConfig="*res://SettingsMenuConfig.gd"
+SettingsMenuControl="*res://SettingsMenuControl.tscn"
 
 [physics]
 
