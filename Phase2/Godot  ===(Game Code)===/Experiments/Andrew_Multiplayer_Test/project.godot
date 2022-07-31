@@ -11,11 +11,14 @@ config_version=4
 [application]
 
 config/name="Multiplayer Test"
+run/main_scene="res://Network_Setup.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Network="*res://Network.gd"
+Global="*res://Global.gd"
+Players="*res://Players.tscn"
 
 [physics]
 
