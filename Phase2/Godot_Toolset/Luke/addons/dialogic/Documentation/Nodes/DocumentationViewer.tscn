@@ -43,7 +43,6 @@ margin_right = 230.0
 
 [node name="DocsPageViewer" parent="HSplit" instance=ExtResource( 1 )]
 margin_left = 242.0
-size_flags_horizontal = 3
 
 [connection signal="text_changed" from="HSplit/VBoxContainer/FilterEntry" to="." method="_on_FilterEntry_text_changed"]
 [connection signal="open_non_html_link" from="HSplit/DocsPageViewer" to="." method="_on_DocsPageViewer_open_non_html_link"]
