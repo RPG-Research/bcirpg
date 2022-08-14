@@ -73,15 +73,15 @@ If you miss the live stream, Patreon supporters get access to the recorded video
 
 
 ## Phase 0 - EEG I/O controllers in NWN on LInux
-learn basics of EEG, bio-and-neuro feedback, and computer interaction, then attempt to replace regular keyboard or other I/O controls for PC-based video game (preferably on Linux due to more flexiiblity of I/O controls) and play game with only EEG and/or bio-monitoring inputs. Start with NeverWinter Nights on Linux. - Complete
+learn basics of EEG, bio-and-neuro feedback, and computer interaction, then attempt to replace regular keyboard or other I/O controls for PC-based video game (preferably on Linux due to more flexiiblity of I/O controls) and play game with only EEG and/or bio-monitoring inputs. Start with NeverWinter Nights on Linux. - COMPLETE
 
 
 ## Phase 1 - Game design prototype in NWN:EE on LInux with EEG/BCI for I/O
-Train new development team on game dev concepts desired with prototype use of Aurora Toolset for NWN. Create new adventure module that will be used as test bed for future prototypes. Choose Shakespeare's The Tempest.. Experiment with controls using EEG and BCI equipment with the Enhanced Edition Neverwinter Nights on Linux.   Complete.
+Train new development team on game dev concepts desired with prototype use of Aurora Toolset for NWN. Create new adventure module that will be used as test bed for future prototypes. Choose Shakespeare's The Tempest.. Experiment with controls using EEG and BCI equipment with the Enhanced Edition Neverwinter Nights on Linux.   COMPLETE.
 
 
 ## Phase 2 - Game from scratch TUI version BCI I/O online turn-based mutiiplayer
-Create from scratch a text-only multiplayer online turn-based cooperative RPG that can be played with only OpenBCI (or similar) equipment. - Currently nearing end of design and documentation steps, and starting actual coding steps. Will use GUI tools with GoDot engine fhe the GM tools, but play must be all TUI and able to be run with the simple inputs of OpenBCI. Use the same adventure bluebrint as Phase 1. - IN PROGRESS. 
+Create from scratch a text-only multiplayer online turn-based cooperative RPG that can be played with only OpenBCI (or similar) equipment. - Currently nearing end of design and documentation steps, and starting actual coding steps. Will use GUI tools with GoDot engine fhe the GM tools, but play must be all TUI and able to be run with the simple inputs of OpenBCI. Use the same adventure bluebrint as Phase 1. Begin incorporating components from the AI RPG and AI GM (ai-rpg.com) projects as needed, especially for NPCs/Creatures, but also options for PCs, world sociopolitical, events, ripple effects from PC actions, etc.- CURRENTLY IN ACTIVE DEVELOPMENT. 
 
 
 ## Phase 3 - Add GUI
