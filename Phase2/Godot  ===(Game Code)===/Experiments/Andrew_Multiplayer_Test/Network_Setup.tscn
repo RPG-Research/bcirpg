@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Network_Setup.gd" type="Script" id=1]
+[ext_resource path="res://But_ChangeScene.gd" type="Script" id=2]
 
 [node name="Network_Setup" type="Control"]
 anchor_right = 1.0
@@ -21,6 +22,8 @@ margin_top = 21.0
 margin_right = 125.0
 margin_bottom = 121.0
 text = "Create Server"
+script = ExtResource( 2 )
+next_scene_path = "res://Room_Creation.tscn"
 
 [node name="Join_Server" type="Button" parent="Multiplayer_Configure"]
 anchor_left = 0.5
@@ -32,6 +35,7 @@ margin_top = -129.0
 margin_right = 125.0
 margin_bottom = -29.0
 text = "Join Server"
+script = ExtResource( 2 )
 
 [node name="Server_IP_Address" type="LineEdit" parent="Multiplayer_Configure"]
 margin_left = 389.0
@@ -54,5 +58,4 @@ margin_bottom = -26.0
 align = 1
 valign = 1
 
-[connection signal="pressed" from="Multiplayer_Configure/Create_Server" to="." method="_on_Create_Server_pressed"]
-[connection signal="pressed" from="Multiplayer_Configure/Join_Server" to="." method="_on_Join_Server_pressed"]
+[connection signal="button_up" from="Multiplayer_Configure/Create_Server" to="Multiplayer_Configure/Create_Server" method="_on_But_NewGame_button_up"]

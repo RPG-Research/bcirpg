@@ -7,6 +7,8 @@ var server = null
 var client = null
 
 var ip_address = ""
+var room_name = ""
+var room_password = ""
 
 func _ready() -> void:
 	ip_address = IP.get_local_addresses()[3]
@@ -33,3 +35,7 @@ func _connected_to_server() -> void:
 	
 func _server_disconnected() -> void:
 	print("Disconnected from the server")
+
+func _set_server_info(name, password) -> void:
+	room_name = name
+	room_password = password
