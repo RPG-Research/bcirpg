@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Room_Creation.gd" type="Script" id=1]
+[ext_resource path="res://But_ChangeScene.gd" type="Script" id=2]
+
+[node name="Room_Creation" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Back" type="Button" parent="."]
+margin_left = 312.0
+margin_top = 419.0
+margin_right = 474.0
+margin_bottom = 493.0
+text = "Back"
+script = ExtResource( 2 )
+next_scene_path = "res://Network_Setup.tscn"
+
+[node name="Multiplayer_Configure" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Create_Server" type="Button" parent="Multiplayer_Configure"]
+margin_left = 592.0
+margin_top = 419.0
+margin_right = 754.0
+margin_bottom = 493.0
+text = "Create"
+
+[node name="Room_Name" type="LineEdit" parent="Multiplayer_Configure"]
+margin_left = 452.0
+margin_top = 250.0
+margin_right = 619.0
+margin_bottom = 274.0
+text = "Room Name"
+align = 1
+
+[node name="Room_Password" type="LineEdit" parent="Multiplayer_Configure"]
+margin_left = 452.0
+margin_top = 315.0
+margin_right = 619.0
+margin_bottom = 339.0
+text = "Room Password"
+align = 1
+
+[node name="Player_Name" type="LineEdit" parent="Multiplayer_Configure"]
+margin_left = 451.0
+margin_top = 188.0
+margin_right = 618.0
+margin_bottom = 212.0
+text = "Player Name"
+align = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Device_IP_Address" type="Label" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -76.0
+margin_right = -1.0
+margin_bottom = -26.0
+align = 1
+valign = 1
+
+[node name="Room_UI" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Room_Name" type="Label" parent="Room_UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -80.5
+margin_right = 80.5
+margin_bottom = 14.0
+align = 1
+
+[node name="Players" type="Label" parent="Room_UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -225.0
+margin_bottom = -225.0
+text = "Players:"
+align = 1
+valign = 1
+
+[connection signal="button_up" from="Back" to="Back" method="_on_But_NewGame_button_up"]
+[connection signal="pressed" from="Multiplayer_Configure/Create_Server" to="." method="_on_Create_Server_pressed"]

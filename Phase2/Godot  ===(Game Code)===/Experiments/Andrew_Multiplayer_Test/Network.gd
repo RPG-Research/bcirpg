@@ -5,8 +5,12 @@ const MAX_CLIENTS = 6
 
 var server = null
 var client = null
+var player_counter = 1
+var player = load("res://Player.tscn")
 
 var ip_address = ""
+var room_name = ""
+var room_password = ""
 
 func _ready() -> void:
 	ip_address = IP.get_local_addresses()[3]
@@ -33,3 +37,17 @@ func _connected_to_server() -> void:
 	
 func _server_disconnected() -> void:
 	print("Disconnected from the server")
+
+func _set_server_info(name, password) -> void:
+	room_name = name
+	room_password = password
+
+func _instance_player(id, name) -> void:
+	var player_instance = Global._instance_node(player, Players)
+	player_instance.name = str(id)
+	player_instance._set_name(name)
+	#Using player_counter to determine the positioning of the player's name on the screen
+	#So that they aren't all overlapping
+	player_instance._set_name_position(player_counter)
+	player_instance.set_network_master(id)
+	player_counter += 1
