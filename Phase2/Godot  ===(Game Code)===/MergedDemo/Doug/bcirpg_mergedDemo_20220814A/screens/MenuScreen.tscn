@@ -80,7 +80,7 @@ margin_top = 223.0
 margin_right = 238.0
 margin_bottom = 264.0
 text = "Settings"
-next_scene_path = "res://Screens/Settings_temp.tscn"
+next_scene_path = "res://Screens/SettingsMenuControl.tscn"
 
 [node name="But_Quit" parent="VBoxContainer" instance=ExtResource( 10 )]
 margin_top = 268.0

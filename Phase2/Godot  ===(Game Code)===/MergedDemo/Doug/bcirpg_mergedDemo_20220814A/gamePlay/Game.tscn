@@ -53,6 +53,7 @@ margin_bottom = -606.384
 locale_name = "the island woods"
 option1 = "Go: south back to the beach"
 option2 = "Go: north deeper in"
+option3 = "Examine: the woods"
 
 [node name="Loc_WoodsA2" parent="LocaleManager" instance=ExtResource( 5 )]
 margin_left = 509.439
@@ -63,6 +64,7 @@ locale_name = "deeper into the woods"
 locale_description = "The woods are very thick. You feel like someone -- or something, may be watching you."
 option1 = "Go: south back in the direction of the beach"
 option2 = "Go: east into the thicket"
+option3 = "Rest: set a camp here"
 
 [node name="Loc_WoodsA3" parent="LocaleManager" instance=ExtResource( 5 )]
 margin_left = 882.439
@@ -81,6 +83,8 @@ margin_right = 1128.44
 margin_bottom = -1161.38
 locale_name = "a cliff top"
 option1 = "Go: south back to the clearing  "
+option2 = "Rest: set a camp here"
+option3 = "Examine: the cliff"
 
 [node name="Background" type="PanelContainer" parent="."]
 anchor_right = 1.0
@@ -113,7 +117,7 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="But_MoreOptions" type="Button" parent="Background/MarginContainer/Rows/ItemList"]
-margin_right = 170.0
+margin_right = 197.0
 margin_bottom = 36.0
 text = "More Options"
 script = ExtResource( 9 )
@@ -269,8 +273,7 @@ margin_top = 44.0
 margin_right = 290.0
 margin_bottom = 194.0
 size_flags_vertical = 3
-text = "Char1: What do you think?
-Char2: Huh?  About what?
+text = "Nothing yet
 "
 readonly = true
 __meta__ = {

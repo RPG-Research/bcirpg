@@ -44,6 +44,8 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="But_ChangeScene" parent="Background/MarginContainer/Rows/ItemList" instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 36.0
 text = "More Options"
 next_scene_path = "res://screens/MoreOptions.tscn"
 
@@ -51,7 +53,7 @@ next_scene_path = "res://screens/MoreOptions.tscn"
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -84.0
-margin_right = 84.0
+margin_right = 115.0
 margin_bottom = 36.0
 text = "History Pager"
 script = ExtResource( 4 )
