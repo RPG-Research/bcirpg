@@ -24,7 +24,7 @@ func _ready():
 
 func _player_connected(id) -> void:
 	print("Player " + str(id) + "connected")
-	instance_player(id)
+	Network._instance_player(id, "New Player")
 	
 func _player_disconnected(id) -> void:
 	print("Player " + str(id) + "disconnected")
@@ -35,7 +35,7 @@ func _player_disconnected(id) -> void:
 func _on_Create_Server_pressed():
 	multiplayer_config_ui.hide()
 	Network._create_server()
-	instance_player(get_tree().get_network_unique_id())
+	Network._instance_player(get_tree().get_network_unique_id(), player_name.text)
 	Network._set_server_info(room_name.text, room_password.text)
 	$Room_UI/Room_Name.text = room_name.text
 	room_ui.show()
@@ -48,12 +48,6 @@ func _on_Create_Server_pressed():
 
 func _connected_to_server() -> void:
 	yield(get_tree().create_timer(0.1), "timeout")
-	instance_player(get_tree().get_network_unique_id())
+	Network._instance_player(get_tree().get_network_unique_id(), player_name.text)
 
-func instance_player(id) -> void:
-	var player_instance = Global.instance_node(player, Players)
-	player_instance.name = str(id)
-	player_instance._set_name(player_name.text)
-	player_instance._set_name_position(playerCounter)
-	player_instance.set_network_master(id)
-	playerCounter += 1
+

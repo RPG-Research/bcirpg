@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Room_Creation.gd" type="Script" id=1]
+[ext_resource path="res://But_ChangeScene.gd" type="Script" id=2]
 
 [node name="Room_Creation" type="Control"]
 anchor_right = 1.0
@@ -13,6 +14,8 @@ margin_top = 419.0
 margin_right = 474.0
 margin_bottom = 493.0
 text = "Back"
+script = ExtResource( 2 )
+next_scene_path = "res://Network_Setup.tscn"
 
 [node name="Multiplayer_Configure" type="Control" parent="."]
 margin_right = 40.0
@@ -70,9 +73,10 @@ anchor_bottom = 1.0
 [node name="Room_Name" type="Label" parent="Room_UI"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -20.0
-margin_right = 20.0
+margin_left = -80.5
+margin_right = 80.5
 margin_bottom = 14.0
+align = 1
 
 [node name="Players" type="Label" parent="Room_UI"]
 anchor_right = 1.0
@@ -83,4 +87,5 @@ text = "Players:"
 align = 1
 valign = 1
 
+[connection signal="button_up" from="Back" to="Back" method="_on_But_NewGame_button_up"]
 [connection signal="pressed" from="Multiplayer_Configure/Create_Server" to="." method="_on_Create_Server_pressed"]
