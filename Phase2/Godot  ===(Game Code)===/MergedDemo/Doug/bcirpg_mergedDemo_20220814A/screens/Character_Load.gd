@@ -3,8 +3,10 @@
 
 extends Control
 
+onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 
 func _ready() -> void:
+	theme=load(settings.themeFile)
 	$Title/But_loadCharacter.grab_focus()
 
 

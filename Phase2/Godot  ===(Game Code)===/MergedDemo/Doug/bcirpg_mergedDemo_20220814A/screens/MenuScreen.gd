@@ -3,10 +3,9 @@
 
 extends Control
 
-var settings_file = "user://PlayerPreferences.cfg"
+onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#DKM TEMP: for testing only -- this will be set for all scenes in settings
-	theme=load("res://assets/ui_controlNode_dark_theme.tres")
+	theme=load(settings.themeFile)
 	$VBoxContainer/But_NewGame.grab_focus()

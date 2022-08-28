@@ -6,6 +6,7 @@
 
 extends Control
 
+onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var history_source = get_node("/root/History").historyScreensSingleton
 onready var current_history = $Background/MarginContainer/Rows/GameInfo/CurrentHistory
 #For zero-indexed array position:
@@ -18,8 +19,7 @@ const InputResponse = preload("res://UserInterface/InputResponse.tscn")
 
 
 func _ready() -> void:
-	#DKM TEMP: for testing only -- this will be set in settings
-	theme=load("res://assets/ui_controlNode_dark_theme.tres")
+	theme=load(settings.themeFile)
 
 	print("Loaded history array size is: " + str(history_source.output_history_array.size()))
 	update_pager()

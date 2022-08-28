@@ -41,7 +41,6 @@ onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualContro
 var iniFile = ConfigFile.new()
 
 func saveToInstance():
-
 	#Save to Singleton, so saveFile does not need to be constantly read
 	saveObject.settingsInstance.inputName = NameVar.text
 	saveObject.settingsInstance.riskFactor = NRiskVar.value
@@ -50,9 +49,15 @@ func saveToInstance():
 	saveObject.settingsInstance.bClosedCaptions = ClosedCaptionsVar.is_pressed()
 	saveObject.settingsInstance.bdevConsole = ConsoleCommandVar.is_pressed()
 	saveObject.settingsInstance.bVirtualKeyboard = bKeyboardEnabled.is_pressed()
-	saveObject.settingsInstance.visualKeyboardLayout = keyboardLayoutList.get_selected_items()
-	saveObject.settingsInstance.themeChoice = themeChoiceList.get_selected_items()
-	
+	var savedKeyboardItems = keyboardLayoutList.get_selected_items() 
+	var keyboardSelection = savedKeyboardItems[0]
+	saveObject.settingsInstance.visualKeyboardLayout = keyboardSelection
+	var savedThemeItems = themeChoiceList.get_selected_items() 
+	var themeSelection = savedThemeItems[0]
+	saveObject.settingsInstance.themeChoiceInt = themeSelection
+	#Trigger re-load of the file name
+	saveObject.load_settings_file()
+	theme=load(saveObject.settingsInstance.themeFile)
 	
 
 func saveFile():
@@ -71,7 +76,7 @@ func saveFile():
 
 	var keyboardSelection = savedKeyboardItems[0]
 	
-	var savedThemeItems = keyboardLayoutList.get_selected_items() 
+	var savedThemeItems = themeChoiceList.get_selected_items() 
 
 	var themeSelection = savedThemeItems[0]
 	
@@ -100,12 +105,13 @@ func _process(delta):
 			print('saveFileRan')
 		
 func _ready():
-	#DKM TEMP: we need to set these to values from the file
+	#Get the singleton's values for initial settings:
 	NameVar.text = saveObject.settingsInstance.inputName
 	NRiskVar.value = saveObject.settingsInstance.riskFactor
-	#themeChoiceList
-	
-	theme=load("res://assets/ui_controlNode_dark_theme.tres") 
+	FontVar.value = saveObject.settingsInstance.fontSize
+	ClosedCaptionsVar.pressed = saveObject.settingsInstance.bClosedCaptions
+	ConsoleCommandVar.pressed = saveObject.settingsInstance.bdevConsole
+	bKeyboardEnabled.pressed = saveObject.settingsInstance.bVirtualKeyboard
 	
 	print(NameVar.get_path())
 	
@@ -120,6 +126,9 @@ func _ready():
 	for i in range(2):
 		themeChoiceList.add_item(themeContents[i],null,true)
 	
-	keyboardLayoutList.select(0,true)
+	keyboardLayoutList.select(saveObject.settingsInstance.visualKeyboardLayout,true)
 	
-	themeChoiceList.select(0,true)
+	themeChoiceList.select(saveObject.settingsInstance.themeChoiceInt,true)
+	
+	#Load selected theme:
+	theme=load(saveObject.settingsInstance.themeFile)

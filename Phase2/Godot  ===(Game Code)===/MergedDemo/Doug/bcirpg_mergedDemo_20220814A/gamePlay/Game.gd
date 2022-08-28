@@ -5,6 +5,7 @@
 extends Control
 
 onready var history_source = get_node("/root/History").historyScreensSingleton
+onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 
 #Abstract class we instance when wanted in game as child of HistoryReference
 const TextOutput = preload("res://UserInterface/Response.tscn")
@@ -26,9 +27,8 @@ onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSh
 onready var module_map = "user://temp_map.save"
 
 func _ready() -> void:
-	#DKM TEMP: for testing only -- this will be set in settings
 	save_module()
-	theme=load("res://assets/ui_controlNode_dark_theme.tres")
+	theme=load(settings.themeFile)
 	current_text.show()
 	option_one.show()
 	option_two.show()

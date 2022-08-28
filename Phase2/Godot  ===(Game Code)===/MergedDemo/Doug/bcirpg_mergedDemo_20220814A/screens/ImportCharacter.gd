@@ -2,15 +2,15 @@
 #	Expanded for Import Character option
 
 extends Control
+
+onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
+
 var charFilePath
 var a
 
 
 func _ready() -> void:
-	#DKM TEMP TODO: replace with settings Singleton theme value
-	#theme=load("res://assets/ui_controlNode_dark_theme.tres")
-	$But_ChangeScene.grab_focus()
-
+	theme=load(settings.themeFile)
 
 func _on_Button_pressed():
 	$VBoxContainer2/VBoxContainer/FileDialog.popup()
