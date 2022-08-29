@@ -18,7 +18,7 @@ onready var locale_manager = $LocaleManager
 onready var option_one = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option1
 onready var option_two= $Background/MarginContainer/Rows/InputArea/VBoxContainer/option2
 onready var option_three = $Background/MarginContainer/Rows/InputArea/VBoxContainer/option3
-onready var pc = get_node("/root/PlayerCharacter")
+onready var pSingleton = get_node("/root/PlayerCharacter")
 onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSheet
 
 
@@ -35,7 +35,7 @@ func _ready() -> void:
 	option_three.show()
 	
 	#Load character sheet:
-	charSheet.text = pc.playerCharacterSingleton.pcText
+	charSheet.text = pSingleton.pc.pcText
 
 	var opening_text = "The game has begun! You can select from the available options below. "
 	#create_response("The game has begun! You can select from the available options below.")	

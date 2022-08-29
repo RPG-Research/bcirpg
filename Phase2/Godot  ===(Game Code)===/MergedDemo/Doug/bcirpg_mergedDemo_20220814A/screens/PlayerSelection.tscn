@@ -37,8 +37,8 @@ __meta__ = {
 [node name="But_ChoosePlayer" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 238.0
 margin_bottom = 98.0
-text = "Select Character"
-next_scene_path = "res://screens/Character_Load.tscn"
+text = "Import Character"
+next_scene_path = "res://screens/ImportCharacter.tscn"
 
 [node name="But_AddChar" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 102.0

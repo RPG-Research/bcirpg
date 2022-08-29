@@ -4,8 +4,8 @@
 
 extends Node
 
-var playerCharacterSingleton 
+var pc 
 
 func _ready() -> void:
-	playerCharacterSingleton = playerCharacterTemplate.new()
+	pc = playerCharacterTemplate.new()
 	
