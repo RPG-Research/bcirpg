@@ -4,18 +4,29 @@ const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
 var db # Database object
 var db_name = "res://DataStorage/database"
 
+onready var only_once : bool = true
+
+onready var textEntry = get_node("VBoxContainer/LineEdit")
+onready var convoID = get_node("VBoxContainer/HBoxContainer/labelConvoID/LineEdit")
+onready var layerID = get_node("VBoxContainer/HBoxContainer/labelLayerID/LineEdit")
+onready var branchID = get_node("VBoxContainer/HBoxContainer/labelBranchID/LineEdit")
+
+onready var saveButton = get_node("saveButton")
+
 func CommitDataToDB():
 	db = SQLite.new()
 	db.path = db_name
 	db.open_db()
 	var tableName = "DataStorage"
 	var dict : Dictionary = Dictionary()
-	dict["ConvoID"] = 1
-	dict["LayerID"] = 1
-	dict["BranchID"] = 1
-	dict["Text"] = "The best riff from Freebird plays at 202 dB."
+	dict["ConvoID"] = int(convoID.text)
+	dict["LayerID"] = int(layerID.text)
+	dict["BranchID"] = int(branchID.text)
+	dict["Text"] = textEntry.text
 	
 	db.insert_row(tableName,dict)
+	
+	print("Done with SQL commit")
 
 func readFromDB():
 	db = SQLite.new()
@@ -39,5 +50,11 @@ func DeleteFromDBByID(idNum):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	DeleteFromDBByID(1)
+	pass
+
+func _process(delta):
+	if saveButton.pressed == true && only_once == true:
+		only_once = false
+		CommitDataToDB()
+
 
