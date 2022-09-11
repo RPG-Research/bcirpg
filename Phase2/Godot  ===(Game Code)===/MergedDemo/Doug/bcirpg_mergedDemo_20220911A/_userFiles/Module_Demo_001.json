@@ -1,0 +1,50 @@
+{
+	"Node_Boat1":{
+		"Id":"Boat_001",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"The game has begun! You may select from the options below. You are in a boat. You have been shipwrecked. You can leave the boat through a hatch.",
+		"Option_Labels":["Examine Ship","Climb out through hatch","Play the fiddle!","Rest","Meditate"],
+		"Option_GoTos":["Boat_002","Shore_001","Misc_001","Misc_002","Misc_003"]
+	},
+	"Node_Boat_002":{
+		"Id":"Boat_002",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"The boat is old and wrecked.",
+		"Option_Labels":["Continue"],
+		"Option_GoTos":["Boat_001"]
+	},
+	"Node_Shore_001":{
+		"Id":"Shore_001",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"You've reached the shore!",
+		"Option_Labels":["Return to boat"],
+		"Option_GoTos":["Boat_001"]
+	},
+	"Node_Misc_001":{
+		"Id":"Misc_001",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"You pull a fiddle from your sack and play it, while dancing around merrily.  Great fun is had.",
+		"Option_Labels":["Resume your quest"],
+		"Option_GoTos":["Boat_001"]
+	},
+	"Node_Misc_002":{
+		"Id":"Misc_002",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"You pull out a blanket, settle your burdens and take a short rest.",
+		"Option_Labels":["Resume your quest"],
+		"Option_GoTos":["Boat_001"]
+	},
+	"Node_Misc_003":{
+		"Id":"Misc_003",
+		"Action":"ShowText",
+		"A_Params":"",
+		"Text":"You find a quiet corner on the boat, put down your burden, and feel the rocking of the boat.  You rest mind and body, and really I'm experimenting with options and sizes of them, added via JSON here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.",
+		"Option_Labels":["Resume your quest"],
+		"Option_GoTos":["Boat_001"]
+	}		
+}

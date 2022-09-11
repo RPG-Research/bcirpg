@@ -1,0 +1,172 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://userInterface/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://screens/Character_Add.gd" type="Script" id=3]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = 215.0
+margin_top = 23.0
+margin_right = 997.0
+margin_bottom = 447.0
+
+[node name="Title" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 0.0
+text = "Create Character (temp)"
+
+[node name="But_SaveChar" type="Button" parent="Title"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Save Character"
+
+[node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
+margin_left = -1.0
+margin_top = 48.0
+margin_right = 142.0
+margin_bottom = 72.0
+text = "Temp: Main Menu"
+next_scene_path = "res://screens/MenuScreen.tscn"
+
+[node name="But_StartNewGame" parent="Title" instance=ExtResource( 2 )]
+margin_top = 98.0
+margin_right = 159.0
+margin_bottom = 122.0
+text = "Temp: Start New Game"
+
+[node name="FileDialog" type="FileDialog" parent="Title"]
+margin_left = 164.0
+margin_top = 35.0
+margin_right = 741.0
+margin_bottom = 426.0
+access = 1
+current_dir = "user://C:/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedDemo_20220911A"
+current_path = "user://C:/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedDemo_20220911A/"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Title"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = 50.0
+margin_right = 20.0
+margin_bottom = 140.0
+
+[node name="LabelName" type="Label" parent="Title/VBoxContainer"]
+margin_right = 81.0
+margin_bottom = 31.0
+text = "NAME
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelName"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelProfession" type="Label" parent="Title/VBoxContainer"]
+margin_top = 35.0
+margin_right = 81.0
+margin_bottom = 66.0
+text = "PROFESSION
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelProfession"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelStrength" type="Label" parent="Title/VBoxContainer"]
+margin_top = 70.0
+margin_right = 81.0
+margin_bottom = 101.0
+text = "STRENGTH
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelStrength"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelIntellect" type="Label" parent="Title/VBoxContainer"]
+margin_top = 105.0
+margin_right = 81.0
+margin_bottom = 136.0
+text = "INTELLECT
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelIntellect"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelWillpower" type="Label" parent="Title/VBoxContainer"]
+margin_top = 140.0
+margin_right = 81.0
+margin_bottom = 171.0
+text = "WILLPOWER
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelWillpower"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelCharm" type="Label" parent="Title/VBoxContainer"]
+margin_top = 175.0
+margin_right = 81.0
+margin_bottom = 189.0
+text = "CHARM"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelCharm"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelWeapon" type="Label" parent="Title/VBoxContainer"]
+margin_top = 193.0
+margin_right = 81.0
+margin_bottom = 224.0
+text = "WEAPON
+"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelWeapon"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelArmor" type="Label" parent="Title/VBoxContainer"]
+margin_top = 228.0
+margin_right = 81.0
+margin_bottom = 242.0
+text = "ARMOR"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelArmor"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="LabelQuote" type="Label" parent="Title/VBoxContainer"]
+margin_top = 246.0
+margin_right = 81.0
+margin_bottom = 260.0
+text = "QUOTE"
+
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelQuote"]
+margin_top = 15.0
+margin_right = 58.0
+margin_bottom = 24.0
+
+[connection signal="pressed" from="Title/But_SaveChar" to="." method="_on_But_SaveChar_pressed"]
+[connection signal="file_selected" from="Title/FileDialog" to="." method="_on_FileDialog_file_selected"]
