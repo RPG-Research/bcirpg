@@ -10,7 +10,6 @@ func _ready() -> void:
 	theme=load(settings.themeFile)
 	$Title/But_SaveChar.grab_focus()
 
-
 func _on_But_SaveChar_pressed() -> void:
 	$Title/FileDialog.popup()
 

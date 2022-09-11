@@ -47,7 +47,6 @@ rect_min_size = Vector2( 0, 40 )
 margin_right = 200.0
 margin_bottom = 36.0
 text = "More Options"
-next_scene_path = "res://screens/MoreOptions.tscn"
 
 [node name="But_HistoryPager" type="Button" parent="Background/MarginContainer/Rows/ItemList"]
 anchor_left = 0.5
