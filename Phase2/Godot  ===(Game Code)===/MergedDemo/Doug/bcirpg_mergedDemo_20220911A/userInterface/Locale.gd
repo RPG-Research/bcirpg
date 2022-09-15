@@ -12,15 +12,13 @@ extends PanelContainer
 #Allows Godot to handle autocomplete and 'register' class
 class_name Locale
 
-export (String) var locale_name = "Location Name"
-export (String) var locale_description = "This is the description of the location."
+var locale_name = "Location Name"
+var locale_description = "This is the description of the location."
+var locale_action = "Default action"
+var locale_action_params = []
 var options_array = []
 var destinations_array = []
 
-#DKM TEMP: assuming this gets set here
-export (String) var option1 = "Option 1"
-export (String) var option2 = "Option 2"
-export (String) var option3 = "Option 3"
 
 var visited = false;
 

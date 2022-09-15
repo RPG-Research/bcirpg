@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Die",
+"language": "GDScript",
+"path": "res://globalScripts/Die.gd"
+}, {
+"base": "Node2D",
+"class": "DieManager",
+"language": "GDScript",
+"path": "res://globalScripts/DieManager.gd"
+}, {
 "base": "Resource",
 "class": "HistoryScreensTemplateSingleton",
 "language": "GDScript",
@@ -30,6 +40,8 @@ _global_script_classes=[ {
 "path": "res://globalScripts/playerCharacterTemplate.gd"
 } ]
 _global_script_class_icons={
+"Die": "",
+"DieManager": "",
 "HistoryScreensTemplateSingleton": "",
 "Locale": "",
 "PlayerSettingsTemplate": "",
@@ -46,8 +58,9 @@ config/icon="res://icon.png"
 
 History="*res://globalScripts/history.gd"
 PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
-GameCurrent="*res://globalScripts/gameCurrent.gd"
+DiceRoller="*res://globalScripts/DiceRoller.gd"
 GlobalSaveInstance="*res://globalScripts/globalSaveInstance.gd"
+GameCurrent="*res://globalScripts/gameCurrent.gd"
 
 [physics]
 
