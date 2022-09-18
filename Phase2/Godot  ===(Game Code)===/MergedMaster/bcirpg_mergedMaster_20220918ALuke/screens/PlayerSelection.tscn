@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://screens/PlayerSelection.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=6]
+
+[node name="PlayerSelection" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -119.0
+margin_top = -152.0
+margin_right = 119.0
+margin_bottom = 152.0
+rect_scale = Vector2( 1.04675, 1.07389 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="But_ChoosePlayer" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 238.0
+margin_bottom = 98.0
+text = "Import Character"
+
+[node name="But_AddChar" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 102.0
+margin_right = 238.0
+margin_bottom = 201.0
+text = "Create Character"
+
+[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 205.0
+margin_right = 238.0
+margin_bottom = 304.0
+text = "Main Menu"
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -177.0
+margin_top = -44.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Version: 0.0.0"
+__meta__ = {
+"_edit_use_anchors_": false
+}

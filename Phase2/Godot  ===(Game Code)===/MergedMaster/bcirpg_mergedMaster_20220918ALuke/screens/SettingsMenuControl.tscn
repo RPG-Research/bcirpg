@@ -1,0 +1,321 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://screens/SettingsMenuConfig.gd" type="Script" id=1]
+[ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=2]
+[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+theme = SubResource( 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -302.0
+margin_right = 512.0
+margin_bottom = 298.0
+rect_pivot_offset = Vector2( -276, 469 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -298.5
+margin_right = 298.5
+margin_bottom = 19.0
+custom_constants/separation = 60
+alignment = 1
+
+[node name="RootVboxVisualControls" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_right = 98.0
+margin_bottom = 19.0
+
+[node name="VisualControlsLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls"]
+margin_right = 98.0
+margin_bottom = 19.0
+text = "Visual Controls"
+
+[node name="VisualControlsVBox" type="VBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxFontSize" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_right = 155.0
+margin_bottom = 19.0
+
+[node name="FontLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/HBoxFontSize"]
+margin_right = 64.0
+margin_bottom = 19.0
+text = "Font Size:"
+
+[node name="FontSizeSlider" type="HSlider" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 39.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="BrightnessLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 43.0
+margin_right = 155.0
+margin_bottom = 62.0
+text = "Brightness:"
+
+[node name="BrightnessSlider" type="HSlider" parent="Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 66.0
+margin_right = 155.0
+margin_bottom = 82.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="RootVboxPlayerPreferences" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 158.0
+margin_right = 275.0
+margin_bottom = 19.0
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/RootVboxPlayerPreferences"]
+margin_right = 117.0
+margin_bottom = 19.0
+text = "Player Preferances"
+
+[node name="VBoxPlayerPreferances" type="VBoxContainer" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label"]
+margin_left = -18.5
+margin_top = 30.0
+margin_right = 126.5
+margin_bottom = 125.0
+
+[node name="HBoxDisplayName" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="DisplayNameLabel" type="Label" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/HBoxDisplayName"]
+margin_right = 95.0
+margin_bottom = 19.0
+text = "Display Name:"
+
+[node name="DisplayNameLineEdit" type="LineEdit" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 52.0
+
+[node name="VBoxRiskFactor" type="VBoxContainer" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_top = 56.0
+margin_right = 145.0
+margin_bottom = 95.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxRiskFactor" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="RiskFactorLabel" type="Label" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/HBoxRiskFactor"]
+margin_right = 145.0
+margin_bottom = 19.0
+text = "Risk Factor Threshold:"
+
+[node name="RiskSlider" type="HSlider" parent="Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 39.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="RootVboxGeneralSettings" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 335.0
+margin_right = 439.0
+margin_bottom = 19.0
+
+[node name="GeneralSettingsLabel" type="Label" parent="Panel/HBoxContainer/RootVboxGeneralSettings"]
+margin_right = 104.0
+margin_bottom = 19.0
+text = "General Settings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_right = 155.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( 62, 14 )
+text = "Volume:"
+
+[node name="VolumeSlider" type="HSlider" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 39.0
+max_value = 10.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="HBoxClosedCaptions" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 43.0
+margin_right = 155.0
+margin_bottom = 70.0
+
+[node name="ClosedCaptionsLabel" type="Label" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions"]
+margin_top = 4.0
+margin_right = 108.0
+margin_bottom = 23.0
+text = "Closed Captions:"
+
+[node name="ClosedCaptionsCheckBox" type="CheckBox" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions"]
+margin_left = 112.0
+margin_right = 136.0
+margin_bottom = 27.0
+
+[node name="HBoxDevConsole" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 74.0
+margin_right = 155.0
+margin_bottom = 101.0
+
+[node name="DevConsoleLabel" type="Label" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole"]
+margin_top = 4.0
+margin_right = 126.0
+margin_bottom = 23.0
+text = "Developer Console:"
+
+[node name="DevConsoleCheckbox" type="CheckBox" parent="Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole"]
+margin_left = 130.0
+margin_right = 154.0
+margin_bottom = 27.0
+
+[node name="RootVboxVisualControls2" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_left = 499.0
+margin_right = 597.0
+margin_bottom = 19.0
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls2"]
+margin_right = 98.0
+margin_bottom = 19.0
+text = "Visual Controls"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxThemes" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_right = 155.0
+margin_bottom = 19.0
+
+[node name="ThemesLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxThemes"]
+margin_right = 119.0
+margin_bottom = 19.0
+text = "Theme Preference:"
+
+[node name="ThemeItemList" type="ItemList" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 32.0
+auto_height = true
+
+[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 36.0
+margin_right = 155.0
+margin_bottom = 63.0
+
+[node name="VisualKeyBoardLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
+margin_top = 4.0
+margin_right = 110.0
+margin_bottom = 23.0
+text = "Virtual Keyboard"
+
+[node name="VisualKeyboardCheckBox" type="CheckBox" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
+margin_left = 114.0
+margin_right = 138.0
+margin_bottom = 27.0
+
+[node name="HBoxKeyboardLayout" type="HBoxContainer" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 67.0
+margin_right = 155.0
+margin_bottom = 86.0
+
+[node name="LayoutLabel" type="Label" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxKeyboardLayout"]
+margin_right = 120.0
+margin_bottom = 19.0
+text = "Layout Preference:"
+
+[node name="LayoutItemList" type="ItemList" parent="Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 90.0
+margin_right = 155.0
+margin_bottom = 99.0
+auto_height = true
+
+[node name="HBoxBottomRow" type="HBoxContainer" parent="Panel"]
+anchor_left = 0.500488
+anchor_right = 0.595215
+margin_left = -48.5
+margin_top = 200.0
+margin_right = 48.5
+margin_bottom = 225.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SaveButton" type="Button" parent="Panel/HBoxBottomRow"]
+margin_left = 24.0
+margin_right = 121.0
+margin_bottom = 25.0
+text = "Save Settings"
+
+[node name="But_ChangeScene" parent="Panel/HBoxBottomRow" instance=ExtResource( 3 )]
+margin_left = 125.0
+margin_right = 170.0
+margin_bottom = 25.0
+text = "Back"
