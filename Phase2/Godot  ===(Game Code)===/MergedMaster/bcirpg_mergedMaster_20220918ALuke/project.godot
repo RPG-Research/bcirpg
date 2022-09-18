@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="MergedMaster_2022_0918A"
-run/main_scene="res://Screens/MenuScreen.tscn"
+run/main_scene="res://screens/MenuScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]

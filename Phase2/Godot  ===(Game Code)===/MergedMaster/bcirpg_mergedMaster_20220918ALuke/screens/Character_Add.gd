@@ -17,7 +17,8 @@ onready var weaponVar = get_node("HBoxContainer/VBoxContainer2/LabelWeapon/LineE
 onready var armorVar = get_node("HBoxContainer/VBoxContainer2/LabelArmor/LineEditArmor")
 onready var quoteVar = get_node("HBoxContainer/VBoxContainer/LabelQuote/LineEditQuote")
 
-
+func writeToCSV(nameV, profV, strengthV, intelV, willpowerV, charmV, weaponV, armorV, quoteV):
+	pass
 
 
 func _ready() -> void:
