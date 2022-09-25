@@ -19,6 +19,8 @@ __meta__ = {
 [node name="Background" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 2.0
+margin_bottom = 2.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,9 +33,9 @@ custom_fonts/font = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.503333
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.503333
 margin_left = -119.0
 margin_top = -152.0
 margin_right = 119.0

@@ -39,7 +39,7 @@ next_scene_path = "res://Screens/MenuScreen.tscn"
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
 margin_top = 70.0
 margin_right = 1024.0
-margin_bottom = 114.0
+margin_bottom = 118.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -56,11 +56,12 @@ __meta__ = {
 margin_top = 24.0
 margin_right = 800.0
 margin_bottom = 374.0
+rect_min_size = Vector2( 400, 140 )
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "/Users/BD/Documents/Godot/rpg"
-current_path = "/Users/BD/Documents/Godot/rpg/"
+current_dir = "/Users/BD_1/Documents/Godot/mainmenu:impchar/rpg"
+current_path = "/Users/BD_1/Documents/Godot/mainmenu:impchar/rpg/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -83,5 +84,26 @@ margin_right = 1024.0
 margin_bottom = 44.0
 text = "Save"
 
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer2/VBoxContainer"]
+margin_top = 48.0
+margin_right = 1024.0
+margin_bottom = 48.0
+
+[node name="textBox" type="LineEdit" parent="VBoxContainer2/VBoxContainer/VBoxContainer3"]
+visible = false
+margin_right = 1024.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="But_Remember" type="Button" parent="VBoxContainer2"]
+margin_top = 122.0
+margin_right = 1024.0
+margin_bottom = 142.0
+text = "Remember File"
+
 [connection signal="pressed" from="VBoxContainer2/VBoxContainer/But_OpenFile" to="." method="_on_Button_pressed"]
 [connection signal="file_selected" from="VBoxContainer2/VBoxContainer/FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Save_Button" to="." method="_on_Save_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/But_Remember" to="." method="_on_But_Remember_pressed"]
