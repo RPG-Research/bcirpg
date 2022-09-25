@@ -96,8 +96,6 @@ func rollDice():
 	if isPercentageRoll:
 		sumOfPercentages += (returnDiePercentage(diceUsed[0]) / 10.0) + (returnDiePercentage(diceUsed[1]) / 100.0)
 	else:
-		#DKM TEMP: not percentage roll:
-		print("TEMP: not percentage roll")
 		for die in diceUsed:
 			sumOfPercentages += returnDiePercentage(die)
 			denominator += 1

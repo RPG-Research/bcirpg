@@ -157,6 +157,31 @@ func change_node(destinationNode: String, destinationParams: Array = []) -> void
 			var destArr = target_Locale.destinations_array
 			create_option(option, destArr[i])
 			i = i+1
+	#DKM TEMP: running an ability check test on passed node: -- this is only built out for agility and strength in this test
+	#	Def needs all kinds of refactor
+	elif target_Locale.locale_action == "TestAbstractAbilityCheck":
+		var check_result ="NA"
+		print("DKM TEMP: passed stat is :" +target_Locale.locale_action_params[0])
+		if(target_Locale.locale_action_params[0] in pSingleton.pc.viableCharStats):
+			match target_Locale.locale_action_params[0]:
+				"AG":
+					if(int(destinationParams[0])<= pSingleton.pc.agility):
+						check_result = "PASS"		
+					else:
+						check_result = "FAIL"				
+				"ST":
+					if(int(destinationParams[0])<= pSingleton.pc.strength):
+						check_result = "PASS"		
+					else:
+						check_result = "FAIL"
+				
+		create_response(target_Locale.locale_description + check_result + " with roll of: " + str(destinationParams) + "; on ability of: " + str(pSingleton.pc.strength))
+		clear_prior_options()
+		var i = 0
+		for option in target_Locale.options_array:
+			var destArr = target_Locale.destinations_array
+			create_option(option, destArr[i])
+			i = i+1
 	options_container.get_child(0).grab_focus()
 
 func action_show_text(newLocale: Locale) -> void:
@@ -181,7 +206,14 @@ func action_roll_die(newLocale: Locale) -> void:
 	DiceRoller.dieManager.setDieManager(dieParams, 0.5)
 	var result = DiceRoller.dieManager.rollDice()
 	print("Rolled values: " + str(result[0]))
-
+	if(DiceRoller.dieManager.isPercentageRoll):
+		var percDie =  int(result[1]*100)
+		print("DKM TEMP: is percentage roll and perc res is: " + str(percDie))
+		var perc_result = [percDie]
+		change_node(newLocale.destinations_array[0], perc_result)
+	else:
+		change_node(newLocale.destinations_array[0], result[0])
+		
 	#DKM TEMP: Andrew's code for ref:
 	#assigning variable names to each of them for better clarity
 #		var rolledValues = result[0]
@@ -190,7 +222,6 @@ func action_roll_die(newLocale: Locale) -> void:
 #		var neededPercent = result[3]
 #		var degreeOfSuccess = result[4]
 #		var dice = result[5] 
-	change_node(newLocale.destinations_array[0], result[0])
 
 #DKM TEMP: saves the entire scene in one packed scene file
 func save_module():
