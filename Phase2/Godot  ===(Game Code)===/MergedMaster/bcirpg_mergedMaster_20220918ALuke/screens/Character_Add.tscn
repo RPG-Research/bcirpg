@@ -63,12 +63,12 @@ margin_bottom = 388.0
 custom_constants/separation = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 81.0
+margin_right = 105.0
 margin_bottom = 358.0
 custom_constants/separation = 20
 
 [node name="LabelName" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 81.0
+margin_right = 105.0
 margin_bottom = 31.0
 text = "NAME
 "
@@ -79,8 +79,8 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelProfession" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_top = 60.0
-margin_right = 81.0
+margin_top = 51.0
+margin_right = 105.0
 margin_bottom = 82.0
 text = "PROFESSION
 "
@@ -91,8 +91,8 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelStrength" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_top = 120.0
-margin_right = 81.0
+margin_top = 102.0
+margin_right = 105.0
 margin_bottom = 133.0
 text = "STRENGTH
 "
@@ -103,8 +103,8 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelIntellect" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_top = 180.0
-margin_right = 81.0
+margin_top = 153.0
+margin_right = 105.0
 margin_bottom = 184.0
 text = "INTELLECT
 "
@@ -114,9 +114,15 @@ margin_top = 25.0
 margin_right = 58.0
 margin_bottom = 24.0
 
+[node name="SaveButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_top = 204.0
+margin_right = 105.0
+margin_bottom = 224.0
+text = "Save Character"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 121.0
-margin_right = 200.0
+margin_left = 145.0
+margin_right = 224.0
 margin_bottom = 358.0
 custom_constants/separation = 30
 
@@ -132,7 +138,7 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelCharm" type="Label" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 60.0
+margin_top = 61.0
 margin_right = 79.0
 margin_bottom = 75.0
 text = "CHARM"
@@ -143,7 +149,7 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelWeapon" type="Label" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 120.0
+margin_top = 105.0
 margin_right = 79.0
 margin_bottom = 136.0
 text = "WEAPON
@@ -155,7 +161,7 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelArmor" type="Label" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 180.0
+margin_top = 166.0
 margin_right = 79.0
 margin_bottom = 180.0
 text = "ARMOR"
@@ -166,7 +172,7 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [node name="LabelQuote" type="Label" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 240.0
+margin_top = 210.0
 margin_right = 79.0
 margin_bottom = 224.0
 text = "QUOTE"
