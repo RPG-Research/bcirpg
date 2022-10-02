@@ -4,7 +4,7 @@
 
 extends Control
 
-#Source for module file: to the GU
+#Source for module file:
 #export(String, FILE, "*.json") var module_file_path:String
 #DKM TEMP:
 var module_file_path = "res://_userFiles/Module_Demo_001.json"
@@ -22,24 +22,20 @@ onready var options_container = $Background/MarginContainer/Rows/InputArea/Scrol
 onready var pSingleton = get_node("/root/PlayerCharacter")
 onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSheet
 
-
-#DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
-#	or desired load approach
-onready var module_map = "res://_userFiles/temp_map.save"
-
 var nodeArray
 
 func _ready() -> void:
-	save_module()
 	theme=load(settings.themeFile)
+	#Initialize module and display text:
+	load_new_module()
+	current_text.show()
+	#Load character sheet:
+	charSheet.text = pSingleton.pc.pcText
 	
-	#DKM TEMP: testing:
-	var moduleDict = loadJSONToDict(module_file_path)
-	
-	#DKM TEMP: this needs to be refactored to reposition this initialization
+#Initializes the default module:
+func load_new_module() -> void:
+	var moduleDict = load_JSON_to_dict(module_file_path)
 	var i = 0
-	#print("Looking for JSON at: " + module_file_path)
-	#print("Json returned as: " + str(moduleDict))
 	var initialNode = Locale.new()
 	nodeArray = [initialNode]
 	for moduleNode in moduleDict.values():
@@ -62,14 +58,8 @@ func _ready() -> void:
 			#print("For #" + str(i) + ": appended go to destination of: " + str(dest))
 		#print("Node array name for #" + str(i) + ": " + nodeArray[i].locale_name)
 		i = i+1
-	
-	current_text.show()
-	
-	#Load character sheet:
-	charSheet.text = pSingleton.pc.pcText
-	
 	create_response(nodeArray[0].locale_description)
-	#DKM TEMP: another that needs to be broken out when ready:
+
 	clear_prior_options()
 	i = 0
 	for option in nodeArray[0].options_array:
@@ -78,17 +68,28 @@ func _ready() -> void:
 		i = i+1
 	options_container.get_child(0).grab_focus()
 
-#DKM TEMP: convert JSON file to dictionary for module import:
-func loadJSONToDict(filepath:String)->Dictionary:
-	var file = File.new()
-	#assert file.file_exists(filepath)
-	file.open(filepath,file.READ)
-	var moduleDict = parse_json(file.get_as_text())
-	#assert moduleDict.size() > 0
-	return moduleDict
+#Master method for handling user interaction:
+func change_node(destinationNode: String, destinationParams: Array = []) -> void:
+	var target_Locale = get_node_by_name(destinationNode)
+	#Run provided action:
+	if target_Locale.locale_action == "ShowText":
+		action_show_text(target_Locale)
+	elif target_Locale.locale_action == "RollDice" && target_Locale.destinations_array.size() == 1:
+		action_roll_die(target_Locale)
+	#DKM TEMP: testing passed param handling by node to node
+	elif target_Locale.locale_action == "TestHandleNodeParams":
+		action_handle_node_params_testing(target_Locale, destinationParams)
+	#DKM TEMP: running an ability check test on passed node:
+	elif target_Locale.locale_action == "TestAbstractAbilityCheck":
+		action_ability_check_testing(target_Locale, destinationParams)
+
+	options_container.get_child(0).grab_focus()
 
 
-#Handles input text
+####################################################
+#DISPLAY METHODS: 
+#	Handles output text and options
+####################################################
 func create_response(response_text: String):
 	var response = TextOutput.instance()
 	response.text = response_text
@@ -103,11 +104,7 @@ func add_response_to_game(response: Control):
 	current_text.add_child(response)
 
 func add_response_to_history(response: Control) -> void:
-	#DKM TEMP: so here we
-	#1. var response_history = response.duplicate()
 	var response_for_history = response.duplicate()
-	#2. get the history array from the singleton,
-	#3. Add this to the history array
 	history_source.output_history_array.append(response_for_history)
 
 func clear_prior_options() -> void:
@@ -129,61 +126,15 @@ func add_option_to_game(optionNew: Control) -> void:
 		#print("New added opt is: " + str(newOptNumber-1))
 		options_container.get_child(newOptNumber-1).connect("option_pressed", self, "_on_option_pressed")
 
-#DKM TEMP: these need to be dynamically added with the options themselves
-
 func _on_option_pressed(destinationSelected: String) -> void:
 	#print("Destination node for pressed option is: " + destinationSelected)
 	change_node(destinationSelected)
-	
-func get_node_by_name(nodeName: String) -> Locale:
-	for n in nodeArray:
-		if n.locale_name == nodeName:
-			return n
-	return nodeArray[0]
 
-func change_node(destinationNode: String, destinationParams: Array = []) -> void:
-	var target_Locale = get_node_by_name(destinationNode)
-	#Run provided action:
-	if target_Locale.locale_action == "ShowText":
-		action_show_text(target_Locale)
-	elif target_Locale.locale_action == "RollDice" && target_Locale.destinations_array.size() == 1:
-		action_roll_die(target_Locale)
-	#DKM TEMP: testing passed param handling by node to node
-	elif target_Locale.locale_action == "TestHandleNodeParams":
-		create_response(target_Locale.locale_description + str(destinationParams))
-		clear_prior_options()
-		var i = 0
-		for option in target_Locale.options_array:
-			var destArr = target_Locale.destinations_array
-			create_option(option, destArr[i])
-			i = i+1
-	#DKM TEMP: running an ability check test on passed node: -- this is only built out for agility and strength in this test
-	#	Def needs all kinds of refactor
-	elif target_Locale.locale_action == "TestAbstractAbilityCheck":
-		var check_result ="NA"
-		print("DKM TEMP: passed stat is :" +target_Locale.locale_action_params[0])
-		if(target_Locale.locale_action_params[0] in pSingleton.pc.viableCharStats):
-			match target_Locale.locale_action_params[0]:
-				"AG":
-					if(int(destinationParams[0])<= pSingleton.pc.agility):
-						check_result = "PASS"		
-					else:
-						check_result = "FAIL"				
-				"ST":
-					if(int(destinationParams[0])<= pSingleton.pc.strength):
-						check_result = "PASS"		
-					else:
-						check_result = "FAIL"
-				
-		create_response(target_Locale.locale_description + check_result + " with roll of: " + str(destinationParams) + "; on ability of: " + str(pSingleton.pc.strength))
-		clear_prior_options()
-		var i = 0
-		for option in target_Locale.options_array:
-			var destArr = target_Locale.destinations_array
-			create_option(option, destArr[i])
-			i = i+1
-	options_container.get_child(0).grab_focus()
 
+####################################################
+#ACTION HANDLERS:
+#	Process actions from selected nodes
+####################################################
 func action_show_text(newLocale: Locale) -> void:
 	create_response(newLocale.locale_description)
 	clear_prior_options()
@@ -214,17 +165,58 @@ func action_roll_die(newLocale: Locale) -> void:
 	else:
 		change_node(newLocale.destinations_array[0], result[0])
 		
-	#DKM TEMP: Andrew's code for ref:
-	#assigning variable names to each of them for better clarity
-#		var rolledValues = result[0]
-#		var percentRolled = result[1]
-#		var passResult = result[2]
-#		var neededPercent = result[3]
-#		var degreeOfSuccess = result[4]
-#		var dice = result[5] 
 
-#DKM TEMP: saves the entire scene in one packed scene file
-func save_module():
-		var scene = PackedScene.new()
-		scene.pack(self)
-		ResourceSaver.save("user://game_01.tscn", scene)
+#TESTING ACTIONS:
+#Test version of ability check -- only built our for strength and agility with this output
+func action_ability_check_testing(t_Locale: Locale, d_Params: Array = []) -> void:
+	var check_result ="NA"
+	print("Testing: passed stat is :" +t_Locale.locale_action_params[0])
+	if(t_Locale.locale_action_params[0] in pSingleton.pc.viableCharStats):
+		match t_Locale.locale_action_params[0]:
+			"AG":
+				if(int(d_Params[0])<= pSingleton.pc.agility):
+					check_result = "PASS"		
+				else:
+					check_result = "FAIL"				
+			"ST":
+				if(int(d_Params[0])<= pSingleton.pc.strength):
+					check_result = "PASS"		
+				else:
+					check_result = "FAIL"
+			
+	create_response(t_Locale.locale_description + check_result + " with roll of: " + str(d_Params) + "; on ability of: " + str(pSingleton.pc.strength))
+	clear_prior_options()
+	var i = 0
+	for option in t_Locale.options_array:
+		var destArr = t_Locale.destinations_array
+		create_option(option, destArr[i])
+		i = i+1
+		
+func action_handle_node_params_testing(t_Locale: Locale, d_Params: Array = []) -> void:
+	create_response(t_Locale.locale_description + str(d_Params))
+	clear_prior_options()
+	var i = 0
+	for option in t_Locale.options_array:
+		var destArr = t_Locale.destinations_array
+		create_option(option, destArr[i])
+		i = i+1	
+
+####################################################
+#HELPER METHODS:
+####################################################
+func get_node_by_name(nodeName: String) -> Locale:
+	for n in nodeArray:
+		if n.locale_name == nodeName:
+			return n
+	return nodeArray[0]
+	
+#Convert JSON file to dictionary for module import:
+#	DKM TEMP: JSON only for development work -- will come from alt data source
+func load_JSON_to_dict(filepath:String)->Dictionary:
+	var file = File.new()
+	#assert file.file_exists(filepath)
+	file.open(filepath,file.READ)
+	var moduleDict = parse_json(file.get_as_text())
+	#assert moduleDict.size() > 0
+	return moduleDict
+
