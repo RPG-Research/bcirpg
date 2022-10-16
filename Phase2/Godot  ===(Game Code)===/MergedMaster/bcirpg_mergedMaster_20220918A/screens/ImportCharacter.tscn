@@ -37,9 +37,8 @@ margin_bottom = 480.0
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedDemo_20220911A"
-current_file = "_userData/characterFiles"
-current_path = "/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedDemo_20220911A/_userData/characterFiles"
+current_dir = "/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedMaster_20220918A"
+current_path = "/ProgramData/CS_Working/RPGR/Godot_projects/bcirpg_mergedMaster_20220918A/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
