@@ -12,8 +12,8 @@
 		"Action":"ShowText",
 		"A_Params":"",
 		"Text":"The boat rocks gently. You can leave the boat through a hatch. There is also now a test option.",
-		"Option_Labels":["Examine Ship","Climb out through hatch","Play the fiddle!","Rest","Meditate", "Run die roll test"],
-		"Option_GoTos":["Boat_002","Shore_001","Misc_001","Misc_002","Misc_003","Test_000"]
+		"Option_Labels":["Examine Ship","Climb out through hatch","Play the fiddle!","Rest","Meditate", "Run generic die roll test", "Do strength check on percentile die"],
+		"Option_GoTos":["Boat_002","Shore_001","Misc_001","Misc_002","Misc_003","Test_000","Test_002"]
 	},	
 	"Node_Boat_002":{
 		"Id":"Boat_002",
@@ -67,8 +67,24 @@
 		"Id":"Test_001",
 		"Action":"TestHandleNodeParams",
 		"A_Params":"",
-		"Text":"Die were rolled and passed to this node as: ",
+		"Text":"Dice were rolled and passed to this node as: ",
 		"Option_Labels":["Back to boat"],
 		"Option_GoTos":["Boat_001"]
-	}			
+	},
+	"Node_Test002":{
+		"Id":"Test_002",
+		"Action":"RollDice",
+		"A_Params":[10,10],
+		"Text":"Dice were rolled and passed to this node as: ",
+		"Option_Labels":["NA"],
+		"Option_GoTos":["Test_003"]
+	},
+	"Node_Test003":{
+		"Id":"Test_003",
+		"Action":"TestAbstractAbilityCheck",
+		"A_Params":["ST"],
+		"Text":"Ability check run on strength resulted in: ",
+		"Option_Labels":["Back to boat"],
+		"Option_GoTos":["Boat_001"]
+	}					
 }

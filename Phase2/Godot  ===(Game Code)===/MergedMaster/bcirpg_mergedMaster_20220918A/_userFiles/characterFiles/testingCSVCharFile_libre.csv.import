@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://_userFiles/characterFiles/testingCSVCharFile_libre.en.translation" ]
+
+source_file="res://_userFiles/characterFiles/testingCSVCharFile_libre.csv"
+dest_files=[ "res://_userFiles/characterFiles/testingCSVCharFile_libre.en.translation" ]
+
+[params]
+
+compress=true
+delimiter=0
