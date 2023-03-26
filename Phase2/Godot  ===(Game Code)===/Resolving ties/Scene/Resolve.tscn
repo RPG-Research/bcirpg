@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Script/Resolve.gd" type="Script" id=1]
+[ext_resource path="res://Assets/ok-button.png" type="Texture" id=2]
+[ext_resource path="res://Assets/icons8-reset-50.png" type="Texture" id=3]
+
+[node name="Resolve" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 0.380392 )
+
+[node name="Player1" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player1"]
+margin_left = 159.0
+margin_top = 174.0
+margin_right = 212.0
+margin_bottom = 191.0
+text = "Player 1"
+
+[node name="TextureButton1" type="TextureButton" parent="Player1"]
+margin_left = 150.0
+margin_top = 220.0
+margin_right = 230.0
+margin_bottom = 286.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+
+[node name="LineEdit" type="LineEdit" parent="Player1"]
+margin_left = 120.0
+margin_top = 200.0
+margin_right = 250.0
+margin_bottom = 225.0
+placeholder_text = "Enter stats"
+
+[node name="Player2" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player2"]
+margin_left = 841.0
+margin_top = 176.0
+margin_right = 895.0
+margin_bottom = 194.0
+text = "Player 2"
+
+[node name="TextureButton2" type="TextureButton" parent="Player2"]
+margin_left = 825.0
+margin_top = 220.0
+margin_right = 905.0
+margin_bottom = 286.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+
+[node name="LineEdit" type="LineEdit" parent="Player2"]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 930.0
+margin_bottom = 225.0
+placeholder_text = "Enter stats"
+
+[node name="Result" type="ColorRect" parent="."]
+visible = false
+margin_left = 348.0
+margin_top = 337.0
+margin_right = 752.0
+margin_bottom = 431.0
+color = Color( 0.368627, 0.32549, 0.32549, 0.560784 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Result"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 158.0
+margin_top = -18.0
+margin_right = -154.0
+
+[node name="ResetButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -25.0
+margin_top = 200.0
+margin_right = 25.0
+margin_bottom = 250.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 3 )
+
+[connection signal="pressed" from="Player1/TextureButton1" to="." method="_on_TextureButton1_pressed"]
+[connection signal="pressed" from="Player2/TextureButton2" to="." method="_on_TextureButton2_pressed"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_ResetButton_pressed"]
