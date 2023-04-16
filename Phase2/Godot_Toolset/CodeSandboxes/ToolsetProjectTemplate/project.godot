@@ -6,22 +6,13 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Reference",
-"class": "SQLiteWrapper",
-"language": "GDScript",
-"path": "res://addons/godot-sqlite/godot-sqlite-wrapper.gd"
-} ]
-_global_script_class_icons={
-"SQLiteWrapper": ""
-}
+config_version=5
 
 [application]
 
 config/name="Toolset_Initial_Work"
 run/main_scene="res://screens/MainMenu.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 
 [physics]
