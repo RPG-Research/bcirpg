@@ -1,0 +1,201 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Cabin-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://toolset_test/source_container.gd" type="Script" id=2]
+[ext_resource path="res://toolset_test/target_container_final.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.760784, 0.760784, 0.760784, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 1, 1, 1 )
+
+[node name="DragAndDropDemo" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VLayout" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionHeader" type="HBoxContainer" parent="VLayout"]
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="M1H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 50 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu One" type="Label" parent="VLayout/DescriptionHeader/M1H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 1"
+align = 1
+valign = 1
+
+[node name="M2H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 254.0
+margin_right = 502.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 5 )
+
+[node name="MenuTwo" type="Label" parent="VLayout/DescriptionHeader/M2H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 2"
+align = 1
+valign = 1
+
+[node name="M3H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 506.0
+margin_right = 756.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 0 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu3Label" type="Label" parent="VLayout/DescriptionHeader/M3H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 3"
+align = 1
+valign = 1
+
+[node name="M4H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 760.0
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 0 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu4Label" type="Label" parent="VLayout/DescriptionHeader/M4H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 4"
+align = 1
+valign = 1
+
+[node name="ToolsOptions" type="HBoxContainer" parent="VLayout"]
+margin_top = 54.0
+margin_right = 1010.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToolsContainer" type="Panel" parent="VLayout/ToolsOptions"]
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 1010, 50 )
+custom_styles/panel = SubResource( 7 )
+script = ExtResource( 2 )
+
+[node name="Padding" type="MarginContainer" parent="VLayout/ToolsOptions/ToolsContainer"]
+margin_right = 1005.0
+margin_bottom = 47.0
+rect_min_size = Vector2( 1005, 0 )
+
+[node name="Columns" type="HBoxContainer" parent="VLayout/ToolsOptions/ToolsContainer/Padding"]
+margin_right = 1005.0
+margin_bottom = 47.0
+rect_min_size = Vector2( 1005, 0 )
+
+[node name="DragAndDropColumns" type="HBoxContainer" parent="VLayout"]
+margin_top = 108.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SourceContainer" type="Panel" parent="VLayout/DragAndDropColumns"]
+margin_right = 175.0
+margin_bottom = 478.0
+rect_min_size = Vector2( 175, 0 )
+custom_styles/panel = SubResource( 6 )
+
+[node name="Padding" type="MarginContainer" parent="VLayout/DragAndDropColumns/SourceContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="VLayout/DragAndDropColumns/SourceContainer/Padding"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 154.0
+margin_bottom = 458.0
+custom_constants/separation = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasContainer" type="Panel" parent="VLayout/DragAndDropColumns"]
+margin_left = 179.0
+margin_right = 831.0
+margin_bottom = 478.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Padding" type="MarginContainer" parent="VLayout/DragAndDropColumns/CanvasContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -5.0
+margin_right = -2.0
+margin_bottom = -1.0
+mouse_filter = 1
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="VLayout/DragAndDropColumns/CanvasContainer/Padding"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 629.0
+margin_bottom = 462.0
+custom_constants/separation = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DetailsContainer" type="Panel" parent="VLayout/DragAndDropColumns"]
+margin_left = 835.0
+margin_right = 1010.0
+margin_bottom = 478.0
+rect_min_size = Vector2( 175, 0 )
+custom_styles/panel = SubResource( 3 )
