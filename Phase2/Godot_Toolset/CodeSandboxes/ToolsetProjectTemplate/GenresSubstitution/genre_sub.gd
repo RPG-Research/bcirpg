@@ -102,7 +102,7 @@ func updateItemByID(id, feedName):
 
 #	This will update an Collection's Item Alias record under your desired ID. 
 #	Example of how to use updateCollectionAliasByID
-#   updateItemByID(1, "Electric Guitar")
+#   updateCollectionAliasByID(1, "Electric Guitar")
 func updateCollectionAliasByID(id, feedName):
 	db.open_db()
 	var tableName = "collection"

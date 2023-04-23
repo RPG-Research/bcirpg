@@ -1,3 +1,2 @@
-res://screens/MainMenu.tscn
-res://GenresSubstitution/genre_sub.gd
 res://GenresSubstitution/TestDB.tscn
+res://GenresSubstitution/genre_sub.gd
