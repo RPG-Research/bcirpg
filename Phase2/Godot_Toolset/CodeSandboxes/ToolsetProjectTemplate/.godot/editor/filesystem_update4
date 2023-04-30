@@ -1,2 +1,3 @@
-res://GenresSubstitution/TestDB.tscn
+res://Dialog/TestDialog.tscn
+res://Dialog/dialog_system.gd
 res://GenresSubstitution/genre_sub.gd

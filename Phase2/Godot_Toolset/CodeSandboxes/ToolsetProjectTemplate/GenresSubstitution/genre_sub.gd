@@ -144,5 +144,4 @@ func deleteCollectionByID(id):
 func _ready():
 	db = SQLite.new()
 	db.path = db_name
-	updateCollectionGenreByID(1, "Cowboys VS Aliens")
 	pass # Replace with function body.

@@ -1,5 +1,5 @@
 2a60927148abd1d33b818b535e306557
-::res://::1682270223
+::res://::1682875387
 default_env.tres::Environment::-1::1680461469::0::1::::<><>::
 icon.png::CompressedTexture2D::1663579034843721578::1659896126::1681665020::1::::<><>::
 README.txt::TextFile::-1::1679251181::0::1::::<><>::
@@ -37,11 +37,11 @@ LiberationSerif-BoldItalic.ttf::FontFile::6973589459942031632::1679252065::16816
 LiberationSerif-Italic.ttf::FontFile::3429051925918376143::1679252065::1681665020::1::::<><>::
 LiberationSerif-Regular.ttf::FontFile::3437532725077625275::1679252065::1681665020::1::::<><>::
 ::res://CharacterCreator/::1659895857
-::res://databases/::1681669600
+::res://databases/::1682874550
 ::res://Dialog/::1659895847
-::res://GenresSubstitution/::1681669646
-genre_sub.gd::GDScript::-1::1681669598::0::1::::<>Node<>::
-TestDB.tscn::PackedScene::3353206590719512815::1681669646::0::1::::<><>::res://GenresSubstitution/genre_sub.gd
+::res://GenresSubstitution/::1682274676
+genre_sub.gd::GDScript::-1::1682274676::0::1::::<>Node<>::
+TestDB.tscn::PackedScene::3353206590719512815::1682274676::0::1::::<><>::res://GenresSubstitution/genre_sub.gd
 ::res://globalScripts/::1679252065
 DiceRoller.gd::GDScript::-1::1679252065::0::1::::<>Control<>::
 ::res://Grammar/::1659895937
