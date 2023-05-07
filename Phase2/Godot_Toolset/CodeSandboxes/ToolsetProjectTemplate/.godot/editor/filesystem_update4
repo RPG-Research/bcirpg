@@ -1,4 +1,5 @@
-res://Dialog/TestDialog.tscn
-res://Dialog/dialog_system.gd
+res://Grammar/GrammarTest.tscn
+res://Grammar/GrammarTest.gd
 res://screens/MainMenu.tscn
 res://GenresSubstitution/TestDB.tscn
+res://Dialog/TestDialog.tscn

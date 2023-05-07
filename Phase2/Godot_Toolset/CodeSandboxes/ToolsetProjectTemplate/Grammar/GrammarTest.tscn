@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brx174ry2iceq"]
+
+[ext_resource type="Script" path="res://Grammar/GrammarTest.gd" id="1_kk72l"]
+
+[node name="GrammarTest" type="Node2D"]
+script = ExtResource("1_kk72l")
