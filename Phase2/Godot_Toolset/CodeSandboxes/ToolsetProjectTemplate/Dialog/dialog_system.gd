@@ -103,4 +103,6 @@ func deleteDialogByID(id):
 func _ready():
 	db = SQLite.new()
 	db.path = db_name
+	deleteTagByID(2)
+	deleteDialogByID(2)
 	pass # Replace with function body.

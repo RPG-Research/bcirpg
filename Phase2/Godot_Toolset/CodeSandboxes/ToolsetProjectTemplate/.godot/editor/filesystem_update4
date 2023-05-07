@@ -1,3 +1,4 @@
 res://Dialog/TestDialog.tscn
 res://Dialog/dialog_system.gd
-res://GenresSubstitution/genre_sub.gd
+res://screens/MainMenu.tscn
+res://GenresSubstitution/TestDB.tscn
