@@ -1,0 +1,172 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Cabin-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://toolset_test_tabbed_merged/toolset_test_tabbed_merged.gd" type="Script" id=2]
+[ext_resource path="res://toolset_test_tabbed_merged/AssetsContainer.gd" type="Script" id=3]
+[ext_resource path="res://toolset_test_tabbed_merged/PanelCanvas_Temp.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 1, 1, 1 )
+
+[node name="Tabbed_merged_test" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="VLayout" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 596.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionHeader" type="HBoxContainer" parent="VLayout"]
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="M1H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 50 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu One" type="Label" parent="VLayout/DescriptionHeader/M1H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 1"
+align = 1
+valign = 1
+
+[node name="M2H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 254.0
+margin_right = 502.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 5 )
+
+[node name="MenuTwo" type="Label" parent="VLayout/DescriptionHeader/M2H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 2"
+align = 1
+valign = 1
+
+[node name="M3H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 506.0
+margin_right = 756.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 0 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu3Label" type="Label" parent="VLayout/DescriptionHeader/M3H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 3"
+align = 1
+valign = 1
+
+[node name="M4H" type="Panel" parent="VLayout/DescriptionHeader"]
+margin_left = 760.0
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 250, 0 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Menu4Label" type="Label" parent="VLayout/DescriptionHeader/M4H"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "Menu 4"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VLayout"]
+margin_top = 54.0
+margin_right = 1010.0
+margin_bottom = 589.0
+
+[node name="AssetsContainer" type="Panel" parent="VLayout/HBoxContainer"]
+margin_right = 175.0
+margin_bottom = 535.0
+rect_min_size = Vector2( 175, 0 )
+script = ExtResource( 3 )
+
+[node name="Padding" type="MarginContainer" parent="VLayout/HBoxContainer/AssetsContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 34.0
+rect_clip_content = true
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="AssetsRows" type="VBoxContainer" parent="VLayout/HBoxContainer/AssetsContainer/Padding"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 155.0
+margin_bottom = 481.0
+
+[node name="Label" type="Label" parent="VLayout/HBoxContainer/AssetsContainer"]
+margin_right = 172.0
+margin_bottom = 31.0
+text = "Assets:"
+
+[node name="TabContainer" type="TabContainer" parent="VLayout/HBoxContainer"]
+margin_left = 179.0
+margin_right = 829.0
+margin_bottom = 535.0
+rect_min_size = Vector2( 650, 535 )
+
+[node name="Visual_Tab" type="Tabs" parent="VLayout/HBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Structural_Tab" type="Tabs" parent="VLayout/HBoxContainer/TabContainer"]
+margin_right = 40.0
+margin_bottom = 24.0
+
+[node name="TextEdit" type="TextEdit" parent="VLayout/HBoxContainer/TabContainer/Structural_Tab"]
+margin_left = -1.0
+margin_top = 20.0
+margin_right = 648.0
+margin_bottom = 529.0
+
+[node name="PanelCanvas_Temp" type="Panel" parent="VLayout/HBoxContainer/TabContainer/Structural_Tab"]
+margin_left = 3.0
+margin_top = 274.0
+margin_right = 643.0
+margin_bottom = 525.0
+script = ExtResource( 4 )
+
+[node name="DetailsContainer" type="Panel" parent="VLayout/HBoxContainer"]
+margin_left = 833.0
+margin_right = 1008.0
+margin_bottom = 535.0
+rect_min_size = Vector2( 175, 0 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="Text_Details" type="TextEdit" parent="VLayout/HBoxContainer/DetailsContainer"]
+margin_right = 177.0
+margin_bottom = 537.0
+text = "Details:"

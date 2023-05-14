@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Cabin-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://toolset_test/draggable_final.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 1 )
+
+[node name="Draggable" type="ColorRect"]
+margin_right = 150.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 150, 35 )
+color = Color( 0.752941, 0.305882, 0.305882, 1 )
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 6 )
+text = "Drag  Me"
+align = 1
+valign = 1
