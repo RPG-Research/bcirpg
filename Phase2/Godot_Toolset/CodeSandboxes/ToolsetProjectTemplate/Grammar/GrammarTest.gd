@@ -1,10 +1,24 @@
 extends Node2D
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+var an_data_file_path = "res://Grammar/ExceptionsForAn.json"
+	
+var exceptionsListForAn = load_json(an_data_file_path)
 
+var a_data_file_path = "res://Grammar/ExceptionsForA.json"
+	
+var exceptionsListForA = load_json(a_data_file_path)
+
+func load_json(filePath : String):
+	if(FileAccess.file_exists(filePath)):
+		
+		var dataFile = FileAccess.open(filePath, FileAccess.READ)
+		var parsedResult = JSON.parse_string(dataFile.get_as_text())
+		
+		if parsedResult is Array:
+			return parsedResult
+		else:
+			print("Error Reading File")
 
 
 #rebuild_sentence is here to assist with making a human readable sentence, out of the array created in correct_sentence.
@@ -43,9 +57,6 @@ func correct_sentence(input_string: String) -> String:
 	var words = input_string.split(" ")
 	var newWords = words
 	var articleList = ["a", "an", "A", "An"]
-	var exceptionsListForAn = ""
-	var exceptionsListForA = ""
-	var exceptionsList = ["hour"]
 
 #	One Potential Addition, could be that we make an exception list for words that should be prefixed with A, and another one for words that should be prefixed with An
 
@@ -60,8 +71,10 @@ func correct_sentence(input_string: String) -> String:
 
 			if current_word != last_word:
 				if articleList.has(last_word):
-					if first_character.match("[aeiouAEIOU]") or exceptionsList.has(last_word):
+					if first_character.match("[aeiouAEIOU]") or exceptionsListForAn.has(last_word):
 						newWords[i-1] = "an"
+					if exceptionsListForA.has(last_word):
+						newWords[i-1] = "a"
 					else:
 						newWords[i-1] = "a"
 
@@ -69,8 +82,10 @@ func correct_sentence(input_string: String) -> String:
 		if words[0] != words[1]:
 			if articleList.has(words[0]):
 				var nextWordFirstChar = words[1].substr(0, 1).to_lower()
-				if nextWordFirstChar.match("[aeiouAEIOU]") or exceptionsList.has(words[1]):
+				if nextWordFirstChar.match("[aeiouAEIOU]") or exceptionsListForAn.has(words[1]):
 					newWords[0] = "An"
+				if exceptionsListForA.has(words[1]):
+					newWords[0] = "A"
 				else:
 					newWords[0] = "A"
 
@@ -80,4 +95,8 @@ func correct_sentence(input_string: String) -> String:
 
 
 func _ready():
-	print(correct_sentence("Eating seeds as an passtime activity..."))
+	print(correct_sentence("A heir and a hourglass to go to the throne"))
+	print(correct_sentence("An european country."))
+	print(correct_sentence("A heir"))
+	print(correct_sentence("a hour"))
+

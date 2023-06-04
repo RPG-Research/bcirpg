@@ -1,5 +1,7 @@
 res://Grammar/GrammarTest.tscn
 res://Grammar/GrammarTest.gd
+res://Grammar/ExceptionsForAn.json
 res://screens/MainMenu.tscn
 res://GenresSubstitution/TestDB.tscn
 res://Dialog/TestDialog.tscn
+res://Grammar/ExceptionsForA.json
