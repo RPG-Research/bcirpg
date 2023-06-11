@@ -143,6 +143,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Structural_Tab" type="Tabs" parent="VLayout/HBoxContainer/TabContainer"]
+visible = false
 margin_right = 40.0
 margin_bottom = 24.0
 
@@ -158,6 +159,10 @@ margin_top = 274.0
 margin_right = 643.0
 margin_bottom = 525.0
 script = ExtResource( 4 )
+
+[node name="Rows" type="VBoxContainer" parent="VLayout/HBoxContainer/TabContainer/Structural_Tab/PanelCanvas_Temp"]
+margin_right = 40.0
+margin_bottom = 40.0
 
 [node name="DetailsContainer" type="Panel" parent="VLayout/HBoxContainer"]
 margin_left = 833.0

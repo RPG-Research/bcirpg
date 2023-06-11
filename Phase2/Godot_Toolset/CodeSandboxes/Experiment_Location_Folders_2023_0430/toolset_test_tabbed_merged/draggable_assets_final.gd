@@ -37,6 +37,9 @@ func _get_preview_control() -> Control:
 	preview.rect_size = rect_size
 	var preview_color = color
 	preview_color.a = .5
+	#DKM TEMP:
+	var testColor = Color8(125,125,125)
+	preview_color = testColor
 	preview.color = preview_color
 	preview.set_rotation(.1) # in readians
 	return preview
