@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Experiment_Location_Folders"
-run/main_scene="res://toolset_test/drag_and_drop_demo_final.tscn"
+run/main_scene="res://toolset_test_tabbed_merged/tabbed_merged_test_interface.tscn"
 config/icon="res://icon.png"
 
 [gui]

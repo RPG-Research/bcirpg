@@ -6,10 +6,10 @@ onready var draggable_assets_scene: PackedScene = preload("res://toolset_test_ta
 onready var draggable_assets_container = $Padding/AssetsRows
 
 var dragables = [
-	{"id": 1, "label": "region"},
-	{"id": 2, "label": "location"},
-	{"id": 3, "label": "space"},
-	{"id": 4, "label": "scene"},	
+	{"id": 1, "label": "region", "color": "red"},
+	{"id": 2, "label": "location", "color": "orange"},
+	{"id": 3, "label": "space", "color": "yellow"},
+	{"id": 4, "label": "scene", "color": "green"},	
 ]
 
 
@@ -22,6 +22,7 @@ func _populate_dragables():
 		var drag_item = draggable_assets_scene.instance()
 		drag_item.id = dragable["id"]
 		drag_item.label = dragable["label"]
+		drag_item.color = _set_color_from_text(dragable["color"])
 		draggable_assets_container.add_child(drag_item)
 
 func _on_item_dropped_on_target(dropped_item: Draggable_Assets) -> void:
@@ -31,3 +32,19 @@ func _on_item_dropped_on_target(dropped_item: Draggable_Assets) -> void:
 			#draggable_container.remove_child(drag_item)
 			#drag_item.queue_free()
 			break
+
+#DKM TEMP: for refactoring, this should live elsewhere, but as we get this up. 
+func _set_color_from_text(colorTerm: String) -> Color:
+	var end_color = Color8(0,0,0)
+	match(colorTerm):
+		"red":
+			end_color = Color8(255,0,0)
+		"orange":
+			end_color = Color8(255,102,0)
+		"yellow":
+			end_color = Color8(255,255,0)
+		"green":
+			end_color = Color8(0,102,0)
+		"blue":
+			end_color = Color8(0,0,255)									
+	return end_color
