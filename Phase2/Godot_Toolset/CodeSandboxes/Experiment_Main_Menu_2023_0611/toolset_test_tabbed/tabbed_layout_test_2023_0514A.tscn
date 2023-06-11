@@ -1,0 +1,33 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_right = 1027.0
+margin_bottom = 604.0
+
+[node name="Visual_Tab" type="Tabs" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ColorPicker" type="ColorPicker" parent="TabContainer/Visual_Tab"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 312.0
+margin_bottom = 466.0
+
+[node name="Structural_Tab" type="Tabs" parent="TabContainer"]
+visible = false
+margin_right = 40.0
+margin_bottom = 24.0
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/Structural_Tab"]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = 1023.0
+margin_bottom = 600.0
+text = "Location folder data loads here"

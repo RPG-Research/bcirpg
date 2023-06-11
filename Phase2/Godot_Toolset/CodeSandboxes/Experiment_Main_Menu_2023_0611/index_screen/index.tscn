@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://0ww5jukep1r3"]
+
+[node name="index" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer_Title" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer_Title"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Welcome to the Aurora Toolset!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer_Canvas" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 125.0
+offset_top = -274.0
+offset_right = -152.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="VBoxContainer_1" type="VBoxContainer" parent="Panel/HBoxContainer_Canvas"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label_Module_Options" type="Label" parent="Panel/HBoxContainer_Canvas/VBoxContainer_1"]
+layout_mode = 2
+text = "Module Options"
+uppercase = true
+
+[node name="Button_Create_Module" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_1"]
+layout_mode = 2
+text = "Create Module"
+
+[node name="Button_Edit_Module" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_1"]
+layout_mode = 2
+text = "Edit Module"
+
+[node name="VBoxContainer_2" type="VBoxContainer" parent="Panel/HBoxContainer_Canvas"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label_Server_Options" type="Label" parent="Panel/HBoxContainer_Canvas/VBoxContainer_2"]
+layout_mode = 2
+text = "Server Options
+"
+uppercase = true
+
+[node name="Button_Create_Server" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_2"]
+layout_mode = 2
+text = "Create Server"
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_2"]
+layout_mode = 2
+text = "Alter Server"
+
+[node name="VBoxContainer_3" type="VBoxContainer" parent="Panel/HBoxContainer_Canvas"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label_Toolset_Options" type="Label" parent="Panel/HBoxContainer_Canvas/VBoxContainer_3"]
+layout_mode = 2
+text = "Reference and Settings"
+
+[node name="Button_Settings" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_3"]
+layout_mode = 2
+text = "Toolset Settings"
+
+[node name="Button_Documentation" type="Button" parent="Panel/HBoxContainer_Canvas/VBoxContainer_3"]
+layout_mode = 2
+text = "Documentation"

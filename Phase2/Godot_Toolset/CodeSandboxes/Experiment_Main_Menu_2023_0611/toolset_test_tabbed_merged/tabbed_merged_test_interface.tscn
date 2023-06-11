@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuwnq7sqmg8wy"]
+
+[ext_resource type="Script" path="res://toolset_test_tabbed_merged/toolset_test_tabbed_merged.gd" id="2"]
+[ext_resource type="Script" path="res://toolset_test_tabbed_merged/AssetsContainer.gd" id="3"]
+[ext_resource type="Script" path="res://toolset_test_tabbed_merged/PanelCanvas_Temp.gd" id="4"]
+
+[node name="Tabbed_merged_test" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2")
+
+[node name="VLayout" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="DescriptionHeader" type="HBoxContainer" parent="VLayout"]
+layout_mode = 2
+
+[node name="M1H" type="Panel" parent="VLayout/DescriptionHeader"]
+layout_mode = 2
+
+[node name="Menu One" type="Label" parent="VLayout/DescriptionHeader/M1H"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Menu 1"
+
+[node name="M2H" type="Panel" parent="VLayout/DescriptionHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MenuTwo" type="Label" parent="VLayout/DescriptionHeader/M2H"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Menu 2"
+
+[node name="M3H" type="Panel" parent="VLayout/DescriptionHeader"]
+layout_mode = 2
+
+[node name="Menu3Label" type="Label" parent="VLayout/DescriptionHeader/M3H"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Menu 3"
+
+[node name="M4H" type="Panel" parent="VLayout/DescriptionHeader"]
+layout_mode = 2
+
+[node name="Menu4Label" type="Label" parent="VLayout/DescriptionHeader/M4H"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Menu 4"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VLayout"]
+layout_mode = 2
+
+[node name="AssetsContainer" type="Panel" parent="VLayout/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("3")
+
+[node name="Padding" type="MarginContainer" parent="VLayout/HBoxContainer/AssetsContainer"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="AssetsRows" type="VBoxContainer" parent="VLayout/HBoxContainer/AssetsContainer/Padding"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VLayout/HBoxContainer/AssetsContainer"]
+layout_mode = 0
+text = "Assets:"
+
+[node name="TabContainer" type="TabContainer" parent="VLayout/HBoxContainer"]
+layout_mode = 2
+
+[node name="Visual_Tab" type="Tabs" parent="VLayout/HBoxContainer/TabContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+editor_description = ""
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = null
+
+[node name="Structural_Tab" type="Tabs" parent="VLayout/HBoxContainer/TabContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+editor_description = ""
+margin_right = 40.0
+margin_bottom = 24.0
+script = null
+
+[node name="TextEdit" type="TextEdit" parent="VLayout/HBoxContainer/TabContainer/Structural_Tab"]
+
+[node name="PanelCanvas_Temp" type="Panel" parent="VLayout/HBoxContainer/TabContainer/Structural_Tab"]
+script = ExtResource("4")
+
+[node name="DetailsContainer" type="Panel" parent="VLayout/HBoxContainer"]
+layout_mode = 2
+
+[node name="Text_Details" type="TextEdit" parent="VLayout/HBoxContainer/DetailsContainer"]
+layout_mode = 0
+text = "Details:"

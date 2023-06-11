@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgknv1j7luukp"]
+
+[ext_resource type="Script" path="res://toolset_test/draggable_final.gd" id="2"]
+
+[node name="Draggable" type="ColorRect"]
+color = Color(0.752941, 0.305882, 0.305882, 1)
+script = ExtResource("2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Drag  Me"
