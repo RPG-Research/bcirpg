@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cemvqqx7rqem3"]
+
+[node name="TopToolbar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_vertical_guides_ = [-96.0]
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Module Options"
+horizontal_alignment = 1
+
+[node name="OptionButton_ModuleSettings" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+item_count = 4
+popup/item_0/text = "Load Module"
+popup/item_0/id = 0
+popup/item_1/text = "Save Module"
+popup/item_1/id = 1
+popup/item_2/text = "Run Module"
+popup/item_2/id = 2
+popup/item_3/text = "Rename Module"
+popup/item_3/id = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Wizards
+"
+horizontal_alignment = 1
+
+[node name="OptionButton_Wizards" type="OptionButton" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Genre Settings"
+popup/item_0/id = 0
+popup/item_1/text = "Dialog Editor"
+popup/item_1/id = 1
+popup/item_2/text = "Character Session"
+popup/item_2/id = 2

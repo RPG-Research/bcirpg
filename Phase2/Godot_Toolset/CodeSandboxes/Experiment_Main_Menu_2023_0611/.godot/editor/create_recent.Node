@@ -1,7 +1,9 @@
-Button
 Label
 VBoxContainer
-ItemList
+OptionButton
+Button
+CheckButton
 HBoxContainer
 Panel
+ItemList
 Control
