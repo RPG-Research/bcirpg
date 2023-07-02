@@ -114,7 +114,7 @@ func rollDice():
 			result.append(0)
 		#result is average of sum of percentages otherwise rounded to 2 decimcal places
 		
-		result.append(stepify((float(sumOfPercentages) / float(denominator)), 0.0001))
+		result.append(snapped((float(sumOfPercentages) / float(denominator)), 0.0001))
 		
 	passedRoll = (result[1] >= neededPercentageToPass)
 #NOTE: degree of success is always calculated regardlesss of success/failure. Let me know if this should be changed	

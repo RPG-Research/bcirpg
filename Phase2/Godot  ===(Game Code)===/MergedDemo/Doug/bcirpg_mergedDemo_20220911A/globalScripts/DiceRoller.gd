@@ -6,8 +6,8 @@ extends Control
 #desired dice types and needed percentage to pass are selected by game/user
 #desiredDice takes an int array representing the # sides on the die/dice
 #neededPercentageToPass takes a float that
-export var desiredDice: Array
-export var neededPercentageToPass: float
+@export var desiredDice: Array
+@export var neededPercentageToPass: float
 
 #Define dieManager variable
 var dieManager

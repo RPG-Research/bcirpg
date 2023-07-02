@@ -1,82 +1,59 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://cot5sao8btmo6"]
 
-[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
-[ext_resource path="res://screens/MoreOptions.gd" type="Script" id=2]
-[ext_resource path="res://userInterface/But_ResumeGame.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=6]
+[ext_resource type="PackedScene" path="res://userInterface/But_ChangeScene.tscn" id="1"]
+[ext_resource type="Script" path="res://screens/MoreOptions.gd" id="2"]
+[ext_resource type="Script" path="res://userInterface/But_ResumeGame.gd" id="3"]
+[ext_resource type="Theme" path="res://assets/ui_controlNode_dark_theme.tres" id="6"]
 
 [node name="MoreOptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 6 )
-script = ExtResource( 2 )
+theme = ExtResource("6")
+script = ExtResource("2")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Background" type="Panel" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -119.0
-margin_top = -152.0
-margin_right = 119.0
-margin_bottom = 152.0
-rect_scale = Vector2( 1.04675, 1.07389 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="But_ResumeGame" type="Button" parent="VBoxContainer"]
-margin_right = 238.0
-margin_bottom = 36.0
+layout_mode = 2
 text = "Resume Game"
-script = ExtResource( 3 )
+script = ExtResource("3")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="But_ShowHistory" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 40.0
-margin_right = 238.0
-margin_bottom = 125.0
+[node name="But_ShowHistory" parent="VBoxContainer" instance=ExtResource("1")]
+layout_mode = 2
 text = "Show History"
-next_scene_path = "res://screens/HistoryViewer.tscn"
 
-[node name="But_Chat" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 129.0
-margin_right = 238.0
-margin_bottom = 214.0
+[node name="But_Chat" parent="VBoxContainer" instance=ExtResource("1")]
+layout_mode = 2
 text = "Chat"
-next_scene_path = "res://screens/MenuScreen.tscn"
 
-[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 218.0
-margin_right = 238.0
-margin_bottom = 304.0
+[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource("1")]
+layout_mode = 2
 text = "Main Menu"
-next_scene_path = "res://Screens/MenuScreen.tscn"
 
 [node name="Version" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -177.0
-margin_top = -44.0
-margin_right = -5.0
-margin_bottom = -6.0
 text = "Version: 0.0.0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="button_up" from="VBoxContainer/But_ResumeGame" to="VBoxContainer/But_ResumeGame" method="_on_But_ResumeGame_button_up"]

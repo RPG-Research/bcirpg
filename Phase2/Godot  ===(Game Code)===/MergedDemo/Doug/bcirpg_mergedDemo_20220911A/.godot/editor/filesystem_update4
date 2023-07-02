@@ -1,0 +1,14 @@
+res://_userFiles/characterFiles/testingCSVCharFile.en.translation
+res://screens/MenuScreen.tscn
+res://screens/ImportCharacter.tscn
+res://screens/LoadGame_temp.tscn
+res://screens/MoreOptions.tscn
+res://screens/Multiplayer_temp.tscn
+res://screens/NewGame_temp.tscn
+res://screens/PlayerSelection.tscn
+res://screens/Character_Add.tscn
+res://screens/Character_Load.tscn
+res://screens/HistoryViewer.tscn
+res://screens/SettingsMenuControl.tscn
+res://globalScripts/DiceRoller.gd
+res://globalScripts/DieManager.gd

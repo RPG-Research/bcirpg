@@ -1,100 +1,67 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://d4j4nm31c6y0"]
 
-[ext_resource path="res://screens/HistoryViewer.gd" type="Script" id=1]
-[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=3]
-[ext_resource path="res://screens/But_HistoryPager.gd" type="Script" id=4]
+[ext_resource type="Script" path="res://screens/HistoryViewer.gd" id="1"]
+[ext_resource type="PackedScene" path="res://userInterface/But_ChangeScene.tscn" id="2"]
+[ext_resource type="Theme" path="res://assets/ui_controlNode_dark_theme.tres" id="3"]
+[ext_resource type="Script" path="res://screens/But_HistoryPager.gd" id="4"]
 
 [node name="HistoryViewer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 3 )
-script = ExtResource( 1 )
+theme = ExtResource("3")
+script = ExtResource("1")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Background" type="PanelContainer" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="Background"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 1023.0
-margin_bottom = 599.0
-custom_constants/margin_right = 20
-custom_constants/margin_top = 10
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
+layout_mode = 2
 
 [node name="Rows" type="VBoxContainer" parent="Background/MarginContainer"]
-margin_left = 20.0
-margin_top = 10.0
-margin_right = 1002.0
-margin_bottom = 578.0
-custom_constants/separation = 10
+layout_mode = 2
 
 [node name="ItemList" type="ItemList" parent="Background/MarginContainer/Rows"]
-margin_right = 982.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 0, 40 )
+layout_mode = 2
 
-[node name="But_ChangeScene" parent="Background/MarginContainer/Rows/ItemList" instance=ExtResource( 2 )]
-margin_right = 200.0
-margin_bottom = 36.0
+[node name="But_ChangeScene" parent="Background/MarginContainer/Rows/ItemList" instance=ExtResource("2")]
+layout_mode = 0
 text = "More Options"
-next_scene_path = "res://screens/MoreOptions.tscn"
 
 [node name="But_HistoryPager" type="Button" parent="Background/MarginContainer/Rows/ItemList"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -84.0
-margin_right = 115.0
-margin_bottom = 36.0
 text = "History Pager"
-script = ExtResource( 4 )
+script = ExtResource("4")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Background/MarginContainer/Rows/ItemList"]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -194.94
-margin_top = -1.12247
-margin_right = -81.9397
-margin_bottom = 23.8775
 text = "History Page:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Page_Display" type="Label" parent="Background/MarginContainer/Rows/ItemList"]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -40.0
-margin_bottom = 25.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GameInfo" type="PanelContainer" parent="Background/MarginContainer/Rows"]
-margin_top = 50.0
-margin_right = 982.0
-margin_bottom = 568.0
+layout_mode = 2
 size_flags_vertical = 3
 
 [node name="CurrentHistory" type="VBoxContainer" parent="Background/MarginContainer/Rows/GameInfo"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 981.0
-margin_bottom = 517.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 20
 
 [connection signal="button_up" from="Background/MarginContainer/Rows/ItemList/But_HistoryPager" to="Background/MarginContainer/Rows/ItemList/But_HistoryPager" method="_on_But_HistoryPager_button_up"]
