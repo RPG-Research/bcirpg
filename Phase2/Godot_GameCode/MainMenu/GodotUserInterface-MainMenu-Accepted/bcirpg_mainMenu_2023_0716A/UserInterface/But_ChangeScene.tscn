@@ -8,8 +8,5 @@ margin_bottom = 24.0
 size_flags_vertical = 3
 text = "New Game"
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[connection signal="button_up" from="." to="." method="_on_But_NewGame_button_up"]
+[connection signal="button_up" from="." to="." method="_on_But_ChangeScene_button_up"]

@@ -20,7 +20,7 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-text = "Multiplayer (temp)"
+text = "Load Game (temp)"
 
 [node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
 text = "Temp: back to menu"

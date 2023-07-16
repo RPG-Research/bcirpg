@@ -9,9 +9,8 @@ export(String, FILE) var next_scene_path: = ""
 
 var tempToggle = 0
 
-func _on_But_NewGame_button_up():
+func _on_But_ChangeScene_button_up():
 	get_tree().change_scene(next_scene_path)
-
 
 func _get_configuration_warning() -> String:
 		return "next_scene_path must be set for this button to work" if next_scene_path == "" else ""
