@@ -1,0 +1,47 @@
+[gd_scene format=2]
+
+[node name="WatingRoom" type="Popup" groups=["WaitingRoom"]]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.109804, 0.129412, 0.243137, 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 412.0
+margin_top = 194.0
+margin_right = 612.0
+margin_bottom = 406.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 31.0
+text = "Waiting Room
+"
+align = 1
+valign = 1
+
+[node name="ItemList" type="ItemList" parent="CenterContainer/VBoxContainer"]
+margin_top = 35.0
+margin_right = 200.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 200, 0 )
+custom_constants/vseparation = 10
+items = [ "Player 1", null, false, "Player 2", null, false, "Player 3", null, false, "Player 4", null, false ]
+auto_height = true
+same_column_width = true
+fixed_column_width = 200
+icon_mode = 0
+
+[node name="ReadyButton" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 200.0
+margin_bottom = 212.0
+text = "Ready"
