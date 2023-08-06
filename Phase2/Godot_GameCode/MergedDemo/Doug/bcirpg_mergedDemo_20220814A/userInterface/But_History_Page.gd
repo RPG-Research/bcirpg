@@ -17,5 +17,3 @@ func _on_But_History_Page_button_up():
 		current_page = 0
 	history_rows_node.remove_child(history_rows_node.get_child(0)) 
 	history_rows_node.add_child(game_history_array[current_page])
-
-
