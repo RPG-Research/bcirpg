@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "PanelContainer",
 "class": "Locale",
 "language": "GDScript",
-"path": "res://UserInterface/Locale.gd"
+"path": "res://userInterface/Locale.gd"
 }, {
 "base": "Node",
 "class": "PlayerSettingsTemplate",

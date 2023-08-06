@@ -83,7 +83,6 @@ margin_bottom = 186.0
 text = "Join Session"
 
 [node name="WaitingRoom" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [connection signal="text_changed" from="CenterContainer/VBoxContainer/GridContainer/NameLineEdit" to="." method="_on_NameLineEdit_text_changed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]

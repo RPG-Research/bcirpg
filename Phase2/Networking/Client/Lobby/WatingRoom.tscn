@@ -1,7 +1,6 @@
 [gd_scene format=2]
 
 [node name="WatingRoom" type="Popup" groups=["WaitingRoom"]]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -16,9 +15,9 @@ anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 412.0
-margin_top = 194.0
+margin_top = 270.0
 margin_right = 612.0
-margin_bottom = 406.0
+margin_bottom = 329.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 margin_right = 200.0

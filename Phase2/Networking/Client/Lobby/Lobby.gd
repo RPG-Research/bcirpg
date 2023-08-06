@@ -10,6 +10,7 @@ onready var waiting_room = $WaitingRoom
 
 onready var ready_btn = $WaitingRoom/CenterContainer/VBoxContainer/ReadyButton
 
+
 func _ready():
 	player_name.text = Save.save_data["player_name"]
 	selected_IP.text = Server.DEFAULT_IP
