@@ -1,0 +1,248 @@
+[gd_scene format=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.537255, 0.537255, 0.537255, 1 )
+
+[node name="RootVBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 397.0
+margin_bottom = 600.0
+
+[node name="TopHBoxContainer" type="HBoxContainer" parent="RootVBoxContainer"]
+margin_right = 397.0
+margin_bottom = 332.0
+
+[node name="LeftVBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/TopHBoxContainer"]
+margin_right = 284.0
+margin_bottom = 332.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer"]
+margin_right = 284.0
+margin_bottom = 136.0
+
+[node name="FactionCenterContainer" type="CenterContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer"]
+margin_right = 112.0
+margin_bottom = 136.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/FactionCenterContainer"]
+margin_top = 56.0
+margin_right = 112.0
+margin_bottom = 80.0
+columns = 2
+
+[node name="Label" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/FactionCenterContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 50.0
+margin_bottom = 19.0
+text = "Faction:"
+
+[node name="LineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/FactionCenterContainer/GridContainer"]
+margin_left = 54.0
+margin_right = 112.0
+margin_bottom = 24.0
+
+[node name="NameCenterContainer2" type="CenterContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer"]
+margin_left = 116.0
+margin_right = 284.0
+margin_bottom = 136.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2"]
+margin_right = 168.0
+margin_bottom = 136.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer"]
+margin_right = 168.0
+margin_bottom = 136.0
+columns = 2
+
+[node name="Label" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 106.0
+margin_bottom = 19.0
+text = "Character Name:"
+
+[node name="LineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_left = 110.0
+margin_right = 168.0
+margin_bottom = 24.0
+
+[node name="Label2" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_top = 33.0
+margin_right = 106.0
+margin_bottom = 47.0
+text = "Profession:"
+
+[node name="LineEdit2" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_left = 110.0
+margin_top = 28.0
+margin_right = 168.0
+margin_bottom = 52.0
+
+[node name="Label3" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_top = 61.0
+margin_right = 106.0
+margin_bottom = 75.0
+text = "Demeanor:"
+
+[node name="LineEdit3" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_left = 110.0
+margin_top = 56.0
+margin_right = 168.0
+margin_bottom = 80.0
+
+[node name="Label4" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_top = 89.0
+margin_right = 106.0
+margin_bottom = 103.0
+text = "Species:"
+
+[node name="LineEdit4" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_left = 110.0
+margin_top = 84.0
+margin_right = 168.0
+margin_bottom = 108.0
+
+[node name="Label5" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_top = 117.0
+margin_right = 106.0
+margin_bottom = 131.0
+text = "Culture:"
+
+[node name="LineEdit5" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/HBoxContainer/NameCenterContainer2/VBoxContainer/GridContainer"]
+margin_left = 110.0
+margin_top = 112.0
+margin_right = 168.0
+margin_bottom = 136.0
+
+[node name="BackgroundStatsVBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer"]
+margin_top = 140.0
+margin_right = 284.0
+margin_bottom = 332.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer"]
+margin_right = 284.0
+margin_bottom = 192.0
+columns = 2
+
+[node name="DescriptionLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 104.0
+margin_bottom = 19.0
+text = "Description:"
+
+[node name="DescriptionLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_right = 166.0
+margin_bottom = 24.0
+
+[node name="HWLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 33.0
+margin_right = 104.0
+margin_bottom = 47.0
+text = "Height / Weight:"
+
+[node name="HWLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 28.0
+margin_right = 166.0
+margin_bottom = 52.0
+
+[node name="BackstoryLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 61.0
+margin_right = 104.0
+margin_bottom = 75.0
+text = "Backstory:"
+
+[node name="BackstoryLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 56.0
+margin_right = 166.0
+margin_bottom = 80.0
+
+[node name="GenderLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 89.0
+margin_right = 104.0
+margin_bottom = 103.0
+text = "Gender:"
+
+[node name="GenderLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 84.0
+margin_right = 166.0
+margin_bottom = 108.0
+
+[node name="EquipmentLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 117.0
+margin_right = 104.0
+margin_bottom = 131.0
+text = "Equipment:"
+
+[node name="EquipmentLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 112.0
+margin_right = 166.0
+margin_bottom = 136.0
+
+[node name="CharismaLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 145.0
+margin_right = 104.0
+margin_bottom = 159.0
+text = "Charisma:"
+
+[node name="CharismaLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 140.0
+margin_right = 166.0
+margin_bottom = 164.0
+
+[node name="DialogueLabel" type="Label" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_top = 173.0
+margin_right = 104.0
+margin_bottom = 187.0
+text = "Dialogue:"
+
+[node name="DialogueLineEdit" type="LineEdit" parent="RootVBoxContainer/TopHBoxContainer/LeftVBoxContainer/BackgroundStatsVBoxContainer/GridContainer"]
+margin_left = 108.0
+margin_top = 168.0
+margin_right = 166.0
+margin_bottom = 192.0
+
+[node name="RightVBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/TopHBoxContainer"]
+margin_left = 288.0
+margin_right = 288.0
+margin_bottom = 332.0
+
+[node name="CenterContainer" type="CenterContainer" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer"]
+margin_bottom = 14.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/CenterContainer"]
+margin_bottom = 14.0
+
+[node name="Label" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/CenterContainer/GridContainer"]
+margin_bottom = 14.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RootVBoxContainer"]
+margin_top = 336.0
+margin_right = 397.0
+margin_bottom = 336.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/HBoxContainer"]
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/HBoxContainer/VBoxContainer"]
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="RootVBoxContainer/HBoxContainer"]
+margin_left = 4.0
+margin_right = 4.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/HBoxContainer/VBoxContainer2"]
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="RootVBoxContainer/HBoxContainer"]
+margin_left = 8.0
+margin_right = 8.0
+
+[node name="GridContainer" type="GridContainer" parent="RootVBoxContainer/HBoxContainer/VBoxContainer3"]
