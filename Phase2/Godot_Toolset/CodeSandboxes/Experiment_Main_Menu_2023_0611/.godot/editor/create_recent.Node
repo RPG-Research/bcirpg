@@ -1,9 +1,11 @@
-Label
+TextEdit
 VBoxContainer
-OptionButton
-Button
-CheckButton
 HBoxContainer
+OptionButton
+Label
+Button
+CheckBox
+CheckButton
 Panel
 ItemList
 Control

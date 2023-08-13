@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cemvqqx7rqem3"]
+[gd_scene load_steps=3 format=3 uid="uid://cemvqqx7rqem3"]
+
+[ext_resource type="Script" path="res://MenuManager.gd" id="1_l6hds"]
+[ext_resource type="Script" path="res://GenreSettings.gd" id="2_kvqsl"]
 
 [node name="TopToolbar" type="Control"]
 layout_mode = 3
@@ -63,3 +66,179 @@ popup/item_1/text = "Dialog Editor"
 popup/item_1/id = 1
 popup/item_2/text = "Character Session"
 popup/item_2/id = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+script = ExtResource("1_l6hds")
+
+[node name="GenreMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
+visible = false
+layout_mode = 2
+text = "Genre Menu"
+script = ExtResource("2_kvqsl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.308
+anchor_bottom = 1.308
+offset_left = -2.0
+offset_top = -0.00800323
+offset_right = 565.0
+offset_bottom = 39.992
+theme_override_constants/separation = 125
+
+[node name="Default" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer"]
+layout_mode = 2
+text = "Default:"
+
+[node name="GenreContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 22.0
+offset_right = 55.0
+offset_bottom = 62.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+layout_mode = 2
+theme_override_constants/separation = 135
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer"]
+layout_mode = 2
+text = "Fantasy"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+layout_mode = 2
+theme_override_constants/separation = 135
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Science Fiction"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+layout_mode = 2
+theme_override_constants/separation = 135
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Modern Day"
+
+[node name="NewGenre" type="Button" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+layout_mode = 2
+text = "Add New Genre"
+
+[node name="Genre Name" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer"]
+layout_mode = 2
+text = "Genre Name:"
+
+[node name="Initial Settings" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer"]
+layout_mode = 2
+text = "Initial Settings:"
+
+[node name="DialogMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
+visible = false
+layout_mode = 2
+text = "Dialog Menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.133
+anchor_top = 1.308
+anchor_right = 0.133
+anchor_bottom = 1.308
+offset_left = -0.0340004
+offset_top = -0.00800323
+offset_right = 39.966
+offset_bottom = 39.992
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.35
+anchor_bottom = 1.35
+offset_left = -2.0
+offset_right = 38.0
+offset_bottom = 40.0
+
+[node name="CharacterMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Character Menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.008
+anchor_top = 1.038
+anchor_right = 0.008
+anchor_bottom = 1.038
+offset_top = 0.0119972
+offset_right = 40.0
+offset_bottom = 40.012
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer"]
+layout_mode = 2
+item_count = 1
+popup/item_0/text = "New Character"
+popup/item_0/id = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 1.29
+anchor_right = 0.013
+anchor_bottom = 1.29
+offset_left = -0.0670002
+offset_top = 0.00999832
+offset_right = 685.933
+offset_bottom = 463.01
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer2/OptionButton_Wizards" to="HBoxContainer/VBoxContainer3" method="_on_option_button_wizards_item_selected"]
+[connection signal="button_up" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/NewGenre" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_new_genre_button_up"]

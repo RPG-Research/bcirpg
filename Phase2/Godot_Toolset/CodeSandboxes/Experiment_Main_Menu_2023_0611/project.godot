@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Experiment_Location_Folders"
-run/main_scene="res://toolset_test/drag_and_drop_demo_final.tscn"
+run/main_scene="res://top_toolbar/TopToolbar.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 
