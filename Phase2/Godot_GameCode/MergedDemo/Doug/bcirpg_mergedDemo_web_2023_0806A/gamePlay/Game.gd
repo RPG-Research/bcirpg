@@ -157,8 +157,10 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 	elif target_Locale.locale_action == "TestDieRollAction" && target_Locale.destinations_array.size() == 1:
 		print("Running test action " + target_Locale.locale_action + "; with parameters of: ")
 		var nodeParameters = []
+		var outputText = "Die types to be rolled: "
 		for param in target_Locale.locale_action_params:
 			print(param)
+			outputText = outputText + str(param) + " sided; "
 			nodeParameters.append(param)
 		#DKM TEST: testing the die roller with Andrew's code; randomly assigning percentage to pass.
 		#	Should this param be optional if you purely want to roll dice?
@@ -167,7 +169,8 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 		DiceRoller.dieManager.setDieManager(dieParams, 0.5)
 		var result = DiceRoller.dieManager.rollDice()
 		print("Rolled values: " + str(result[0]))
-
+		outputText = outputText + "with values: " + str(result[0])
+		create_response(outputText)
 		#DKM TEMP: Andrew's code for ref:
 		#assigning variable names to each of them for better clarity
 #		var rolledValues = result[0]
@@ -177,7 +180,7 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 #		var degreeOfSuccess = result[4]
 #		var dice = result[5] 
 
-		change_node(target_Locale.destinations_array[0])
+		#change_node(target_Locale.destinations_array[0])
 	options_container.get_child(0).grab_focus()
 
 
