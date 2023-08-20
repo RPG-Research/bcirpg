@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://screens/wizards/character_creation/SkillOptionButtonScript.gd" type="Script" id=1]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -412,6 +414,7 @@ text = "Skill 1:"
 margin_left = 54.0
 margin_right = 83.0
 margin_bottom = 20.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel2" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 27.0
@@ -424,6 +427,7 @@ margin_left = 54.0
 margin_top = 24.0
 margin_right = 83.0
 margin_bottom = 44.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel3" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 51.0
@@ -436,6 +440,7 @@ margin_left = 54.0
 margin_top = 48.0
 margin_right = 83.0
 margin_bottom = 68.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel4" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 75.0
@@ -448,6 +453,7 @@ margin_left = 54.0
 margin_top = 72.0
 margin_right = 83.0
 margin_bottom = 92.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel5" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 99.0
@@ -460,6 +466,7 @@ margin_left = 54.0
 margin_top = 96.0
 margin_right = 83.0
 margin_bottom = 116.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel6" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 123.0
@@ -472,6 +479,7 @@ margin_left = 54.0
 margin_top = 120.0
 margin_right = 83.0
 margin_bottom = 140.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel7" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 147.0
@@ -484,6 +492,7 @@ margin_left = 54.0
 margin_top = 144.0
 margin_right = 83.0
 margin_bottom = 164.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel9" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 171.0
@@ -496,6 +505,7 @@ margin_left = 54.0
 margin_top = 168.0
 margin_right = 83.0
 margin_bottom = 188.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel8" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 195.0
@@ -508,6 +518,7 @@ margin_left = 54.0
 margin_top = 192.0
 margin_right = 83.0
 margin_bottom = 212.0
+script = ExtResource( 1 )
 
 [node name="SkillLabel10" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer"]
 margin_top = 219.0
@@ -520,6 +531,7 @@ margin_left = 54.0
 margin_top = 216.0
 margin_right = 83.0
 margin_bottom = 236.0
+script = ExtResource( 1 )
 
 [node name="SpecialAbilitiesVBoxContainer" type="VBoxContainer" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer"]
 margin_left = 280.0

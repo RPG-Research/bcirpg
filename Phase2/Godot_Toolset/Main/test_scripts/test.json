@@ -1,0 +1,12 @@
+{
+  "variables": [
+    {
+      "name": "variable1",
+      "value": "value1"
+    },
+    {
+      "name": "variable2",
+      "value": "value2"
+    }
+  ]
+}
