@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://screens/wizards/character_creation/SkillOptionButtonScript.gd" type="Script" id=1]
+[ext_resource path="res://screens/wizards/character_creation/skills_option_button.gd" type="Script" id=1]
+[ext_resource path="res://screens/wizards/character_creation/specials_option_button.gd" type="Script" id=2]
+[ext_resource path="res://screens/wizards/character_creation/SaveCharButton.gd" type="Script" id=3]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -568,6 +570,7 @@ text = "Slot 1:"
 margin_left = 44.0
 margin_right = 73.0
 margin_bottom = 20.0
+script = ExtResource( 2 )
 
 [node name="Label2" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 27.0
@@ -580,6 +583,7 @@ margin_left = 44.0
 margin_top = 24.0
 margin_right = 73.0
 margin_bottom = 44.0
+script = ExtResource( 2 )
 
 [node name="Label3" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 51.0
@@ -592,6 +596,7 @@ margin_left = 44.0
 margin_top = 48.0
 margin_right = 73.0
 margin_bottom = 68.0
+script = ExtResource( 2 )
 
 [node name="Label4" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 75.0
@@ -604,6 +609,7 @@ margin_left = 44.0
 margin_top = 72.0
 margin_right = 73.0
 margin_bottom = 92.0
+script = ExtResource( 2 )
 
 [node name="Label5" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 99.0
@@ -616,6 +622,7 @@ margin_left = 44.0
 margin_top = 96.0
 margin_right = 73.0
 margin_bottom = 116.0
+script = ExtResource( 2 )
 
 [node name="Label6" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 123.0
@@ -628,6 +635,7 @@ margin_left = 44.0
 margin_top = 120.0
 margin_right = 73.0
 margin_bottom = 140.0
+script = ExtResource( 2 )
 
 [node name="Label7" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 147.0
@@ -640,6 +648,7 @@ margin_left = 44.0
 margin_top = 144.0
 margin_right = 73.0
 margin_bottom = 164.0
+script = ExtResource( 2 )
 
 [node name="Label8" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 171.0
@@ -652,6 +661,7 @@ margin_left = 44.0
 margin_top = 168.0
 margin_right = 73.0
 margin_bottom = 188.0
+script = ExtResource( 2 )
 
 [node name="Label9" type="Label" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer"]
 margin_top = 195.0
@@ -664,9 +674,14 @@ margin_left = 44.0
 margin_top = 192.0
 margin_right = 73.0
 margin_bottom = 212.0
+script = ExtResource( 2 )
 
 [node name="Button" type="Button" parent="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer"]
 margin_top = 348.0
 margin_right = 400.0
 margin_bottom = 368.0
 text = "Export Character To Module"
+script = ExtResource( 3 )
+
+[connection signal="pressed" from="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/Button" to="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SkillsVboxContainer/CenterContainer/GridContainer/SkillOptionButton" method="_on_Button_pressed"]
+[connection signal="pressed" from="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/Button" to="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/Button" method="_on_Button_pressed"]

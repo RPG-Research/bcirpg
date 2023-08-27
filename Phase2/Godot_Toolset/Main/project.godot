@@ -13,6 +13,10 @@ config_version=4
 config/name="bcirpg_toolset"
 config/icon="res://icon.png"
 
+[global]
+
+filters=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
