@@ -15,27 +15,27 @@ onready var saveObject = get_node('/root/GlobalSaveInstance')
 #res://SettingsMenuControl.tscn
 
 # Vars For UI Widgets
-onready var NameVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
+onready var NameVar = get_node('SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
 
-onready var NRiskVar = get_node('Panel/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/RiskSlider')
+onready var NRiskVar = get_node('SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/RiskSlider')
 
-onready var FontVar = get_node("Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/FontSizeSlider")
+onready var FontVar = get_node("SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/FontSizeSlider")
 
-onready var BrightnessVar = get_node('Panel/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/BrightnessSlider')
+onready var BrightnessVar = get_node('SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/BrightnessSlider')
 
-onready var VolumeVar = get_node("Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/VolumeSlider")
+onready var VolumeVar = get_node("SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/VolumeSlider")
 
-onready var ClosedCaptionsVar = get_node('Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions/ClosedCaptionsCheckBox')
+onready var ClosedCaptionsVar = get_node('SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions/ClosedCaptionsCheckBox')
 
-onready var ConsoleCommandVar = get_node('Panel/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole/DevConsoleCheckbox')
+onready var ConsoleCommandVar = get_node('SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole/DevConsoleCheckbox')
 
-onready var saveButton = get_node("Panel/HBoxBottomRow/SaveButton")
+onready var saveButton = get_node("HBoxBottomRow/SaveButton")
 
-onready var bKeyboardEnabled = get_node("Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled/VisualKeyboardCheckBox")
+onready var bKeyboardEnabled = get_node("SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled/VisualKeyboardCheckBox")
 
-onready var keyboardLayoutList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/LayoutItemList') 
+onready var keyboardLayoutList = get_node('SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/LayoutItemList') 
 
-onready var themeChoiceList = get_node('Panel/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/ThemeItemList')
+onready var themeChoiceList = get_node('SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/ThemeItemList')
 
 
 var iniFile = ConfigFile.new()
@@ -55,9 +55,16 @@ func saveToInstance():
 	var savedThemeItems = themeChoiceList.get_selected_items() 
 	var themeSelection = savedThemeItems[0]
 	saveObject.settingsInstance.themeChoiceInt = themeSelection
-	#Trigger re-load of the file name
-	saveObject.load_settings_file()
+	#DKM TEMP: for web version, setting this to the singleton without requiring reprocess of file
+	if(saveObject.settingsInstance.themeChoiceInt == 1):
+		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
+	else:
+		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+	#Load selected theme:
 	theme=load(saveObject.settingsInstance.themeFile)
+	#Trigger re-load of the file name
+	#saveObject.load_settings_file()
+	#theme=load(saveObject.settingsInstance.themeFile)
 	
 
 func saveFile():
