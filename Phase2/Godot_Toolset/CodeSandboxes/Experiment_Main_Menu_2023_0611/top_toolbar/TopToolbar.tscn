@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cemvqqx7rqem3"]
+[gd_scene load_steps=6 format=3 uid="uid://cemvqqx7rqem3"]
 
 [ext_resource type="Script" path="res://MenuManager.gd" id="1_l6hds"]
 [ext_resource type="Script" path="res://GenreSettings.gd" id="2_kvqsl"]
+[ext_resource type="Script" path="res://top_toolbar/DialogMenu.gd" id="3_3vxaj"]
+[ext_resource type="Script" path="res://top_toolbar/GenreDialogManager.gd" id="4_vxa5e"]
+[ext_resource type="PackedScene" uid="uid://cgtpfhy1ler0" path="res://genre_dialog_container.tscn" id="5_pyfae"]
 
 [node name="TopToolbar" type="Control"]
 layout_mode = 3
@@ -92,48 +95,53 @@ theme_override_constants/separation = 125
 layout_mode = 2
 text = "Default:"
 
-[node name="GenreContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default"]
-layout_mode = 0
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default"]
+custom_minimum_size = Vector2(745, 500)
+layout_mode = 2
 offset_left = 15.0
 offset_top = 22.0
-offset_right = 55.0
-offset_bottom = 62.0
+offset_right = 755.0
+offset_bottom = 222.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+[node name="GenreContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer"]
 layout_mode = 2
 theme_override_constants/separation = 135
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer"]
 layout_mode = 2
 text = "Fantasy"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer"]
 layout_mode = 2
 theme_override_constants/separation = 135
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer2"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Science Fiction"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer"]
 layout_mode = 2
 theme_override_constants/separation = 135
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer3"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer3"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/HBoxContainer3"]
 layout_mode = 2
 text = "Modern Day"
 
-[node name="NewGenre" type="Button" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer"]
+[node name="NewGenre" type="Button" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Add New Genre"
 
 [node name="Genre Name" type="Label" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer"]
@@ -148,6 +156,7 @@ text = "Initial Settings:"
 visible = false
 layout_mode = 2
 text = "Dialog Menu"
+script = ExtResource("3_3vxaj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu"]
 layout_mode = 1
@@ -163,17 +172,32 @@ offset_bottom = 39.992
 
 [node name="OptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer"]
 layout_mode = 2
+item_count = 3
+popup/item_0/text = "Fantasy"
+popup/item_0/id = 0
+popup/item_1/text = "Sci Fi"
+popup/item_1/id = 1
+popup/item_2/text = "Modern Day"
+popup/item_2/id = 2
+script = ExtResource("4_vxa5e")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.35
-anchor_bottom = 1.35
-offset_left = -2.0
-offset_right = 38.0
-offset_bottom = 40.0
+[node name="GenreDialogContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+
+[node name="GenreDialogContainer2" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+
+[node name="GenreDialogContainer3" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
 
 [node name="CharacterMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
+visible = false
 layout_mode = 2
 text = "Character Menu"
 
@@ -201,31 +225,167 @@ anchor_left = 0.013
 anchor_top = 1.29
 anchor_right = 0.013
 anchor_bottom = 1.29
-offset_left = -0.0670002
-offset_top = 0.00999832
-offset_right = 685.933
-offset_bottom = 463.01
+offset_left = 0.933
+offset_top = 8.01001
+offset_right = 743.933
+offset_bottom = 818.01
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Faction"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Profession"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+text = "Demeanor"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer4"]
+layout_mode = 2
+text = "Species"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+text = "Culture"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Height/weight"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Backstory"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Gender"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Equipment"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "CR"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Dialouge"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
@@ -234,11 +394,372 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Con"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Agi"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Self-Discipline"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Memory"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Reasoning"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Strength"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer7"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Quickness"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer7"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer8"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Presence"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer8"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer9"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Intuition"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer9"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer10"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Empathy"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer10"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer11" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer11"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Appearance"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer11"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 1:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 2:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 3:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 4:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 5:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 6:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer7"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 7:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer7"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer8"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 8:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer8"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer9"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 9:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer9"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer10"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Skill 10:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer10"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 1:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 2:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 3:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 4:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 5:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer5"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 6:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer7"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 7:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer7"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer8"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 8:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer8"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer9"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Special Ability 9:"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer9"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer2/OptionButton_Wizards" to="HBoxContainer/VBoxContainer3" method="_on_option_button_wizards_item_selected"]
-[connection signal="button_up" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/GenreContainer/NewGenre" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_new_genre_button_up"]
+[connection signal="button_up" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/NewGenre" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_new_genre_button_up"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" to="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" method="_on_item_selected"]

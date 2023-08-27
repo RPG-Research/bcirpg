@@ -1,3 +1,5 @@
 res://top_toolbar/TopToolbar.tscn
-res://MenuManager.gd
+res://new_genre.tscn
 res://GenreSettings.gd
+res://top_toolbar/DialogMenu.gd
+res://top_toolbar/GenreDialogManager.gd

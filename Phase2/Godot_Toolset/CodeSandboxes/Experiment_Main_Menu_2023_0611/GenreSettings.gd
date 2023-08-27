@@ -14,5 +14,9 @@ func _process(delta):
 
 func _on_new_genre_button_up():
 	var genreInstance = newGenre.instantiate()
-	$HBoxContainer/Default/GenreContainer.add_child(genreInstance)
-	$HBoxContainer/Default/GenreContainer.move_child($HBoxContainer/Default/GenreContainer/NewGenre, $HBoxContainer/Default/GenreContainer.get_child_count() - 1)
+	$HBoxContainer/Default/ScrollContainer/GenreContainer.add_child(genreInstance)
+	$HBoxContainer/Default/ScrollContainer/GenreContainer.move_child($HBoxContainer/Default/ScrollContainer/GenreContainer/NewGenre, $HBoxContainer/Default/ScrollContainer/GenreContainer.get_child_count() - 1)
+
+
+func _on_v_scroll_bar_scrolling():
+	$HboxContainer

@@ -1,9 +1,11 @@
-TextEdit
-VBoxContainer
-HBoxContainer
 OptionButton
 Label
+HBoxContainer
+TextEdit
+VBoxContainer
 Button
+ScrollContainer
+VScrollBar
 CheckBox
 CheckButton
 Panel

@@ -1,11 +1,13 @@
 2a60927148abd1d33b818b535e306557
-::res://::1691776207
+::res://::1692385278
 Cabin-VariableFont_wdth,wght.ttf::FontFile::6071708341937432371::1691364683::1691364683::1::::<><>::
 default_env.tres::Environment::-1::1691364683::0::1::::<><>::
+GenreSettings.gd::GDScript::-1::1691903482::0::1::::<>Node<>::
 icon.png::CompressedTexture2D::6683631437730026850::1691364683::1691364683::1::::<><>::
-MenuManager.gd::GDScript::-1::1691459965::0::1::::<>Node<>::
+MenuManager.gd::GDScript::-1::1691948501::0::1::::<>Node<>::
+new_genre.tscn::PackedScene::4691503272014395181::1691803163::0::1::::<><>::
 README.md::TextFile::-1::1691364683::0::1::::<><>::
 ::res://index_screen/::1691364683
 index.tscn::PackedScene::1801527253264693182::1691364683::0::1::::<><>::
-::res://top_toolbar/::1691459965
-TopToolbar.tscn::PackedScene::5079673781919012116::1691459965::0::1::::<><>::res://MenuManager.gd
+::res://top_toolbar/::1691950434
+TopToolbar.tscn::PackedScene::5079673781919012116::1691950434::0::1::::<><>::res://MenuManager.gd<>res://GenreSettings.gd
