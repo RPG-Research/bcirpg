@@ -86,41 +86,54 @@ onready var special8 = $"RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/V
 
 onready var special9 = $"RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer/SBOptionButton9"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-func _handle_user_input():
 	# Save the data to a CSV file.
-	var data = [CharacterName, Profession, Demeanor, Species, Culture, Faction, Description, HeightAndWeight, 
+var rowData = [CharacterName, Profession, Demeanor, Species, Culture, Faction, Description, HeightAndWeight, 
 	Backstory, Gender, Equipment, Charisma, Dialog, Constitution, Agility, SelfDisipline, Memory, Reasoning, 
 	Strength, Quickness, Presence, Intuition, Empathy, Appearence, skill1, skill2, skill3, skill4, skill5,
 	skill6, skill7, skill8, skill9, skill10, special1, special2, special3, special4, special5, special6,
 	special7, special8, special9]
 
-	var header = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
-			"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
-		  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
-		  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
-		  "special7", "special8", "special9"]
-		
+var headerData = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
+	"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
+	  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
+	  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
+	  "special7", "special8", "special9"]
+	
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func save_data_to_csv(data: Array, file_path: String):
 	var file = File.new()
+	if file.open(file_path, File.WRITE) == OK:
+		for row in data:
+			file.store_string(format_row(row))
+		file.close()
+		print("Data saved to", file_path)
+	else:
+		print("Failed to open", file_path, "for writing.")
 
-   # Open the file for writing.
-	file.open(filename, File.WRITE)
+func format_row(row_data: Array) -> String:
+	# Convert the array of data to a comma-separated string
+	var formatted_row = ""
+	for i in range(row_data.size()):
+		formatted_row += str(row_data[i])
+		if i < row_data.size() - 1:
+			formatted_row += ","
+	formatted_row += "\n"
+	return formatted_row
 
-   # Write the header row to the file.
-	file.store_string(','.join(header))
+# Example usage:
+var data_to_save = [
+	["Name", "Age", "Score"],
+	["John", 25, 85],
+	["Alice", 30, 92],
+	["Bob", 28, 78],
+]
 
-   # Write the data rows to the file.
-	for row in data:
-		file.store_string(','.join(row))
-
-   # Close the file.
-	file.close()
-
-
+var file_path = "user://data.csv"  # Use 'user://' to save in the user data directory
 
 
 func _on_Button_pressed():
-	_handle_user_input()
+	var fileName = "character_data.csv"	
+	save_data_to_csv(data_to_save, file_path)
