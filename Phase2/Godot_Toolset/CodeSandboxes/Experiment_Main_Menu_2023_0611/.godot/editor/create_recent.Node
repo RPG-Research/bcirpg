@@ -1,9 +1,9 @@
+Button
+VBoxContainer
 OptionButton
 Label
 HBoxContainer
 TextEdit
-VBoxContainer
-Button
 ScrollContainer
 VScrollBar
 CheckBox

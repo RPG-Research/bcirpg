@@ -75,7 +75,6 @@ layout_mode = 2
 script = ExtResource("1_l6hds")
 
 [node name="GenreMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
-visible = false
 layout_mode = 2
 text = "Genre Menu"
 script = ExtResource("2_kvqsl")
@@ -152,6 +151,10 @@ text = "Genre Name:"
 layout_mode = 2
 text = "Initial Settings:"
 
+[node name="SaveButton" type="Button" parent="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer"]
+layout_mode = 2
+text = "Save"
+
 [node name="DialogMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
 visible = false
 layout_mode = 2
@@ -183,17 +186,17 @@ script = ExtResource("4_vxa5e")
 
 [node name="GenreDialogContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
-layout_mode = 0
+layout_mode = 2
 anchors_preset = 0
 
 [node name="GenreDialogContainer2" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
-layout_mode = 0
+layout_mode = 2
 anchors_preset = 0
 
 [node name="GenreDialogContainer3" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
-layout_mode = 0
+layout_mode = 2
 anchors_preset = 0
 
 [node name="CharacterMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
@@ -762,4 +765,5 @@ layout_mode = 2
 
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer2/OptionButton_Wizards" to="HBoxContainer/VBoxContainer3" method="_on_option_button_wizards_item_selected"]
 [connection signal="button_up" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/NewGenre" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_new_genre_button_up"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/SaveButton" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_save_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" to="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" method="_on_item_selected"]

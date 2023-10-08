@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgtpfhy1ler0"]
+[gd_scene load_steps=3 format=3 uid="uid://cgtpfhy1ler0"]
 
 [ext_resource type="PackedScene" uid="uid://cl7q0snsncynm" path="res://term_container.tscn" id="1_g7lmq"]
+[ext_resource type="Script" path="res://genre_dialog_container.gd" id="1_pfbcu"]
 
 [node name="GenreDialogContainer" type="ScrollContainer"]
 anchors_preset = -1
@@ -12,6 +13,7 @@ offset_left = 0.034
 offset_top = 0.0039978
 offset_right = 728.034
 offset_bottom = 539.004
+script = ExtResource("1_pfbcu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -22,3 +24,5 @@ layout_mode = 2
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "New Term"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
