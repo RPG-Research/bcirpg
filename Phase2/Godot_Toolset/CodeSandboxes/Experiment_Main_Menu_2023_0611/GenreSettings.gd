@@ -21,10 +21,16 @@ func _on_new_genre_button_up():
 
 
 func _on_save_button_pressed():
+	var listOfGenres = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<genresettings>\n"
 	var file = FileAccess.open("user://test.xml", FileAccess.WRITE)
-	if file:
-		file.store_string("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<genresettings>\n")
-		#for each genre container
-		#add name and what it's based on. skip based on if first three.
-		file.store_string("</genresettings>")
-		file.close()
+	var fromFile = $HBoxContainer/Default/ScrollContainer/GenreContainer.get_children()
+	#go through each genre in the list and add them to the string to be added to the file
+	for genre in fromFile:
+		if genre is HBoxContainer:
+			listOfGenres= listOfGenres + "\t<genre>\n"
+			if genre.get_child_count() > 2:
+				listOfGenres = listOfGenres + "\t\t<default>\n\t\t\t" + str(genre.get_child(0).is_pressed()) + "\n\t\t</default>\n" + "\t\t<name>\n\t\t\t" + genre.get_child(1).text + "\n\t\t</name>\n" + "\t\t<basedOn>\n\t\t\t" + genre.get_child(2).Selected + "\n\t\t</basedOn>\n\t</genre>\n"
+			else:
+				listOfGenres= listOfGenres + "\t\t<default>\n\t\t\t" + str(genre.get_child(0).is_pressed()) + "\n\t\t</default>\n" + "\t\t<name>\n\t\t\t" + genre.get_child(1).text + "\n\t\t</name>\n\t</genre>\n"
+	listOfGenres = listOfGenres + "</genresettings>\n"
+	file.store_string(listOfGenres)
