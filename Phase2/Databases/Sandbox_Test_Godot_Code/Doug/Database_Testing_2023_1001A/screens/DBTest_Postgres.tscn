@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://screens/DBTest_Postgres.gd" type="Script" id=2]
+
+[node name="Control" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Background" type="Panel" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 415.0
+margin_top = 133.0
+margin_right = 653.0
+margin_bottom = 233.0
+
+[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 238.0
+margin_bottom = 100.0
+text = "Main Menu"
+next_scene_path = "res://MenuScreen.tscn"
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 846.0
+margin_top = 554.0
+margin_right = 1018.0
+margin_bottom = 592.0
+text = "Version: 0.0.0"

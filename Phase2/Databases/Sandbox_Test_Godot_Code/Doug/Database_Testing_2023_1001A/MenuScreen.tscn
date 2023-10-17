@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://userInterface/But_Quit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=2]
+
+[node name="MenuScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -119.0
+margin_top = -152.0
+margin_right = 65.0
+margin_bottom = -91.0
+rect_scale = Vector2( 1.04675, 1.07389 )
+
+[node name="But_ChangeScene" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_right = 184.0
+margin_bottom = 37.0
+text = "Test Postgres"
+next_scene_path = "res://screens/DBTest_Postgres.tscn"
+
+[node name="But_Quit" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 41.0
+margin_right = 184.0
+margin_bottom = 61.0
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -177.0
+margin_top = -44.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Version: 0.0.0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
