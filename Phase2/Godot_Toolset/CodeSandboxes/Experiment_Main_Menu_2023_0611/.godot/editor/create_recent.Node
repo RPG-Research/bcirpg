@@ -1,8 +1,8 @@
 Button
+HBoxContainer
 VBoxContainer
 OptionButton
 Label
-HBoxContainer
 TextEdit
 ScrollContainer
 VScrollBar

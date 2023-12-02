@@ -22,7 +22,7 @@ func _on_new_genre_button_up():
 
 func _on_save_button_pressed():
 	var listOfGenres = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<genresettings>\n"
-	var file = FileAccess.open("user://test.xml", FileAccess.WRITE)
+	var file = FileAccess.open("user://GenreSettings.xml", FileAccess.WRITE)
 	var fromFile = $HBoxContainer/Default/ScrollContainer/GenreContainer.get_children()
 	#go through each genre in the list and add them to the string to be added to the file
 	for genre in fromFile:

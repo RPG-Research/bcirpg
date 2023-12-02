@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cemvqqx7rqem3"]
+[gd_scene load_steps=7 format=3 uid="uid://cemvqqx7rqem3"]
 
 [ext_resource type="Script" path="res://MenuManager.gd" id="1_l6hds"]
 [ext_resource type="Script" path="res://GenreSettings.gd" id="2_kvqsl"]
 [ext_resource type="Script" path="res://top_toolbar/DialogMenu.gd" id="3_3vxaj"]
 [ext_resource type="Script" path="res://top_toolbar/GenreDialogManager.gd" id="4_vxa5e"]
 [ext_resource type="PackedScene" uid="uid://cgtpfhy1ler0" path="res://genre_dialog_container.tscn" id="5_pyfae"]
+[ext_resource type="Script" path="res://top_toolbar/CharacterMenu.gd" id="6_bxipl"]
 
 [node name="TopToolbar" type="Control"]
 layout_mode = 3
@@ -20,6 +21,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 7.0
+offset_right = 3.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -75,6 +80,7 @@ layout_mode = 2
 script = ExtResource("1_l6hds")
 
 [node name="GenreMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
+visible = false
 layout_mode = 2
 text = "Genre Menu"
 script = ExtResource("2_kvqsl")
@@ -162,16 +168,11 @@ text = "Dialog Menu"
 script = ExtResource("3_3vxaj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.133
-anchor_top = 1.308
-anchor_right = 0.133
-anchor_bottom = 1.308
-offset_left = -0.0340004
-offset_top = -0.00800323
-offset_right = 39.966
-offset_bottom = 39.992
+layout_mode = 2
+offset_left = 13.0
+offset_top = 34.0
+offset_right = 151.0
+offset_bottom = 74.0
 
 [node name="OptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer"]
 layout_mode = 2
@@ -184,25 +185,33 @@ popup/item_2/text = "Modern Day"
 popup/item_2/id = 2
 script = ExtResource("4_vxa5e")
 
-[node name="GenreDialogContainer" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+[node name="Fantasy" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
 
-[node name="GenreDialogContainer2" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+[node name="SciFi" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
 
-[node name="GenreDialogContainer3" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
+[node name="ModernDay" parent="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" instance=ExtResource("5_pyfae")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
+
+[node name="Save Button" type="Button" parent="HBoxContainer/VBoxContainer3/DialogMenu"]
+layout_mode = 1
+offset_left = 181.0
+offset_top = 20.0
+offset_right = 225.0
+offset_bottom = 60.0
+text = "Save"
 
 [node name="CharacterMenu" type="Label" parent="HBoxContainer/VBoxContainer3"]
-visible = false
 layout_mode = 2
 text = "Character Menu"
+script = ExtResource("6_bxipl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu"]
 layout_mode = 1
@@ -221,545 +230,550 @@ item_count = 1
 popup/item_0/text = "New Character"
 popup/item_0/id = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton"]
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.013
-anchor_top = 1.29
-anchor_right = 0.013
-anchor_bottom = 1.29
-offset_left = 0.933
-offset_top = 8.01001
-offset_right = 743.933
-offset_bottom = 818.01
+anchor_left = 1.101
+anchor_right = 1.101
+offset_left = -0.0590057
+offset_top = 1.0
+offset_right = 43.941
+offset_bottom = 32.0
+text = "Save"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+[node name="CharacterContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton"]
+layout_mode = 2
+offset_top = 50.0
+offset_right = 647.0
+offset_bottom = 625.0
+
+[node name="TopBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+[node name="LeftSide" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="FactionContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/LeftSide"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/LeftSide/FactionContainer"]
 layout_mode = 2
 text = "Faction"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Faction" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/LeftSide/FactionContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+[node name="Middle" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="NameContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/NameContainer"]
 layout_mode = 2
 text = "Name"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+[node name="NameEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/NameContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="ProfessionContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/ProfessionContainer"]
 layout_mode = 2
 text = "Profession"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2"]
+[node name="ProfessionEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/ProfessionContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="DemeanorContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer3"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/DemeanorContainer"]
 layout_mode = 2
 text = "Demeanor"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer3"]
+[node name="DemeanorEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/DemeanorContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="SpeciesContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer4"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/SpeciesContainer"]
 layout_mode = 2
 text = "Species"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer4"]
+[node name="SpeciesEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/SpeciesContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="CultureContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle"]
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/CultureContainer"]
 layout_mode = 2
 text = "Culture"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+[node name="CultureEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/Middle/CultureContainer"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer"]
+[node name="PortraitContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="ASCIIPortrait" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/TopBox/PortraitContainer"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+[node name="MiddleBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="HWContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/HWContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Height/weight"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="HWEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/HWContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="BackstoryContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/BackstoryContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Backstory"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="BackstoryEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/BackstoryContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="GenderContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/GenderContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Gender"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer3"]
+[node name="GenderEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/GenderContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="EquipmentContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer4"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/EquipmentContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Equipment"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer4"]
+[node name="EquipmentEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/EquipmentContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="CRContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer5"]
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/CRContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "CR"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer5"]
+[node name="CREntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/CRContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer"]
+[node name="DialougeContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox"]
 layout_mode = 2
 
-[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer6"]
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/DialougeContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Dialouge"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/VBoxContainer/HBoxContainer6"]
+[node name="DialougeEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/MiddleBox/DialougeContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer"]
+[node name="BottomBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+[node name="LeftCollumn" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="ConContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/ConContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Con"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer"]
+[node name="ConEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/ConContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="AgiContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/AgiContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Agi"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+[node name="AgiEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/AgiContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="SelfDisciplineContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer3"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/SelfDisciplineContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Self-Discipline"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer3"]
+[node name="SelfDisciplineEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/SelfDisciplineContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="MemoryContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer4"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/MemoryContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Memory"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer4"]
+[node name="MemoryEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/MemoryContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="ReasoningContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer5"]
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/ReasoningContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Reasoning"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer5"]
+[node name="ReasoningEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/ReasoningContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="StrengthContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer6"]
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/StrengthContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Strength"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer6"]
+[node name="StrengthEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/StrengthContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="QuicknessContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer7"]
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/QuicknessContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Quickness"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer7"]
+[node name="QuicknessEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/QuicknessContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="PresenceContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer8"]
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/PresenceContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Presence"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer8"]
+[node name="PresenceEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/PresenceContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="IntuitionContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer9"]
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/IntuitionContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Intuition"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer9"]
+[node name="IntuitionEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/IntuitionContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer10" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="EmpathyContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer10"]
+[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/EmpathyContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Empathy"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer10"]
+[node name="EmpathyEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/EmpathyContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer11" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="AppearanceContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn"]
 layout_mode = 2
 
-[node name="Label11" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer11"]
+[node name="Label11" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/AppearanceContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Appearance"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer/HBoxContainer11"]
+[node name="AppearanceEntry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/LeftCollumn/AppearanceContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+[node name="MiddleCollumn" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill1Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill1Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 1:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer"]
+[node name="Skill1Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill1Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill2Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill2Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 2:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+[node name="Skill2Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill2Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill3Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer3"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill3Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 3:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer3"]
+[node name="Skill3Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill3Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill4Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer4"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill4Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 4:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer4"]
+[node name="Skill4Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill4Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill5Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer5"]
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill5Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 5:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer5"]
+[node name="Skill5Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill5Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill6Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer6"]
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill6Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 6:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer6"]
+[node name="Skill6Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill6Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill7Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer7"]
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill7Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 7:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer7"]
+[node name="Skill7Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill7Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill8Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer8"]
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill8Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 8:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer8"]
+[node name="Skill8Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill8Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill9Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer9"]
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill9Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 9:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer9"]
+[node name="Skill9Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill9Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer10" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2"]
+[node name="Skill10Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn"]
 layout_mode = 2
 
-[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer10"]
+[node name="Label10" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill10Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Skill 10:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer2/HBoxContainer10"]
+[node name="Skill10Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/MiddleCollumn/Skill10Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3"]
+[node name="RightCollumn" type="VBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA1Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA1Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 1:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer"]
+[node name="SA1Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA1Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA2Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer2"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA2Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 2:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer2"]
+[node name="SA2Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA2Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA3Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer3"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA3Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 3:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer3"]
+[node name="SA3Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA3Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA4Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer4"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA4Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 4:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer4"]
+[node name="SA4Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA4Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA5Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer5"]
+[node name="Label5" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA5Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 5:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer5"]
+[node name="SA5Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA5Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA6Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer6"]
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA6Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 6:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer6"]
+[node name="SA6Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA6Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer7" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA7Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer7"]
+[node name="Label7" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA7Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 7:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer7"]
+[node name="SA7Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA7Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer8" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA8Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer8"]
+[node name="Label8" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA8Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 8:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer8"]
+[node name="SA8Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA8Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="HBoxContainer9" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3"]
+[node name="SA9Container" type="HBoxContainer" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn"]
 layout_mode = 2
 
-[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer9"]
+[node name="Label9" type="Label" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA9Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Special Ability 9:"
 
-[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/VBoxContainer/HBoxContainer3/VBoxContainer3/HBoxContainer9"]
+[node name="SA9Entry" type="TextEdit" parent="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/CharacterContainer/BottomBox/RightCollumn/SA9Container"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
@@ -767,3 +781,5 @@ layout_mode = 2
 [connection signal="button_up" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/Default/ScrollContainer/GenreContainer/NewGenre" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_new_genre_button_up"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer3/GenreMenu/HBoxContainer/SaveButton" to="HBoxContainer/VBoxContainer3/GenreMenu" method="_on_save_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" to="HBoxContainer/VBoxContainer3/DialogMenu/VBoxContainer/OptionButton" method="_on_item_selected"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/DialogMenu/Save Button" to="HBoxContainer/VBoxContainer3/DialogMenu" method="_on_save_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/CharacterMenu/VBoxContainer/OptionButton/Button" to="HBoxContainer/VBoxContainer3/CharacterMenu" method="_on_button_pressed"]
