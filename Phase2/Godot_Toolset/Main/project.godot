@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Object",
+"class": "ConflictResultsProcess",
+"language": "GDScript",
+"path": "res://middleware/conflictResults/conflictResults.gd"
+}, {
+"base": "Object",
 "class": "SpecialAbility",
 "language": "GDScript",
 "path": "res://middleware/specialabliities/specialabilities.gd"
 } ]
 _global_script_class_icons={
+"ConflictResultsProcess": "",
 "SpecialAbility": ""
 }
 

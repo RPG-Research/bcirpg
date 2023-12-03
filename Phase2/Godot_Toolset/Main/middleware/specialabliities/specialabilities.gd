@@ -5,7 +5,7 @@ class_name SpecialAbility
 #This is the middle ware, to define the structure of the data, before it is accesable by the character sheet.
 #This class is also used to define the structure, as to make it normalized for the database / XML layers.
 
-# Luke, 12/9/2023, Godot 3.5
+# Luke, 12/9/2023, Godot 3.5+
 	
 	
 var Name: String
