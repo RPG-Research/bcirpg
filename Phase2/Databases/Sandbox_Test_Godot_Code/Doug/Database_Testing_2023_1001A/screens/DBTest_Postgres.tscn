@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://screens/DBTest_Postgres.gd" type="Script" id=2]
+[ext_resource path="res://userInterface/But_ChangeScene.gd" type="Script" id=3]
 
 [node name="Control" type="Node2D"]
 script = ExtResource( 2 )
@@ -20,10 +20,15 @@ margin_top = 133.0
 margin_right = 653.0
 margin_bottom = 233.0
 
-[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource( 1 )]
+[node name="But_MainMenu" type="Button" parent="VBoxContainer"]
 margin_right = 238.0
 margin_bottom = 100.0
+size_flags_vertical = 3
 text = "Main Menu"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 next_scene_path = "res://MenuScreen.tscn"
 
 [node name="Version" type="Label" parent="."]
@@ -36,3 +41,5 @@ margin_top = 554.0
 margin_right = 1018.0
 margin_bottom = 592.0
 text = "Version: 0.0.0"
+
+[connection signal="button_up" from="VBoxContainer/But_MainMenu" to="VBoxContainer/But_MainMenu" method="_on_But_NewGame_button_up"]

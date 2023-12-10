@@ -4,10 +4,8 @@
 
 extends Button
 
-#var history_JSON = "user://history.json"
 
 
-#DKM TEMP: save history is only here temporarily -- needs to move upstream.
 func _on_But_Quit_button_up():
 	get_tree().quit()
 	
