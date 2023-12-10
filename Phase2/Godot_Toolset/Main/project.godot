@@ -13,21 +13,19 @@ _global_script_classes=[ {
 "class": "ConflictResultsProcess",
 "language": "GDScript",
 "path": "res://middleware/conflictResults/conflictResults.gd"
-}, {
-"base": "Object",
-"class": "SpecialAbility",
-"language": "GDScript",
-"path": "res://middleware/specialabliities/specialabilities.gd"
 } ]
 _global_script_class_icons={
-"ConflictResultsProcess": "",
-"SpecialAbility": ""
+"ConflictResultsProcess": ""
 }
 
 [application]
 
 config/name="bcirpg_toolset"
 config/icon="res://icon.png"
+
+[autoload]
+
+SpecialAbility="*res://middleware/specialabliities/SpecialAbility.gd"
 
 [global]
 
