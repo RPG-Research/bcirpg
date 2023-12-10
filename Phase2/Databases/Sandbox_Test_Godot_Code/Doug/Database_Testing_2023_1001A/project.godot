@@ -9,18 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "PanelContainer",
-"class": "Locale",
-"language": "GDScript",
-"path": "res://userInterface/Locale.gd"
-}, {
 "base": "Object",
 "class": "PostgreSQLClient",
 "language": "GDScript",
 "path": "res://screens/PostgreSQLClient.gd"
 } ]
 _global_script_class_icons={
-"Locale": "",
 "PostgreSQLClient": ""
 }
 
