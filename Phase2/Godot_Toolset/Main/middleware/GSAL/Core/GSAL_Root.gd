@@ -6,21 +6,79 @@ extends Node
 # Define Boundires of the minimum and maximum for a character sheet in the appropriate game system.
 # Otherwise default to 0/10
 var systemSheetMin = 0
-var systemSheetMax = 10
-
+var systemSheetMax = 100
 
 # Define Dice Type used by the desired module
 # Otherwise default to a polyhedral set of dice.
 var definedDiceTypes = [20,12,10,100,8,6,4]
-
 
 # Define Level Boundries to be used by the character of the current level
 # Otherwise default to 0/100
 var defineMinLevel = 0
 var definedMaxLevel = 100
 
-# Section 1 End
 
+# Stats, Default Values are 50 percent:
+
+# Physical Attributes (Stats):
+# 1. AG = Agility
+var Agility = 0.50
+# 2. APP = Appearance
+var Appearance = 0.50
+# 3. CO = Constitution
+var Constitution = 0.50
+# 4. QU = Quickness
+var Quickness = 0.50
+# 5. MD = Manual Dexterity
+var ManualDexterity = 0.50
+# 6. ST = Strength
+var Strength = 0.50
+
+# Non-physical Attributes (Stats):
+# 7. CH = Chutzpah
+var Chutzpah = 0.50
+# 8. EM = Empathy
+var Empathy = 0.50
+# 9. IN = Intuition
+var Intuition = 0.50
+# 10. ME = Memory
+var Memory = 0.50
+# 11. MX = Moxie
+var Moxie = 0.50
+# 12. PR = Presence
+var Presence = 0.50
+# 13. RE = Reasoning
+var Reasoning = 0.50
+# 14. SD = Self Discipline
+var SelfDiscipline = 0.50
+
+
+
+#Skills: Default Values are Zero Percent
+
+var Athletics = 0.0
+
+var Communication = 0.0
+
+var Knowledge = 0.0
+
+var Magical = 0.0
+
+var Mechanical = 0.0
+
+var MovingAndManeuvering = 0.0
+
+var PerceptiveAndObservational = 0.0
+
+var Stealth = 0.0
+
+var SocialInteractions = 0.0
+
+var Weapons = 0.0
+
+# TODO: Where to store modifiers?
+
+# Section 1 End
 
 #Section 2 (Calculate)
 # Need to find what formulas and problems we need to solve as a part of section 2
@@ -28,18 +86,34 @@ var definedMaxLevel = 100
 func _ready():
 	pass
 
-
 # Define process for declareing actions
 # Otherwise follow the rough "Doctor Who" action process.
 func _declareAction():
 	pass
+
+func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0):
+# Luke
+# Last Modified: 1/21/2023
+# Grab the skill and compare it to the required number for a "good roll"
+# Think of the checks in Dialog in Fallout 3 and New Vegas
+# The default modifier is Zero, unless another stat modifier value is provided
+	if statModifier > 0:
+		var moddedStat = requiredStat + statModifier
+		if moddedStat >= numberToMatch:
+			return true
+		else:
+			return false
+	else: 
+		if requiredStat >= numberToMatch:
+			return true
+		else:
+			return false
 
 
 # Refactor DieRoller from the main game, to be a modular function
 # Pull Die Sizes from the variable "definedDiceTypes"
 func _dieRoll():
 	pass
-
 
 # Create rough formulas to plug into this function, per game system module
 # Otherwise follow the default formula provided in the function
