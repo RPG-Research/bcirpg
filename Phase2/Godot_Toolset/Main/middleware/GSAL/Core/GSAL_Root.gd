@@ -76,7 +76,8 @@ var SocialInteractions = 0.0
 
 var Weapons = 0.0
 
-# TODO: Where to store modifiers?
+# TODO: Add Modifers to the characters sheet: Then these modfiers can be added to skill checks
+
 
 # Section 1 End
 
@@ -91,13 +92,14 @@ func _ready():
 func _declareAction():
 	pass
 
-func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0):
+func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0.0):
 # Luke
 # Last Modified: 1/21/2023
 # Grab the skill and compare it to the required number for a "good roll"
 # Think of the checks in Dialog in Fallout 3 and New Vegas
 # The default modifier is Zero, unless another stat modifier value is provided
-	if statModifier > 0:
+	
+	if statModifier > 0.0:
 		var moddedStat = requiredStat + statModifier
 		if moddedStat >= numberToMatch:
 			return true
@@ -112,20 +114,29 @@ func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0):
 
 # Refactor DieRoller from the main game, to be a modular function
 # Pull Die Sizes from the variable "definedDiceTypes"
-func _dieRoll():
-	pass
+func _dieRoll(dieMin, dieMax):
+	return rand_range(dieMin, dieMax)
 
 # Create rough formulas to plug into this function, per game system module
 # Otherwise follow the default formula provided in the function
-func _calculateInitiative():
+func _calculateInitiative(inputCharacterArray):
 	pass
 
 
+# Draft Function
+# Need to work on calculate initiatve first.
+# I might need to have to add a way to resolve Ties between both arrays.
+#func _defenderAndOpponentResults(playerArray, enemyArray):
+#	var DefenderResults = []
+#	var OpponentResults = []
+#
+#	DefenderResults.push_back(_calculateInitiative(playerArray))
+#	OpponentResults.push_back(_calculateInitiative(playerArray))
+#
+#	return[[DefenderResults][OpponentResults]]
+
+
 # Section 2 End
-
-
-
-
 
 
 # Things to add to the GSAL
