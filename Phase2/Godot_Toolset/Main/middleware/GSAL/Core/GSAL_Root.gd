@@ -78,7 +78,6 @@ var Weapons = 0.0
 
 # TODO: Add Modifers to the characters sheet: Then these modfiers can be added to skill checks
 
-
 # Section 1 End
 
 #Section 2 (Calculate)
@@ -99,6 +98,7 @@ func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0.0):
 # Think of the checks in Dialog in Fallout 3 and New Vegas
 # The default modifier is Zero, unless another stat modifier value is provided
 	
+#	Stat modifier should come from the character sheet.
 	if statModifier > 0.0:
 		var moddedStat = requiredStat + statModifier
 		if moddedStat >= numberToMatch:
@@ -115,25 +115,35 @@ func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0.0):
 # Refactor DieRoller from the main game, to be a modular function
 # Pull Die Sizes from the variable "definedDiceTypes"
 func _dieRoll(dieMin, dieMax):
-	return rand_range(dieMin, dieMax)
+	return randi() % dieMax + dieMin
 
 # Create rough formulas to plug into this function, per game system module
 # Otherwise follow the default formula provided in the function
 func _calculateInitiative(inputCharacterArray):
-	pass
+	var outputCharacterArray = []
+	for person in inputCharacterArray:
+#		Return a number between 1 / 20 and add it to the array
+#		Change to a D6 for BFRPG rules.
+		outputCharacterArray.push_back([person, _dieRoll(1, 20)])
+		
+#		Sort by highest to lowest, according to BFRPG Rules.
+		outputCharacterArray.sort()
+
+		
+	return outputCharacterArray
 
 
 # Draft Function
 # Need to work on calculate initiatve first.
 # I might need to have to add a way to resolve Ties between both arrays.
-#func _defenderAndOpponentResults(playerArray, enemyArray):
-#	var DefenderResults = []
-#	var OpponentResults = []
-#
-#	DefenderResults.push_back(_calculateInitiative(playerArray))
-#	OpponentResults.push_back(_calculateInitiative(playerArray))
-#
-#	return[[DefenderResults][OpponentResults]]
+func _defenderAndOpponentResults(playerArray, enemyArray):
+	var DefenderResults = []
+	var OpponentResults = []
+
+	DefenderResults.push_back(_calculateInitiative(playerArray))
+	OpponentResults.push_back(_calculateInitiative(enemyArray))
+	
+	return[[DefenderResults][OpponentResults]]
 
 
 # Section 2 End
@@ -151,10 +161,6 @@ func _calculateInitiative(inputCharacterArray):
 # var Defender_Results_Calculation : int
 #
 #var Opponent_Results_Calclation: int
-
-#func _Defender_VS_Opponent_Results(int): Matrix
-#Matrix is not a built in datatype in Godot. How I am imagining us doing this is with a 2D or 3D array.
-#Example Structure [[DefenderResults], [OpponentResults]]
 
 
 #func _Outcome_Options(Matrix): List
