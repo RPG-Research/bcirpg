@@ -88,8 +88,36 @@ func _ready():
 
 # Define process for declareing actions
 # Otherwise follow the rough "Doctor Who" action process.
-func _declareAction():
-	pass
+
+# Declare action before determining initiatve, but the GSAL can handle it.
+
+# In d20, comabt round starts; first roll initiative. Then declare action
+
+#In some game systems, actions are based on reactions; but that is beyond MVP.
+
+# Declare actions, to help prepare the inititave Queue.
+
+func _declareAction(choicesIntArray, inputChoice):
+	if inputChoice in choicesIntArray:
+		return inputChoice
+
+# Characters on the first column, and Inputs in the second
+var inputCharacterArrayWithInputs = [[],[]]
+
+
+# 
+func declareAllCharacterActions(inputCharacterArrayWithInputs, ChoiceOptions):
+	var declaredActions = []
+	for person in inputCharacterArrayWithInputs:
+		declaredActions.push_back(_declareAction(ChoiceOptions, person.inputChoice))
+
+#		I Don't think we will have to sort this function, but correct me if I am wrong.
+
+#		Sort by highest to lowest, according to BFRPG Rules.
+#		outputCharacterArray.sort()
+	
+	return declaredActions
+
 
 func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0.0):
 # Luke
@@ -105,7 +133,7 @@ func nonOpposedSkillCheck(requiredStat, numberToMatch, statModifier = 0.0):
 			return true
 		else:
 			return false
-	else: 
+	else:
 		if requiredStat >= numberToMatch:
 			return true
 		else:
@@ -119,12 +147,20 @@ func _dieRoll(dieMin, dieMax):
 
 # Create rough formulas to plug into this function, per game system module
 # Otherwise follow the default formula provided in the function
-func _calculateInitiative(inputCharacterArray):
+
+# Keep in mind that diffeernt systems, might use things such as your dexterity as a modifer for this roll.
+# NOTE: Allow intiitave to handle differnt variables.....
+func _calculateInitiative(inputCharacterArray, statModifer = 0, isPositiveBuff = true):
 	var outputCharacterArray = []
 	for person in inputCharacterArray:
 #		Return a number between 1 / 20 and add it to the array
-#		Change to a D6 for BFRPG rules.
-		outputCharacterArray.push_back([person, _dieRoll(1, 20)])
+#		Change to a D6 for BFRPG rules, and DnD pre 3.0
+		
+		if isPositiveBuff == true:
+			outputCharacterArray.push_back([person, (_dieRoll(1, 20) + statModifer)])
+			
+		else:
+			outputCharacterArray.push_back([person, (_dieRoll(1,20) - statModifer)])
 		
 #		Sort by highest to lowest, according to BFRPG Rules.
 		outputCharacterArray.sort()
@@ -150,11 +186,8 @@ func _defenderAndOpponentResults(playerArray, enemyArray):
 
 
 # Things to add to the GSAL
-
-
 # What do these two variables do? That was not clearly defined in the UML...
-# var Action_Declared : Array
-#
+
 # var Situation_Mod : int
 #
 # What is the desired data that we want from these two Int values below
