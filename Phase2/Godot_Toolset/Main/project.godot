@@ -8,10 +8,24 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "ConflictResultsProcess",
+"language": "GDScript",
+"path": "res://middleware/conflictResults/conflictResults.gd"
+} ]
+_global_script_class_icons={
+"ConflictResultsProcess": ""
+}
+
 [application]
 
 config/name="bcirpg_toolset"
 config/icon="res://icon.png"
+
+[autoload]
+
+SpecialAbility="*res://middleware/specialabliities/SpecialAbility.gd"
 
 [global]
 

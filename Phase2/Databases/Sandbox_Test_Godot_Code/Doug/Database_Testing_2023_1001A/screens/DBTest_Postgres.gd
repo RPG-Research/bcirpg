@@ -3,11 +3,11 @@ extends Node
 var database := PostgreSQLClient.new()
 
 #TODO: ADD RELEVANT VALUES BELOW FOR TESTING!
-const USER = ''#"postgres"
-const PASSWORD = ''
-const HOST = ''#"localhost"
+const USER = 'ernie'#"postgres"
+const PASSWORD = 'myPasswordGoesHere' #TODO: replace with correct password
+const HOST = 'localhost'#"localhost"
 const PORT = 5432 # Default postgres port
-const DATABASE = ''#"postgres"
+const DATABASE = 'main'#"postgres"
 
 
 
@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func _init() -> void:
 	print("Init running")
+	print("USER: " + str(USER) + "; HOST: " + str(HOST) + "; PORT: " + str(PORT) + "; DATABASE: " + str(DATABASE))
 	var _error := database.connect("connection_established", self, "_executer")
 	_error = database.connect("authentication_error", self, "_authentication_error")
 	_error = database.connect("connection_closed", self, "_close")
@@ -46,7 +47,7 @@ func _executer() -> void:
 
 	var datas := database.execute("""
 		BEGIN;
-		SELECT * FROM characters;
+		SELECT * FROM test_characters;
 		COMMIT;
 	""")
 	
