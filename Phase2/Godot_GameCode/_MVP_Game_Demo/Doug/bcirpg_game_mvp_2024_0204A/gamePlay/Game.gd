@@ -8,6 +8,8 @@ extends Control
 #export(String, FILE, "*.json") var module_file_path:String
 #DKM TEMP:
 var module_file_path = "res://_userFiles/Module_Demo_001.json"
+#DKM TEMP:
+var module_file_path_xml = "res://_userFiles/Module_Demo_002.xml"
 
 onready var history_source = get_node("/root/History").historyScreensSingleton
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
@@ -35,6 +37,7 @@ func _ready() -> void:
 	
 	#DKM TEMP: testing:
 	var moduleDict = loadJSONToDict(module_file_path)
+	loadXMLDemo(module_file_path_xml)
 	
 	#DKM TEMP: this needs to be refactored to reposition this initialization
 	var i = 0
@@ -86,6 +89,42 @@ func loadJSONToDict(filepath:String)->Dictionary:
 	var moduleDict = parse_json(file.get_as_text())
 	#assert moduleDict.size() > 0
 	return moduleDict
+
+
+#DKM TEMP (XML): 
+func loadXMLDemo(filepath:String):
+	print("TEST! Trying to open xml at " + filepath)
+	
+	var test_array = []
+	var parser = XMLParser.new()
+	var error = parser.open(filepath)
+	if error != OK:
+		print("Error opening XML file ", error)
+		return
+
+	#DKM TEMP: initial testing only:
+#	else:
+#		parser.read()
+#		#Skip encoding:
+#		parser.skip_section()
+#		print(parser.get_node_name())
+
+	#DKM TEMP: printer; probably don't need the strip_edges, was looking to remove white space. 
+	#	Looks like it reads the closing tags, too, which is a bummer. 
+	while true:
+		if parser.read() != OK:
+			print("Parser read not okay!")
+			return
+		else:
+			var px = parser.get_node_name()
+			px.strip_edges(true,true)
+			if(!px.empty()):
+				print("Node Named: " + px)
+			px = parser.get_node_data()
+			px.strip_edges(true,true)
+			if(!px.empty()):
+				print("Data: " + px)
+
 
 
 #Handles input text

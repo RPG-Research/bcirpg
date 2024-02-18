@@ -12,11 +12,13 @@ var history_JSON = "res://_userFiles/history.json"
 func _on_But_Quit_button_up():
 	#Stops execution but broswer window remains
 	get_tree().quit()
+	
+	#DKM TEMP: temporarily de-activating while working:
 	#For web: redirect result:
-	if OS.get_name() == "HTML5":
-		JavaScript.eval("window.location.href='https://rpgresearch.com/'")
-	else:
-		var _openReturn= OS.shell_open("https://rpgresearch.com/")
+#	if OS.get_name() == "HTML5":
+#		JavaScript.eval("window.location.href='https://rpgresearch.com/'")
+#	else:
+#		var _openReturn= OS.shell_open("https://rpgresearch.com/")
 	
 	
 #JSON: requires dictionaries:
