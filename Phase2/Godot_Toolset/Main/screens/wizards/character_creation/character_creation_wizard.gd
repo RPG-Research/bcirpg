@@ -93,11 +93,7 @@ onready var special9 = $"RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/V
 	# skill6, skill7, skill8, skill9, skill10, special1, special2, special3, special4, special5, special6,
 	# special7, special8, special9
 
-var headerData = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
-	"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
-	  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
-	  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
-	  "special7", "special8", "special9"]
+
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -106,28 +102,45 @@ func _ready():
 
 var file_path = "user://data.xml"  # Use 'user://' to save in the user data directory
 
-func save_data_to_xml(data: Array, path: String) -> void:
-	
-	#save_user_data()
-	
+func save_data_to_xml(data: Array, header: Array, path: String) -> void:
 	
 	var file = File.new()
 	
 	if file.open("user://data.xml", File.WRITE) == OK:
-		file.store_line("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-		file.store_line("<root>")
+	  var xml = "<root>\n"
+	  var index = 0
+	  for line_edit in data:
+		  var line_edit_text = line_edit.text
+		  xml += header[index] + ": " + line_edit_text + "\n"
+		  index += 1
 		
-		for line_edit in data:
-			var line_edit_text = line_edit.text
-			file.store_line(line_edit_text)
-			#file.store_line("\n")
-		
-		
-		file.store_line("</root>")
-		file.close()
-		print("Data saved to XML file:", path)
+	  xml += "</root>"
+	
+	
+	  file.store_line(xml)
+	  file.close()
+	  print("Data saved to XML file: ", path)
 	else:
-		print("Error opening file for writing:", path)
+		print("Error opening file for writing: ", path)
+	#save_user_data()
+	
+	
+#	var file = File.new()
+	
+#	if file.open("user://data.xml", File.WRITE) == OK:
+#		file.store_line("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+#		file.store_line("<root>")
+#		
+#		for line_edit in data:
+#			var line_edit_text = line_edit.text
+#			file.store_line(line_edit_text + "\n")
+#		
+#		
+#		file.store_line("</root>")
+#		file.close()
+#		print("Data saved to XML file:", path)
+#	else:
+#		print("Error opening file for writing:", path)
 
 
 func create_array_to_save() -> Array:
@@ -136,10 +149,23 @@ func create_array_to_save() -> Array:
 	Strength, Quickness, Presence, Intuition, Empathy, Appearence]
 	
 	return userData
+	
+	
+func create_header() -> Array:
+	
+	var headerData = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
+	"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
+	  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
+	  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
+	  "special7", "special8", "special9"]
+	
+	return headerData
 
 func _on_Button_pressed():
-	save_data_to_xml(create_array_to_save(), file_path)
+	save_data_to_xml(create_array_to_save(), create_header(), file_path)
 
 
+func _on_Button_tree_entered():
+	pass
 
 	
