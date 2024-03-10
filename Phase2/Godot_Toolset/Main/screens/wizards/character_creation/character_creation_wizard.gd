@@ -100,26 +100,26 @@ func _ready():
 	pass # Replace with function body.
 
 
-var file_path = "user://data.xml"  # Use 'user://' to save in the user data directory
+var file_path = "user://characterData.csv"  # Use 'user://' to save in the user data directory
 
-func save_data_to_xml(data: Array, header: Array, path: String) -> void:
+func save_data_to_csv(data: Array, header: Array, path: String) -> void:
 	
 	var file = File.new()
 	
-	if file.open("user://data.xml", File.WRITE) == OK:
-	  var xml = "<root>\n"
+	if file.open(file_path, File.WRITE) == OK:
+	  var csv = "" 
 	  var index = 0
 	  for line_edit in data:
 		  var line_edit_text = line_edit.text
-		  xml += header[index] + ": " + line_edit_text + "\n"
+		  csv += header[index] + ": " + line_edit_text + "\n"
 		  index += 1
 		
-	  xml += "</root>"
+
 	
 	
-	  file.store_line(xml)
+	  file.store_line(csv)
 	  file.close()
-	  print("Data saved to XML file: ", path)
+	  print("Data saved to csv file: ", path)
 	else:
 		print("Error opening file for writing: ", path)
 	#save_user_data()
@@ -162,7 +162,7 @@ func create_header() -> Array:
 	return headerData
 
 func _on_Button_pressed():
-	save_data_to_xml(create_array_to_save(), create_header(), file_path)
+	save_data_to_csv(create_array_to_save(), create_header(), file_path)
 
 
 func _on_Button_tree_entered():

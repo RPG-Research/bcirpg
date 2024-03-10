@@ -14,6 +14,10 @@ config/name="bcirpg_toolset"
 run/main_scene="res://screens/wizards/character_creation/character_creation_wizard.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SpecialAbility="*res://middleware/specialabliities/SpecialAbility.gd"
+
 [global]
 
 filters=false
