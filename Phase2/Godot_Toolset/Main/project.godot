@@ -21,6 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="bcirpg_toolset"
+run/main_scene="res://screens/wizards/character_creation/character_creation_wizard.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -86,54 +86,86 @@ onready var special8 = $"RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/V
 
 onready var special9 = $"RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/HBoxContainer/SpecialAbilitiesVBoxContainer/CenterContainer/GridContainer/SBOptionButton9"
 
-	# Save the data to a CSV file.
-var rowData = [CharacterName, Profession, Demeanor, Species, Culture, Faction, Description, HeightAndWeight, 
-	Backstory, Gender, Equipment, Charisma, Dialog, Constitution, Agility, SelfDisipline, Memory, Reasoning, 
-	Strength, Quickness, Presence, Intuition, Empathy, Appearence, skill1, skill2, skill3, skill4, skill5,
-	skill6, skill7, skill8, skill9, skill10, special1, special2, special3, special4, special5, special6,
-	special7, special8, special9]
+	# 12/10/23 save the data to a xml file.
 
-var headerData = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
-	"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
-	  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
-	  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
-	  "special7", "special8", "special9"]
+	# comments for future skill sets to use
+	# ,skill1, skill2, skill3, skill4, skill5,
+	# skill6, skill7, skill8, skill9, skill10, special1, special2, special3, special4, special5, special6,
+	# special7, special8, special9
+
+
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-func save_data_to_csv(data: Array, file_path: String):
+
+var file_path = "user://data.xml"  # Use 'user://' to save in the user data directory
+
+func save_data_to_xml(data: Array, header: Array, path: String) -> void:
+	
 	var file = File.new()
-	if file.open(file_path, File.WRITE) == OK:
-		for row in data:
-			file.store_string(format_row(row))
-		file.close()
-		print("Data saved to", file_path)
+	
+	if file.open("user://data.xml", File.WRITE) == OK:
+	  var xml = "<root>\n"
+	  var index = 0
+	  for line_edit in data:
+		  var line_edit_text = line_edit.text
+		  xml += header[index] + ": " + line_edit_text + "\n"
+		  index += 1
+		
+	  xml += "</root>"
+	
+	
+	  file.store_line(xml)
+	  file.close()
+	  print("Data saved to XML file: ", path)
 	else:
-		print("Failed to open", file_path, "for writing.")
+		print("Error opening file for writing: ", path)
+	#save_user_data()
+	
+	
+#	var file = File.new()
+	
+#	if file.open("user://data.xml", File.WRITE) == OK:
+#		file.store_line("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+#		file.store_line("<root>")
+#		
+#		for line_edit in data:
+#			var line_edit_text = line_edit.text
+#			file.store_line(line_edit_text + "\n")
+#		
+#		
+#		file.store_line("</root>")
+#		file.close()
+#		print("Data saved to XML file:", path)
+#	else:
+#		print("Error opening file for writing:", path)
 
-func format_row(row_data: Array) -> String:
-	# Convert the array of data to a comma-separated string
-	var formatted_row = ""
-	for i in range(row_data.size()):
-		formatted_row += str(row_data[i])
-		if i < row_data.size() - 1:
-			formatted_row += ","
-	formatted_row += "\n"
-	return formatted_row
 
-# Example usage:
-var data_to_save = [
-	["Name", "Age", "Score"],
-	["John", 25, 85],
-	["Alice", 30, 92],
-	["Bob", 28, 78],
-]
-
-var file_path = "user://data.csv"  # Use 'user://' to save in the user data directory
-
+func create_array_to_save() -> Array:
+	var userData = [CharacterName, Profession, Demeanor, Species, Culture, Faction, Description, HeightAndWeight, 
+	Backstory, Gender, Equipment, Charisma, Dialog, Constitution, Agility, SelfDisipline, Memory, Reasoning, 
+	Strength, Quickness, Presence, Intuition, Empathy, Appearence]
+	
+	return userData
+	
+	
+func create_header() -> Array:
+	
+	var headerData = ["CharacterName", "Profession", "Demeanor", "Species", "Culture", "Faction", "Description", "HeightAndWeight",
+	"Backstory", "Gender", "Equipment", "Charisma", "Dialog", "Constitution", "Agility", "SelfDisipline", "Memory",
+	  "Reasoning","Strength", "Quickness", "Presence", "Intuition", "Empathy", "Appearance", "skill1", "skill2", "skill3", "skill4",
+	  "skill5", "skill6", "skill7", "skill8", "skill9", "skill10", "special1", "special2", "special3", "special4", "special5", "special6",
+	  "special7", "special8", "special9"]
+	
+	return headerData
 
 func _on_Button_pressed():
-	var fileName = "character_data.csv"	
-	save_data_to_csv(data_to_save, file_path)
+	save_data_to_xml(create_array_to_save(), create_header(), file_path)
+
+
+func _on_Button_tree_entered():
+	pass
+
+	

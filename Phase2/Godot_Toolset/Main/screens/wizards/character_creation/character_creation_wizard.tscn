@@ -12,6 +12,8 @@ script = ExtResource( 3 )
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -6.0
+margin_bottom = -6.0
 color = Color( 0.537255, 0.537255, 0.537255, 1 )
 
 [node name="RootVBoxContainer" type="VBoxContainer" parent="."]
@@ -684,3 +686,4 @@ margin_bottom = 368.0
 text = "Export Character To Module"
 
 [connection signal="pressed" from="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="tree_entered" from="RootVBoxContainer/TopHBoxContainer/RightVBoxContainer/VBoxContainer/Button" to="." method="_on_Button_tree_entered"]
