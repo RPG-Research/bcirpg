@@ -1,8 +1,9 @@
-Project Ilmatar Tech Specs Doc
-by Hawke Robinson — published a few seconds ago, last modified a few seconds ago
-This is a snapshot of the BCI RPG "Project Ilmatar" project technical specifications document. This snapshot was from the October 1st, 2023 revision. This will be updated periodically as resources allow.
+# Project Ilmatar Tech Specs Doc
+by Hawke Robinson
 
-PROJECT ILMATAR
+This is a snapshot of the BCI RPG "Project Ilmatar" project technical specifications document. This snapshot was from the October 1st, 2023 revision. This will be updated periodically as resources allow. This will need major cleaning up to fit within the .md format properly.
+
+# PROJECT ILMATAR
 
 RPG Research
 
@@ -11,69 +12,46 @@ ERPG Dev Team
 Created on 10/13/19
 
 
+# REVISION HISTORY
 
 
+# DATE
+2024/03/10
 
+# VERSION
+0.0.3 
 
-
-
-
-
-
-
-REVISION HISTORY
-
-DATE
+# DESCRIPTION
     
 
-VERSION
+#  AUTHOR
+Hawke Robinson
     
 
-DESCRIPTION
-    
-
-AUTHOR
-
-10/03/19
-    
-
-0.0.1
-    
-
-Base Specifications - Phase 1
+# Base Specifications - Phase 1
     
 
 Valerie, Hawke
-
 8/22/2020
     
 
-0.0.2
-    
-
-Base Specifications - Phase 2
+# Base Specifications - Phase 2
     
 
 ERPG Dev Team
-
 10/1/2020
-    
-
 0.0.3
     
 
-Section/Layout/Organization adjustments for clarity
+# Section/Layout/Organization adjustments for clarity
     
 
 Valerie Krepel
-
 10/24/2020
-    
-
 0.0.4
     
 
-Integration with agenda notes, define features
+# Integration with agenda notes, define features
     
 
 Valerie Krepel
@@ -84,7 +62,7 @@ Valerie Krepel
 0.0.5
     
 
-Integration with agenda, define features and terms
+# Integration with agenda, define features and terms
     
 
 Valerie Krepel
@@ -95,7 +73,7 @@ Valerie Krepel
 0.0.6
     
 
-Integration with agenda, elaborations on solutions
+# Integration with agenda, elaborations on solutions
     
 
 Valerie Krepel
@@ -106,7 +84,7 @@ Valerie Krepel
 0.0.7
     
 
-Integration with agenda, additional solutions
+# Integration with agenda, additional solutions
     
 
 Valerie Krepel
@@ -117,7 +95,7 @@ Valerie Krepel
 0.0.8
     
 
-Integration with agenda, server ports
+# Integration with agenda, server ports
     
 
 Valerie Krepel
@@ -128,19 +106,21 @@ Valerie Krepel
 0.0.9
     
 
-Integration with agenda, database options
+# Integration with agenda, database options
     
 
 Valerie Krepel
             
             
             
-INTRODUCTION
-Overview
+# INTRODUCTION
+
+
+## Overview
 
 This project came about because of multiple client requests over the decades to provide an ERPG solo and multiplayer experience similar to the TRPG experience. This was further developed when Hawke worked with some specific clients but was set aside when the client was incapacitated by a brain injury. The demand, however, for ERPGs that can be tweaked to meet specific measurable goals for different populations to achieve their recreational, entertainment, educational, professional, and therapeutic needs.
 
-Glossary or Terminology
+# Glossary or Terminology
 
 New terms you come across as you research your design or terms you may suspect your readers/stakeholders not to know.  
 
@@ -154,8 +134,6 @@ Mod Gods - Those who create modules for use by players and/or game masters. Note
 
 MVP - Minimum Viable Product. The baseline of features needed to have the basic structure of our program.
 
-
-
 NPC - Non-playable character. A character in the game system who cannot be controlled by players and has to be entirely coded by the Mod Gods in terms of dialogue and actions.
 
 NWN - Neverwinter Nights, a game by bioware which includes the Aurora Toolset, a game building tool that has a function similar to how we’d like our game creation toolset to run.
@@ -168,7 +146,7 @@ Use-Case Wireframe - a more detailed version of a wireframe, including real game
 
 Wireframe - a mockup of the user interface for the game -- NOT the same as a flowchart.
 
-Project Scope
+# Project Scope
 
 The triangle of resources between time, quality, and expenses (man hours and other costs). While this project does not have a set timeline, we do want to use project best practices to try to keep the momentum going.
 
@@ -178,7 +156,7 @@ The triangle of resources between time, quality, and expenses (man hours and oth
 
 
 
-Three stages to development:
+Multiple stages to development:   
 
     Stage 1: NWN Mod1 on NeverwinterNights Aurora Platform ESMA (electronic solo or multiplayer adventure)
 
@@ -186,12 +164,15 @@ RPG
 
     Stage 2: Ilmar text only branching ETSMA (electronic text-based solo / multiplayer adventure) RPG
     Stage 3: Vaina (pronounced: Vah-een-ah) activated live action film or animation based on Stage 2’s result,
+    Stage 4: 
+    Stage 5: 
+    Stage 6:  
 
-interactive video plus (IV+)
+# Interactive video plus (IV+)
 
 
 
-MVP for Base Toolset (Phase 2)
+# MVP for Base Toolset (Phase 2)
 
     Very basic graphical/text tool that allows us to create a gamespace with some minimal drag and drop functionality (similar to aurora toolset). 
     16 x 16 grid space that we can drag and drop tools into space.
@@ -257,7 +238,7 @@ MVP for Base Toolset (Phase 2)
     Default scripts (such as ammo consumption) to be added for general use. Room for mod gods to create their own scripts.
     For the MVP 1.0  Server and Game Creation and Management Toolsets, we only need them to work on Windows, Mac, and Linux (Desktop app and headless server functions).
 
-Phase 2 Menu Items
+# Phase 2 Menu Items
 
     Light/Dark mode toggle
     Use the phrase ‘Import Character’ as opposed to ‘Add Character’ to prevent confusion
@@ -281,7 +262,7 @@ Phase 2 Menu Items
         Default bg color/image
         Keyboard
 
-Non-Goals or Out of Scope
+# Non-Goals or Out of Scope
 
     Future Goals
 
@@ -298,24 +279,24 @@ Non-Goals or Out of Scope
     Choose between railroaded or sandbox-ey
     Therapy/educational/entertainment tags (learning mode settings)
 
-Assumptions
+# Assumptions
 
-Conditions and resources that need to be present and accessible for the solution to work as described. 
+# Conditions and resources that need to be present and accessible for the solution to work as described. 
 
-Notes on Comparable Items
+# Notes on Comparable Items
 
-Compare between comparable softwares. What do we like? What do we dislike? Would we like to create our own version of certain features?
+# Compare between comparable softwares. What do we like? What do we dislike? Would we like to create our own version of certain features?
 
-Aurora Toolset Module Editor
+# Aurora Toolset Module Editor
 
     Hard to tell when conversations branched. Coding vague at best and a big pain to integrate. Split up dialogue conditionals -- clearly separated. No indication if line overflows, have to look elsewhere for full text. Too many functionality buttons.
     Like difference in color between npc and pc. Idea of base + branches good (might need to be split?) Node based? May need to find code for it so we don’t have to build it ourselves
 
-SOLUTIONS
+# SOLUTIONS
 
     Proposed Design 
 
-Features
+# Features
 
     Platform that allows solo and multiplayer adventures
     Built in some kind of open source license that mandates attribution and does allow commercial use with permission.
@@ -328,11 +309,11 @@ Features
     Can be played in multiplayer, single/solo, or client mode
     For 1.0 MVP we need all game PLAY functions to work on all platforms including web (Windows, Mac, Linux, iOS, Android, and Web) and be fully BCI usable. 
 
-Project Overview
+# Project Overview
 
-The project is a combination of module editor and playable game.
+# The project is a combination of module editor and playable game.
 
-Game
+# Game
 
 The game will consist of playable modules with storylines that encourage players to make decisions based on non-violence, exploration, problem-solving, and compassion. Players may create their own module outside of this scope, but our team will be operating with these goals. 
 
@@ -340,17 +321,17 @@ Each module will be playable in multiple genres -- to start, our modules will ha
 
 Game text will let a player know the outcome of their rolls in a way that is not obstructive to storytelling and immersion. For example, if a player’s strength statistic is not high enough for the action they attempted to make, game text would read along the lines of ‘You tried to do [action], but your body was too weak! You take 1 hp of damage.’
 
-Player Objections
+# Player Objections
 
 Players will be given the option to object to decisions made by other party members if they disagree. Players will be able to set a ‘risk rating’, which will determine which of the other players’ choices they will be able to object to; the game will be set to the middle risk level as default if the player does not choose for themself. All game choices will be given a rating as set by the mod god. Those who have chosen a higher risk rating threshold will not be given the choice to object and will automatically proceed with the decision of the player making the primary choice.
 
 The player making the choice will be shown the number of objections, and all players will be given the opportunity to break out into chat to discuss, even if some players did not object. After discussion, players will be given the same choice again and those who choose differently from the original choice that was objected to will abstain from that action and its consequences or rewards. If there are no objections, the game will continue with no further discussion.
 
-Chat
+# Chat
 
 The game will have an integrated chat function. Audio chat may be tricky, but there is a possibility of linking into Jitsi or a similar 3rd party service. Text chat will be included as a minimum, but will not integrate well with BCI, so audio chat is a goal as well. Players in group settings will need to be able to communicate with one another to make decisions, form strategies, discuss puzzles, etc. For BCI accessibility, chat will have an ‘enable’ toggle. When the toggle is off, chat will be readable but not interactable. When it is on, chat can be written in.
 
-Behavior Guidance
+# Behavior Guidance
 
 Modules will present problems with various decisions, each decision tagged on a gradient of good-neutral-bad. At the end of the module, the outcome will be determined by the group (or players) gradient levels, with good levels resulting in the best possible outcome, bad in the worst possible outcome, and neutral somewhere in between. 
 
@@ -358,13 +339,13 @@ Players will receive little feedback dialogues throughout the game to let them k
 
 Once the module is finished, there will be a report of decisions and paths taken by the player. Players can view parts of the report, but not all (we want to avoid the players making decisions simply because they saw it will give them a better end in the report). Administrators/Game Masters can view full, printable reports, which will include player statistics and tags determining whether players are leaning toward violent decisions or not.
 
-Initiative and Turns
+# Initiative and Turns
 
 For combat, players will select options at the same time and will go in order of violence, starting with least violent and going to most. For example, players who choose to negotiate will go before players who choose to fight. Players later in the action queue may change their mind and choose a different option based on the outcomes of previous players’ choices -- i.e. Player one chooses to negotiate and is mostly successful. Player two had chosen to fight but may change their mind and choose to continue negotiation or any other option when their turn arrives. See extended contested conflict flowchart.
 
 For non-combat, there will be a random assignment using process of elimination with an opt-out feature. Players will be put into a pool and names would be randomly selected, then removed from the pool. Once the pool is empty, the process would repeat -- all players would get an equal number of turns, but order would be randomized. There will be temporary exclusion to prevent the same player from going twice in a row, as well as the option to opt out of making choices each round. Should all players opt out, the default is for everyone to be put into the selection pool again and a buffer to be applied to the party’s decision, meaning any NPCs in the presence of the party will take their turns first. The code will need to be tolerant of drop in/drop out players.
 
-GM Permissions
+# GM Permissions
 
 GMs will have the same base code as players but with added accessibility and editing capabilities.
 
@@ -376,7 +357,7 @@ Many GM features will be similar to NWN but with different approaches.
 
 
 
-Module Editor
+# Module Editor
 
 In addition to the included modules, players will have the options to create their own to play. The module editor will take inspiration from the Aurora Toolset, with some differences.
 
@@ -390,7 +371,7 @@ The editor will be in a drag-and-drop grid style to make editing easier. It will
     Save module, save as
     Genre editor
 
-Minimum included features will be:
+# Minimum included features will be:
 
     No limits to number of items in menu (2-3 for prototype but don’t limit for later) 
     Branching logic opportunities
@@ -423,13 +404,13 @@ Each overarching section can affect and feed into the more granular areas. So Re
 
 
 
-Game System-agnostic
+# Game System-agnostic
 
 The module editor will determine rolls based on percentages, not dice types, so the editor will be agnostic in terms of game systems. The Mod Gods can determine which game system they want to base their rules off of and customize the module to fit (i.e. using OpenD6 or D&D 5th Edition). Likewise, statistics can be added, removed, or renamed to fit statistics held in differing game systems.
 
 The default agnostic system employed will have base stats that cannot be removed but can be renamed based on the system the Mod God would like to use. Additionally, the default does NOT have level advancement or classes, but the Mod God can customize their system to include it.
 
-Softwares Needed to Attain
+# Softwares Needed to Attain
 
 Coding repository: Github
 
@@ -474,7 +455,7 @@ To be used to create code wireframes (hopefully in UML). After research, diagram
     Free
     Supports local hosting, not just cloud
 
-Flowchart Standards
+# Flowchart Standards
 
 First letter of each word in a title to be capitalized, with title in upper right hand corner of the document in a line.
 
@@ -510,7 +491,7 @@ Create MVP with basic toolset features to verify attainability.
         Tools: event trigger. Dialogue pop-up with menu option. No limits to number of items in menu (2-3 for prototype but don’t limit for later). Branching logic opportunity. Condition can be set based on a decision made from menu options (if b, set condition, if c, set condition, etc.). Export module feature. Open module, new module, save module, save as.
     Micro MVP for game to play: works on a network. In server multiplayer mode, single/solo player mode, client mode. Show to 2 or more players the same menu screen on event trigger. Last person to connect gets the first choice, rotate which players choose i.e. 5, 4, 3, 2, 1, 5. Have each dev do their own version of this to get a better idea of the pros and cons of the toolsets. 
 
-Documentation
+# Documentation
 
 If Java-based, use Java doc.
 
@@ -780,11 +761,11 @@ Related Work
 
 Any work external to the proposed solution that is similar to it in some way and is worked on by different teams. It’s important to know this to enable knowledge sharing between such teams when faced with related problems. 
 
-References
+## REFERENCES
 
 Links to documents and resources that you used when coming up with your design and wish to credit. 
 
-UML Tutorials
+## UML Tutorials
 
     https://medium.com/nerd-for-tech/principles-of-object-oriented-design-556edf6987be
     https://www.oodesign.com/design-principles
@@ -795,27 +776,22 @@ UML Tutorials
     https://blogs.sap.com/2022/05/27/abap-oo-design-7-basic-oo-principles-summary/ 
 
 
+## Acknowledgments
+In alphabetical order by first name first:
 
-Acknowledgments
-
-Doug  (Developer, …)
-
-
-
-
-Hawke Robinson (Project founder, lead researcher, developer)
-
- 
-
-Luke (Developer, …)
-
- 
-
-Trevor Tengowski (Developer, …)
-
- 
-
-Valerie Krepel (Project Manager, …)
+* ...
+* Doug  (Developer, …)
+* ...
+* Hawke Robinson (Project founder, lead researcher, developer)
+* ...
+* Luke (Developer, …)
+* ...
+* Suhwan (Developer, ...)
+* ...
+* Trevor Tengowski (Developer, …)
+* ...
+* Valerie Krepel (Project Manager, …)
+* ...
 
 
 

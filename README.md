@@ -122,7 +122,6 @@ Need greater resolution of signal, frequency ranges, more CPU power. OpenEEG and
 # Phase 1 (completed) 2019 - 2020
 NeverWinter Nights (NWN) Enhanced Edition (NWN:EE).
 
-
 Using Windows for Aurora Toolset module development.
 
 Not using EEG or BCI equipment at this phase. Creating prototype adventure that will be used in Phase 2 onward for baseline R&D.
@@ -159,7 +158,6 @@ Scope and build from ground-up electronic role-playing game (ERPG) that can be c
 ### BCI RPG Game player, Player Text User Interface
 
  
-
 
 # Features Scope
 
