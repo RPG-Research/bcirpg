@@ -4,7 +4,18 @@
 Original Creator: Hawke Robinson (W.A. Hawkes-Robinson)
 Now many other contributors, especially the wonderful volunteers at RPG Research (see Acknowledgements for list).
 
+The BCI RPG is an accessible, online, turn-based, cooperative, social, multiplayer, role-playing game platform. Although supporting regular device (mouse, keyboard, etc.) interaction, the BCI RPG is designed from the ground up to be 100% usable with alternative Human-Machine Interfaces (HMI) "with just your thoughts", by supporting various combinations of non-invasive Electroencephalogram (EEG), Electromyogram (EMG), electrooculogram (EOG), Brain-computer Interface (BCI) neurotech (like OpenBCI, NeuroRPG, and others) and related "accessibility" technologies combined with optional Machine Learning (ML), Automatic Speech Recognition (ASR), Natural Language Processing (NLP), Virtual and Augmented Reality (VR & AR), the Matrix.org Chat & Data, and Artificial Intelligence (AI), the BCI RPG opensource volunteer community at the non-profit RPG Research is striving to build the ultimate in role-playing game accessibility for everyone. We're using neurotech (neuroscience based technologies) so that players can play a multiplayer, social, live, turn-based, cooperative, role-playing game online, just by thinking! Donate or Volunteer Today! Additional technical and financial support is provided to this project by the for-profit organization RPG Therapeutics LLC through their NeuroRPG products and services. 
+
 ## Brain-Computer Interface Role-Playing Game
+
+BCI RPG, an accessible online platform, actively redefines the landscape of role-playing games as a turn-based, cooperative, social, multiplayer experience. This platform, while fully compatible with conventional devices like mice and keyboards, primarily stands out for its groundbreaking design. It enables complete operability through a variety of Human-Machine Interfaces (HMI), allowing players to control the game using only their thoughts. This functionality stems from its support for a wide range of non-invasive neurotechnologies, including Electroencephalogram (EEG), Electromyogram (EMG), electrooculogram (EOG), and Brain-computer Interface (BCI) technologies, notably OpenBCI and NeuroRPG.
+
+In its commitment to ultimate accessibility, BCI RPG integrates advanced "accessibility" technologies, utilizing Machine Learning (ML), Automatic Speech Recognition (ASR), Natural Language Processing (NLP), Virtual and Augmented Reality (VR & AR), Matrix.org Chat & Data, and Artificial Intelligence (AI). The RPG Research, a dedicated non-profit volunteer community, drives this initiative, aiming to deliver the most accessible role-playing game experience available. By harnessing neurotech, which draws on neuroscience-based technologies, BCI RPG enables players to immerse in a multiplayer, social, live, turn-based, cooperative role-playing game online, controlled purely through thought.
+
+To support this groundbreaking project, we encourage donations and volunteering. RPG Therapeutics LLC, a for-profit organization, also plays a crucial role by providing substantial technical and financial support through their NeuroRPG products and services.
+
+
+
 ### Electronic Role-playing Game (ERPG) development efforts by the RPG Research community
 
 ...
@@ -35,6 +46,49 @@ Experimenting with early VR and AR in the late 90s and early 2000s with early PD
 Experimenting with biofeedback and bio-controlled devices since 1996 (a la mouse cursor controlled by single fingertip clip for example).
 
 Since about 2005 working on integration of electroencephalogram (EEG) and later brain-computer interface (BCI) equipment with computers, mobile devices, VR, and AR. Experimenting with a wide range of VR and AR hardware and software, including used in educational, artistic, social, and therapeutic programs.
+
+BCI RPG is an opensource Brain-Computer Interface controls supported social multiplayer Role-Playing Game able to be played through brainwaves (aka just your thoughts).
+
+Created by "The Grandfather of Therapeutic Gaming", Hawke Robinson is Executive Director and founder of the 501(c)3 non-profit RPG Research. Both our founder and the organization are huge advocates for accessibility and inclusiveness.
+
+Our founder's background in nursing, recreation therapy, gaming, neuroscience, music, and more has inspired his decades-long endeavor to using non-invasive neuro-and-bio technologies for people with accessibility issues, as well as enhanced experiences for the general public. Our founder was first involved with role-playing games in 1977. He also began software development and engaging in the online community in 1979 (through the University of Utah) and various BBSes. He has been involved with VR equipment since the late 1980s using Amigas (still has working Amiga 2000) and other equipment over the decades. Developed Virtual-Reality Markup Language (VRML) websites in the mid-to-late-90s. Experimenting with early AR in the late 90s and early 2000s with early PDAs and "smartphones" long before iOS and Android existed (Nokia, Palm phones, etc), combined with early location and GPS technologies.
+
+Experimenting with biofeedback and bio-controlled devices since 1996 (a la mouse cursor controlled by electromyogram (EGM) controlled single fingertip clip for example).
+
+Since about 2005 working on integration of EMG and electroencephalogram (EEG) and later brain-computer interface (BCI) equipment with computers, mobile devices, VR, and AR. Experimenting with a wide range of VR and AR hardware and software, including used in educational, artistic, social, and therapeutic programs.
+
+
+Improving RPG Accessibility For Everyone
+
+RPG Mobile Fleet: https://rpgmobile.com
+
+Improving Introductory Play and Accessibility to RPG:  https://w3.rpgresearch.com/blog/breaking-down-the-rpg-barriers-to-entry-with-bfrpg
+
+frequently-asked-questions-about-the-lockedin-syndrome-3-6388b2b1a.pngWe support accessibility not only through all of our training, advocacy, and accessible mobile facilities, but through our active projects to make gaming accessible to all. RPG Research is a 501(c)3 100% volunteer-run non-profit research charitable research and human services organization. More about RPG Research.
+
+Main website: www.bcirpg.com - alias: https://www.rpgresearch.com/bci-rpg
+
+Moved project name from erpg to bcirpg.
+
+New open source Github source code repository is now: https://github.com/RPG-Research/bcirpg  was The opensource github repository: https://github.com/RPG-Research/erpg
+
+The project Wiki: https://github.com/RPG-Research/erpg/wiki
+
+## Using RPGs for Brain Injury Recovery (Activating Maximal Neuroplasticity)
+
+PDF: https://www.academia.edu/18120187/Presentation_Using_Role_Playing_Games_in_the_Treatment_of_Traumatic_Brain_Injury
+
+<iframe width="397" height="297" src="https://www.youtube.com/embed/BwD4fAZx_2w" title="RPG Research Traumatic Brain Injury Treatment using Role-playing Gaming" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+# Officially Authorized Commercial implementation of BCI RPG
+
+This is an open source project, so as long as they comply with license, anyone can build on this with attribution, etc. However, only a few are "officially" acknowledged as known projects, and should have a higher level of safety, and especially for giving back to the open source community, rather than just taking and not giving back, as has happened all too much in recent years across many open source projects.
+
+The following have asked and officially been acknowledged as commercial implementations of the BCI RPG:
+* RPG Therapeutics LLC's NeuroRPG
+* ...
+
 
 
 # LIS & CLIS - Locked In Syndrome and Complete Locked in State
