@@ -1,4 +1,9 @@
 # BCI RPG
+![Placeholder image for logo, photo of Brain-computer interface, EEG, OpenEEG, VR, and other equipment plus RPG Research and RPG.LLC brochures, on battlemat grid](https://www.bcirpg.com/images/bci-rpg-eeg-openbci-montage-1b-img_0073-1817w1024h-30pct.jpg/@@images/2cd98a35-f1ba-4c19-8233-64c410d4c936.jpeg)
+
+Original Creator: Hawke Robinson (W.A. Hawkes-Robinson)
+Now many other contributors, especially the wonderful volunteers at RPG Research (see Acknowledgements for list).
+
 ## Brain-Computer Interface Role-Playing Game
 ### Electronic Role-playing Game (ERPG) development efforts by the RPG Research community
 
@@ -13,12 +18,11 @@
 # Introduction
 RPG Research is a huge advocate for accessibility and inclusiveness in gaming. Not only through all of our training, advocacy, and accessible mobile facilities, but through our active projects to make gaming accessible to all. RPG Research is a 501(c)3 100% volunteer-run non-profit research charitable research and human services organization. More about RPG Research.
 
-Main website: www.bcirpg.com - alias: https://www.rpgresearch.com/bcirpg
-
-The opensource github repository: https://github.com/RPG-Research/erpg
-
-The project Wiki: https://github.com/RPG-Research/erpg/wiki
-
+* New Main BCI RPG website: https://bcirpg.com
+* Old Main website: https://www.rpgresearch.com/bcirpg
+* The opensource github repository: https://github.com/RPG-Research/erpg
+* The project Wiki: https://github.com/RPG-Research/erpg/wiki
+* Gitea Mirror (may migrate project to this in future): https://git.dev2dev.net/RPGResearch/bcirpg
 
 
 # Background History
@@ -34,11 +38,10 @@ Since about 2005 working on integration of electroencephalogram (EEG) and later 
 
 
 # LIS & CLIS - Locked In Syndrome and Complete Locked in State
+
+![Locked-In Syndrome or Complete Locked-In State (LIS/CLIS) image with range of impairment listed on sprectum.](https://www.bcirpg.com/images/frequently-asked-questions-about-the-lockedin-syndrome-3-6388b2b1a.png/@@images/655ae6b8-b466-4989-bc95-6bb7c984be7f.png)
+
 Our founder was dramatically motivated to try to find a solution for those people suffering from Locked-in Syndrome (LIS) and Complete Locked-in State (CLIS), starting with caring for a young adult in 1990 as a nurse's aide and LPN trainee, at Doxie Hatch Medical Center, and additionally for many others with various injuries and neurological disorders as a habilitation therapist at Hillcrest Care Center.  Ever since he has wanted to figure out a way to use technology to help them reconnect socially, set them free of their physical prisons of the active minds trapped in their bodies, and gain back some of their lives.
-
-
-
-
 
 
 The goal, and real-world metrics test, is if someone with profound disabilities, including experiencing locked-in syndrome (LIS) or complete locked-in state (CLIS), can be freed from their prison to engage socially in complex multiplayer social cooperative problem-solving role-playing games.
@@ -340,8 +343,5 @@ Your donations mean that more people can have access to our free programs.
 
 Please  to help us with these efforts.
 
-Or !
  
-
-
 
