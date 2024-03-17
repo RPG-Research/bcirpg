@@ -95,7 +95,7 @@ func loadJSONToDict(filepath:String)->Dictionary:
 func loadXMLDemo(filepath:String):
 	print("TEST! Trying to open xml at " + filepath)
 	
-	var test_array = []
+	var xml_data = {}
 	var parser = XMLParser.new()
 	var error = parser.open(filepath)
 	if error != OK:
@@ -111,19 +111,50 @@ func loadXMLDemo(filepath:String):
 
 	#DKM TEMP: printer; probably don't need the strip_edges, was looking to remove white space. 
 	#	Looks like it reads the closing tags, too, which is a bummer. 
-	while true:
-		if parser.read() != OK:
-			print("Parser read not okay!")
-			return
-		else:
-			var px = parser.get_node_name()
-			px.strip_edges(true,true)
-			if(!px.empty()):
-				print("Node Named: " + px)
-			px = parser.get_node_data()
-			px.strip_edges(true,true)
-			if(!px.empty()):
-				print("Data: " + px)
+	
+	#DKM TEMP: Test print output brute force
+#	while true:
+#		if parser.read() != OK:
+#			print("Parser read not okay!")
+#			return
+#		else:
+#			var px = parser.get_node_name()
+#			px.strip_edges(true,true)
+#			if(!px.empty()):
+#				print("Node Named: " + px)
+#			px = parser.get_node_data()
+#			px.strip_edges(true,true)
+#			if(!px.empty()):
+#				print("Data: " + px)	
+	while parser.read() == OK:
+		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+			var node_name = parser.get_node_name()
+			if node_name.strip_edges(true,true).to_upper() == "LOCATION":
+				while parser.read() == OK:
+					if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+						if parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION":
+							break
+						var child_node_name = parser.get_node_name()
+						#DKM TEMP: we need to switch/match all this, but still wrapping head around this parsing
+						print(child_node_name.strip_edges(true,true).to_upper())
+						if child_node_name.strip_edges(true,true).to_upper()  == "ID":
+							parser.read()
+							var id_node_data = parser.get_node_data()
+							print("TEMP: ID found, named: " + str(id_node_data))
+							xml_data[id_node_data] = {}
+
+				
+#			xml_data[node_name] = {}
+#			for i in range(parser.get_attribute_count()):
+#				var key = parser.get_attribute_name(i)
+#				var value = parser.get_attribute_value(i)
+#				xml_data[node_name][key] = value
+	
+	#DKM TEMP: test dictionary output:
+#	print("TEST: printing XML dictionary values: ")
+#	for val in xml_data.values():
+#		print(val)	
+
 
 
 
