@@ -1,0 +1,308 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Screens/SettingsMenuConfig.gd" type="Script" id=1]
+[ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=2]
+[ext_resource path="res://UserInterface/But_ChangeScene.gd" type="Script" id=3]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxBottomRow" type="HBoxContainer" parent="."]
+margin_right = 146.0
+margin_bottom = 25.0
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="HBoxBottomRow"]
+margin_right = 97.0
+margin_bottom = 25.0
+text = "Save Settings"
+
+[node name="But_ChangeScene" type="Button" parent="HBoxBottomRow"]
+margin_left = 101.0
+margin_right = 146.0
+margin_bottom = 25.0
+size_flags_vertical = 3
+text = "Back"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="SettingsScroll" type="ScrollContainer" parent="."]
+anchor_top = 0.568
+anchor_right = 0.601
+anchor_bottom = 0.669
+margin_left = 20.0
+margin_top = -300.8
+margin_right = 4.57599
+margin_bottom = 38.6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsScroll"]
+margin_right = 597.0
+margin_bottom = 19.0
+custom_constants/separation = 60
+alignment = 1
+
+[node name="RootVboxVisualControls" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
+margin_right = 98.0
+margin_bottom = 19.0
+
+[node name="VisualControlsLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls"]
+margin_right = 98.0
+margin_bottom = 19.0
+text = "Visual Controls"
+
+[node name="VisualControlsVBox" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxFontSize" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_right = 155.0
+margin_bottom = 19.0
+
+[node name="FontLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox/HBoxFontSize"]
+margin_right = 64.0
+margin_bottom = 19.0
+text = "Font Size:"
+
+[node name="FontSizeSlider" type="HSlider" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 39.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="BrightnessLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 43.0
+margin_right = 155.0
+margin_bottom = 62.0
+text = "Brightness:"
+
+[node name="BrightnessSlider" type="HSlider" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
+margin_top = 66.0
+margin_right = 155.0
+margin_bottom = 82.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="RootVboxPlayerPreferences" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
+margin_left = 158.0
+margin_right = 275.0
+margin_bottom = 19.0
+
+[node name="Label" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences"]
+margin_right = 117.0
+margin_bottom = 19.0
+text = "Player Preferances"
+
+[node name="VBoxPlayerPreferances" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label"]
+margin_left = -18.5
+margin_top = 30.0
+margin_right = 126.5
+margin_bottom = 125.0
+
+[node name="HBoxDisplayName" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="DisplayNameLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/HBoxDisplayName"]
+margin_right = 95.0
+margin_bottom = 19.0
+text = "Display Name:"
+
+[node name="DisplayNameLineEdit" type="LineEdit" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 52.0
+
+[node name="VBoxRiskFactor" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_top = 56.0
+margin_right = 145.0
+margin_bottom = 95.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxRiskFactor" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor"]
+margin_right = 145.0
+margin_bottom = 19.0
+
+[node name="RiskFactorLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor/HBoxRiskFactor"]
+margin_right = 145.0
+margin_bottom = 19.0
+text = "Risk Factor Threshold:"
+
+[node name="RiskSlider" type="HSlider" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxRiskFactor"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 39.0
+min_value = 1.0
+max_value = 5.0
+value = 5.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="RootVboxGeneralSettings" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
+margin_left = 335.0
+margin_right = 439.0
+margin_bottom = 19.0
+
+[node name="GeneralSettingsLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings"]
+margin_right = 104.0
+margin_bottom = 19.0
+text = "General Settings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_right = 155.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( 62, 14 )
+text = "Volume:"
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 39.0
+max_value = 10.0
+rounded = true
+tick_count = 10
+ticks_on_borders = true
+
+[node name="HBoxClosedCaptions" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 43.0
+margin_right = 155.0
+margin_bottom = 70.0
+
+[node name="ClosedCaptionsLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions"]
+margin_top = 4.0
+margin_right = 108.0
+margin_bottom = 23.0
+text = "Closed Captions:"
+
+[node name="ClosedCaptionsCheckBox" type="CheckBox" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxClosedCaptions"]
+margin_left = 112.0
+margin_right = 136.0
+margin_bottom = 27.0
+
+[node name="HBoxDevConsole" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
+margin_top = 74.0
+margin_right = 155.0
+margin_bottom = 101.0
+
+[node name="DevConsoleLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole"]
+margin_top = 4.0
+margin_right = 126.0
+margin_bottom = 23.0
+text = "Developer Console:"
+
+[node name="DevConsoleCheckbox" type="CheckBox" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer/HBoxDevConsole"]
+margin_left = 130.0
+margin_right = 154.0
+margin_bottom = 27.0
+
+[node name="RootVboxVisualControls2" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
+margin_left = 499.0
+margin_right = 597.0
+margin_bottom = 19.0
+
+[node name="Label2" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2"]
+margin_right = 98.0
+margin_bottom = 19.0
+text = "Visual Controls"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -77.5
+margin_top = 30.0
+margin_right = 77.5
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxThemes" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_right = 155.0
+margin_bottom = 19.0
+
+[node name="ThemesLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxThemes"]
+margin_right = 119.0
+margin_bottom = 19.0
+text = "Theme Preference:"
+
+[node name="ThemeItemList" type="ItemList" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 23.0
+margin_right = 155.0
+margin_bottom = 32.0
+auto_height = true
+
+[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 36.0
+margin_right = 155.0
+margin_bottom = 63.0
+
+[node name="VisualKeyBoardLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
+margin_top = 4.0
+margin_right = 110.0
+margin_bottom = 23.0
+text = "Virtual Keyboard"
+
+[node name="VisualKeyboardCheckBox" type="CheckBox" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
+margin_left = 114.0
+margin_right = 138.0
+margin_bottom = 27.0
+
+[node name="HBoxKeyboardLayout" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 67.0
+margin_right = 155.0
+margin_bottom = 86.0
+
+[node name="LayoutLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxKeyboardLayout"]
+margin_right = 120.0
+margin_bottom = 19.0
+text = "Layout Preference:"
+
+[node name="LayoutItemList" type="ItemList" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 90.0
+margin_right = 155.0
+margin_bottom = 99.0
+auto_height = true
+
+[connection signal="button_up" from="HBoxBottomRow/But_ChangeScene" to="HBoxBottomRow/But_ChangeScene" method="_on_But_NewGame_button_up"]

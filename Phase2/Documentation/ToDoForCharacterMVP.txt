@@ -1,0 +1,11 @@
+ To Do
+
+ 1: Get the saving and loading code for CSV from Suwhan.
+
+ 2: Make that code work with the UI of the MVP project.
+
+ 3: Similar to the method of saving the Game Settings, to a .CFG file by using a singleton; I will need to save the character information to the player singleton for use.
+
+ 4: Then save the singleton data to a CSV
+
+ 5: Figure out the issues with CSV like doug mentioned.
