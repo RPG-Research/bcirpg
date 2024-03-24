@@ -29,57 +29,27 @@ onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSh
 #	or desired load approach
 onready var module_map = "res://_userFiles/temp_map.save"
 
+#Name: nodeArray
+#Use: Contains the loaded module. Each array item is a 
+#	Location instance, instantiated from the Location.gd script.
 var nodeArray
 
 func _ready() -> void:
 	save_module()
 	theme=load(settings.themeFile)
 	
-	#DKM TEMP: testing:
-	var moduleDict = loadJSONToDict(module_file_path)
-	loadXMLDemo(module_file_path_xml)
+	#nodeArray = runJSON_NodeBuilder(module_file_path)
+	nodeArray = runXML_NodeBuilder(module_file_path_xml)
 	
-	#DKM TEMP: this needs to be refactored to reposition this initialization
-	var i = 0
-	#print("Looking for JSON at: " + module_file_path)
-	#print("Json returned as: " + str(moduleDict))
-	var initialNode = Locale.new()
-	nodeArray = [initialNode]
-	for moduleNode in moduleDict.values():
-		if nodeArray.size() <= i:
-			var newNode = Locale.new()
-			nodeArray.append(newNode)
-		nodeArray[i].locale_name = moduleNode.get("Id")
-		nodeArray[i].locale_description = moduleNode.get("Text")
-		nodeArray[i].locale_action = moduleNode.get("Action")
-		var actionParameters = moduleNode.get("A_Params")
-		for p in actionParameters:
-			nodeArray[i].locale_action_params.append(p)	
-		var nodeOptions = moduleNode.get("Option_Labels")
-		for option in nodeOptions:
-			nodeArray[i].options_array.append(option)
-			#print("For #" + str(i) + ": appended option of: " + str(option))
-		var nodeDestinations = moduleNode.get("Option_GoTos")
-		for dest in nodeDestinations:
-			nodeArray[i].destinations_array.append(dest)
-			#print("For #" + str(i) + ": appended go to destination of: " + str(dest))
-		#print("Node array name for #" + str(i) + ": " + nodeArray[i].locale_name)
-		i = i+1
+	#DKM TEMP: look at nodearry
+	print("Temp: Looking at nodeArray:")
+	for loc in nodeArray:
+		print ("Location named: " + loc.locale_name)
 	
 	current_text.show()
-	
 	#Load character sheet:
 	charSheet.text = pSingleton.pc.pcText
-	
-	create_response(nodeArray[0].locale_description)
-	#DKM TEMP: another that needs to be broken out when ready:
-	clear_prior_options()
-	i = 0
-	for option in nodeArray[0].options_array:
-		var destArr = nodeArray[0].destinations_array
-		create_option(option, destArr[i])
-		i = i+1
-	options_container.get_child(0).grab_focus()
+
 
 #DKM TEMP: convert JSON file to dictionary for module import:
 func loadJSONToDict(filepath:String)->Dictionary:
@@ -91,71 +61,120 @@ func loadJSONToDict(filepath:String)->Dictionary:
 	return moduleDict
 
 
-#DKM TEMP (XML): 
-func loadXMLDemo(filepath:String):
-	print("TEST! Trying to open xml at " + filepath)
+#DKM TEMP (XML version of JSON, manually imports and fills the nodeArray with locations): 
+func loadXMLDemo(filepath:String)->Array:
 	
-	var xml_data = {}
+	var nodeArray_XML
 	var parser = XMLParser.new()
 	var error = parser.open(filepath)
 	if error != OK:
 		print("Error opening XML file ", error)
-		return
+		return nodeArray_XML
+		
+	#Instantiate counter, initial locations for our module node of locations
+	var i = 0
+	var initialNode = Locale.new()
+	nodeArray_XML = [initialNode]	
 
-	#DKM TEMP: initial testing only:
-#	else:
-#		parser.read()
-#		#Skip encoding:
-#		parser.skip_section()
-#		print(parser.get_node_name())
-
-	#DKM TEMP: printer; probably don't need the strip_edges, was looking to remove white space. 
-	#	Looks like it reads the closing tags, too, which is a bummer. 
-	
-	#DKM TEMP: Test print output brute force
-#	while true:
-#		if parser.read() != OK:
-#			print("Parser read not okay!")
-#			return
-#		else:
-#			var px = parser.get_node_name()
-#			px.strip_edges(true,true)
-#			if(!px.empty()):
-#				print("Node Named: " + px)
-#			px = parser.get_node_data()
-#			px.strip_edges(true,true)
-#			if(!px.empty()):
-#				print("Data: " + px)	
 	while parser.read() == OK:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
 			var node_name = parser.get_node_name()
+		
 			if node_name.strip_edges(true,true).to_upper() == "LOCATION":
+				if nodeArray_XML.size() <= i:
+					print("Adding new node to array")
+					var newNode = Locale.new()
+					nodeArray_XML.append(newNode)
 				while parser.read() == OK:
 					if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-						if parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION":
-							break
-						var child_node_name = parser.get_node_name()
-						#DKM TEMP: we need to switch/match all this, but still wrapping head around this parsing
-						print(child_node_name.strip_edges(true,true).to_upper())
-						if child_node_name.strip_edges(true,true).to_upper()  == "ID":
-							parser.read()
-							var id_node_data = parser.get_node_data()
-							print("TEMP: ID found, named: " + str(id_node_data))
-							xml_data[id_node_data] = {}
+						var child_node_name = parser.get_node_name().strip_edges(true,true).to_upper()
+						if "OPTION_LABELS" in child_node_name:
+							child_node_name = "OPTION_LABELS"
+						elif "OPTION_GOTOS" in child_node_name:
+							child_node_name = "OPTION_GOTOS"
+						match child_node_name:
+							"ID":
+								parser.read()
+								var id_node_data = parser.get_node_data()
+								print("Found Id named: " + id_node_data + "; at i: " + str(i))
+								if(i < nodeArray_XML.size()):
+									nodeArray_XML[i].locale_name = id_node_data.strip_edges(true,true)
+							"ACTION":
+								parser.read()
+								var action_node_data = parser.get_node_data()
+								if(i < nodeArray_XML.size()):
+									nodeArray_XML[i].locale_action  = action_node_data.strip_edges(true,true)
+							"TEXT":
+								parser.read()
+								var descr_node_data = parser.get_node_data()
+								if(i < nodeArray_XML.size()):
+									nodeArray_XML[i].locale_description  = descr_node_data.strip_edges(true,true)
+							#"OPTION_LABELS":
+										#Break on ending tag for current location, increasing count
+					elif parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION" && parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
+						#DKM_TEMP: 
+						print("Found location break at i: " + str(i))
+						i = i+1
+						break
+								
+	return nodeArray_XML
 
-				
-#			xml_data[node_name] = {}
-#			for i in range(parser.get_attribute_count()):
-#				var key = parser.get_attribute_name(i)
-#				var value = parser.get_attribute_value(i)
-#				xml_data[node_name][key] = value
+
+
+func runXML_NodeBuilder(module_file_path:String)->Array:
+	var nodeArray_XML = loadXMLDemo(module_file_path_xml)
+	create_response(nodeArray_XML[0].locale_description)
+	#DKM TEMP: another that needs to be broken out when ready:
+	clear_prior_options()
+	var i = 0
+	for option in nodeArray_XML[0].options_array:
+		var destArr = nodeArray_XML[0].destinations_array
+		create_option(option, destArr[i])
+		i = i+1
+	#options_container.get_child(0).grab_focus()
+	return nodeArray_XML
+
+
+func runJSON_NodeBuilder(module_file_path:String)->Array:
+	var nodeArray_JSON
+	var moduleDict = loadJSONToDict(module_file_path)
+	#DKM TEMP: this needs to be refactored to reposition this initialization
+	var i = 0
+	#print("Looking for JSON at: " + module_file_path)
+	#print("Json returned as: " + str(moduleDict))
+	var initialNode = Locale.new()
+	nodeArray_JSON = [initialNode]
+	for moduleNode in moduleDict.values():
+		if nodeArray_JSON.size() <= i:
+			var newNode = Locale.new()
+			nodeArray_JSON.append(newNode)
+		nodeArray_JSON[i].locale_name = moduleNode.get("Id")
+		nodeArray_JSON[i].locale_description = moduleNode.get("Text")
+		nodeArray_JSON[i].locale_action = moduleNode.get("Action")
+		var actionParameters = moduleNode.get("A_Params")
+		for p in actionParameters:
+			nodeArray_JSON[i].locale_action_params.append(p)	
+		var nodeOptions = moduleNode.get("Option_Labels")
+		for option in nodeOptions:
+			nodeArray_JSON[i].options_array.append(option)
+			#print("For #" + str(i) + ": appended option of: " + str(option))
+		var nodeDestinations = moduleNode.get("Option_GoTos")
+		for dest in nodeDestinations:
+			nodeArray_JSON[i].destinations_array.append(dest)
+			#print("For #" + str(i) + ": appended go to destination of: " + str(dest))
+		#print("Node array name for #" + str(i) + ": " + nodeArray[i].locale_name)
+		i = i+1
+	create_response(nodeArray_JSON[0].locale_description)
+	#DKM TEMP: another that needs to be broken out when ready:
+	clear_prior_options()
+	i = 0
+	for option in nodeArray_JSON[0].options_array:
+		var destArr = nodeArray_JSON[0].destinations_array
+		create_option(option, destArr[i])
+		i = i+1
+	options_container.get_child(0).grab_focus()
 	
-	#DKM TEMP: test dictionary output:
-#	print("TEST: printing XML dictionary values: ")
-#	for val in xml_data.values():
-#		print(val)	
-
-
+	return nodeArray_JSON
 
 
 #Handles input text
