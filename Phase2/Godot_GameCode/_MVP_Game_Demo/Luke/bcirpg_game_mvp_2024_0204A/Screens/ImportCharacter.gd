@@ -16,6 +16,8 @@ func _ready() -> void:
 func _on_Button_pressed():
 	$FileDialog.popup()
 
+#TO DO, Add items from the CSV files into the player character singleton. Work on formatting the CSV files from AddCharacter.gd first.
+
 #this is going to take information from the file the player chose and put the individul parts into textboxes so it can be edited and then saved
 func _on_FileDialog_file_selected(path):
 	var file = File.new()
