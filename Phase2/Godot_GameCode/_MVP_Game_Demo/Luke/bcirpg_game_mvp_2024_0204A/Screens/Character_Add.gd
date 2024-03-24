@@ -7,23 +7,54 @@ extends Control
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var pSingleton = get_node("/root/PlayerCharacter").pc
 
+onready var Name = get_node("Title/VBoxContainer/LabelName/LE_Name")
+
+onready var Profession = get_node("Title/VBoxContainer/LabelProfession/LE_Pro")
+
+onready var Strength = get_node("Title/VBoxContainer/LabelStrength/LE_Str")
+
+onready var Intellect = get_node("Title/VBoxContainer/LabelIntellect/LE_Intl")
+
+onready var Willpower = get_node("Title/VBoxContainer/LabelWillpower/LE_Will")
+
+onready var Charm = get_node("Title/VBoxContainer/LabelCharm/LE_Charm")
+
+onready var Weapon = get_node("Title/VBoxContainer/LabelWeapon/LE_Weapon")
+
+onready var Armor = get_node("Title/VBoxContainer/LabelArmor/LE_Armor")
+
+onready var Quote = get_node("Title/VBoxContainer/LabelQuote/LE_Quote")
+
 func _ready() -> void:
 	theme=load(settings.themeFile)
 	$Title/But_SaveChar.grab_focus()
 
+func _prep_PlayerCharacter_Template():
+#	This function prepares the data for the player character in two ways.
+#	Way 1: By loading all of this data into the singleton for easy reads during gameplay
+#	Way 2: To prepare the data to be pulled from the singleton, when writing a file.
+	pSingleton.name = Name.text
+	pSingleton.profession = Profession.text
+	pSingleton.strength = Strength.text
+	pSingleton.intellect = Intellect.text
+	pSingleton.willpower = Willpower.text
+	pSingleton.charm = Charm.text
+	pSingleton.armor = Armor.text
+	pSingleton.quote = Quote.text
+
 func _on_But_SaveChar_pressed() -> void:
+	_prep_PlayerCharacter_Template()
 	$Title/FileDialog.popup()
 
 #DKM TEMP: this code was inherited and it needs pretty substantial
 #	overhaul for use in the module, depending on toolset use. 
 #	For now all the labels are individual lineEdits we need to grab.
 func _on_FileDialog_file_selected(path: String) -> void:
+#	This function runs when you hit the button to save your file, after you selected the name and location
+#	TODO: Create the CSV File, Populate the CSV File, workout where it saves to.
+	
 	var pc = get_node("/root/PlayerCharacter")
 	var newCharFile = File.new()
 	newCharFile.open(path, 2)
 	
-	#DKM TEMP: getting something to work with as text	
-	var newCharStr = $Title/VBoxContainer/LabelName/LE_Name.text
-	newCharFile.store_string(newCharStr)
-	pSingleton.pcText = "Name: " + newCharStr
-	print("PC text: " + pSingleton.pcText )
+	

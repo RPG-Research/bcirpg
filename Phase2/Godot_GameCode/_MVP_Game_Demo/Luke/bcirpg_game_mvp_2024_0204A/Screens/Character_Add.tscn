@@ -88,7 +88,7 @@ margin_bottom = 66.0
 text = "PROFESSION
 "
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelProfession"]
+[node name="LE_Pro" type="LineEdit" parent="Title/VBoxContainer/LabelProfession"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -100,10 +100,10 @@ margin_bottom = 101.0
 text = "STRENGTH
 "
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelStrength"]
+[node name="LE_Str" type="LineEdit" parent="Title/VBoxContainer/LabelStrength"]
 margin_top = 15.0
 margin_right = 58.0
-margin_bottom = 24.0
+margin_bottom = 39.0
 
 [node name="LabelIntellect" type="Label" parent="Title/VBoxContainer"]
 margin_top = 105.0
@@ -112,7 +112,7 @@ margin_bottom = 136.0
 text = "INTELLECT
 "
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelIntellect"]
+[node name="LE_Intl" type="LineEdit" parent="Title/VBoxContainer/LabelIntellect"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -124,7 +124,7 @@ margin_bottom = 171.0
 text = "WILLPOWER
 "
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelWillpower"]
+[node name="LE_Will" type="LineEdit" parent="Title/VBoxContainer/LabelWillpower"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -135,7 +135,7 @@ margin_right = 81.0
 margin_bottom = 189.0
 text = "CHARM"
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelCharm"]
+[node name="LE_Charm" type="LineEdit" parent="Title/VBoxContainer/LabelCharm"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -147,7 +147,7 @@ margin_bottom = 224.0
 text = "WEAPON
 "
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelWeapon"]
+[node name="LE_Weapon" type="LineEdit" parent="Title/VBoxContainer/LabelWeapon"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -158,7 +158,7 @@ margin_right = 81.0
 margin_bottom = 242.0
 text = "ARMOR"
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelArmor"]
+[node name="LE_Armor" type="LineEdit" parent="Title/VBoxContainer/LabelArmor"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0
@@ -169,7 +169,7 @@ margin_right = 81.0
 margin_bottom = 260.0
 text = "QUOTE"
 
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer/LabelQuote"]
+[node name="LE_Quote" type="LineEdit" parent="Title/VBoxContainer/LabelQuote"]
 margin_top = 15.0
 margin_right = 58.0
 margin_bottom = 24.0

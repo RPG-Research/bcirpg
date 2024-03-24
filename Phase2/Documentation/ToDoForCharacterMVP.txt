@@ -9,3 +9,6 @@
  4: Then save the singleton data to a CSV
 
  5: Figure out the issues with CSV like doug mentioned.
+
+
+ Completed: 3
