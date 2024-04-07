@@ -38,6 +38,7 @@ func _prep_PlayerCharacter_Template():
 	pSingleton.strength = Strength.text
 	pSingleton.intellect = Intellect.text
 	pSingleton.willpower = Willpower.text
+	pSingleton.weapon = Weapon.text
 	pSingleton.charm = Charm.text
 	pSingleton.armor = Armor.text
 	pSingleton.quote = Quote.text
@@ -74,8 +75,7 @@ func _on_But_SaveChar_pressed():
 	
 	var input_data = [
 	["Name", "Profession", "Strength", "Intellect", "Willpower", "Charm",  "Weapon", "Armor", "Quote"],
-	[pSingleton.name, pSingleton.profession, pSingleton.strength, pSingleton.intellect, 
-	pSingleton.willpower, pSingleton.charm, pSingleton.weapon, pSingleton.armor, pSingleton.quote],
+	[pSingleton.name, pSingleton.profession, pSingleton.strength, pSingleton.intellect, pSingleton.willpower, pSingleton.charm, pSingleton.weapon, pSingleton.armor, pSingleton.quote],
 ]
 
 	save_data_to_csv(input_data, file_path)
