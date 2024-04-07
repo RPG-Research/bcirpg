@@ -1,2 +1,4 @@
+res://genre_dialog_container.tscn
+res://MenuManager.gd
 res://top_toolbar/TopToolbar.tscn
-res://top_toolbar/CharacterMenu.gd
+res://term_container.tscn
