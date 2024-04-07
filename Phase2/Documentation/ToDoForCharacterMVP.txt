@@ -11,4 +11,6 @@
  5: Figure out the issues with CSV like doug mentioned.
 
 
- Completed: 3
+ Completed: 1 (I wrote my own), 2 (Wrote my own), 3, 4
+
+ TO DO: Talk with doug about part 5.
