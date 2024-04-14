@@ -13,12 +13,54 @@ script = ExtResource( 3 )
 anchor_left = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.0
+margin_left = -1.0
 margin_top = 0.0
-margin_right = 0.0
+margin_right = -1.0
 margin_bottom = 0.0
-text = "Multiplayer (temp)"
+text = "Multiplayer"
 
 [node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
 text = "Temp: back to menu"
 next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Title"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.5
+margin_top = -20.0
+margin_right = 144.5
+margin_bottom = 20.0
+custom_constants/separation = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Title/HBoxContainer"]
+margin_right = 97.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Title/HBoxContainer/VBoxContainer"]
+margin_right = 97.0
+margin_bottom = 14.0
+text = "Server Options"
+
+[node name="Button" type="Button" parent="Title/HBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 97.0
+margin_bottom = 38.0
+text = "Create Server"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Title/HBoxContainer"]
+margin_left = 197.0
+margin_right = 289.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Title/HBoxContainer/VBoxContainer2"]
+margin_right = 92.0
+margin_bottom = 14.0
+text = "Client Options"
+
+[node name="Button" type="Button" parent="Title/HBoxContainer/VBoxContainer2"]
+margin_top = 18.0
+margin_right = 92.0
+margin_bottom = 38.0
+text = "Join Server"
