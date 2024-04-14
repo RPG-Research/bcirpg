@@ -28,8 +28,6 @@ func _prep_PlayerCharacter_Template(loadedCSVData):
 	pSingleton.armor = loadedCSVData[6]
 	pSingleton.quote = loadedCSVData[7]
 
-	print("P Singleton")
-	print(pSingleton)
 
 
 func load_csv_data(path):

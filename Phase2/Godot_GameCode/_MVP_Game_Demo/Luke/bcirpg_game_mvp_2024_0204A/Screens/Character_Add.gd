@@ -46,6 +46,7 @@ func _prep_PlayerCharacter_Template():
 
 func save_data_to_csv(data: Array, file_path: String):
 	var file = File.new()
+	
 	if file.open(file_path, File.WRITE) == OK:
 		for row in data:
 			file.store_string(format_row(row))
@@ -69,7 +70,13 @@ func _on_But_SaveChar_pressed():
 	
 	_prep_PlayerCharacter_Template()
 	
-	var file_path = "user://character_data.csv"
+	var file_path = ""
+	
+	if pSingleton.name != "":
+		file_path = "user://" + pSingleton.name + "_data.csv"
+	
+	else: 
+		 file_path = "user://character_data.csv"
 
 #	To Do. Format data into the correct table.
 	
