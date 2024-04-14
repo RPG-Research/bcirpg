@@ -13,4 +13,4 @@
 
  Completed: 1 (I wrote my own), 2 (Wrote my own), 3, 4
 
- TO DO: Talk with doug about part 5.
+ For Part 5, We will need to look into another way to save and load data for the web version of the project.
