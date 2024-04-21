@@ -70,7 +70,7 @@
     <Id>Misc_003</Id>
     <Action>ShowText</Action>
     <A_Params></A_Params>
-    <Text>You find a quiet corner on the boat, put down your burden, and feel the rocking of the boat.  You rest mind and body, and really I&#x27;m experimenting with options and sizes of them, added via JSON here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.</Text>
+    <Text>You find a quiet corner on the boat, put down your burden, and feel the rocking of the boat.  You rest mind and body, and really I&#x27;m experimenting with options and sizes of them, added via XML here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.</Text>
     <Option_Labels_001>Resume your quest</Option_Labels_001>
     <Option_GoTos_001>Boat_001</Option_GoTos_001>
   </Location>

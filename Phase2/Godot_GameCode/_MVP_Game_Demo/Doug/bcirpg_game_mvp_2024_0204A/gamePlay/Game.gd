@@ -9,7 +9,7 @@ extends Control
 #DKM TEMP:
 var module_file_path = "res://_userFiles/Module_Demo_001.json"
 #DKM TEMP:
-var module_file_path_xml = "res://_userFiles/Module_Demo_002.xml"
+var module_file_path_xml = "res://_userFiles/Module_Demo_003_Loc.xml"
 
 onready var history_source = get_node("/root/History").historyScreensSingleton
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
@@ -31,7 +31,7 @@ onready var module_map = "res://_userFiles/temp_map.save"
 
 #Name: nodeArray
 #Use: Contains the loaded module. Each array item is a 
-#	Location instance, instantiated from the Location.gd script.
+#	Location instance, instantiated from the UserInterface/Location.gd script.
 var nodeArray
 
 func _ready() -> void:
@@ -44,7 +44,7 @@ func _ready() -> void:
 	#DKM TEMP: look at nodearry
 	print("Temp: Looking at nodeArray:")
 	for loc in nodeArray:
-		print ("Location named: " + loc.locale_name)
+		print ("Space named: " + loc.locale_name)
 	
 	current_text.show()
 	#Load character sheet:
@@ -62,14 +62,56 @@ func loadJSONToDict(filepath:String)->Dictionary:
 
 
 #DKM TEMP (XML version of JSON, manually imports and fills the nodeArray with locations): 
+#	4/21/24 (1454): In the middle of this refactor; while we're making connections we're
+#		just passing out the space array, but this will be fixed when finished to navigate whole
+#		regions, locations, and so on.
 func loadXMLDemo(filepath:String)->Array:
+	var spaceNode = Locale.new()
 	
-	var nodeArray_XML
-	var parser = XMLParser.new()
-	var error = parser.open(filepath)
+	var parser_ext = XMLParser.new()
+	var error = parser_ext.open(filepath)
 	if error != OK:
 		print("Error opening XML file ", error)
-		return nodeArray_XML
+		return spaceNode.contained_subLocations
+
+	while parser_ext.read() == OK:
+		if parser_ext.get_node_type() == XMLParser.NODE_ELEMENT:
+			var node_name = parser_ext.get_node_name()
+		
+			if node_name.strip_edges(true,true).to_upper() == "REGION":
+				var newNode = Locale.new()
+				newNode.locale_type = node_name.strip_edges(true,true).to_upper()
+				
+				while parser_ext.read() == OK:
+					if parser_ext.get_node_type() == XMLParser.NODE_ELEMENT:
+						var child_node_name_raw = parser_ext.get_node_name().strip_edges(true,true).to_upper()
+						var child_node_name = child_node_name_raw
+						match child_node_name:
+							"NAME":
+								parser_ext.read()
+								if parser_ext.get_node_type() == XMLParser.NODE_TEXT:	
+									var id_node_data = parser_ext.get_node_data()							
+									newNode.locale_name = id_node_data.strip_edges(true,true)
+							"DESCRIPTION":
+								parser_ext.read()
+								if parser_ext.get_node_type() == XMLParser.NODE_TEXT:	
+									var id_node_data = parser_ext.get_node_data()							
+									newNode.locale_description = id_node_data.strip_edges(true,true)	
+							"LOCATION":
+								var subNode = Locale.new()
+								subNode.locale_type = child_node_name
+								newNode.contained_subLocations.append(subNode)
+							"SPACE":
+								spaceNode = loadGameNode(parser_ext)
+							"SCENE":
+								break
+				print("Found area of type: " + newNode.locale_type +"; with description: " + newNode.locale_description)
+		
+	return spaceNode.contained_subLocations
+
+func loadGameNode(parser:XMLParser)->Locale:
+	var gameNodeLocale = Locale.new()
+	var nodeArray_XML
 		
 	#Instantiate counter, initial locations for our module node of locations
 	var i = 0
@@ -80,44 +122,104 @@ func loadXMLDemo(filepath:String)->Array:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
 			var node_name = parser.get_node_name()
 		
-			if node_name.strip_edges(true,true).to_upper() == "LOCATION":
+			if node_name.strip_edges(true,true).to_upper() == "REGION":
+				var newNode = Locale.new()
+				newNode.locale_type = node_name.strip_edges(true,true).to_upper()
+				
+				while parser.read() == OK:
+					if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+						var child_node_name_raw = parser.get_node_name().strip_edges(true,true).to_upper()
+						var child_node_name = child_node_name_raw
+						match child_node_name:
+							"NAME":
+								parser.read()
+								if parser.get_node_type() == XMLParser.NODE_TEXT:	
+									var id_node_data = parser.get_node_data()							
+									newNode.locale_name = id_node_data.strip_edges(true,true)
+							"DESCRIPTION":
+								parser.read()
+								if parser.get_node_type() == XMLParser.NODE_TEXT:	
+									var id_node_data = parser.get_node_data()							
+									newNode.locale_description = id_node_data.strip_edges(true,true)	
+							"LOCATION":
+								var subNode = Locale.new()
+								subNode.locale_type = child_node_name
+								newNode.contained_subLocations.append(subNode)
+							"SPACE":
+								break
+							"SCENE":
+								break
+				print("Found area of type: " + newNode.locale_type +"; with description: " + newNode.locale_description)
+		
+			if node_name.strip_edges(true,true).to_upper() == "SPACE":
 				if nodeArray_XML.size() <= i:
 					print("Adding new node to array")
 					var newNode = Locale.new()
+					newNode.locale_type = "SPACE"
 					nodeArray_XML.append(newNode)
 				while parser.read() == OK:
 					if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-						var child_node_name = parser.get_node_name().strip_edges(true,true).to_upper()
-						if "OPTION_LABELS" in child_node_name:
+						var child_node_name_raw = parser.get_node_name().strip_edges(true,true).to_upper()
+						var child_node_name = child_node_name_raw
+						
+						#DKM TEMP/TODO: Note that the code currently expects an even number of labels and go-tos, 
+						#		and in the correct order. Ideally we split on the underscore, match the numbers
+						#		and handle cases of mismatches (by number mismatch or failure to match numbers of 
+						#		labels with numbers of gotos. But for now works as JSON version did.
+						#		I'm using the child_node_name_raw to preserve the full name with suffix number if we 
+						#		want to use.
+						#		NOTE: XMLParser throws errors on get node name and type if not within the expected
+						#			type; these are being checked against in the match after read, but not output.
+						#
+						if "OPTION_LABELS" in child_node_name_raw:
 							child_node_name = "OPTION_LABELS"
-						elif "OPTION_GOTOS" in child_node_name:
+						elif "OPTION_GOTOS" in child_node_name_raw:
 							child_node_name = "OPTION_GOTOS"
 						match child_node_name:
 							"ID":
 								parser.read()
-								var id_node_data = parser.get_node_data()
-								print("Found Id named: " + id_node_data + "; at i: " + str(i))
-								if(i < nodeArray_XML.size()):
-									nodeArray_XML[i].locale_name = id_node_data.strip_edges(true,true)
+								if parser.get_node_type() == XMLParser.NODE_TEXT:								
+									var id_node_data = parser.get_node_data()
+									print("Found Id named: " + id_node_data + "; at i: " + str(i))
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].locale_name = id_node_data.strip_edges(true,true)
 							"ACTION":
 								parser.read()
-								var action_node_data = parser.get_node_data()
-								if(i < nodeArray_XML.size()):
-									nodeArray_XML[i].locale_action  = action_node_data.strip_edges(true,true)
+								if parser.get_node_type() == XMLParser.NODE_TEXT:								
+									var action_node_data = parser.get_node_data()
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].locale_action  = action_node_data.strip_edges(true,true)
 							"TEXT":
 								parser.read()
-								var descr_node_data = parser.get_node_data()
-								if(i < nodeArray_XML.size()):
-									nodeArray_XML[i].locale_description  = descr_node_data.strip_edges(true,true)
-							#"OPTION_LABELS":
-										#Break on ending tag for current location, increasing count
-					elif parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION" && parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
+								if parser.get_node_type() == XMLParser.NODE_TEXT:								
+									var descr_node_data = parser.get_node_data()
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].locale_description  = descr_node_data.strip_edges(true,true)
+							"OPTION_LABELS":
+								parser.read()
+								if parser.get_node_type() == XMLParser.NODE_TEXT:								
+									var action_node_data = parser.get_node_data()
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].options_array.append(action_node_data.strip_edges(true,true))
+							"OPTION_GOTOS":
+								parser.read()
+								if parser.get_node_type() == XMLParser.NODE_TEXT:								
+									var action_node_data = parser.get_node_data()
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].destinations_array.append(action_node_data.strip_edges(true,true))
+							"A_PARAMS":
+								parser.read()
+								if parser.get_node_type() == XMLParser.NODE_TEXT:
+									var action_node_data = parser.get_node_data()
+									if(i < nodeArray_XML.size()):
+										nodeArray_XML[i].locale_action_params.append(action_node_data.strip_edges(true,true))
+					elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END && parser.get_node_name().strip_edges(true,true).to_upper() == "SPACE":
 						#DKM_TEMP: 
-						print("Found location break at i: " + str(i))
+						print("Found space break at i: " + str(i))
 						i = i+1
 						break
-								
-	return nodeArray_XML
+	gameNodeLocale.contained_subLocations = nodeArray_XML
+	return gameNodeLocale
 
 
 

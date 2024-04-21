@@ -13,12 +13,13 @@ extends PanelContainer
 class_name Locale
 
 var locale_name = "Location Name"
+var locale_type = "Space"
 var locale_description = "This is the description of the location."
 var locale_action = "Default action"
 var locale_action_params = []
 var options_array = []
 var destinations_array = []
-
+var contained_subLocations = []
 
 var visited = false;
 

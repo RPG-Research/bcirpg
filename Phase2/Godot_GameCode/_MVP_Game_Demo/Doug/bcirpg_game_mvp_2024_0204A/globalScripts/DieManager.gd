@@ -44,12 +44,16 @@ func setDieManager(dice, percent):
 #Load the diceInPlay array
 func loadData():
 	for elem in desiredDice:
-		if elem in validDieTypes:
-			diceUsed.append(Die.new(elem))
+		if int(elem) in validDieTypes:
+			diceUsed.append(Die.new(int(elem)))
 	
 	#conditional to check if two D10s are being used
 	#if so, we know that a percentage roll is taking place
-	if len(desiredDice) == 2 && desiredDice[0] == 10 && desiredDice[1] == 10:
+	#if len(desiredDice) == 2 && desiredDice[0] == 10 && desiredDice[1] == 10:
+	#	isPercentageRoll = true
+	#DKM TEMP: this is crashing 4/21/24 with strings coming through unchecked. Not sure what happened to the check that 
+	#	was functional here before. TODO on this is type-safe this DieRoller entirely.
+	if desiredDice.size() == 2 && int(desiredDice[0]) == 10 && int(desiredDice[1]) == 10:
 		isPercentageRoll = true
 
 #Resets the data in the script

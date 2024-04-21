@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://gamePlay/Game.gd" type="Script" id=1]
-[ext_resource path="res://gamePlay/But_MoreOptions.gd" type="Script" id=2]
-[ext_resource path="res://gamePlay/But_Option.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gamePlay/But_Option.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gamePlay/But_MoreOptions.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=4]
 [ext_resource path="res://assets/liberation_serif_30pt.tres" type="DynamicFont" id=5]
 
@@ -46,7 +46,7 @@ rect_min_size = Vector2( 0, 40 )
 margin_right = 197.0
 margin_bottom = 36.0
 text = "More Options"
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -84,7 +84,7 @@ margin_right = 108.0
 margin_bottom = 36.0
 custom_constants/separation = 5
 
-[node name="option1" type="Button" parent="Background/MarginContainer/Rows/InputArea/ScrollContainer/OptionsContainer" instance=ExtResource( 3 )]
+[node name="option1" type="Button" parent="Background/MarginContainer/Rows/InputArea/ScrollContainer/OptionsContainer" instance=ExtResource( 2 )]
 margin_right = 108.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 5 )
