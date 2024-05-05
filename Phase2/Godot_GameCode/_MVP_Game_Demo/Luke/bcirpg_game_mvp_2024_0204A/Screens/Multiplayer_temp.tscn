@@ -23,7 +23,64 @@ text = "Multiplayer"
 text = "Temp: back to menu"
 next_scene_path = "res://Screens/MenuScreen.tscn"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Title"]
+[node name="ConfigHBoxContainer" type="HBoxContainer" parent="Title"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -148.5
+margin_top = -42.0
+margin_right = 148.5
+custom_constants/separation = 20
+
+[node name="IPVboxContainer" type="VBoxContainer" parent="Title/ConfigHBoxContainer"]
+margin_right = 150.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="Title/ConfigHBoxContainer/IPVboxContainer"]
+margin_right = 150.0
+margin_bottom = 14.0
+text = "IP Address (V4 Format):"
+align = 1
+
+[node name="IPLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/IPVboxContainer"]
+margin_top = 18.0
+margin_right = 150.0
+margin_bottom = 42.0
+
+[node name="PortVboxContainer" type="VBoxContainer" parent="Title/ConfigHBoxContainer"]
+margin_left = 170.0
+margin_right = 251.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="Title/ConfigHBoxContainer/PortVboxContainer"]
+margin_right = 81.0
+margin_bottom = 14.0
+text = "Player Name"
+align = 1
+
+[node name="IPLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PortVboxContainer"]
+margin_top = 18.0
+margin_right = 81.0
+margin_bottom = 42.0
+
+[node name="PlayerNameVboxContainer" type="VBoxContainer" parent="Title/ConfigHBoxContainer"]
+margin_left = 271.0
+margin_right = 329.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="Title/ConfigHBoxContainer/PlayerNameVboxContainer"]
+margin_right = 58.0
+margin_bottom = 14.0
+text = "Port"
+align = 1
+
+[node name="IPLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PlayerNameVboxContainer"]
+margin_top = 18.0
+margin_right = 58.0
+margin_bottom = 42.0
+
+[node name="JoinHBoxContainer" type="HBoxContainer" parent="Title"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -34,33 +91,36 @@ margin_right = 144.5
 margin_bottom = 20.0
 custom_constants/separation = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Title/HBoxContainer"]
+[node name="CreateVBoxContainer" type="VBoxContainer" parent="Title/JoinHBoxContainer"]
 margin_right = 97.0
 margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="Title/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Title/JoinHBoxContainer/CreateVBoxContainer"]
 margin_right = 97.0
 margin_bottom = 14.0
 text = "Server Options"
 
-[node name="Button" type="Button" parent="Title/HBoxContainer/VBoxContainer"]
+[node name="CreateButton" type="Button" parent="Title/JoinHBoxContainer/CreateVBoxContainer"]
 margin_top = 18.0
 margin_right = 97.0
 margin_bottom = 38.0
 text = "Create Server"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Title/HBoxContainer"]
+[node name="ConnectVBoxContainer" type="VBoxContainer" parent="Title/JoinHBoxContainer"]
 margin_left = 197.0
 margin_right = 289.0
 margin_bottom = 40.0
 
-[node name="Label" type="Label" parent="Title/HBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="Title/JoinHBoxContainer/ConnectVBoxContainer"]
 margin_right = 92.0
 margin_bottom = 14.0
 text = "Client Options"
 
-[node name="Button" type="Button" parent="Title/HBoxContainer/VBoxContainer2"]
+[node name="ConnectButton" type="Button" parent="Title/JoinHBoxContainer/ConnectVBoxContainer"]
 margin_top = 18.0
 margin_right = 92.0
 margin_bottom = 38.0
 text = "Join Server"
+
+[connection signal="pressed" from="Title/JoinHBoxContainer/CreateVBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="Title/JoinHBoxContainer/ConnectVBoxContainer/ConnectButton" to="." method="_on_ConnectButton_pressed"]

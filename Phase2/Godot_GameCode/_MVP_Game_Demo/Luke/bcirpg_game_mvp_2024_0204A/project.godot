@@ -61,6 +61,7 @@ PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
 DiceRoller="*res://globalScripts/DiceRoller.gd"
 GlobalSaveInstance="*res://globalScripts/globalSaveInstance.gd"
 GameCurrent="*res://globalScripts/gameCurrent.gd"
+Network="*res://globalScripts/Network.gd"
 
 [physics]
 

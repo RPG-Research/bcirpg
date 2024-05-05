@@ -1,0 +1,22 @@
+To Do for servers.
+
+1. Work off of this lesson video series and git repo.
+
+https://www.youtube.com/watch?v=Xu3LtVihYoo&t=372s
+
+https://github.com/gdquest-demos/godot-3-demos/tree/master/2018/07-30-2018-multiplayer-high-level-api
+
+2. Test a basic server connection from two sessions (server and client)
+
+3: Rework the 2D Postitioning system from this project, to have it work alongside the history functionality of Doug's project instead.
+
+
+What has been done so far.
+
+Created Rough UI for Port, IP, and Player Name
+
+Imported boilerplate code from Git repo.
+
+Added some bits of code here and there.
+
+Created Network.gd as a Singleton.
