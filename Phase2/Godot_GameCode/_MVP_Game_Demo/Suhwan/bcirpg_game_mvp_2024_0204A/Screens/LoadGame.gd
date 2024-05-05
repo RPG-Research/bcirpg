@@ -9,7 +9,7 @@ onready var pSingleton = get_node("/root/PlayerCharacter").pc
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	theme=load(settings.themeFile)
-	$Title/But_ChangeScene.grab_focus()
+	#$Title/But_ChangeScene.grab_focus()
 	#pass # Replace with function body.
 
 
@@ -21,7 +21,7 @@ func _on_Button_pressed():
 	$FileDialog.popup()
 
 
-#this is going to take information from the file the player chose and put the individul parts into textboxes so it can be edited and then saved
+#this is going to take information from the file the player chose and put the individual parts into textboxes so it can be edited and then saved
 func _on_FileDialog_file_selected(path):
 	var file = File.new()
 	#read the text in the file, save it in the variable a
@@ -51,3 +51,5 @@ func _on_FileDialog_file_selected(path):
 				pSingleton.pcText += csvStr + "\n"
 			i += 1
 	file.close()
+
+
