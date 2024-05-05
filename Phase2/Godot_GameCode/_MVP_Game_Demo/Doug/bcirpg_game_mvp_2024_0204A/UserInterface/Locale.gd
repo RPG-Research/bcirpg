@@ -20,6 +20,7 @@ var locale_action_params = []
 var options_array = []
 var destinations_array = []
 var contained_subLocations = []
+var is_starting_locale = false;
 
 var visited = false;
 

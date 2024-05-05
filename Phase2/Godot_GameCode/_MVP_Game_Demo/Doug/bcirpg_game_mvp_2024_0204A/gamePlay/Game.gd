@@ -30,13 +30,25 @@ onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSh
 onready var module_map = "res://_userFiles/temp_map.save"
 
 #Name: nodeArray
-#Use: Contains the loaded module. Each array item is a 
+#Use: Contains Locales of type SPACE for current location of the party in the game.
 #	Location instance, instantiated from the UserInterface/Location.gd script.
 var nodeArray
+#Name: regionsArray
+#Use: Contains Locales of type REGION, outermost Location level in the hierarchy. 
+#	Regions contain Locations, which contain Spaces.
+#	Each array item is a Location instance, instantiated from the UserInterface/Location.gd script.
+var regionsArray
 
 func _ready() -> void:
 	save_module()
 	theme=load(settings.themeFile)
+	
+	#DKM TEMP: note the original JSON builder passes the starting space back, as it operates in a flat 
+	#	location hierarchy. The XML builder implements a hierarchy of locations, and therefore returns
+	#	the outermost layer as the regionsArray. Support for the JSON can be entirely removed when desired
+	#	and all that code excised, but for now left in place for testing purposes. 
+	#	Because of this hierarchy, the additional findStartingSpaceNode helper function is used within the
+	#	runXML_NodeBuilder function.
 	
 	#nodeArray = runJSON_NodeBuilder(module_file_path)
 	nodeArray = runXML_NodeBuilder(module_file_path_xml)
@@ -61,13 +73,16 @@ func loadJSONToDict(filepath:String)->Dictionary:
 	return moduleDict
 
 
-#DKM TEMP (XML version of JSON, manually imports and fills the nodeArray with locations): 
-#	4/21/24 (1454): In the middle of this refactor; while we're making connections we're
-#		just passing out the space array, but this will be fixed when finished to navigate whole
-#		regions, locations, and so on.
+#FUNCTION Load XML Demo
+#Params: File path to the location of the XML file
+#Returns: Array of all game regions
+#Notes: This is the XML version of the prior, JSON version to build the game provided source module material. 
+#	Builds an array of Location of type REGION, the outermost layer on the location hierarchy, with all contained 
+#	Locations and all contained Spaces. At this this there is no support for a separate layer of type of Scene, 
+#	though this can be added as desired. 
 func loadXMLDemo(filepath:String)->Array:
 	
-	#Array to hold all regions for the module (of type Locale)
+	#Array to hold all regions for the module (of type Location)
 	var regions_XML = []
 	#To hold our current Region node
 	var newNode
@@ -112,15 +127,13 @@ func loadXMLDemo(filepath:String)->Array:
 						regions_XML.append(newNode)
 						i = i+1
 				
-	#DKM TEMP: (END 4/28; TO DO next time): 
-	#	This is a cheat while the levels of the hierarchy were implemented. Now that this is working, we need
-	#	to add an action that allows for moving between container locations. We also need to add
-	#	an action or indicator where we begin. I'm handing the known start location here over directly, so 
-	#	when ready, this should just return the completed regions_XML.
-	#	We'll also need to add more test regions to our XML itself to verify this. 
-	return regions_XML[0].contained_subLocations[0].contained_subLocations
+	return regions_XML
 
-#Creates a new location node (type Locale), with it's contained children, calling space node creator as needed
+
+#FUNCTION Load Location Node
+#Params: Currently validated XML parser
+#Returns: A new Locale of type LOCATION, with name and description and contained children
+#Notes: This calls the space node creator as needed; also bubbles up starting location if found in the spaces contained
 func loadLocationNode(parser:XMLParser)->Locale:
 	var newLocationNode = Locale.new()
 	#Our spaces per location node iterator
@@ -142,6 +155,9 @@ func loadLocationNode(parser:XMLParser)->Locale:
 						newLocationNode.locale_description = loc_id_node_data.strip_edges(true,true)	
 				"SPACE":
 					var spaceNode = loadGameNode(parser)
+					#Starting locale is set to the specific space node, but the location that holds this node will also be flagged.
+					if spaceNode.is_starting_locale == true:
+						newLocationNode.is_starting_locale = true
 					newLocationNode.contained_subLocations.append(spaceNode)
 				
 		elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END && parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION":
@@ -150,7 +166,11 @@ func loadLocationNode(parser:XMLParser)->Locale:
 			
 	return newLocationNode
 
-#Creates a new space node, with all its elements (ID, action, options and options labels) contained
+
+#FUNCTION Load Game Node
+#Params: currently validated XML parser
+#Returns: A new Locale of type SPACE, with elements (ID, action, options and options labels) contained
+#Notes:
 func loadGameNode(parser:XMLParser)->Locale:
 	var node_name = parser.get_node_name()
 	var spaceNode = Locale.new()
@@ -183,7 +203,11 @@ func loadGameNode(parser:XMLParser)->Locale:
 						var id_node_data = parser.get_node_data()
 						print("Found Id named: " + id_node_data)
 						spaceNode.locale_name = id_node_data.strip_edges(true,true)
-
+				"START":
+					parser.read()
+					if (parser.get_node_type() == XMLParser.NODE_TEXT) && (parser.get_node_data().strip_edges(true,true).to_upper() == "TRUE"):								
+						print("Found Starting place!")
+						spaceNode.is_starting_locale  = true					
 				"ACTION":
 					parser.read()
 					if parser.get_node_type() == XMLParser.NODE_TEXT:								
@@ -218,10 +242,33 @@ func loadGameNode(parser:XMLParser)->Locale:
 
 	return spaceNode
 
-
-
+#FUNCTION Find Starting Space Node
+#Params: regions XML array: array of all game regions (outermost location level)
+#Returns: XML of the contained sublocations for a location holding the starting node
+#Notes: This helper function iterates the built regions and returns the contained sublocations from the Location level 
+#	area that contains the starting space flagged.
+func findStartingSpaceNode(regions:Array)->Array:
+	var startingSpaces_XML = []
+	if regions.size() < 1:
+		return startingSpaces_XML
+	else:
+		for x in regions:
+			#Location level
+			for y in x.contained_subLocations:
+				if y.is_starting_locale == true:
+					startingSpaces_XML = y.contained_subLocations
+	
+	return startingSpaces_XML
+	
+#FUNCTION: Run XML Node Builder
+#Params: File path to the location of the XML file
+#Returns: Array of Locales of type SPACE that contain the isStartingLocale node. 
+#Notes: This is a wrapper function to load from the XML. It begins with initial
+#	option loading, and finds the starting place, populating the global Regions 
+#	Array so it may be accessed for changing regions.
 func runXML_NodeBuilder(module_file_path:String)->Array:
-	var nodeArray_XML = loadXMLDemo(module_file_path_xml)
+	regionsArray = loadXMLDemo(module_file_path_xml) 
+	var nodeArray_XML = findStartingSpaceNode(regionsArray)
 	create_response(nodeArray_XML[0].locale_description)
 	#DKM TEMP: another that needs to be broken out when ready:
 	clear_prior_options()
@@ -342,6 +389,25 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 			var destArr = target_Locale.destinations_array
 			create_option(option, destArr[i])
 			i = i+1
+	elif target_Locale.locale_action == "ChangeLocation" && target_Locale.destinations_array.size() == 1:
+		print("Running test action " + target_Locale.locale_action + "; with parameters of: ")
+		var nodeParameters = []
+		var outputText = "Stepping over to: "
+		for param in target_Locale.locale_action_params:
+			print(param)
+			nodeParameters.append(param)
+		if (target_Locale.locale_action_params.size() == 3):
+			var destination = findRelocationLocation(nodeParameters)
+			print ("TEMP: returned destination of: " + destination.locale_name)
+			create_response(destination.locale_description)
+			clear_prior_options()
+			var p = 0
+			for option in destination.options_array:
+				var destArr = destination.destinations_array
+				create_option(option, destArr[p])
+				p = p+1
+
+		
 	elif target_Locale.locale_action == "TestDieRollAction" && target_Locale.destinations_array.size() == 1:
 		print("Running test action " + target_Locale.locale_action + "; with parameters of: ")
 		var nodeParameters = []
@@ -371,6 +437,23 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 		#change_node(target_Locale.destinations_array[0])
 	options_container.get_child(0).grab_focus()
 
+#FUNCTION: Find Relocation Location
+#Params: array containing the names of target: 0.region, 1.location, 2.space
+#Returns: the target location
+#Notes: This is a helper function to look up desired location by name. 
+func findRelocationLocation(locNames:Array)->Locale:
+	var relocated_location = Locale.new()
+	if locNames.size() == 3:
+		for region in regionsArray:
+			print("TEMP: region name read as: " + region.locale_name)
+			if (region.locale_name.strip_edges(true,true).to_upper() == locNames[0].strip_edges(true,true).to_upper()):
+				for loc in region.contained_subLocations:
+					if (loc.locale_name.strip_edges(true,true).to_upper() == locNames[1].strip_edges(true,true).to_upper()):
+						for space in loc.contained_subLocations:
+							print("TEMP: space name read as: " + space.locale_name)
+							if (space.locale_name.strip_edges(true,true).to_upper() == locNames[2].strip_edges(true,true).to_upper()):
+								relocated_location = space
+	return relocated_location
 
 #DKM TEMP: saves the entire scene in one packed scene file
 func save_module():
