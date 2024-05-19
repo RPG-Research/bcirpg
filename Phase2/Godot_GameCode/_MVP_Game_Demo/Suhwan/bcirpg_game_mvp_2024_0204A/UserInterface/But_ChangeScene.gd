@@ -16,3 +16,7 @@ func _on_But_NewGame_button_up():
 func _get_configuration_warning() -> String:
 	return "next_scene_path must be set for this button to work" if next_scene_path == "" else ""
 
+
+
+func _on_But_OpenFile_pressed():
+	pass # Replace with function body.

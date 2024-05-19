@@ -45,7 +45,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="But_OpenFile" type="Button" parent="VBoxContainer2"]
+[node name="But_LoadFile" type="Button" parent="VBoxContainer2"]
 margin_top = 12.0
 margin_right = 369.0
 margin_bottom = 32.0
@@ -53,3 +53,18 @@ text = "Load Character File"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_left = 113.0
+margin_top = 24.0
+margin_right = 886.0
+margin_bottom = 480.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Open a File"
+mode = 0
+access = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="VBoxContainer2/But_LoadFile" to="." method="_on_Button_pressed"]
