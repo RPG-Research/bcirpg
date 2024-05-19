@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UserInterface/But_ChangeScene.gd" type="Script" id=1]
+
+[node name="But_ChangeScene" type="Button"]
+margin_right = 130.0
+margin_bottom = 24.0
+size_flags_vertical = 3
+text = "New Game"
+script = ExtResource( 1 )
+
+[connection signal="button_up" from="." to="." method="_on_But_NewGame_button_up"]
