@@ -20,6 +20,7 @@ func create_server(player_nickname):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
+	print("Created Server")
 
 func connect_to_server(player_nickname):
 	self_data.name = player_nickname
@@ -59,8 +60,6 @@ remote func _send_player_info(id, info):
 	new_player.set_network_master(id)
 	$'/root/Game/'.add_child(new_player)
 	new_player.init(info.name, info.position, true)
-
-
 
 
 func update_position(id, position):

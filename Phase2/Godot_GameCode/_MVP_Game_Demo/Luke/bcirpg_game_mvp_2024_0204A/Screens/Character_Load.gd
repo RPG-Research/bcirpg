@@ -58,18 +58,3 @@ func _on_LoadCharacter_FileDialog_file_selected(path: String) -> void:
 	print(csv_data)
 	_prep_PlayerCharacter_Template(csv_data[1])
 
-
-
-#	pc.playerCharacterSingleton.pcText = charFile.get_as_text()
-#	$TextEdit.text = pc.playerCharacterSingleton.pcText 
-
-
-
-
-#func _ready():
-#  # Replace "your_file.csv" with the actual path to your CSV file
-#  var csv_data = load_csv_data("res://your_file.csv")
-#  # Process the loaded data (data is a 2D array)
-#  # You can access data like this:
-#  #  for row in csv_data:
-#  #      print(row[0])  # Access first element in each row

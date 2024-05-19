@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/liberation_serif_40pt.tres" type="DynamicFont" id=1]
-[ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=2]
-[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://userInterface/Title.tscn" type="PackedScene" id=2]
+[ext_resource path="res://userInterface/But_ChangeScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://screens/grabFocus.gd" type="Script" id=4]
 [ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=5]
 

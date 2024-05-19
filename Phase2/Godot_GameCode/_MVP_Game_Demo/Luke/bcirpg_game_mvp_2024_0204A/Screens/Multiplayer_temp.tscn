@@ -2,12 +2,12 @@
 
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Screens/grabFocus.gd" type="Script" id=3]
+[ext_resource path="res://Screens/Multiplayer_temp.gd" type="Script" id=4]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Title" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.0
@@ -18,6 +18,7 @@ margin_top = 0.0
 margin_right = -1.0
 margin_bottom = 0.0
 text = "Multiplayer"
+script = ExtResource( 4 )
 
 [node name="But_ChangeScene" parent="Title" instance=ExtResource( 2 )]
 text = "Temp: back to menu"
@@ -28,10 +29,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -148.5
+margin_left = -164.5
 margin_top = -42.0
-margin_right = 148.5
+margin_right = 164.5
 custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="IPVboxContainer" type="VBoxContainer" parent="Title/ConfigHBoxContainer"]
 margin_right = 150.0
@@ -59,7 +63,7 @@ margin_bottom = 14.0
 text = "Player Name"
 align = 1
 
-[node name="IPLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PortVboxContainer"]
+[node name="PortLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PortVboxContainer"]
 margin_top = 18.0
 margin_right = 81.0
 margin_bottom = 42.0
@@ -75,7 +79,7 @@ margin_bottom = 14.0
 text = "Port"
 align = 1
 
-[node name="IPLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PlayerNameVboxContainer"]
+[node name="PlayerLineEdit" type="LineEdit" parent="Title/ConfigHBoxContainer/PlayerNameVboxContainer"]
 margin_top = 18.0
 margin_right = 58.0
 margin_bottom = 42.0

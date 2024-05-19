@@ -86,27 +86,3 @@ func _on_But_SaveChar_pressed():
 ]
 
 	save_data_to_csv(input_data, file_path)
-
-##DKM TEMP: this code was inherited and it needs pretty substantial
-##	overhaul for use in the module, depending on toolset use. 
-##	For now all the labels are individual lineEdits we need to grab.
-#func _on_FileDialog_file_selected(path: String) -> void:
-##	This function runs when you hit the button to save your file, after you selected the name and location
-##	TODO: Create the CSV File, Populate the CSV File, workout where it saves to.
-#
-#	var pc = get_node("/root/PlayerCharacter")
-#	var newCharFile = File.new()
-#	newCharFile.open(path, 2)
-#
-##	var file_path = "user://character_data.csv"
-##
-##	var input_data = [
-##	["Name", "Age", "Score"],
-##	["John", 25, 85],
-##	["Alice", 30, 92],
-##	["Bob", 28, 78],
-##]
-##
-##	save_data_to_csv(input_data, file_path)
-##
-#
