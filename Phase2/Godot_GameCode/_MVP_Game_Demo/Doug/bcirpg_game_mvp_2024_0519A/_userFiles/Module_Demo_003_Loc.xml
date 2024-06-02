@@ -11,9 +11,9 @@
         <Start>True</Start>
         <Action>ShowText</Action>
         <A_Params></A_Params>
-        <Text>The game has begun! You may select from the options below. You are in a boat. You have been shipwrecked. You can leave the boat through a hatch.</Text>
+        <Text>The game has begun! You may select from the options below. You are in a **/boat**. You have been **/shipwrecked**. You can leave the **/boat** through a **/hatch**.</Text>
         <Option_Labels_001>Examine Ship</Option_Labels_001>
-        <Option_Labels_002>Climb out through hatch</Option_Labels_002>
+        <Option_Labels_002>Climb out through **hatch**</Option_Labels_002>
         <Option_Labels_003>Play the fiddle!</Option_Labels_003>
         <Option_Labels_004>Rest</Option_Labels_004>
         <Option_Labels_005>Meditate</Option_Labels_005>

@@ -4,6 +4,12 @@
 
 extends Control
 
+#GAL is to hold instantiated Genre_Layer
+const Genre_Layer := preload("res://globalScripts/GAL_Lookups.gd")
+onready var GAL = Genre_Layer.new()
+var generics_flag = "**"
+var generics_word_header = "/"
+
 #Source for module file: to the GU
 #export(String, FILE, "*.json") var module_file_path:String
 #DKM TEMP:
@@ -39,7 +45,7 @@ var nodeArray
 #	Each array item is a Location instance, instantiated from the UserInterface/Location.gd script.
 var regionsArray
 
-func _ready() -> void:
+func _ready() -> void: 
 	save_module()
 	theme=load(settings.themeFile)
 	
@@ -53,15 +59,14 @@ func _ready() -> void:
 	#nodeArray = runJSON_NodeBuilder(module_file_path)
 	nodeArray = runXML_NodeBuilder(module_file_path_xml)
 	
-	#DKM TEMP: look at nodearry
-	print("Temp: Looking at nodeArray:")
-	for loc in nodeArray:
-		print ("Space named: " + loc.locale_name)
-	
 	current_text.show()
 	#Load character sheet:
 	pSingleton.pc._print_PC()
 	charSheet.text = pSingleton.pc.pcText
+	
+	#DKM TEMP: 6/2/24 testing initial access of GAL code
+	var testWords = GAL.genrify("Science_Fiction","boat")
+	print("Sent test word of boat, and got back: " + testWords)
 	
 
 
@@ -80,7 +85,7 @@ func loadJSONToDict(filepath:String)->Dictionary:
 #Returns: Array of all game regions
 #Notes: This is the XML version of the prior, JSON version to build the game provided source module material. 
 #	Builds an array of Location of type REGION, the outermost layer on the location hierarchy, with all contained 
-#	Locations and all contained Spaces. At this this there is no support for a separate layer of type of Scene, 
+#	Locations and all contained Spaces. At this time there is no support for a separate layer of type of Scene, 
 #	though this can be added as desired. 
 func loadXMLDemo(filepath:String)->Array:
 	
@@ -125,7 +130,7 @@ func loadXMLDemo(filepath:String)->Array:
 								var locationNode = loadLocationNode(parser_ext)
 								newNode.contained_subLocations.append(locationNode)		
 					elif parser_ext.get_node_type() == XMLParser.NODE_ELEMENT_END && parser_ext.get_node_name().strip_edges(true,true).to_upper() == "REGION":
-						print ("End of region found")
+						#print ("End of region found")
 						regions_XML.append(newNode)
 						i = i+1
 				
@@ -163,7 +168,7 @@ func loadLocationNode(parser:XMLParser)->Locale:
 					newLocationNode.contained_subLocations.append(spaceNode)
 				
 		elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END && parser.get_node_name().strip_edges(true,true).to_upper() == "LOCATION":
-			print ("End of location " + newLocationNode.locale_name + " found")
+			#print ("End of location " + newLocationNode.locale_name + " found")
 			break
 			
 	return newLocationNode
@@ -183,7 +188,7 @@ func loadGameNode(parser:XMLParser)->Locale:
 			var child_node_name_raw = parser.get_node_name().strip_edges(true,true).to_upper()
 			var child_node_name = child_node_name_raw
 			
-			print("TEMP: debug child name: " + child_node_name)
+			#print("TEMP: debug child name: " + child_node_name)
 			
 			#DKM TEMP/TODO: Note that the code currently expects an even number of labels and go-tos, 
 			#		and in the correct order. Ideally we split on the underscore, match the numbers
@@ -203,18 +208,18 @@ func loadGameNode(parser:XMLParser)->Locale:
 					parser.read()
 					if parser.get_node_type() == XMLParser.NODE_TEXT:								
 						var id_node_data = parser.get_node_data()
-						print("Found Id named: " + id_node_data)
+						#print("Found Id named: " + id_node_data)
 						spaceNode.locale_name = id_node_data.strip_edges(true,true)
 				"START":
 					parser.read()
 					if (parser.get_node_type() == XMLParser.NODE_TEXT) && (parser.get_node_data().strip_edges(true,true).to_upper() == "TRUE"):								
-						print("Found Starting place!")
+						#print("Found Starting place!")
 						spaceNode.is_starting_locale  = true					
 				"ACTION":
 					parser.read()
 					if parser.get_node_type() == XMLParser.NODE_TEXT:								
 						var action_node_data = parser.get_node_data()
-						print("Found Action named: " + action_node_data)
+						#print("Found Action named: " + action_node_data)
 						spaceNode.locale_action  = action_node_data.strip_edges(true,true)
 				"TEXT":
 					parser.read()
@@ -239,7 +244,7 @@ func loadGameNode(parser:XMLParser)->Locale:
 						var action_node_data = parser.get_node_data()
 						spaceNode.locale_action_params.append(action_node_data.strip_edges(true,true))
 		elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END && parser.get_node_name().strip_edges(true,true).to_upper() == "SPACE":
-			print ("End of space " + spaceNode.locale_name + " found")
+			#print ("End of space " + spaceNode.locale_name + " found")
 			break
 
 	return spaceNode
@@ -324,11 +329,32 @@ func runJSON_NodeBuilder(module_file_path:String)->Array:
 	
 	return nodeArray_JSON
 
+#FUNCTION: Flags fix
+#Params: Any string to be checked
+#Returns: String with generics replaced
+#Notes: This looks for generics flag, currently marked above, and if found, genrifies 
+#	that word if possible, and if not, returns the string with flags removed
+func flags_fix(input_text:String)->String:
+	if(generics_flag in input_text):
+		var output_text =""
+		var output_source_arr = input_text.split(generics_flag, false)
+		var output_arr =[]
+		for section in output_source_arr:
+			if(section.find(generics_word_header) == 0):
+				output_arr.append(GAL.genrify("Science_Fiction",section.substr(1,-1)))
+			else:
+				output_arr.append(section)
+		for section in output_arr:
+			output_text = output_text + section
+		return output_text
+	else:
+		return input_text
 
 #Handles input text
 func create_response(response_text: String):
+	var out_text = flags_fix(response_text)
 	var response = TextOutput.instance()
-	response.text = response_text
+	response.text = out_text
 	add_response_to_game(response)	
 
 #Copies the response output to add to both current game output, and the 

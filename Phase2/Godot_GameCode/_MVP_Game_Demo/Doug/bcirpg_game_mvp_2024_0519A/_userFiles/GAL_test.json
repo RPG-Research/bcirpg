@@ -1,0 +1,17 @@
+{
+	"Fantasy":{
+		"boat":"frigate",
+		"shipwrecked":"shipwrecked",
+		"hatch":"hatch"
+	},
+	"Science_Fiction":{
+		"boat":"ship",
+		"shipwrecked":"crashed",
+		"hatch":"entryway"
+	},	
+	"Mystery":{
+		"boat":"cruise ship",
+		"shipwrecked":"shipwrecked",
+		"hatch":"gangway"
+	}
+}

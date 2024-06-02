@@ -19,6 +19,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://globalScripts/DieManager.gd"
 }, {
+"base": "Reference",
+"class": "Game_System_Layer",
+"language": "GDScript",
+"path": "res://globalScripts/GSP_Lookups.gd"
+}, {
+"base": "Reference",
+"class": "Genre_Layer",
+"language": "GDScript",
+"path": "res://globalScripts/GAL_Lookups.gd"
+}, {
 "base": "Resource",
 "class": "HistoryScreensTemplateSingleton",
 "language": "GDScript",
@@ -42,6 +52,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Die": "",
 "DieManager": "",
+"Game_System_Layer": "",
+"Genre_Layer": "",
 "HistoryScreensTemplateSingleton": "",
 "Locale": "",
 "PlayerSettingsTemplate": "",
