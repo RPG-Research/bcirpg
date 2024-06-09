@@ -12,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 1 )
 script = ExtResource( 1 )
+genre_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer/OptionBut_Genre")
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -119,7 +120,7 @@ margin_bottom = 19.0
 [node name="Label" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences"]
 margin_right = 117.0
 margin_bottom = 19.0
-text = "Player Preferances"
+text = "Player Preferences"
 
 [node name="VBoxPlayerPreferances" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label"]
 margin_left = -18.5
@@ -168,6 +169,21 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
+margin_top = 99.0
+margin_right = 145.0
+margin_bottom = 147.0
+
+[node name="Label" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer"]
+margin_right = 145.0
+margin_bottom = 19.0
+text = "Genre Selection:"
+
+[node name="OptionBut_Genre" type="OptionButton" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer"]
+margin_top = 23.0
+margin_right = 145.0
+margin_bottom = 48.0
 
 [node name="RootVboxGeneralSettings" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
 margin_left = 335.0

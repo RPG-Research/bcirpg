@@ -49,6 +49,7 @@ func _ready() -> void:
 	save_module()
 	theme=load(settings.themeFile)
 	
+	
 	#DKM TEMP: note the original JSON builder passes the starting space back, as it operates in a flat 
 	#	location hierarchy. The XML builder implements a hierarchy of locations, and therefore returns
 	#	the outermost layer as the regionsArray. Support for the JSON can be entirely removed when desired
@@ -65,8 +66,8 @@ func _ready() -> void:
 	charSheet.text = pSingleton.pc.pcText
 	
 	#DKM TEMP: 6/2/24 testing initial access of GAL code
-	var testWords = GAL.genrify("Science_Fiction","boat")
-	print("Sent test word of boat, and got back: " + testWords)
+	var testWords = GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],"boat")
+	print("Sent test word of boat," + " and genre of " + settings.Genre_Option.keys()[settings.genre_selection] + "and got back: " + testWords)
 	
 
 
@@ -341,7 +342,7 @@ func flags_fix(input_text:String)->String:
 		var output_arr =[]
 		for section in output_source_arr:
 			if(section.find(generics_word_header) == 0):
-				output_arr.append(GAL.genrify("Science_Fiction",section.substr(1,-1)))
+				output_arr.append(GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],section.substr(1,-1)))
 			else:
 				output_arr.append(section)
 		for section in output_arr:
@@ -382,7 +383,7 @@ func create_option(option: String, dest: String) -> void:
 	#print("Received request to make option for label: " + option +"; and destination: " + dest)
 	var optionNew = OptionOutput.instance()
 	optionNew.destinationLabel = dest
-	optionNew.text = option
+	optionNew.text = flags_fix(option)
 	add_option_to_game(optionNew)
 
 func add_option_to_game(optionNew: Control) -> void:

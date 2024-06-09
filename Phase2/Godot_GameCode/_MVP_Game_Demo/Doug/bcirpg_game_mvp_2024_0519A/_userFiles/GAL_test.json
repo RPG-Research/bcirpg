@@ -1,15 +1,15 @@
 {
-	"Fantasy":{
+	"FANTASY":{
 		"boat":"frigate",
 		"shipwrecked":"shipwrecked",
 		"hatch":"hatch"
 	},
-	"Science_Fiction":{
+	"SCIENCE_FICTION":{
 		"boat":"ship",
 		"shipwrecked":"crashed",
 		"hatch":"entryway"
 	},	
-	"Mystery":{
+	"MYSTERY":{
 		"boat":"cruise ship",
 		"shipwrecked":"shipwrecked",
 		"hatch":"gangway"
