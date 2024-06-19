@@ -6,6 +6,8 @@ class_name Genre_Layer
 
 var genre_dictionary
 var library_path = "res://_userFiles/GAL_test.json"
+var replacements_label = "REPLACEMENTS"
+var genre_options_label = "GENRES"
 
 #FUNCTION genr-ify!
 #Params: genre as a string, flagged generic to be replaced
@@ -14,8 +16,8 @@ var library_path = "res://_userFiles/GAL_test.json"
 func genrify (genre:String, generic:String)->String:
 	if(access_library()):
 		var replaced_value = generic
-		replaced_value = genre_dictionary[genre][generic]
-		if(replaced_value.length() >0):
+		if(genre_dictionary[replacements_label][genre].has(generic)):
+			replaced_value = genre_dictionary[replacements_label][genre][generic]
 			return replaced_value
 		else:
 			return generic
@@ -39,3 +41,17 @@ func access_library() -> bool:
 		genre_dictionary = parse_json(file.get_as_text())
 		return true
 
+
+#FUNCTION: Get Genre Options
+#Params: None 
+#Returns: Array containing genres from library or empty
+#Notes: None
+func get_genre_options() ->Array:
+	var genres = [];
+	if(access_library()):
+		for g in genre_dictionary[genre_options_label]:
+			genres.append(g)
+		return genres
+	else:
+		return genres
+	

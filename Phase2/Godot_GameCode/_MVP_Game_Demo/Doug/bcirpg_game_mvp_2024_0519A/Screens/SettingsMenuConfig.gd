@@ -17,6 +17,10 @@ onready var genre_dropdown = get_node(genre_dropdown_path)
 
 #res://SettingsMenuControl.tscn
 
+#GAL is to hold instantiated Genre_Layer; needed for getting genre types
+const Genre_Layer := preload("res://globalScripts/GAL_Lookups.gd")
+onready var GAL = Genre_Layer.new()
+
 # Vars For UI Widgets
 onready var NameVar = get_node('SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
 
@@ -52,7 +56,7 @@ func saveToInstance():
 	saveObject.settingsInstance.bClosedCaptions = ClosedCaptionsVar.is_pressed()
 	saveObject.settingsInstance.bdevConsole = ConsoleCommandVar.is_pressed()
 	saveObject.settingsInstance.bVirtualKeyboard = bKeyboardEnabled.is_pressed()
-	saveObject.settingsInstance.genre_selection = genre_dropdown.get_selected_id()
+	saveObject.settingsInstance.genre_selection = saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()]
 	var savedKeyboardItems = keyboardLayoutList.get_selected_items() 
 	var keyboardSelection = savedKeyboardItems[0]
 	saveObject.settingsInstance.visualKeyboardLayout = keyboardSelection
@@ -97,7 +101,7 @@ func saveFile():
 	
 	iniFile.set_value("theme", "theme_selection", themeSelection)
 	
-	iniFile.set_value("player_preferences", "genre_option", genre_dropdown.get_selected_id())
+	iniFile.set_value("player_preferences", "genre_selection", saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()])
 	
 	iniFile.save("res://_userFiles/PlayerPreferences.cfg")
 
@@ -120,16 +124,17 @@ func _process(_delta):
 #FUNCTION: Add Genre Options (to dropdown)
 #Params: None
 #Returns: None
-#Notes: Method to load genre options into our settings dropdown
-
+#Notes: Method to load genre options into our settings dropdown and our settings 
+#	options. Fantasy exists by default, and hence is not added back to the settings.
 func add_genre_options():
-	for genre in saveObject.settingsInstance.Genre_Option:
+	var genreChoices = GAL.get_genre_options()
+	for genre in genreChoices:
+		if(genre != "FANTASY"):
+			saveObject.settingsInstance.genre_options.append(genre)
 		genre_dropdown.add_item(str(genre).to_lower())
 		
 		
-		
 func _ready():
-	
 	#Get our initial genre options for dropdown:
 	add_genre_options()
 	
@@ -141,7 +146,8 @@ func _ready():
 	ConsoleCommandVar.pressed = saveObject.settingsInstance.bdevConsole
 	bKeyboardEnabled.pressed = saveObject.settingsInstance.bVirtualKeyboard
 	
-	genre_dropdown.select(saveObject.settingsInstance.genre_selection)
+	#genre_dropdown.select(saveObject.settingsInstance.genre_selection)
+	genre_dropdown.select(saveObject.settingsInstance.genre_options.find(saveObject.settingsInstance.genre_selection))
 	
 	print(NameVar.get_path())
 	

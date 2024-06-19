@@ -66,8 +66,8 @@ func _ready() -> void:
 	charSheet.text = pSingleton.pc.pcText
 	
 	#DKM TEMP: 6/2/24 testing initial access of GAL code
-	var testWords = GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],"boat")
-	print("Sent test word of boat," + " and genre of " + settings.Genre_Option.keys()[settings.genre_selection] + "and got back: " + testWords)
+	#var testWords = GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],"boat")
+	#print("Sent test word of boat," + " and genre of " + settings.Genre_Option.keys()[settings.genre_selection] + "and got back: " + testWords)
 	
 
 
@@ -342,7 +342,8 @@ func flags_fix(input_text:String)->String:
 		var output_arr =[]
 		for section in output_source_arr:
 			if(section.find(generics_word_header) == 0):
-				output_arr.append(GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],section.substr(1,-1)))
+				#output_arr.append(GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],section.substr(1,-1)))
+				output_arr.append(GAL.genrify(settings.genre_selection,section.substr(1,-1)))
 			else:
 				output_arr.append(section)
 		for section in output_arr:
