@@ -2,6 +2,10 @@
 #	Script for adding a new character and both saving it to file and loading 
 #		it into the character object
 
+#DKM TEMP: TODO: we shouldn't be writing all this stuff manually. 
+#	That way we can send this whatever we have and have it write the boxes. 
+#	This one requires a conversion, which is trickier. 
+
 extends Control
 
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance

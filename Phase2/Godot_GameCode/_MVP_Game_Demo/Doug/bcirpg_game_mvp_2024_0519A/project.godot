@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://UserInterface/Locale.gd"
 }, {
+"base": "Reference",
+"class": "OpenD6_Converter",
+"language": "GDScript",
+"path": "res://globalScripts/Convert_OpenD6.gd"
+}, {
 "base": "Node",
 "class": "PlayerSettingsTemplate",
 "language": "GDScript",
@@ -56,6 +61,7 @@ _global_script_class_icons={
 "Genre_Layer": "",
 "HistoryScreensTemplateSingleton": "",
 "Locale": "",
+"OpenD6_Converter": "",
 "PlayerSettingsTemplate": "",
 "playerCharacterTemplate": ""
 }

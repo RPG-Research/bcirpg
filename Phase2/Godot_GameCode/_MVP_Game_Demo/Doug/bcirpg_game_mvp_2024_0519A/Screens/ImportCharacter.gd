@@ -1,6 +1,9 @@
 #GRAB FOCUS: simple script for temp files to grab focus
 #	Expanded for Import Character option
 
+#DKM TEMP: TO DO: As with the character add, we need this to read what's 
+#	handed to it and generate the output from that, rather than have this be hard-coded. 
+
 extends Control
 
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance

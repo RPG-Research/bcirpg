@@ -7,6 +7,45 @@ class_name Game_System_Layer
 var game_dictionary
 var library_path = "res://_userFiles/GSP_test.json"
 var game_options_label = "GAMES"
+#Default is OpenD6
+var game_system_used = "OPEND6"
+
+
+#FUNCTION character sheet converter
+#Params: the game we've selected, a char template (source char sheet), and if this is input. 
+#	Otherwise output
+#Returns: a new pc template, with either percentile abilities, or output fields set per this game system 
+#	and the boolean direction indicated
+#Notes: We should probably pass this character by reference, but in GD Script, not sure what we're
+#	dealing with here. So instead we'll pass the game selected, character source,  and take the values we need.
+#	Looks up the needed converters, converts, and sends it back. If game not found, gives back original.
+func char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate:
+	if access_library() && game_dictionary[game_options_label].has(game):
+		var output_char = playerCharacterTemplate.new()
+		game_system_used = game
+		if char_in:
+			return _build_percentile_char(source_char, output_char)
+		else:
+			return _build_output_char(source_char, output_char)  
+	else:
+		return source_char
+
+#FUNCTION build percentile character
+#Params: the source char and the destination char
+#Returns: the destination char sheet, with ability scores updated
+#Notes: Assumes library can be accessed, game_dictionary has been
+#	already written, and game system noted.
+func _build_percentile_char (before_char:playerCharacterTemplate, after_char:playerCharacterTemplate)->playerCharacterTemplate:
+	return after_char
+	
+#FUNCTION build output character
+#Params: the source (percentile) char and the destination (output) char
+#Returns: the destination char sheet, with output fields written as needed
+#Notes: Assumes library can be accessed, game_dictionary has been
+#	already written, and game system noted.
+func _build_output_char (before_char:playerCharacterTemplate, after_char:playerCharacterTemplate)->playerCharacterTemplate:
+	return after_char
+
 
 #FUNCTION Access Library
 #Params: None now
