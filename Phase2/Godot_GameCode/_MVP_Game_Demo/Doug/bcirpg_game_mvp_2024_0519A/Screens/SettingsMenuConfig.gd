@@ -4,7 +4,9 @@ extends Control
 # https://stackoverflow.com/a/65774028 
 # Be Sure to make these Vars as OnReadys; you can read up on it here.
 
+#Allow us to link to the dropdowns on the UI:
 export (NodePath) var genre_dropdown_path
+export (NodePath) var game_dropdown_path
 
 # Items to Fill the dropdown Lists
 onready var keyboardContents = ["Qwerty", "Dvorak", "Alphabetical"]
@@ -14,12 +16,16 @@ onready var themeContents = ["White on Black", "Black on White"]
 onready var saveObject = get_node('/root/GlobalSaveInstance') 
 
 onready var genre_dropdown = get_node(genre_dropdown_path)
+onready var game_dropdown = get_node(game_dropdown_path)
 
 #res://SettingsMenuControl.tscn
 
 #GAL is to hold instantiated Genre_Layer; needed for getting genre types
 const Genre_Layer := preload("res://globalScripts/GAL_Lookups.gd")
 onready var GAL = Genre_Layer.new()
+#GSP is to hold instantiated GSP_Layer; needed for getting game types
+const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
+onready var GSP = Game_Layer.new()
 
 # Vars For UI Widgets
 onready var NameVar = get_node('SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
@@ -57,6 +63,7 @@ func saveToInstance():
 	saveObject.settingsInstance.bdevConsole = ConsoleCommandVar.is_pressed()
 	saveObject.settingsInstance.bVirtualKeyboard = bKeyboardEnabled.is_pressed()
 	saveObject.settingsInstance.genre_selection = saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()]
+	saveObject.settingsInstance.game_selection = saveObject.settingsInstance.game_options[game_dropdown.get_selected_id()]	
 	var savedKeyboardItems = keyboardLayoutList.get_selected_items() 
 	var keyboardSelection = savedKeyboardItems[0]
 	saveObject.settingsInstance.visualKeyboardLayout = keyboardSelection
@@ -102,6 +109,7 @@ func saveFile():
 	iniFile.set_value("theme", "theme_selection", themeSelection)
 	
 	iniFile.set_value("player_preferences", "genre_selection", saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()])
+	iniFile.set_value("player_preferences", "game_selection", saveObject.settingsInstance.game_options[game_dropdown.get_selected_id()])
 	
 	iniFile.save("res://_userFiles/PlayerPreferences.cfg")
 
@@ -133,10 +141,24 @@ func add_genre_options():
 			saveObject.settingsInstance.genre_options.append(genre)
 		genre_dropdown.add_item(str(genre).to_lower())
 		
+#FUNCTION: Add Game System Options (to dropdown)
+#Params: None
+#Returns: None
+#Notes: Method to load game system options into our settings dropdown and our settings 
+#	options. OpenD6 exists by default, and hence is not added back to the settings.
+func add_game_options():
+	var gameChoices = GSP.get_game_options()
+	for game in gameChoices:
+		if(game != "OPEND6"):
+			saveObject.settingsInstance.game_options.append(game)
+		game_dropdown.add_item(str(game).to_lower())
+
 		
 func _ready():
 	#Get our initial genre options for dropdown:
 	add_genre_options()
+	#Get our initial game system options for dropdown:
+	add_game_options()	
 	
 	#Get the singleton's values for initial settings:
 	NameVar.text = saveObject.settingsInstance.inputName
@@ -148,7 +170,8 @@ func _ready():
 	
 	#genre_dropdown.select(saveObject.settingsInstance.genre_selection)
 	genre_dropdown.select(saveObject.settingsInstance.genre_options.find(saveObject.settingsInstance.genre_selection))
-	
+	game_dropdown.select(saveObject.settingsInstance.game_options.find(saveObject.settingsInstance.game_selection))
+		
 	print(NameVar.get_path())
 	
 #	Init Keyboard Layout List
