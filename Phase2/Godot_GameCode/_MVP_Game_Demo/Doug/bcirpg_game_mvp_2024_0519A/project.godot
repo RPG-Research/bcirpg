@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "OpenD6_Converter",
 "language": "GDScript",
-"path": "res://globalScripts/Convert_OpenD6.gd"
+"path": "res://globalScripts/Convert_OPEND6.gd"
 }, {
 "base": "Node",
 "class": "PlayerSettingsTemplate",

@@ -44,23 +44,31 @@ func _populate_preset_character_format(file:File):
 				textBox.text = csvStrContentsArray[i]
 				match csvStrHeaderArray[i].strip_edges(true,true).to_upper():
 					"NAME":
-						pSingleton.name = csvStrContentsArray[i]
+						pSingleton.name = str(csvStrContentsArray[i])
 					"PROFESSION":
-						pSingleton.profession = csvStrContentsArray[i]
+						pSingleton.profession = str(csvStrContentsArray[i])
+					"AGILITY":
+						pSingleton.AG = int(csvStrContentsArray[i])
+					"APPEARANCE":
+						pSingleton.APP = int(csvStrContentsArray[i])
+					"CONSTITUTION":
+						pSingleton.CO = int(csvStrContentsArray[i])
+					"QUICKNESS":
+						pSingleton.QU = int(csvStrContentsArray[i])
 					"STRENGTH":
-						pSingleton.strength = csvStrContentsArray[i]
-					"INTELLECT":
-						pSingleton.intellect = csvStrContentsArray[i]
-					"WILLPOWER":
-						pSingleton.willpower = csvStrContentsArray[i]
-					"CHARM":
-						pSingleton.charm = csvStrContentsArray[i]	
+						pSingleton.ST = int(csvStrContentsArray[i])
+					"CHUTZPAH":
+						pSingleton.CH = int(csvStrContentsArray[i])
+					"EMPATHY":
+						pSingleton.EM = int(csvStrContentsArray[i])
+					"INTUITION":
+						pSingleton.IN = int(csvStrContentsArray[i])
 					"WEAPON":
-						pSingleton.weapon = csvStrContentsArray[i]
+						pSingleton.weapon = str(csvStrContentsArray[i])
 					"ARMOR":
-						pSingleton.armor = csvStrContentsArray[i]	
+						pSingleton.armor = str(csvStrContentsArray[i])
 					"QUOTE":
-						pSingleton.quote = csvStrContentsArray[i]	
+						pSingleton.quote = str(csvStrContentsArray[i])
 		
 
 

@@ -62,7 +62,8 @@ func _ready() -> void:
 	
 	current_text.show()
 	#Load character sheet:
-	pSingleton.pc._print_PC()
+	#pSingleton.pc.print_percentile_PC()
+	pSingleton.pc.print_output_PC()
 	charSheet.text = pSingleton.pc.pcText
 	
 	#DKM TEMP: 6/2/24 testing initial access of GAL code

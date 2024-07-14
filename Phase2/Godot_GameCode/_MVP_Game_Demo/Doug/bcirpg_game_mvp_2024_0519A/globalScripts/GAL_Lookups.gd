@@ -28,7 +28,7 @@ func genrify (genre:String, generic:String)->String:
 #FUNCTION Access Library
 #Params: None now
 #Returns: Successful connection or not
-#Notes: This is aplaceholder for whatever we're going to need to establish connection to go to the 
+#Notes: This is a placeholder for whatever we're going to need to establish connection to go to the 
 #	library on the server. As we are temporarily working from a JSON test, this is a local file 
 #	within our built-in "user files." These populate our member variable for lookups. 
 func access_library() -> bool:

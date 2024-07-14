@@ -6,9 +6,15 @@ class_name Game_System_Layer
 
 var game_dictionary
 var library_path = "res://_userFiles/GSP_test.json"
+const Conversion_Source := preload("res://globalScripts/Convert_OPEND6.gd")
 var game_options_label = "GAMES"
 #Default is OpenD6
 var game_system_used = "OPEND6"
+
+#DKM TEMP: will search for Convert_{game_system_used} code in globals, and use percent if not found?
+#	This will be used to get the output labels, output scores, and run ability conversions each way.
+func test() ->void:
+	Conversion_Source.print_HW()
 
 
 #FUNCTION character sheet converter
@@ -19,6 +25,7 @@ var game_system_used = "OPEND6"
 #Notes: We should probably pass this character by reference, but in GD Script, not sure what we're
 #	dealing with here. So instead we'll pass the game selected, character source,  and take the values we need.
 #	Looks up the needed converters, converts, and sends it back. If game not found, gives back original.
+#	Direction bool matters as we're possibly overwriting what's there in the other set of abilities. 
 func char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate:
 	if access_library() && game_dictionary[game_options_label].has(game):
 		var output_char = playerCharacterTemplate.new()
@@ -34,7 +41,7 @@ func char_sheet_converter (game:String, source_char:playerCharacterTemplate, cha
 #Params: the source char and the destination char
 #Returns: the destination char sheet, with ability scores updated
 #Notes: Assumes library can be accessed, game_dictionary has been
-#	already written, and game system noted.
+#	already written, and game system noted. Returns both ability score sets in the after/output char
 func _build_percentile_char (before_char:playerCharacterTemplate, after_char:playerCharacterTemplate)->playerCharacterTemplate:
 	return after_char
 	
@@ -42,7 +49,7 @@ func _build_percentile_char (before_char:playerCharacterTemplate, after_char:pla
 #Params: the source (percentile) char and the destination (output) char
 #Returns: the destination char sheet, with output fields written as needed
 #Notes: Assumes library can be accessed, game_dictionary has been
-#	already written, and game system noted.
+#	already written, and game system noted. As above, returns both ability score sets in the after/output char
 func _build_output_char (before_char:playerCharacterTemplate, after_char:playerCharacterTemplate)->playerCharacterTemplate:
 	return after_char
 
@@ -62,6 +69,7 @@ func access_library() -> bool:
 	else:
 		game_dictionary = parse_json(file.get_as_text())
 		return true
+		
 
 #FUNCTION: Get Game Options
 #Params: None 
