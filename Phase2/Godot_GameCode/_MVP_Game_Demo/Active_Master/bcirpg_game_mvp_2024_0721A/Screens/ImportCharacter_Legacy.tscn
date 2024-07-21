@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Screens/ImportCharacter.gd" type="Script" id=1]
-[ext_resource path="res://UserInterface/But_PlayButton.gd" type="Script" id=2]
-[ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=3]
-[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Screens/ImportCharacter_Legacy.gd" type="Script" id=3]
+[ext_resource path="res://UserInterface/But_PlayButton.gd" type="Script" id=4]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 
 [node name="PopupDialog" type="PopupDialog" parent="."]
 anchor_top = 0.5
@@ -39,23 +39,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" parent="." instance=ExtResource( 3 )]
+[node name="Title" parent="." instance=ExtResource( 1 )]
 margin_left = -164.0
 margin_top = 0.0
 margin_right = 164.0
 margin_bottom = 14.0
 text = "Import Character"
 
-[node name="But_Play" parent="." instance=ExtResource( 4 )]
+[node name="But_Play" parent="." instance=ExtResource( 2 )]
 margin_left = 1.0
 margin_top = 34.0
 margin_right = 152.0
 margin_bottom = 71.0
 text = "Start Game"
-script = ExtResource( 2 )
+script = ExtResource( 4 )
 next_scene_path = "res://gamePlay/Game.tscn"
 
-[node name="But_Cancel" parent="." instance=ExtResource( 4 )]
+[node name="But_Cancel" parent="." instance=ExtResource( 2 )]
 margin_left = 1.0
 margin_top = 78.0
 margin_right = 152.0

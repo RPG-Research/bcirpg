@@ -71,108 +71,15 @@ margin_right = 20.0
 margin_bottom = 140.0
 
 [node name="LabelName" type="Label" parent="Title/VBoxContainer"]
-margin_right = 81.0
+margin_right = 58.0
 margin_bottom = 31.0
 text = "NAME
 "
 
-[node name="LE_Name" type="LineEdit" parent="Title/VBoxContainer/LabelName"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelProfession" type="Label" parent="Title/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer"]
 margin_top = 35.0
-margin_right = 81.0
-margin_bottom = 66.0
-text = "PROFESSION
-"
-
-[node name="LE_Pro" type="LineEdit" parent="Title/VBoxContainer/LabelProfession"]
-margin_top = 15.0
 margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelStrength" type="Label" parent="Title/VBoxContainer"]
-margin_top = 70.0
-margin_right = 81.0
-margin_bottom = 101.0
-text = "STRENGTH
-"
-
-[node name="LE_Str" type="LineEdit" parent="Title/VBoxContainer/LabelStrength"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 39.0
-
-[node name="LabelIntellect" type="Label" parent="Title/VBoxContainer"]
-margin_top = 105.0
-margin_right = 81.0
-margin_bottom = 136.0
-text = "INTELLECT
-"
-
-[node name="LE_Intl" type="LineEdit" parent="Title/VBoxContainer/LabelIntellect"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelWillpower" type="Label" parent="Title/VBoxContainer"]
-margin_top = 140.0
-margin_right = 81.0
-margin_bottom = 171.0
-text = "WILLPOWER
-"
-
-[node name="LE_Will" type="LineEdit" parent="Title/VBoxContainer/LabelWillpower"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelCharm" type="Label" parent="Title/VBoxContainer"]
-margin_top = 175.0
-margin_right = 81.0
-margin_bottom = 189.0
-text = "CHARM"
-
-[node name="LE_Charm" type="LineEdit" parent="Title/VBoxContainer/LabelCharm"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelWeapon" type="Label" parent="Title/VBoxContainer"]
-margin_top = 193.0
-margin_right = 81.0
-margin_bottom = 224.0
-text = "WEAPON
-"
-
-[node name="LE_Weapon" type="LineEdit" parent="Title/VBoxContainer/LabelWeapon"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelArmor" type="Label" parent="Title/VBoxContainer"]
-margin_top = 228.0
-margin_right = 81.0
-margin_bottom = 242.0
-text = "ARMOR"
-
-[node name="LE_Armor" type="LineEdit" parent="Title/VBoxContainer/LabelArmor"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
-
-[node name="LabelQuote" type="Label" parent="Title/VBoxContainer"]
-margin_top = 246.0
-margin_right = 81.0
-margin_bottom = 260.0
-text = "QUOTE"
-
-[node name="LE_Quote" type="LineEdit" parent="Title/VBoxContainer/LabelQuote"]
-margin_top = 15.0
-margin_right = 58.0
-margin_bottom = 24.0
+margin_bottom = 59.0
 
 [connection signal="pressed" from="Title/But_SaveChar" to="." method="_on_But_SaveChar_pressed"]
 [connection signal="button_up" from="Title/But_ChangeScene" to="Title/But_ChangeScene" method="_on_But_NewGame_button_up"]

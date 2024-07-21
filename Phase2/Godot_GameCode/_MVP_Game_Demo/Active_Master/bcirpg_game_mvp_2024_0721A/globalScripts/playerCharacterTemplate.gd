@@ -14,7 +14,7 @@ var output_scores_A = [2,2,2,4,4,4]
 var output_A_label = "D"
 var is_output_B = true
 var output_B_label = "+"
-var output_scores_B = [0,0,0,0,0,0]
+var output_scores_B = [1,0,2,0,0,0]
 
 
 var pcText = ""
