@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <Region>
+    <Name>Realm of Tempestia</Name>
+    <Description>A mystical fantasy landscape, where characters speak often in verse!</Description>
+    <Location>
+      <Name>Island of Sorrows</Name>
+      <Description>Setting for this module</Description>
+      <Space>
+        <Id>Boat_000</Id>
+        <Start>True</Start>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>The game has begun! You may select from the options below. You are in a **/boat**. You have been **/shipwrecked**. You can leave the **/boat** through a **/hatch**.</Text>
+        <Option_Labels_001>Examine **/boat**</Option_Labels_001>
+        <Option_Labels_002>Exit through **/hatch**</Option_Labels_002>
+        <Option_Labels_003>Play the fiddle!</Option_Labels_003>
+        <Option_Labels_004>Rest</Option_Labels_004>
+        <Option_Labels_005>Meditate</Option_Labels_005>
+        <Option_GoTos_001>Boat_002</Option_GoTos_001>
+        <Option_GoTos_002>Shore_001</Option_GoTos_002>
+        <Option_GoTos_003>Misc_001</Option_GoTos_003>
+        <Option_GoTos_004>Misc_002</Option_GoTos_004>
+        <Option_GoTos_005>Misc_003</Option_GoTos_005>
+      </Space>
+      <Space>
+        <Id>Boat_001</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>The boat rocks gently. You can leave the **/boat** through a **/hatch**. There is also now a test option.</Text>
+        <Option_Labels_001>Examine **/boat**</Option_Labels_001>
+        <Option_Labels_002>Exit through **/hatch**</Option_Labels_002>
+        <Option_Labels_003>Play the fiddle!</Option_Labels_003>
+        <Option_Labels_004>Rest</Option_Labels_004>
+        <Option_Labels_005>Meditate</Option_Labels_005>
+        <Option_Labels_006>Run die roll test</Option_Labels_006>
+        <Option_Labels_007>Travel to the Forgotten Realms</Option_Labels_007>
+        <Option_GoTos_001>Boat_002</Option_GoTos_001>
+        <Option_GoTos_002>Shore_001</Option_GoTos_002>
+        <Option_GoTos_003>Misc_001</Option_GoTos_003>
+        <Option_GoTos_004>Misc_002</Option_GoTos_004>
+        <Option_GoTos_005>Misc_003</Option_GoTos_005>
+        <Option_GoTos_006>Test_000</Option_GoTos_006>
+        <Option_GoTos_007>Test_001</Option_GoTos_007>        
+      </Space>
+      <Space>
+        <Id>Boat_002</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>The **/boat** is old and wrecked.</Text>
+        <Option_Labels_001>Continue</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Shore_001</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>You&#x27;ve reached the shore!</Text>
+        <Option_Labels_001>Return to **/boat**</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Misc_001</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>You pull a fiddle from your sack and play it, while dancing around merrily.  Great fun is had.</Text>
+        <Option_Labels_001>Resume your quest</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Misc_002</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>You pull out a blanket, settle your burdens and take a short rest.</Text>
+        <Option_Labels_001>Resume your quest</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Misc_003</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>You find a quiet corner on the **/boat**, put down your burden, and feel the rocking of the **/boat**.  You rest mind and body, and really I&#x27;m experimenting with options and sizes of them, added via XML here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.</Text>
+        <Option_Labels_001>Resume your quest</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Test_000</Id>
+        <Action>TestDieRollAction</Action>
+        <A_Params>4</A_Params>
+        <A_Params>6</A_Params>
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Test_001</Id>
+        <Action>ChangeLocation</Action>
+        <A_Params>Faerun</A_Params>
+        <A_Params>Waterdeep</A_Params>
+        <A_Params>The_Wits_End</A_Params>        
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>      
+    </Location>
+    <Location>
+      <Name>Tempestuous Seas</Name>
+      <Description>A test location away from the island; rampant with sea monsters and storms!</Description>
+      <Space>
+        <Id>Water_000</Id>
+        <Start>False</Start>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>Dear gods! You've started in a wild sea with no **/boat**! Even if you're a skilled swimmer, you won't last long, with waves lashing you, storms above, and sea monsters beneath! You can't focus to use magic or gear, or even talk.</Text>
+        <Option_Labels_001>Fight to survive</Option_Labels_001>
+        <Option_GoTos_001>Water_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Water_001</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>You try to survive but cannot. You die.</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Water_001</Option_GoTos_001>        
+      </Space>        
+    </Location>
+  </Region>
+  <Region>
+    <Name>Faerun</Name>
+    <Description>The Forgotten Realms, only here as a test.</Description>
+    <Location>
+      <Name>Baldur's Gate</Name>
+      <Description>Setting of an entirely different series of games...</Description>
+    </Location>
+    <Location>
+      <Name>Waterdeep</Name>
+      <Description>One gigantic city!</Description>
+      <Space>
+        <Id>The_Wits_End</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>POOF! You've teleported into a tavern! Fire crackles in the hearth, assorted fantasy characters abound getting food and drinks, eyeing each other suspiciously. You have the sense you're not in the Tempest anymore... better get back.</Text>
+        <Option_Labels_001>Resume your quest!</Option_Labels_001>
+        <Option_GoTos_001>Resume_000</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Resume_000</Id>
+        <Action>ChangeLocation</Action>
+        <A_Params>Realm of Tempestia</A_Params>
+        <A_Params>Island of Sorrows</A_Params>
+        <A_Params>Boat_001</A_Params>       
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>          
+    </Location>
+    <Location>
+      <Name>Icewind Dale</Name>
+      <Description>A frosty land with a famous Drow resident.</Description>      
+    </Location> 
+  </Region>
+</root>

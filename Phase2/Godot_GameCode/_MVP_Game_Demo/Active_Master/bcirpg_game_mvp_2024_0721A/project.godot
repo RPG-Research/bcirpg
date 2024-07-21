@@ -1,0 +1,89 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Die",
+"language": "GDScript",
+"path": "res://globalScripts/Die.gd"
+}, {
+"base": "Node2D",
+"class": "DieManager",
+"language": "GDScript",
+"path": "res://globalScripts/DieManager.gd"
+}, {
+"base": "Reference",
+"class": "Game_System_Layer",
+"language": "GDScript",
+"path": "res://globalScripts/GSP_Lookups.gd"
+}, {
+"base": "Reference",
+"class": "Genre_Layer",
+"language": "GDScript",
+"path": "res://globalScripts/GAL_Lookups.gd"
+}, {
+"base": "Resource",
+"class": "HistoryScreensTemplateSingleton",
+"language": "GDScript",
+"path": "res://globalScripts/historyScreensTemplate.gd"
+}, {
+"base": "PanelContainer",
+"class": "Locale",
+"language": "GDScript",
+"path": "res://UserInterface/Locale.gd"
+}, {
+"base": "Reference",
+"class": "OpenD6_Converter",
+"language": "GDScript",
+"path": "res://globalScripts/Convert_OPEND6.gd"
+}, {
+"base": "Node",
+"class": "PlayerSettingsTemplate",
+"language": "GDScript",
+"path": "res://globalScripts/playerSettingsTemplate.gd"
+}, {
+"base": "Resource",
+"class": "playerCharacterTemplate",
+"language": "GDScript",
+"path": "res://globalScripts/playerCharacterTemplate.gd"
+} ]
+_global_script_class_icons={
+"Die": "",
+"DieManager": "",
+"Game_System_Layer": "",
+"Genre_Layer": "",
+"HistoryScreensTemplateSingleton": "",
+"Locale": "",
+"OpenD6_Converter": "",
+"PlayerSettingsTemplate": "",
+"playerCharacterTemplate": ""
+}
+
+[application]
+
+config/name="BCIRPGR_game_mvp"
+run/main_scene="res://Screens/MenuScreen.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+History="*res://globalScripts/history.gd"
+PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
+DiceRoller="*res://globalScripts/DiceRoller.gd"
+GlobalSaveInstance="*res://globalScripts/globalSaveInstance.gd"
+GameCurrent="*res://globalScripts/gameCurrent.gd"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

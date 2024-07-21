@@ -1,0 +1,26 @@
+{
+	"GAMES":["OPEND6", "DUNGEONS&DRAGONS"],
+	"CONVERSION":{
+		"OPEND6":{
+			"IN":"",
+			"OUT":""
+		},
+		"DUNGEONS&DRAGONS":{
+			"IN":"*5",
+			"OUT":"/5"
+		},
+	},
+
+	"ATTRIBUTES":{
+		"OPEND6":{
+		},
+		"DUNGEONS&DRAGONS":{
+			"STR":"ST",
+			"INT":"RE+ME",
+			"WIS":"IN+EM",
+			"DEX":"AG+MD+QU",
+			"CON":"CO",
+			"CHR":"PR+SD+MX+CH"						
+		},
+	}
+}
