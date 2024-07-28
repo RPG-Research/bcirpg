@@ -120,3 +120,4 @@ margin_bottom = 24.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer2/But_OpenFile" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Save_Button" to="." method="_on_Save_Button_pressed"]

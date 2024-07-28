@@ -41,14 +41,35 @@ func _populate_preset_character_format(file:File):
 				var textBox = LineEdit.new()
 				$ScrollContainer/VBoxContainer.add_child(textBox)
 				textBox.text = csvStrContentsArray[i]
-				
+	_save_data_to_singleton()
 
+#FUNCTION clear the character sheet
+#Params: None
+#Returns: Nothing; all work done in function
+#Notes: Clears the display so additional characters may be 
+#	loaded by releasing the queue and removing UI items. 
+func _clear_char_sheet() -> void:
+	for n in $ScrollContainer/VBoxContainer.get_children():
+		$ScrollContainer/VBoxContainer.remove_child(n)
+		n.queue_free()
 
 #this is going to take information from the file the player chose and put the individul parts into textboxes so it can be edited and then saved
 func _on_FileDialog_file_selected(path):
+	_clear_char_sheet()
 	var file = File.new()
 	#read the text in the file, save it in the variable a
 	file.open(path, File.READ)
 	_populate_preset_character_format(file)
 	
 	file.close()
+	
+func _save_data_to_singleton() -> void:
+	pSingleton.name = "TEMP to allow game!"
+	
+func _save_data_to_csv() -> void:
+	pass
+		
+func _on_Save_Button_pressed():
+	_save_data_to_singleton()
+	_save_data_to_csv()
+	
