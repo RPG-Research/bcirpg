@@ -6,15 +6,15 @@ class_name Game_System_Layer
 
 var game_dictionary
 var library_path = "res://_userFiles/GSP_test.json"
-const Conversion_Source := preload("res://globalScripts/Convert_OPEND6.gd")
+#const Conversion_Source := preload("res://globalScripts/Convert_OPEND6.gd")
 var game_options_label = "GAMES"
 #Default is OpenD6
 var game_system_used = "OPEND6"
 
 #DKM TEMP: will search for Convert_{game_system_used} code in globals, and use percent if not found?
 #	This will be used to get the output labels, output scores, and run ability conversions each way.
-func test() ->void:
-	Conversion_Source.print_HW()
+#func test() ->void:
+#	Conversion_Source.print_HW()
 
 
 #FUNCTION character sheet converter

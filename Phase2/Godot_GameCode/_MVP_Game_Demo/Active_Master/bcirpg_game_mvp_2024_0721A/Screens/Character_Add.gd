@@ -2,129 +2,111 @@
 #	Script for adding a new character and both saving it to file and loading 
 #		it into the character object
 
-#DKM TEMP: TODO: we shouldn't be writing all this stuff manually. 
-#	That way we can send this whatever we have and have it write the boxes. 
-#	This one requires a conversion, which is trickier. 
 
 extends Control
 
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var pSingleton = get_node("/root/PlayerCharacter").pc
 
-#GSP is to hold instantiated GSP_Layer; needed for getting game types
+#GSP is to hold instantiated GSP_Layer; needed for calling necessary conversion functionality
 const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
 onready var GSP = Game_Layer.new()
 
-#DKM TEMP: this was for the prior, hard-coded system (with random abilities)
-#onready var Name = get_node("Title/VBoxContainer/LabelName/LE_Name")
-#
-#onready var Profession = get_node("Title/VBoxContainer/LabelProfession/LE_Pro")
-#
-#onready var Strength = get_node("Title/VBoxContainer/LabelStrength/LE_Str")
-#
-#onready var Intellect = get_node("Title/VBoxContainer/LabelIntellect/LE_Intl")
-#
-#onready var Willpower = get_node("Title/VBoxContainer/LabelWillpower/LE_Will")
-#
-#onready var Charm = get_node("Title/VBoxContainer/LabelCharm/LE_Charm")
-#
-#onready var Weapon = get_node("Title/VBoxContainer/LabelWeapon/LE_Weapon")
-#
-#onready var Armor = get_node("Title/VBoxContainer/LabelArmor/LE_Armor")
-#
-#onready var Quote = get_node("Title/VBoxContainer/LabelQuote/LE_Quote")
 
 func _ready() -> void:
-	_load_character_entry_page()
-	
 	theme=load(settings.themeFile)
 	$Title/But_SaveChar.grab_focus()
+	_populate_output_character_format()
+
+#FUNCTION populate preset character format
+#Params: file we have opened and are reading
+#Returns: Nothing; all work done in function
+#Notes: This adjusts  output using what we know, that is: set character sheet format, and a csv that 
+#	has all headers in the top line, and all values in the next line
+#	NOTE: this assumes we have matching lines, and our csv matches
+#TODO: Next step  here is run the GSP converted to also update the percentile/singleton
+func _populate_output_character_format():
+	var i = 0
+	#make a new textbox for each header piece
+	for label in pSingleton.output_labels:
+		var textLine = Label.new()
+		$Title/VBoxContainer.add_child(textLine)
+		textLine.text = label.to_upper()
+		i = i+1
+		#match to content, assuming it exists and aligns
+		if(pSingleton.output_scores_A.size()>= i):
+			var textBox = LineEdit.new()
+			$Title/VBoxContainer.add_child(textBox)
+			var ability_text = str(pSingleton.output_scores_A[i-1])
+			if(pSingleton.output_A_label.length() > 0):
+				ability_text = ability_text + pSingleton.output_A_label
+				if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
+					if(pSingleton.output_B_label.length() > 0):
+						ability_text = ability_text + pSingleton.output_B_label
+					ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
+			textBox.text = ability_text
+
+#FUNCTION save data to character singleton
+#Params: None
+#Returns: Nothing; all work done in function
+#Notes: Reads the input fields, breaking headers out, then parsing lines to look 
+#	for the relevant fields for the system. It saves to the singleton output fields. 
+#TODO: This should poll the game system in use first, for validing what output fields
+#	to save; it should also call the GSP conversion once done to update the percentile values, too.
+func save_data_to_singleton() -> void:
+	var char_labels = []
+	var char_scores_A = []
+	var char_A_label = "D"
+	var is_char_B = true
+	var char_B_label = "+"
+	var char_scores_B = []
 	
-#DKM TEMP:
-func _load_character_entry_page() -> void:
-	GSP.test()
-
-func _prep_PlayerCharacter_Template():
-	pass
-#	This function prepares the data for the player character in two ways.
-#	Way 1: By loading all of this data into the singleton for easy reads during gameplay
-#	Way 2: To prepare the data to be pulled from the singleton, when writing a file.
-#	pSingleton.name = Name.text
-#	pSingleton.profession = Profession.text
-#	pSingleton.strength = Strength.text
-#	pSingleton.intellect = Intellect.text
-#	pSingleton.willpower = Willpower.text
-#	pSingleton.weapon = Weapon.text
-#	pSingleton.charm = Charm.text
-#	pSingleton.armor = Armor.text
-#	pSingleton.quote = Quote.text
-
-	print("TEMP: saved the player singleton name as: " + pSingleton.name)
-
-func save_data_to_csv(data: Array, file_path: String):
+	var is_label = true
+	for child_box in $Title/VBoxContainer.get_children():
+		if is_label:
+			#if child_box.text.strip_edges(true,true).to_upper() == "NAME":
+				#TODO(7/28/24): Stopped here. We need to:
+				#	Check between TextLines (labels) and TextBoxes values. Not sure how to
+				#		verify this type, but it must be doable. In this case, get the next 
+				#		TextBox after Name and store that value, ala
+				#		pSingleton.name = child_box.text.strip_edges(true,true).to_upper()
+			#else:
+			char_labels.append(child_box.text.strip_edges(true,true).to_upper())
+			is_label = false
+		else:
+			var input_value = child_box.text
+			
+			is_label = true
+	pSingleton.output_labels = char_labels
+				
+#FUNCTION save character csv
+#Params: none
+#Returns: Nothing; all work done in function
+#Notes: This saves the character output fields to a csv.
+#	TO DO: this is not safe at all; we can't just take a player entered name
+#		for a file name, we need to validate it. 
+func save_data_to_csv() -> void:
+	var file_path = ""
+	if pSingleton.name != "":
+		file_path = "user://" + pSingleton.name + "_data.csv"
+	else: 
+		 file_path = "user://character_data.csv"
 	var file = File.new()
-	
 	if file.open(file_path, File.WRITE) == OK:
-		for row in data:
-			file.store_string(format_row(row))
+		var csv_labels = ""
+		for name in pSingleton.output_labels:
+			csv_labels = csv_labels + name + ","
+		csv_labels = csv_labels + "\n"
+		#TO DO:add the values, too.
+		file.store_string(csv_labels)
 		file.close()
 		print("Data saved to ", file_path)
 		print(OS.get_data_dir())
 	else:
 		print("Failed to open", file_path, "for writing.")
 
-func format_row(row_data: Array) -> String:
-	# Convert the array of data to a comma-separated string
-	var formatted_row = ""
-	for i in range(row_data.size()):
-		formatted_row += str(row_data[i])
-		if i < row_data.size() - 1:
-			formatted_row += ","
-	formatted_row += "\n"
-	return formatted_row
-
 
 func _on_But_SaveChar_pressed(): 
-	
-	_prep_PlayerCharacter_Template()
-	
-	var file_path = ""
-	
-	if pSingleton.name != "":
-		file_path = "user://" + pSingleton.name + "_data.csv"
-	
-	else: 
-		 file_path = "user://character_data.csv"
+	save_data_to_singleton()
+	save_data_to_csv()
 
-#	To Do. Format data into the correct table.
-	
-	var input_data = [
-	["Name", "Profession", "Strength", "Intellect", "Willpower", "Charm",  "Weapon", "Armor", "Quote"],
-	[pSingleton.name, pSingleton.profession, pSingleton.strength, pSingleton.intellect, pSingleton.willpower, pSingleton.charm, pSingleton.weapon, pSingleton.armor, pSingleton.quote],
-]
-
-	save_data_to_csv(input_data, file_path)
-
-##DKM TEMP: this code was inherited and it needs pretty substantial
-##	overhaul for use in the module, depending on toolset use. 
-##	For now all the labels are individual lineEdits we need to grab.
-#func _on_FileDialog_file_selected(path: String) -> void:
-##	This function runs when you hit the button to save your file, after you selected the name and location
-##	TODO: Create the CSV File, Populate the CSV File, workout where it saves to.
-#
-#	var pc = get_node("/root/PlayerCharacter")
-#	var newCharFile = File.new()
-#	newCharFile.open(path, 2)
-#
-##	var file_path = "user://character_data.csv"
-##
-##	var input_data = [
-##	["Name", "Age", "Score"],
-##	["John", 25, 85],
-##	["Alice", 30, 92],
-##	["Bob", 28, 78],
-##]
-##
-##	save_data_to_csv(input_data, file_path)
-##
-#
