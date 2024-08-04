@@ -54,30 +54,36 @@ func _populate_output_character_format():
 #TODO: This should poll the game system in use first, for validing what output fields
 #	to save; it should also call the GSP conversion once done to update the percentile values, too.
 func save_data_to_singleton() -> void:
+	#Values divisions provided for game system variations
+	#TODO: ascertain if these are sufficiently robust?
 	var char_labels = []
-	var char_scores_A = []
-	var char_A_label = "D"
-	var is_char_B = true
-	var char_B_label = "+"
-	var char_scores_B = []
+	var char_values_A = []
+	var char_values_B = []
 	
 	var is_label = true
+	var box_count = 0
 	for child_box in $Title/VBoxContainer.get_children():
+		is_label = child_box.get_class() == "Label"
 		if is_label:
-			#if child_box.text.strip_edges(true,true).to_upper() == "NAME":
-				#TODO(7/28/24): Stopped here. We need to:
-				#	Check between TextLines (labels) and TextBoxes values. Not sure how to
-				#		verify this type, but it must be doable. In this case, get the next 
-				#		TextBox after Name and store that value, ala
-				#		pSingleton.name = child_box.text.strip_edges(true,true).to_upper()
-			#else:
+			if child_box.text.strip_edges(true,true).to_upper() == "NAME":
+				if $Title/VBoxContainer.get_child_count() >= box_count+1:
+					pSingleton.name = str($Title/VBoxContainer.get_child(box_count+1).text)
+				print("TEMP name found! As : " + str(pSingleton.name))
 			char_labels.append(child_box.text.strip_edges(true,true).to_upper())
-			is_label = false
 		else:
-			var input_value = child_box.text
-			
-			is_label = true
+			print ("TEMP: raw value returned is:" + child_box.text)
+			#Output B in use means we have a multi-part attributes system
+			if pSingleton.is_output_B:
+				var A_label_idx = child_box.text.find(pSingleton.output_A_label)
+				if(A_label_idx >=0):
+					char_values_A.append(int(child_box.text.substr(0,A_label_idx)))
+					char_values_B.append(int(child_box.text.substr(A_label_idx+1,child_box.text.length()-1)))
+			else: 
+				char_values_A.append(int(child_box.text))
+		box_count = box_count +1
 	pSingleton.output_labels = char_labels
+	pSingleton.output_scores_A  = char_values_A
+	pSingleton.output_scores_B  = char_values_B
 				
 #FUNCTION save character csv
 #Params: none
@@ -87,8 +93,8 @@ func save_data_to_singleton() -> void:
 #		for a file name, we need to validate it. 
 func save_data_to_csv() -> void:
 	var file_path = ""
-	if pSingleton.name != "":
-		file_path = "user://" + pSingleton.name + "_data.csv"
+	if str(pSingleton.name) != "":
+		file_path = "user://" + str(pSingleton.name) + "_data.csv"
 	else: 
 		 file_path = "user://character_data.csv"
 	var file = File.new()
@@ -97,6 +103,18 @@ func save_data_to_csv() -> void:
 		for name in pSingleton.output_labels:
 			csv_labels = csv_labels + name + ","
 		csv_labels = csv_labels + "\n"
+		csv_labels = csv_labels + str(pSingleton.name) + ","
+		var labels_counter = 0
+		for val in pSingleton.output_scores_A:
+			csv_labels = csv_labels + str(val)
+			if pSingleton.output_A_label.length() > 0:
+				 csv_labels = csv_labels + str(pSingleton.output_A_label)
+			if pSingleton.is_output_B:
+				if pSingleton.output_B_label.length() > 0:
+					csv_labels = csv_labels + " " + str(pSingleton.output_B_label) + " "
+					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
+			labels_counter = labels_counter +1
+			csv_labels = csv_labels + ","
 		#TO DO:add the values, too.
 		file.store_string(csv_labels)
 		file.close()
