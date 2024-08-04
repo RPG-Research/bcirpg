@@ -41,23 +41,24 @@ __meta__ = {
 }
 next_scene_path = "res://Screens/MenuScreen.tscn"
 
-[node name="SettingsScroll" type="ScrollContainer" parent="."]
+[node name="SettingsScroll" type="VBoxContainer" parent="."]
 anchor_top = 0.568
 anchor_right = 0.601
-anchor_bottom = 0.669
-margin_left = 20.0
-margin_top = -300.8
-margin_right = 4.57599
-margin_bottom = 38.6
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = -283.8
+margin_right = 404.576
+margin_bottom = -3.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsScroll"]
-margin_right = 597.0
+margin_right = 1018.0
 margin_bottom = 19.0
 custom_constants/separation = 60
 alignment = 1
 
 [node name="RootVboxVisualControls" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
-margin_right = 98.0
+margin_left = 210.0
+margin_right = 308.0
 margin_bottom = 19.0
 
 [node name="VisualControlsLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls"]
@@ -72,9 +73,6 @@ margin_left = -77.5
 margin_top = 30.0
 margin_right = 77.5
 margin_bottom = 52.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxFontSize" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
 margin_right = 155.0
@@ -114,8 +112,8 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="RootVboxPlayerPreferences" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
-margin_left = 158.0
-margin_right = 275.0
+margin_left = 368.0
+margin_right = 485.0
 margin_bottom = 19.0
 
 [node name="Label" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences"]
@@ -198,8 +196,8 @@ margin_right = 145.0
 margin_bottom = 100.0
 
 [node name="RootVboxGeneralSettings" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
-margin_left = 335.0
-margin_right = 439.0
+margin_left = 545.0
+margin_right = 649.0
 margin_bottom = 19.0
 
 [node name="GeneralSettingsLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings"]
@@ -266,8 +264,8 @@ margin_right = 154.0
 margin_bottom = 27.0
 
 [node name="RootVboxVisualControls2" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
-margin_left = 499.0
-margin_right = 597.0
+margin_left = 709.0
+margin_right = 807.0
 margin_bottom = 19.0
 
 [node name="Label2" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2"]
