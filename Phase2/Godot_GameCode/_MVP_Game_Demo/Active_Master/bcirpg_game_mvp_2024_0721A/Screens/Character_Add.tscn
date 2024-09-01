@@ -70,17 +70,6 @@ margin_top = 50.0
 margin_right = 20.0
 margin_bottom = 140.0
 
-[node name="LabelName" type="Label" parent="Title/VBoxContainer"]
-margin_right = 58.0
-margin_bottom = 31.0
-text = "NAME
-"
-
-[node name="LineEdit" type="LineEdit" parent="Title/VBoxContainer"]
-margin_top = 35.0
-margin_right = 58.0
-margin_bottom = 59.0
-
 [connection signal="pressed" from="Title/But_SaveChar" to="." method="_on_But_SaveChar_pressed"]
 [connection signal="button_up" from="Title/But_ChangeScene" to="Title/But_ChangeScene" method="_on_But_NewGame_button_up"]
 [connection signal="button_up" from="Title/But_StartNewGame" to="Title/But_StartNewGame" method="_on_But_NewGame_button_up"]

@@ -56,15 +56,18 @@ func print_percentile_PC() -> void:
 	+ "	TBD\n"\
 	+ "QUOTE: " + quote
 
-#Simple print from output; saved to template's PC text field.
+#Simple print the values in output; saved to template's PC text field.
 func print_output_PC() -> void:
 	pcText = "NAME: " + name + "\nPROF: " + profession + "\nQUOTE: " + quote + "\n"
 	var i = 0
 	for out_label in output_labels:
-		pcText = pcText + out_label + ": " + str(output_scores_A[i])
+		if output_scores_A.size() > i:
+			pcText = pcText + out_label + ": " + str(output_scores_A[i])
 		if is_output_B:
 			pcText = pcText + output_A_label
-			if(output_scores_B[i] != 0):
+			if(output_scores_B.size() > i && output_scores_B[i] != 0):
 				pcText = pcText + " " + output_B_label + str(output_scores_B[i])
 		pcText = pcText + "\n" 
 		i = i+1
+	pcText = pcText + "Weapon: " + weapon + "\n" 
+	pcText = pcText + "Armor: " + armor + "\n" 

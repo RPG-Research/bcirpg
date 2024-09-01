@@ -62,7 +62,6 @@ func _ready() -> void:
 	
 	current_text.show()
 	#Load character sheet:
-	#pSingleton.pc.print_percentile_PC()
 	pSingleton.pc.print_output_PC()
 	charSheet.text = pSingleton.pc.pcText
 	
