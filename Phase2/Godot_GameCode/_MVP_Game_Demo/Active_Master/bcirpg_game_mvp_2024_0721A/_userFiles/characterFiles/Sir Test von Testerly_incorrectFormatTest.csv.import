@@ -6,7 +6,7 @@ valid=false
 
 [deps]
 
-source_file="res://_userFiles/characterFiles/test.csv"
+source_file="res://_userFiles/characterFiles/Sir Test von Testerly_incorrectFormatTest.csv"
 [params]
 
 compress=true

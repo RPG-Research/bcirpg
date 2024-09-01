@@ -28,6 +28,14 @@ func _ready() -> void:
 func _populate_output_character_format():
 	var i = 0
 	#make a new textbox for each header piece
+	var set_labels = ["NAME","PROFESSION","QUOTE","WEAPON","ARMOR"]
+	for set in set_labels:
+		var setLine = Label.new()
+		setLine.text = set
+		$Title/VBoxContainer.add_child(setLine)
+		var setBox = LineEdit.new()
+		$Title/VBoxContainer.add_child(setBox)
+
 	for label in pSingleton.output_labels:
 		var textLine = Label.new()
 		$Title/VBoxContainer.add_child(textLine)
@@ -61,16 +69,42 @@ func save_data_to_singleton() -> void:
 	var char_values_B = []
 	
 	var is_label = true
+	var skip_next = false	
 	var box_count = 0
 	for child_box in $Title/VBoxContainer.get_children():
 		is_label = child_box.get_class() == "Label"
 		if is_label:
-			if child_box.text.strip_edges(true,true).to_upper() == "NAME":
-				if $Title/VBoxContainer.get_child_count() >= box_count+1:
-					pSingleton.name = str($Title/VBoxContainer.get_child(box_count+1).text)
-				print("TEMP name found! As : " + str(pSingleton.name))
-			char_labels.append(child_box.text.strip_edges(true,true).to_upper())
-		else:
+			var label_value = child_box.text.strip_edges(true,true).to_upper()
+			match label_value:
+				"NAME":
+					if $Title/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.name = str($Title/VBoxContainer.get_child(box_count+1).text)
+					print("TEMP name found! As : " + str(pSingleton.name))
+					skip_next = true
+				"PROFESSION":
+					if $Title/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.profession = str($Title/VBoxContainer.get_child(box_count+1).text)
+					print("TEMP prof found! As : " + str(pSingleton.profession))
+					skip_next = true
+				"WEAPON":
+					if $Title/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.weapon = str($Title/VBoxContainer.get_child(box_count+1).text)
+					print("TEMP weapon found! As : " + str(pSingleton.weapon))
+					skip_next = true
+				"ARMOR":
+					if $Title/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.armor = str($Title/VBoxContainer.get_child(box_count+1).text)
+					print("TEMP armor found! As : " + str(pSingleton.armor))
+					skip_next = true
+				"QUOTE":
+					if $Title/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.quote = str($Title/VBoxContainer.get_child(box_count+1).text)
+					print("TEMP quote found! As : " + str(pSingleton.quote))
+					skip_next = true
+				_:
+					skip_next = false
+					char_labels.append(child_box.text.strip_edges(true,true).to_upper())
+		elif !skip_next:
 			print ("TEMP: raw value returned is:" + child_box.text)
 			#Output B in use means we have a multi-part attributes system
 			if pSingleton.is_output_B:
