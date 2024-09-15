@@ -4,5 +4,5 @@
 class_name OpenD6_Converter
 
 
-static func print_HW() -> void:
-	print("Hello World!")
+static func get_HW() -> String:
+	return ("Hello Open D6 World!")
