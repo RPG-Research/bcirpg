@@ -16,6 +16,9 @@ var a
 func _ready() -> void:
 	theme=load(settings.themeFile)
 	_populate_output_character_format()
+	#Uncomment this if we want to grab focus on the "Open Character File" option by default
+	#$VBoxContainer2/But_OpenFile.grab_focus()
+	$But_Play.grab_focus() #This will grab focus on the "Start Game" option by default
 
 func _on_Button_pressed():
 	$FileDialog.popup()
@@ -64,6 +67,20 @@ func _populate_preset_character_format(file:File):
 				$ScrollContainer/VBoxContainer.add_child(textBox)
 				textBox.text = csvStrContentsArray[i]
 	_save_data_to_singleton()
+	
+	# Set focus order for dynamically created LineEdit fields
+	var previous_control = $VBoxContainer2/Save_Button
+	for child in $ScrollContainer/VBoxContainer.get_children():
+		if child is LineEdit:
+			child.focus_previous = previous_control.get_path()
+			previous_control.focus_next = child.get_path()
+			previous_control = child
+	
+	# Connect the last LineEdit back to the first button
+	if previous_control != $VBoxContainer2/Save_Button:
+		previous_control.focus_next = $VBoxContainer2/But_OpenFile.get_path()
+		$VBoxContainer2/But_OpenFile.focus_previous = previous_control.get_path()
+
 
 #FUNCTION clear the character sheet
 #Params: None
@@ -84,6 +101,7 @@ func _on_FileDialog_file_selected(path):
 	_populate_preset_character_format(file)
 	
 	file.close()
+	$VBoxContainer2/But_OpenFile.grab_focus()
 	
 #FUNCTION save data to character singleton
 #Params: None
