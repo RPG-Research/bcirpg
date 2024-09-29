@@ -12,6 +12,7 @@ var conversion_file_path = ""
 var game_options_label = "GAMES"
 #Default is OpenD6
 var game_system_used = "OPEND6"
+var conversion_class = ""
 
 #DKM TEMP: will search for Convert_{game_system_used} code in globals, and use percent if not found?
 #	This will be used to get the output labels, output scores, and run ability conversions each way.
@@ -42,7 +43,14 @@ func char_sheet_converter (game:String, source_char:playerCharacterTemplate, cha
 func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharacterTemplate:
 	if source_char.output_labels.size() > 0 && source_char.output_labels.size() == source_char.output_scores_A.size():
 		#DKM TEMP (9/15/24: STOPPED HERE; working through this variable loading)
-		print(get_conversion_rules())
+		get_conversion_rules()
+		print(conversion_class.get_HW())
+		var ability_match_dict = conversion_class.get_ability_match()
+		print("TEST: iterating provided abilities:")
+		for key_ab in ability_match_dict:
+			print(key_ab + ": ")
+			print(ability_match_dict[key_ab] + "/n")
+		#match loc_child_node_name:
 	return source_char
 	
 #FUNCTION build output character
@@ -88,15 +96,13 @@ func get_game_options() ->Array:
 #Params: None 
 #Returns: Makes connection to conversion (TBD)
 #Notes: None
-func get_conversion_rules() ->String:
+func get_conversion_rules() ->void:
 	var rules_test = "";
 	conversion_file_path = global_path_prefix + "Convert_" + game_system_used + ".gd"
 	var file = File.new()
 	var error = file.open(conversion_file_path, file.READ)
 	if error != OK:
-		rules_test = "Error finding conversion rules in library " + error
+		print("Error finding conversion rules in library " + error)
 	else:
-		var converstionClass = load(conversion_file_path)
-		rules_test = converstionClass.get_HW()
-	return rules_test
-	
+		var Conversion_Class := load(conversion_file_path)
+		conversion_class = Conversion_Class.new()
