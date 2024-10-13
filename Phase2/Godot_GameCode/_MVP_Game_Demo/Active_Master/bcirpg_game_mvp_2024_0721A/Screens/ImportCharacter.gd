@@ -9,6 +9,10 @@ extends Control
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var pSingleton = get_node("/root/PlayerCharacter").pc
 
+#GSP is to hold instantiated GSP_Layer; needed for calling necessary conversion functionality
+const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
+onready var GSP = Game_Layer.new()
+
 var charFilePath
 var a
 
@@ -167,6 +171,7 @@ func _save_data_to_singleton() -> void:
 	pSingleton.output_labels = char_labels
 	pSingleton.output_scores_A  = char_values_A
 	pSingleton.output_scores_B  = char_values_B
+	pSingleton = GSP.char_sheet_converter(settings.game_selection,pSingleton, true)
 	
 #FUNCTION save character csv
 #Params: none
