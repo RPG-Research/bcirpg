@@ -5,6 +5,37 @@ extends Resource
 
 class_name playerCharacterTemplate
 
+const Capability_Source := preload("res://globalScripts/Char_Capability.gd")
+var source_backend_capabilities = ["AG","APP", "CO","QU","MD","ST","CH","EM","IN","ME","MX","PR","RE","SD","Health","Defense","Vision"]
+var player_capabilities = []
+
+func _ready() -> void:
+	_populate_default_character()
+	
+func _populate_default_character() -> void:
+	for ability in source_backend_capabilities:
+		var current = Capability_Source.new()
+		current.name = ability
+		player_capabilities.append(current)
+	
+func set_health () -> void: 
+	var health_calc = 0
+	for x in player_capabilities:
+		if x.name == "CO":
+			health_calc = health_calc + x.score + x.modifiers
+	for x in player_capabilities:
+		if x.name == "Health":
+			x.score = health_calc
+
+func set_defense () -> void: 
+	var def_calc = 0
+	for x in player_capabilities:
+		if x.defend:
+			def_calc = def_calc + x.score + x.modifiers
+	for x in player_capabilities:
+		if x.name == "Defense":
+			x.score = def_calc
+	
 #DKM TEMP: these outputs will likely need to be expanded
 #For output only:
 #Defaulting to OpenD6, these can be updated via the GSP_Lookups and
@@ -25,36 +56,14 @@ var weapon = "None"
 var armor = "None"
 var quote = "..."
 
-#Physical stats (BCI-RPG Backend Percentile System):
-var AG = 0
-var APP = 0
-var CO = 0
-var QU = 0
-var MD = 0
-var ST = 0
-#Non-Physical stats (BCI-RPG Backend Percentile System):
-var CH = 0
-var EM = 0
-var IN = 0
-var ME = 0
-var MX = 0
-var PR = 0
-var RE = 0
-var SD = 0
-
 
 #Simple print from backend percentile stats; saved to template's PC text field.
 func print_percentile_PC() -> void:
-	pcText = "NAME: " + name + "\nPROF: " + profession + "\nPHYSICAL ABILITIES:\n" \
-	+ "	Agility: " + str(AG) + "\n" \
-	+ "	Appearance: " + str(APP) + "\n" \
-	+ "	Constitution: " + str(CO) + "\n" \
-	+ "	Quickness: " + str(QU) + "\n" \
-	+ "	Manual Dexterity: " + str(MD) + "\n" \
-	+ "	Strength: " + str(ST) + "\n" \
-	+ "Non-Physical Abilities:\n"\
-	+ "	TBD\n"\
-	+ "QUOTE: " + quote
+	pcText = "NAME: " + name + "\nPROF: " + profession + "\n"
+	for cap in player_capabilities:
+		pcText = pcText + cap.name + ": " + str(cap.score + cap.modifiers) + "\n"
+	pcText = pcText + "QUOTE: " + quote
+
 
 #Simple print the values in output; saved to template's PC text field.
 func print_output_PC() -> void:

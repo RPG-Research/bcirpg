@@ -9,4 +9,3 @@ var pc
 func _ready() -> void:
 	pc = playerCharacterTemplate.new()
 	
-	
