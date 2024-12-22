@@ -62,10 +62,13 @@ func _ready() -> void:
 	
 	current_text.show()
 	#Load character sheet:
-	pSingleton.pc.print_output_PC()
+	pSingleton.pc.to_string_output_PC()
 	charSheet.text = pSingleton.pc.pcText
 	
 	#DKM TEMP: 6/2/24 testing initial access of GAL code
+	print("PERCENTILE CHAR print test: \n")
+	print(pSingleton.pc.to_string_perc_PC())
+	
 	#var testWords = GAL.genrify(settings.Genre_Option.keys()[settings.genre_selection],"boat")
 	#print("Sent test word of boat," + " and genre of " + settings.Genre_Option.keys()[settings.genre_selection] + "and got back: " + testWords)
 	

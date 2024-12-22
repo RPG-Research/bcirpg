@@ -6,16 +6,18 @@ extends Resource
 class_name playerCharacterTemplate
 
 const Capability_Source := preload("res://globalScripts/Char_Capability.gd")
-var source_backend_capabilities = ["AG","APP", "CO","QU","MD","ST","CH","EM","IN","ME","MX","PR","RE","SD","Health","Defense","Vision"]
+var source_backend_capabilities = ["AG","APP", "CO","QU","MD","ST","CH","EM","IN","ME","MX","PR","RE","SD"]
 var player_capabilities = []
 
-func _ready() -> void:
-	_populate_default_character()
 	
-func _populate_default_character() -> void:
+func populate_default_character() -> void:
 	for ability in source_backend_capabilities:
 		var current = Capability_Source.new()
 		current.name = ability
+		player_capabilities.append(current)
+	for specials in ["Health","Defense","Vision"]:
+		var current = Capability_Source.new()
+		current.name = specials
 		player_capabilities.append(current)
 	
 func set_health () -> void: 
@@ -40,6 +42,7 @@ func set_defense () -> void:
 #For output only:
 #Defaulting to OpenD6, these can be updated via the GSP_Lookups and
 #	Settings. In other settings, output B will often not be used.
+var output_extras = ["Name","Profession","Quote"]
 var output_labels = ["Agility","Coordination","Physique","Charisma","Intellect","Acumen"]
 var output_scores_A = [2,2,2,4,4,4]
 var output_A_label = "D"
@@ -52,21 +55,20 @@ var pcText = ""
  
 var name = ""
 var profession = "NA"
-var weapon = "None"
-var armor = "None"
 var quote = "..."
 
 
 #Simple print from backend percentile stats; saved to template's PC text field.
-func print_percentile_PC() -> void:
+func to_string_perc_PC() -> String:
 	pcText = "NAME: " + name + "\nPROF: " + profession + "\n"
 	for cap in player_capabilities:
 		pcText = pcText + cap.name + ": " + str(cap.score + cap.modifiers) + "\n"
 	pcText = pcText + "QUOTE: " + quote
+	return pcText
 
 
 #Simple print the values in output; saved to template's PC text field.
-func print_output_PC() -> void:
+func to_string_output_PC() -> String:
 	pcText = "NAME: " + name + "\nPROF: " + profession + "\nQUOTE: " + quote + "\n"
 	var i = 0
 	for out_label in output_labels:
@@ -78,5 +80,4 @@ func print_output_PC() -> void:
 				pcText = pcText + " " + output_B_label + str(output_scores_B[i])
 		pcText = pcText + "\n" 
 		i = i+1
-	pcText = pcText + "Weapon: " + weapon + "\n" 
-	pcText = pcText + "Armor: " + armor + "\n" 
+	return pcText

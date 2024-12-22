@@ -28,31 +28,47 @@ func _ready() -> void:
 func _populate_output_character_format():
 	var i = 0
 	#make a new textbox for each header piece
-	var set_labels = ["NAME","PROFESSION","QUOTE","WEAPON","ARMOR"]
+	var set_labels = ["NAME","PROFESSION","QUOTE"]
 	for set in set_labels:
 		var setLine = Label.new()
 		setLine.text = set
-		$Title/VBoxContainer.add_child(setLine)
+		$Title/ScrollContainer/VBoxContainer.add_child(setLine)
 		var setBox = LineEdit.new()
-		$Title/VBoxContainer.add_child(setBox)
+		$Title/ScrollContainer/VBoxContainer.add_child(setBox)
 
-	for label in pSingleton.output_labels:
-		var textLine = Label.new()
-		$Title/VBoxContainer.add_child(textLine)
-		textLine.text = label.to_upper()
-		i = i+1
-		#match to content, assuming it exists and aligns
-		if(pSingleton.output_scores_A.size()>= i):
+
+	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
+	#	the Capabilities system is tested. These values should be set on the GSP as
+	#	per all systems. 
+	if (settings.game_selection == "BCIRPG_PERCENTILE"):
+		pSingleton.is_output_B = false
+		pSingleton.output_A_label = ""
+		for label in pSingleton.source_backend_capabilities:
+			var textLine = Label.new()
+			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
+			textLine.text = label + ":"
 			var textBox = LineEdit.new()
-			$Title/VBoxContainer.add_child(textBox)
-			var ability_text = str(pSingleton.output_scores_A[i-1])
-			if(pSingleton.output_A_label.length() > 0):
-				ability_text = ability_text + pSingleton.output_A_label
-				if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
-					if(pSingleton.output_B_label.length() > 0):
-						ability_text = ability_text + pSingleton.output_B_label
-					ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
-			textBox.text = ability_text
+			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+		#Here: add interactive capacity to add new capabilities. 
+		
+	else:
+		for label in pSingleton.output_labels:
+			var textLine = Label.new()
+			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
+			textLine.text = label.to_upper()
+			i = i+1
+			#match to content, assuming it exists and aligns
+			if(pSingleton.output_scores_A.size()>= i):
+				var textBox = LineEdit.new()
+				$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+				var ability_text = str(pSingleton.output_scores_A[i-1])
+				if(pSingleton.output_A_label.length() > 0):
+					ability_text = ability_text + pSingleton.output_A_label
+					if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
+						if(pSingleton.output_B_label.length() > 0):
+							ability_text = ability_text + pSingleton.output_B_label
+						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
+				textBox.text = ability_text
 
 #FUNCTION save data to character singleton
 #Params: None
@@ -71,34 +87,24 @@ func save_data_to_singleton() -> void:
 	var is_label = true
 	var skip_next = false	
 	var box_count = 0
-	for child_box in $Title/VBoxContainer.get_children():
+	for child_box in $Title/ScrollContainer/VBoxContainer.get_children():
 		is_label = child_box.get_class() == "Label"
 		if is_label:
 			var label_value = child_box.text.strip_edges(true,true).to_upper()
 			match label_value:
 				"NAME":
-					if $Title/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.name = str($Title/VBoxContainer.get_child(box_count+1).text)
+					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.name = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 					print("TEMP name found! As : " + str(pSingleton.name))
 					skip_next = true
 				"PROFESSION":
-					if $Title/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.profession = str($Title/VBoxContainer.get_child(box_count+1).text)
+					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.profession = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 					print("TEMP prof found! As : " + str(pSingleton.profession))
 					skip_next = true
-				"WEAPON":
-					if $Title/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.weapon = str($Title/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP weapon found! As : " + str(pSingleton.weapon))
-					skip_next = true
-				"ARMOR":
-					if $Title/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.armor = str($Title/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP armor found! As : " + str(pSingleton.armor))
-					skip_next = true
 				"QUOTE":
-					if $Title/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.quote = str($Title/VBoxContainer.get_child(box_count+1).text)
+					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+						pSingleton.quote = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 					print("TEMP quote found! As : " + str(pSingleton.quote))
 					skip_next = true
 				_:
@@ -134,10 +140,12 @@ func save_data_to_csv() -> void:
 	var file = File.new()
 	if file.open(file_path, File.WRITE) == OK:
 		var csv_labels = ""
+		for extra in pSingleton.output_extras:
+			csv_labels = csv_labels + extra + ","
 		for name in pSingleton.output_labels:
 			csv_labels = csv_labels + name + ","
 		csv_labels = csv_labels + "\n"
-		csv_labels = csv_labels + str(pSingleton.name) + ","
+		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
 		var labels_counter = 0
 		for val in pSingleton.output_scores_A:
 			csv_labels = csv_labels + str(val)
