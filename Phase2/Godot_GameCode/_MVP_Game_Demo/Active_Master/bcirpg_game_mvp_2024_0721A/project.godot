@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "PanelContainer",
+"class": "Capacity",
+"language": "GDScript",
+"path": "res://UserInterface/Capacity.gd"
+}, {
 "base": "Reference",
 "class": "Char_Capability",
 "language": "GDScript",
@@ -60,6 +65,7 @@ _global_script_classes=[ {
 "path": "res://globalScripts/playerCharacterTemplate.gd"
 } ]
 _global_script_class_icons={
+"Capacity": "",
 "Char_Capability": "",
 "Die": "",
 "DieManager": "",

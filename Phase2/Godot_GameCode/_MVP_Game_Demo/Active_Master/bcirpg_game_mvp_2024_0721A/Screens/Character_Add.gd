@@ -8,6 +8,9 @@ extends Control
 onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var pSingleton = get_node("/root/PlayerCharacter").pc
 
+const Perc_Cap = preload("res://UserInterface/Capacity.tscn")
+var cust_cap_count = 0
+
 #GSP is to hold instantiated GSP_Layer; needed for calling necessary conversion functionality
 const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
 onready var GSP = Game_Layer.new()
@@ -46,10 +49,20 @@ func _populate_output_character_format():
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
+			cust_cap_count = cust_cap_count+1
 			textLine.text = label + ":"
 			var textBox = LineEdit.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+			cust_cap_count = cust_cap_count+1
 		#Here: add interactive capacity to add new capabilities. 
+		var new_cap = Perc_Cap.instance()
+		$Title/ScrollContainer/VBoxContainer.add_child(new_cap)
+		cust_cap_count = cust_cap_count+1
+		#DKM TEMP: 12/29/24: Stopped here. Not sure I'm even doing this right -- the goal is to
+		#	keep each button connected with each capacity for easier removal. 
+		#	As with options in the game, we're manually emitting a signal here from the 
+		#	Capability object
+		$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("rem_cap_pressed", self, "_on_rem_cap_pressed")
 		
 	else:
 		for label in pSingleton.output_labels:
@@ -69,6 +82,9 @@ func _populate_output_character_format():
 							ability_text = ability_text + pSingleton.output_B_label
 						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
 				textBox.text = ability_text
+
+func _on_rem_cap_pressed(cap_chosen: String) -> void:
+	print("Destination node for pressed option is: " + cap_chosen)
 
 #FUNCTION save data to character singleton
 #Params: None
