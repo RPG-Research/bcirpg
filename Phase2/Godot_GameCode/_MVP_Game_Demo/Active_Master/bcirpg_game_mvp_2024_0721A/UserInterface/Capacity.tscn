@@ -13,11 +13,11 @@ script = ExtResource( 1 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 243.001
-margin_bottom = 229.0
+margin_bottom = 643.0
 
 [node name="Rows" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 236.0
-margin_bottom = 222.0
+margin_bottom = 636.0
 
 [node name="LocaleName" type="Label" parent="MarginContainer/Rows"]
 margin_right = 236.0
@@ -79,5 +79,118 @@ text = "Defend?"
 margin_top = 198.0
 margin_right = 236.0
 margin_bottom = 222.0
+
+[node name="L_Use_Range" type="Label" parent="MarginContainer/Rows"]
+margin_top = 226.0
+margin_right = 236.0
+margin_bottom = 240.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Use  Range:"
+
+[node name="Use_Range" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 244.0
+margin_right = 236.0
+margin_bottom = 268.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Duration" type="Label" parent="MarginContainer/Rows"]
+margin_top = 272.0
+margin_right = 236.0
+margin_bottom = 286.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Duration:"
+
+[node name="Duration" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 290.0
+margin_right = 236.0
+margin_bottom = 314.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Impact_Target" type="Label" parent="MarginContainer/Rows"]
+margin_top = 318.0
+margin_right = 236.0
+margin_bottom = 332.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Impact Target:"
+
+[node name="Impact_Target" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 336.0
+margin_right = 236.0
+margin_bottom = 360.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Impact_Amount" type="Label" parent="MarginContainer/Rows"]
+margin_top = 364.0
+margin_right = 236.0
+margin_bottom = 378.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Impact Amount:"
+
+[node name="Impact_Amount" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 382.0
+margin_right = 236.0
+margin_bottom = 406.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Uses_Max" type="Label" parent="MarginContainer/Rows"]
+margin_top = 410.0
+margin_right = 236.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Uses Max:"
+
+[node name="Uses_Max" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 428.0
+margin_right = 236.0
+margin_bottom = 452.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Uses_Current" type="Label" parent="MarginContainer/Rows"]
+margin_top = 456.0
+margin_right = 236.0
+margin_bottom = 470.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Uses Current:"
+
+[node name="Uses_Current" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 474.0
+margin_right = 236.0
+margin_bottom = 498.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Recharge" type="Label" parent="MarginContainer/Rows"]
+margin_top = 502.0
+margin_right = 236.0
+margin_bottom = 516.0
+text = "Recharges?"
+
+[node name="Recharge" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 520.0
+margin_right = 236.0
+margin_bottom = 544.0
+
+[node name="L_Reload" type="Label" parent="MarginContainer/Rows"]
+margin_top = 548.0
+margin_right = 236.0
+margin_bottom = 562.0
+text = "Reloads?"
+
+[node name="Reload" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 566.0
+margin_right = 236.0
+margin_bottom = 590.0
+
+[node name="L_Modifier" type="Label" parent="MarginContainer/Rows"]
+margin_top = 594.0
+margin_right = 236.0
+margin_bottom = 608.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Modifier:"
+
+[node name="Modifier" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 612.0
+margin_right = 236.0
+margin_bottom = 636.0
+rect_pivot_offset = Vector2( -161, -69 )
 
 [connection signal="button_up" from="MarginContainer/Rows/But_RemCap" to="MarginContainer/Rows/But_RemCap" method="_on_But_RemCap_button_up"]

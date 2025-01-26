@@ -15,6 +15,7 @@ var cust_cap_count = 0
 const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
 onready var GSP = Game_Layer.new()
 
+const Cap_New_Button = preload("res://UserInterface/Option.tscn")
 
 func _ready() -> void:
 	theme=load(settings.themeFile)
@@ -36,8 +37,10 @@ func _populate_output_character_format():
 		var setLine = Label.new()
 		setLine.text = set
 		$Title/ScrollContainer/VBoxContainer.add_child(setLine)
+		cust_cap_count= cust_cap_count+1
 		var setBox = LineEdit.new()
 		$Title/ScrollContainer/VBoxContainer.add_child(setBox)
+		cust_cap_count = cust_cap_count+1
 
 
 	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
@@ -46,6 +49,13 @@ func _populate_output_character_format():
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
+		#Add a button to add new capacities at the bottom:
+		var add_cap_but = Cap_New_Button.instance()
+		add_cap_but.text = "Add New Capacity"
+		add_cap_but.destinationLabel = "NA"
+		$Title/ScrollContainer/VBoxContainer.add_child(add_cap_but)
+		$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
+		cust_cap_count = cust_cap_count+1
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
@@ -53,17 +63,8 @@ func _populate_output_character_format():
 			textLine.text = label + ":"
 			var textBox = LineEdit.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
-			cust_cap_count = cust_cap_count+1
-		#Here: add interactive capacity to add new capabilities. 
-		var new_cap = Perc_Cap.instance()
-		$Title/ScrollContainer/VBoxContainer.add_child(new_cap)
-		cust_cap_count = cust_cap_count+1
-		#DKM TEMP: 12/29/24: Stopped here. Not sure I'm even doing this right -- the goal is to
-		#	keep each button connected with each capacity for easier removal. 
-		#	As with options in the game, we're manually emitting a signal here from the 
-		#	Capability object
-		$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("rem_cap_pressed", self, "_on_rem_cap_pressed")
-		
+			cust_cap_count = cust_cap_count+1	
+
 	else:
 		for label in pSingleton.output_labels:
 			var textLine = Label.new()
@@ -83,8 +84,35 @@ func _populate_output_character_format():
 						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
 				textBox.text = ability_text
 
-func _on_rem_cap_pressed(cap_chosen: String) -> void:
-	print("Destination node for pressed option is: " + cap_chosen)
+#FUNCTION helper rem cap pressed
+#Params: the parent node of the remove button being pressed
+#Returns: Nothing; all work done in function
+#Notes: Connecting to a capacity's internal button signal, this function's goal is
+#	to remove the capacity on the button pressed from the character sheet. 
+func _on_rem_cap_pressed(cap_par: Node) -> void:
+	print("Connection made! Passed name is: " + cap_par.name)
+	#var target_cap = $Title/ScrollContainer/VBoxContainer.find_child(child_idx)
+	$Title/ScrollContainer/VBoxContainer.remove_child(cap_par)
+	#target_cap.queue_free()
+	cust_cap_count = cust_cap_count-1
+
+#FUNCTION helper add cap pressed
+#Params: NA, this is currently un-used. Retained to salvage the options button
+#Returns: Nothing; all work done in function
+#Notes: Adds a new capacity at the bottom of the character sheet, saving the parent node
+#	so it can be removed regardless of order
+func _on_new_cap_pressed(NA: String) -> void:
+	print("Connected to the new cap, too!")
+	var new_cap = Perc_Cap.instance()
+	$Title/ScrollContainer/VBoxContainer.add_child(new_cap)
+	cust_cap_count = cust_cap_count+1
+	print("Current count set to: " + str(cust_cap_count))
+	#Get the remove button on the capacity node to connect signal:
+	var cap_node_but = $Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count-1).get_child(0).get_child(0).get_child(1)
+	#This sets the child count currently for future reference (to enable dynamic removes)
+	cap_node_but.cap_setting = $Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count-1)
+	cap_node_but.connect("rem_cap_pressed", self, "_on_rem_cap_pressed") 
+
 
 #FUNCTION save data to character singleton
 #Params: None
