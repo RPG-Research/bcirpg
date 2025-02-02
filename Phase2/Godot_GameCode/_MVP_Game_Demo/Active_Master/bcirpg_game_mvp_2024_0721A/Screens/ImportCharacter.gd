@@ -115,6 +115,10 @@ func _on_FileDialog_file_selected(path):
 #TODO: This should poll the game system in use first, for validing what output fields
 #	to save; it should also call the GSP conversion once done to update the percentile values, too.
 func _save_data_to_singleton() -> void:
+	
+	#DKM TEMP 12/22/24: This needs overhaul for the new capability system. Testing
+	#	default character write here:
+	pSingleton.populate_default_character()
 	#Values divisions provided for game system variations
 	#TODO: ascertain if these are sufficiently robust?
 	var char_labels = []
@@ -138,16 +142,6 @@ func _save_data_to_singleton() -> void:
 					if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 						pSingleton.profession = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 					print("TEMP prof found! As : " + str(pSingleton.profession))
-					skip_next = true
-				"WEAPON":
-					if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.weapon = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP weapon found! As : " + str(pSingleton.weapon))
-					skip_next = true
-				"ARMOR":
-					if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.armor = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP armor found! As : " + str(pSingleton.armor))
 					skip_next = true
 				"QUOTE":
 					if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
@@ -188,10 +182,12 @@ func _save_data_to_csv() -> void:
 	var file = File.new()
 	if file.open(file_path, File.WRITE) == OK:
 		var csv_labels = ""
+		for extra in pSingleton.output_extras:
+			csv_labels = csv_labels + extra + ","
 		for name in pSingleton.output_labels:
 			csv_labels = csv_labels + name + ","
 		csv_labels = csv_labels + "\n"
-		csv_labels = csv_labels + str(pSingleton.name) + ","
+		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
 		var labels_counter = 0
 		for val in pSingleton.output_scores_A:
 			csv_labels = csv_labels + str(val)

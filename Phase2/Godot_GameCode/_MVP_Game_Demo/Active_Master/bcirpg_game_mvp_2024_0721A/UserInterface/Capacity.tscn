@@ -1,0 +1,196 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UserInterface/Locale.gd" type="Script" id=1]
+[ext_resource path="res://UserInterface/But_RemCap.gd" type="Script" id=2]
+
+[node name="Capacity" type="PanelContainer"]
+margin_right = 250.001
+margin_bottom = 200.0
+rect_min_size = Vector2( 250, 200 )
+script = ExtResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 243.001
+margin_bottom = 643.0
+
+[node name="Rows" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 236.0
+margin_bottom = 636.0
+
+[node name="LocaleName" type="Label" parent="MarginContainer/Rows"]
+margin_right = 236.0
+margin_bottom = 14.0
+text = "New Capacity"
+align = 1
+
+[node name="But_RemCap" type="Button" parent="MarginContainer/Rows"]
+margin_top = 18.0
+margin_right = 236.0
+margin_bottom = 38.0
+text = "Remove Capacity"
+script = ExtResource( 2 )
+
+[node name="L_CapName" type="Label" parent="MarginContainer/Rows"]
+margin_top = 42.0
+margin_right = 236.0
+margin_bottom = 56.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Name:"
+
+[node name="CapName" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 60.0
+margin_right = 236.0
+margin_bottom = 84.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Score" type="Label" parent="MarginContainer/Rows"]
+margin_top = 88.0
+margin_right = 236.0
+margin_bottom = 102.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Score:"
+
+[node name="Score" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 106.0
+margin_right = 236.0
+margin_bottom = 130.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Attack" type="Label" parent="MarginContainer/Rows"]
+margin_top = 134.0
+margin_right = 236.0
+margin_bottom = 148.0
+text = "Attack?"
+
+[node name="AttackBox" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 152.0
+margin_right = 236.0
+margin_bottom = 176.0
+
+[node name="L_Defend" type="Label" parent="MarginContainer/Rows"]
+margin_top = 180.0
+margin_right = 236.0
+margin_bottom = 194.0
+text = "Defend?"
+
+[node name="DefendBox" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 198.0
+margin_right = 236.0
+margin_bottom = 222.0
+
+[node name="L_Use_Range" type="Label" parent="MarginContainer/Rows"]
+margin_top = 226.0
+margin_right = 236.0
+margin_bottom = 240.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Use  Range:"
+
+[node name="Use_Range" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 244.0
+margin_right = 236.0
+margin_bottom = 268.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Duration" type="Label" parent="MarginContainer/Rows"]
+margin_top = 272.0
+margin_right = 236.0
+margin_bottom = 286.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Duration:"
+
+[node name="Duration" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 290.0
+margin_right = 236.0
+margin_bottom = 314.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Impact_Target" type="Label" parent="MarginContainer/Rows"]
+margin_top = 318.0
+margin_right = 236.0
+margin_bottom = 332.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Impact Target:"
+
+[node name="Impact_Target" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 336.0
+margin_right = 236.0
+margin_bottom = 360.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Impact_Amount" type="Label" parent="MarginContainer/Rows"]
+margin_top = 364.0
+margin_right = 236.0
+margin_bottom = 378.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Impact Amount:"
+
+[node name="Impact_Amount" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 382.0
+margin_right = 236.0
+margin_bottom = 406.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Uses_Max" type="Label" parent="MarginContainer/Rows"]
+margin_top = 410.0
+margin_right = 236.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Uses Max:"
+
+[node name="Uses_Max" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 428.0
+margin_right = 236.0
+margin_bottom = 452.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Uses_Current" type="Label" parent="MarginContainer/Rows"]
+margin_top = 456.0
+margin_right = 236.0
+margin_bottom = 470.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Uses Current:"
+
+[node name="Uses_Current" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 474.0
+margin_right = 236.0
+margin_bottom = 498.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[node name="L_Recharge" type="Label" parent="MarginContainer/Rows"]
+margin_top = 502.0
+margin_right = 236.0
+margin_bottom = 516.0
+text = "Recharges?"
+
+[node name="Recharge" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 520.0
+margin_right = 236.0
+margin_bottom = 544.0
+
+[node name="L_Reload" type="Label" parent="MarginContainer/Rows"]
+margin_top = 548.0
+margin_right = 236.0
+margin_bottom = 562.0
+text = "Reloads?"
+
+[node name="Reload" type="CheckBox" parent="MarginContainer/Rows"]
+margin_top = 566.0
+margin_right = 236.0
+margin_bottom = 590.0
+
+[node name="L_Modifier" type="Label" parent="MarginContainer/Rows"]
+margin_top = 594.0
+margin_right = 236.0
+margin_bottom = 608.0
+rect_pivot_offset = Vector2( -161, -51 )
+text = "Modifier:"
+
+[node name="Modifier" type="LineEdit" parent="MarginContainer/Rows"]
+margin_top = 612.0
+margin_right = 236.0
+margin_bottom = 636.0
+rect_pivot_offset = Vector2( -161, -69 )
+
+[connection signal="button_up" from="MarginContainer/Rows/But_RemCap" to="MarginContainer/Rows/But_RemCap" method="_on_But_RemCap_button_up"]

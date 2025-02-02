@@ -62,13 +62,13 @@ margin_bottom = 426.0
 rect_min_size = Vector2( 400, 140 )
 access = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Title"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -20.0
-margin_top = 50.0
-margin_right = 20.0
-margin_bottom = 140.0
+[node name="ScrollContainer" type="ScrollContainer" parent="Title"]
+margin_left = 370.0
+margin_top = 31.0
+margin_right = 989.0
+margin_bottom = 452.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Title/ScrollContainer"]
 
 [connection signal="pressed" from="Title/But_SaveChar" to="." method="_on_But_SaveChar_pressed"]
 [connection signal="button_up" from="Title/But_ChangeScene" to="Title/But_ChangeScene" method="_on_But_NewGame_button_up"]
