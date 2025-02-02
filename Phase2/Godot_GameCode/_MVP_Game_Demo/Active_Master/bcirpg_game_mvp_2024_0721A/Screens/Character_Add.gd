@@ -124,50 +124,80 @@ func _on_new_cap_pressed(NA: String) -> void:
 func save_data_to_singleton() -> void:
 	#Values divisions provided for game system variations
 	#TODO: ascertain if these are sufficiently robust?
-	var char_labels = []
-	var char_values_A = []
-	var char_values_B = []
-	
 	var is_label = true
-	var skip_next = false	
+	var skip_next = false
 	var box_count = 0
-	for child_box in $Title/ScrollContainer/VBoxContainer.get_children():
-		is_label = child_box.get_class() == "Label"
-		if is_label:
-			var label_value = child_box.text.strip_edges(true,true).to_upper()
-			match label_value:
-				"NAME":
-					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.name = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP name found! As : " + str(pSingleton.name))
-					skip_next = true
-				"PROFESSION":
-					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.profession = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP prof found! As : " + str(pSingleton.profession))
-					skip_next = true
-				"QUOTE":
-					if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-						pSingleton.quote = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-					print("TEMP quote found! As : " + str(pSingleton.quote))
-					skip_next = true
-				_:
-					skip_next = false
-					char_labels.append(child_box.text.strip_edges(true,true).to_upper())
-		elif !skip_next:
-			print ("TEMP: raw value returned is:" + child_box.text)
-			#Output B in use means we have a multi-part attributes system
-			if pSingleton.is_output_B:
-				var A_label_idx = child_box.text.find(pSingleton.output_A_label)
-				if(A_label_idx >=0):
-					char_values_A.append(int(child_box.text.substr(0,A_label_idx)))
-					char_values_B.append(int(child_box.text.substr(A_label_idx+1,child_box.text.length()-1)))
-			else: 
-				char_values_A.append(int(child_box.text))
-		box_count = box_count +1
-	pSingleton.output_labels = char_labels
-	pSingleton.output_scores_A  = char_values_A
-	pSingleton.output_scores_B  = char_values_B
+	#DKM TEMP (2/2/25): As testing direct-access for bcirpg percentile, this game type bypasses
+	#	the output character attributes and writes directly to the backend stats. 
+	if (settings.game_selection == "BCIRPG_PERCENTILE"):
+		for child_box in $Title/ScrollContainer/VBoxContainer.get_children():
+			is_label = child_box.get_class() == "Label"
+			if is_label:
+				var label_value = child_box.text.strip_edges(true,true).to_upper()
+				match label_value:
+					"NAME":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.name = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("BCI P name found! As : " + str(pSingleton.name))
+					"PROFESSION":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.profession = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("BCI P prof found! As : " + str(pSingleton.profession))
+					"QUOTE":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.quote = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("BCI P quote found! As : " + str(pSingleton.quote))
+			#Capacity object:
+			elif child_box.get_class() == "PanelContainer":
+				var cap_source = child_box.get_children()[0].get_children()
+				for cap_item in cap_source[0].get_children():
+					if cap_item.get_name() == "LocaleName" || cap_item.get_name() == "But_RemC":
+						pass
+					elif cap_item.get_class() != "Label":
+						print ("In cap, name: " + cap_item.get_name() )
+			
+	else:
+		var char_labels = []
+		var char_values_A = []
+		var char_values_B = []
+		
+		for child_box in $Title/ScrollContainer/VBoxContainer.get_children():
+			is_label = child_box.get_class() == "Label"
+			if is_label:
+				var label_value = child_box.text.strip_edges(true,true).to_upper()
+				match label_value:
+					"NAME":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.name = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("TEMP name found! As : " + str(pSingleton.name))
+						skip_next = true
+					"PROFESSION":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.profession = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("TEMP prof found! As : " + str(pSingleton.profession))
+						skip_next = true
+					"QUOTE":
+						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							pSingleton.quote = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+						print("TEMP quote found! As : " + str(pSingleton.quote))
+						skip_next = true
+					_:
+						skip_next = false
+						char_labels.append(child_box.text.strip_edges(true,true).to_upper())
+			elif !skip_next:
+				print ("TEMP: raw value returned is:" + child_box.text)
+				#Output B in use means we have a multi-part attributes system
+				if pSingleton.is_output_B:
+					var A_label_idx = child_box.text.find(pSingleton.output_A_label)
+					if(A_label_idx >=0):
+						char_values_A.append(int(child_box.text.substr(0,A_label_idx)))
+						char_values_B.append(int(child_box.text.substr(A_label_idx+1,child_box.text.length()-1)))
+				else: 
+					char_values_A.append(int(child_box.text))
+			box_count = box_count +1
+		pSingleton.output_labels = char_labels
+		pSingleton.output_scores_A  = char_values_A
+		pSingleton.output_scores_B  = char_values_B
 				
 #FUNCTION save character csv
 #Params: none

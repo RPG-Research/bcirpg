@@ -22,7 +22,7 @@ margin_bottom = 636.0
 [node name="LocaleName" type="Label" parent="MarginContainer/Rows"]
 margin_right = 236.0
 margin_bottom = 14.0
-text = "New Capacity"
+text = "Added Capacity"
 align = 1
 
 [node name="But_RemCap" type="Button" parent="MarginContainer/Rows"]
