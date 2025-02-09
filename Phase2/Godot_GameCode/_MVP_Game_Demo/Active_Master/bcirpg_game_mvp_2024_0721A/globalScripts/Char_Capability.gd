@@ -15,6 +15,14 @@ var uses_max = 0
 var uses_current = 0
 var recharge = false
 var reload = false
-var modifiers = 0
+var modifier = 0
 	
-	
+func to_string() -> String:
+	var output_text = "name:" + str(name)
+	output_text = output_text + ",score:" + str(score) + ",attack:" + str(attack)
+	output_text = output_text + ",defend:" + str(defend) + ",use_range:" + str(use_range)
+	output_text = output_text + ",duration:" + str(duration) + ",impact_target:" + str(impact_target)
+	output_text = output_text + ",impact_amount:" + str(impact_amount) + ",uses_max:" + str(uses_max)
+	output_text = output_text + ",uses_current:" + str(uses_current) + ",recharge:" + str(recharge)
+	output_text = output_text + ",reload:" + str(reload) + ",modifier:" + str(modifier)
+	return output_text
