@@ -247,7 +247,16 @@ func save_data_to_singleton() -> void:
 				pSingleton.player_capabilities.append(new_cap)
 		pSingleton.set_health()
 		pSingleton.set_defense()
-		print("Character entered as: " + pSingleton.to_string_perc_PC())
+		#Now set output values, too:
+		pSingleton.is_output_B = false
+		pSingleton.output_A_label = ""
+		var char_labels = []
+		var char_values_A = []
+		for pc_cap in pSingleton.player_capabilities:
+			char_labels.append(pc_cap.name)
+			char_values_A.append(pc_cap.score)
+		pSingleton.output_labels = char_labels
+		pSingleton.output_scores_A = char_values_A
 	else:
 		var char_labels = []
 		var char_values_A = []
