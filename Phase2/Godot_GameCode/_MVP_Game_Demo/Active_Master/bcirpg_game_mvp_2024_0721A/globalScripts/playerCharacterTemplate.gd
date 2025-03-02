@@ -24,7 +24,7 @@ func set_health () -> void:
 	var health_calc = 0
 	for x in player_capabilities:
 		if x.name == "CO":
-			health_calc = health_calc + x.score + x.modifiers
+			health_calc = health_calc + int(x.score) + int(x.modifier)
 	for x in player_capabilities:
 		if x.name == "Health":
 			x.score = health_calc
@@ -33,7 +33,7 @@ func set_defense () -> void:
 	var def_calc = 0
 	for x in player_capabilities:
 		if x.defend:
-			def_calc = def_calc + x.score + x.modifiers
+			def_calc = def_calc + int(x.score) + int(x.modifier)
 	for x in player_capabilities:
 		if x.name == "Defense":
 			x.score = def_calc
@@ -60,10 +60,10 @@ var quote = "..."
 
 #Simple print from backend percentile stats; saved to template's PC text field.
 func to_string_perc_PC() -> String:
-	pcText = "NAME: " + name + "\nPROF: " + profession + "\n"
+	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
-		pcText = pcText + cap.name + ": " + str(cap.score + cap.modifiers) + "\n"
-	pcText = pcText + "QUOTE: " + quote
+		pcText = pcText + str(cap.name) + ": " + str(int(cap.score) + int(cap.modifier)) + "\n"
+	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
 
 

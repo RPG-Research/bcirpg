@@ -36,6 +36,18 @@ func _on_Button_pressed():
 #	NOTE: this assumes we have matching lines, and our csv matches
 #TODO: Next step  here is run the GSP converted to also update the percentile/singleton
 func _populate_output_character_format():
+		#	the output character attributes and writes directly to the backend stats. 
+	if (settings.game_selection == "BCIRPG_PERCENTILE"):
+		pSingleton.populate_default_character()
+		pSingleton.is_output_B = false
+		pSingleton.output_A_label = ""
+		var char_labels = []
+		var char_values_A = []
+		for pc_cap in pSingleton.player_capabilities:
+			char_labels.append(pc_cap.name)
+			char_values_A.append(pc_cap.score)
+		pSingleton.output_labels = char_labels
+		pSingleton.output_scores_A = char_values_A
 	var i = 0
 	#make a new textbox for each header piece
 	for label in pSingleton.output_labels:
@@ -115,19 +127,16 @@ func _on_FileDialog_file_selected(path):
 #TODO: This should poll the game system in use first, for validing what output fields
 #	to save; it should also call the GSP conversion once done to update the percentile values, too.
 func _save_data_to_singleton() -> void:
-	
-	#DKM TEMP 12/22/24: This needs overhaul for the new capability system. Testing
-	#	default character write here:
-	pSingleton.populate_default_character()
 	#Values divisions provided for game system variations
 	#TODO: ascertain if these are sufficiently robust?
+	var is_label = true
+	var skip_next = false
+	var box_count = 0
+	
 	var char_labels = []
 	var char_values_A = []
 	var char_values_B = []
 	
-	var is_label = true
-	var skip_next = false
-	var box_count = 0
 	for child_box in $ScrollContainer/VBoxContainer.get_children():
 		is_label = child_box.get_class() == "Label"
 		if is_label:
@@ -153,8 +162,9 @@ func _save_data_to_singleton() -> void:
 					char_labels.append(child_box.text.strip_edges(true,true).to_upper())
 		elif !skip_next:
 			print ("TEMP: raw value returned is:" + child_box.text)
-			#Output B in use means we have a multi-part attributes system
-			if pSingleton.is_output_B:
+			#Output B in use means we have a multi-part attributes system; search
+			#	for output_B_label in text
+			if pSingleton.is_output_B && pSingleton.output_B_label in child_box.text:
 				var A_label_idx = child_box.text.find(pSingleton.output_A_label)
 				if(A_label_idx >=0):
 					char_values_A.append(int(child_box.text.substr(0,A_label_idx)))
@@ -162,10 +172,12 @@ func _save_data_to_singleton() -> void:
 			else: 
 				char_values_A.append(int(child_box.text))
 		box_count = box_count +1
-	pSingleton.output_labels = char_labels
-	pSingleton.output_scores_A  = char_values_A
-	pSingleton.output_scores_B  = char_values_B
-	pSingleton = GSP.char_sheet_converter(settings.game_selection,pSingleton, true)
+		pSingleton.output_labels = char_labels
+		pSingleton.output_scores_A  = char_values_A
+		pSingleton.output_scores_B  = char_values_B
+	if pSingleton.output_scores_B.size() <=0:
+		pSingleton.is_output_B = false
+		pSingleton.output_A_label = ""
 	
 #FUNCTION save character csv
 #Params: none
