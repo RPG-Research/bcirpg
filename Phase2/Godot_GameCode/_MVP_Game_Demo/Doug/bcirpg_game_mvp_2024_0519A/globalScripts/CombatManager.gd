@@ -189,7 +189,7 @@ func execute_ai_turn():
     
     return action_result
 
-# Run a complete combat sequence (for testing)
+# Run a complete combat sequence (for testing later. I haven't tested this yet but added it for later)
 func run_test_combat(player_ref, opponent_ref):
     var combat_log = []
     
