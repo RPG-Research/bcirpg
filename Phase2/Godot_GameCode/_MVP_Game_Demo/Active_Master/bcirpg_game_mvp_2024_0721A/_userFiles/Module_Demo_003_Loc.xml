@@ -27,7 +27,7 @@
         <Id>Boat_001</Id>
         <Action>ShowText</Action>
         <A_Params></A_Params>
-        <Text>The boat rocks gently. You can leave the **/boat** through a **/hatch**. There is also now a test option.</Text>
+        <Text>The boat rocks gently. You can leave the **/boat** through a **/hatch**. There are also now three new test options.</Text>
         <Option_Labels_001>Examine **/boat**</Option_Labels_001>
         <Option_Labels_002>Exit through **/hatch**</Option_Labels_002>
         <Option_Labels_003>Play the fiddle!</Option_Labels_003>
@@ -35,13 +35,17 @@
         <Option_Labels_005>Meditate</Option_Labels_005>
         <Option_Labels_006>Run die roll test</Option_Labels_006>
         <Option_Labels_007>Travel to the Forgotten Realms</Option_Labels_007>
+        <Option_Labels_008>Try to lift a heavy weight! (Strength check test.)</Option_Labels_008>
+        <Option_Labels_009>Examine the hold more closely? (Intuition check test.)</Option_Labels_009>
         <Option_GoTos_001>Boat_002</Option_GoTos_001>
         <Option_GoTos_002>Shore_001</Option_GoTos_002>
         <Option_GoTos_003>Misc_001</Option_GoTos_003>
         <Option_GoTos_004>Misc_002</Option_GoTos_004>
         <Option_GoTos_005>Misc_003</Option_GoTos_005>
         <Option_GoTos_006>Test_000</Option_GoTos_006>
-        <Option_GoTos_007>Test_001</Option_GoTos_007>        
+        <Option_GoTos_007>Test_001</Option_GoTos_007>  
+        <Option_GoTos_008>Test_002</Option_GoTos_008>  
+        <Option_GoTos_009>Test_003</Option_GoTos_009>                
       </Space>
       <Space>
         <Id>Boat_002</Id>
@@ -52,6 +56,15 @@
         <Option_GoTos_001>Boat_001</Option_GoTos_001>
       </Space>
       <Space>
+      <Space>
+        <Id>Boat_003</Id>
+        <Action>ShowText</Action>
+        <A_Params></A_Params>
+        <Text>The **/boat** contains a secret room and you've found it! Sadly, it's not yet built into the game... check back later!</Text>
+        <Option_Labels_001>Continue</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>        
         <Id>Shore_001</Id>
         <Action>ShowText</Action>
         <A_Params></A_Params>
@@ -101,7 +114,27 @@
         <Text>NA</Text>
         <Option_Labels_001>NA</Option_Labels_001>
         <Option_GoTos_001>Boat_001</Option_GoTos_001>
-      </Space>      
+      </Space>
+      <Space>
+        <Id>Test_002</Id>
+        <Action>TestAbilityCheck</Action>
+        <A_Params>ST</A_Params>
+        <A_Params>-10</A_Params>
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>  
+      <Space>
+        <Id>Test_003</Id>
+        <Action>AbilityCheck_Conditional</Action>
+        <A_Params>IN</A_Params>
+        <A_Params>+10</A_Params>
+        <Text>You search the hold carefully? (Ability check)</Text>
+        <Option_Labels_001>You find nothing interesting.</Option_Labels_001>
+        <Option_GoTos_001>Boat_002</Option_GoTos_001>
+        <Option_Labels_002>A peg on the wall twists in a way you didn't expect...</Option_Labels_002>
+        <Option_GoTos_002>Boat_003</Option_GoTos_002>
+      </Space>                 
     </Location>
     <Location>
       <Name>Tempestuous Seas</Name>

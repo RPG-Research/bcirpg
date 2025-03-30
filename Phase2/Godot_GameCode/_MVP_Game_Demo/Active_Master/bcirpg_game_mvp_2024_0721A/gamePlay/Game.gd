@@ -30,6 +30,9 @@ onready var options_container = $Background/MarginContainer/Rows/InputArea/Scrol
 onready var pSingleton = get_node("/root/PlayerCharacter")
 onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSheet
 
+#Ability_Checker are used as passed by module and return Check_Results
+const Ability_Checker_Source := preload("res://globalScripts/game_abilitychecks.gd")
+onready var Ability_Checker = Ability_Checker_Source.new()
 
 #DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
 #	or desired load approach
@@ -439,7 +442,34 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 				var destArr = destination.destinations_array
 				create_option(option, destArr[p])
 				p = p+1
+	#DKM TEMP: This is a test of the new ability check class and check result.
+	elif target_Locale.locale_action == "TestAbilityCheck" && target_Locale.destinations_array.size() == 1:
+		print("Running test action " + target_Locale.locale_action)
+		var nodeParameters = []
+		var ability_to_use = target_Locale.locale_action_params[0]
+		var modifier_to_check = target_Locale.locale_action_params[1]
+		var outputText = "Ability to be checked: " + str(ability_to_use) + "; at mod of " + str(modifier_to_check)
+		
+		var results_of_check = Ability_Checker.make_player_check(str(ability_to_use),int(modifier_to_check)) 
 
+		outputText = outputText + "; with result (true pass; false fail) of check being: " + str(results_of_check.check_pass) +"; on a roll of: " + str(results_of_check.rolled)
+		create_response(outputText)
+	
+	elif target_Locale.locale_action == "AbilityCheck_Conditional" && target_Locale.destinations_array.size() == 2:
+		print("Running conditional ability check " + target_Locale.locale_action)
+		create_response(target_Locale.locale_description)
+		var nodeParameters = []
+		var ability_to_use = target_Locale.locale_action_params[0]
+		var modifier_to_check = target_Locale.locale_action_params[1]
+		var results_of_check = Ability_Checker.make_player_check(str(ability_to_use),int(modifier_to_check)) 
+		clear_prior_options()
+		
+		if !(results_of_check.check_pass):
+			create_option(target_Locale.options_array[0], target_Locale.destinations_array[0])
+		else:
+			create_option(target_Locale.options_array[1], target_Locale.destinations_array[1])
+		
+		
 		
 	elif target_Locale.locale_action == "TestDieRollAction" && target_Locale.destinations_array.size() == 1:
 		print("Running test action " + target_Locale.locale_action + "; with parameters of: ")
