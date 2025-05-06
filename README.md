@@ -1,6 +1,6 @@
 # BCI RPG
 
-![Brain Computer Interface Role-Playing Game BCI RPG Logo]Phase2/Documentation/Media/Images/BCI-RPG-06-logo-bw-287x260.jpeg()
+![Brain Computer Interface Role-Playing Game BCI RPG Logo](Phase2/Documentation/Media/Images/BCI-RPG-06-logo-bw-287x260.jpeg)
 
 ## Brain-Computer Interface Role-Playing Game
 ### Electronic Role-playing Game (ERPG) development efforts by the RPG Research community
