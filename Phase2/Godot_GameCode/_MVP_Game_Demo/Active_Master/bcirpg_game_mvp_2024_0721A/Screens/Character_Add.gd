@@ -22,6 +22,34 @@ func _ready() -> void:
 	$Title/But_SaveChar.grab_focus()
 	_populate_output_character_format()
 
+# FUNCTION: get_character_names_from_csv_folder
+# --------------------------------------------
+# Scans the res://_userFiles/characterFiles/ directory for all character CSV files
+# matching the pattern *_data.csv. Extracts and returns the character names (from filenames)
+# to populate the character name dropdown (OptionButton) in the UI.
+#
+# RETURNS:
+#   Array of character names as strings, e.g. ["Bilbo Baggins", "Gandalf"]
+func get_character_names_from_csv_folder() -> Array:
+	var names = []
+	var dir := Directory.new()
+
+	if dir.open("res://_userFiles/characterFiles/") != OK:
+		print("❌ Failed to open characterFiles directory.")
+		return names
+
+	dir.list_dir_begin()
+	while true:
+		var file_name = dir.get_next()
+		if file_name == "":
+			break
+		if !dir.current_is_dir() and file_name.ends_with("_data.csv"):
+			var name_only = file_name.replace("_data.csv", "")
+			names.append(name_only)
+	dir.list_dir_end()
+
+	return names
+	
 #FUNCTION populate preset character format
 #Params: file we have opened and are reading
 #Returns: Nothing; all work done in function
@@ -31,17 +59,46 @@ func _ready() -> void:
 #TODO: Next step  here is run the GSP converted to also update the percentile/singleton
 func _populate_output_character_format():
 	var i = 0
+	# Original code - COMMENTED OUT:
 	#make a new textbox for each header piece
-	var set_labels = ["NAME","PROFESSION","QUOTE"]
+#	var set_labels = ["NAME","PROFESSION","QUOTE"]
+#	for set in set_labels:
+	#	var setLine = Label.new()
+	#	setLine.text = set
+	#	$Title/ScrollContainer/VBoxContainer.add_child(setLine)
+	#	cust_cap_count= cust_cap_count+1
+	#	var setBox = LineEdit.new()
+	#	$Title/ScrollContainer/VBoxContainer.add_child(setBox)
+	#	cust_cap_count = cust_cap_count+1
+
+# Updated code to replace NAME textbox with a dropdown (OptionButton)
+###############
+	var set_labels = ["NAME", "PROFESSION", "QUOTE"]
 	for set in set_labels:
+	# Create label for each field
 		var setLine = Label.new()
 		setLine.text = set
 		$Title/ScrollContainer/VBoxContainer.add_child(setLine)
-		cust_cap_count= cust_cap_count+1
-		var setBox = LineEdit.new()
-		$Title/ScrollContainer/VBoxContainer.add_child(setBox)
-		cust_cap_count = cust_cap_count+1
+		cust_cap_count += 1
 
+		if set == "NAME":
+			# Replace LineEdit with OptionButton (dropdown) for NAME
+			var name_dropdown = OptionButton.new()
+			name_dropdown.name = "NameOption"  # Assign a name so we can access it later
+			# Add options from predefined character presets
+			for char_name in get_character_names_from_csv_folder():
+				name_dropdown.add_item(char_name)
+			# Connect dropdown selection signal
+			name_dropdown.connect("item_selected", self, "_on_name_selected")
+			# Add dropdown to the form
+			$Title/ScrollContainer/VBoxContainer.add_child(name_dropdown)
+			cust_cap_count += 1
+		else:
+			# Keeps LineEdit for PROFESSION and QUOTE
+			var setBox = LineEdit.new()
+			$Title/ScrollContainer/VBoxContainer.add_child(setBox)
+			cust_cap_count += 1
+###############
 
 	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
 	#	the Capabilities system is tested. These values should be set on the GSP as
