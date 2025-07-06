@@ -400,4 +400,10 @@ func save_data_to_csv() -> void:
 func _on_But_SaveChar_pressed(): 
 	save_data_to_singleton()
 	save_data_to_csv()
+	
+#takes appropriate action when the custom hotkey is pressed
+func _unhandled_input(event):
+	if Input.is_action_pressed("save_character_file_hotkey"):
+		save_data_to_singleton()
+		save_data_to_csv()
 
