@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://globalScripts/CombatManager.gd"
 }, {
+"base": "Reference",
+"class": "D20_Converter",
+"language": "GDScript",
+"path": "res://globalScripts/D20_Converter.gd"
+}, {
 "base": "Node2D",
 "class": "Die",
 "language": "GDScript",
@@ -85,6 +90,7 @@ _global_script_class_icons={
 "Char_Capability": "",
 "CheckResult": "",
 "CombatManager": "",
+"D20_Converter": "",
 "Die": "",
 "DieManager": "",
 "Game_System_Layer": "",

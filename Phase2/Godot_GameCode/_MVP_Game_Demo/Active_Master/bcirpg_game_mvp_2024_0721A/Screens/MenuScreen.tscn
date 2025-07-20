@@ -50,7 +50,7 @@ margin_top = 89.0
 margin_right = 238.0
 margin_bottom = 130.0
 text = "Multiplayer"
-next_scene_path = "res://Screens/Multiplayer_temp.tscn"
+next_scene_path = "res://Screens/MenuServerOptions.tscn"
 
 [node name="But_AddChar" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 134.0
