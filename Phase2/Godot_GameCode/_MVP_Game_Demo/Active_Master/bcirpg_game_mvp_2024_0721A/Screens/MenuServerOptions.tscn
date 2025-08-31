@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Screens/MenuServerOptions.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=6]
+
+[node name="MenuServerOptions" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+script = ExtResource( 2 )
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -119.0
+margin_top = -152.0
+margin_right = 119.0
+margin_bottom = 152.0
+rect_scale = Vector2( 1.04675, 1.07389 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="But_Multi_Join" type="Button" parent="VBoxContainer"]
+margin_right = 271.0
+margin_bottom = 36.0
+text = "Join Multiplayer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="But_Login_Server" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 40.0
+margin_right = 271.0
+margin_bottom = 103.0
+text = "Login to Server"
+script = null
+
+[node name="But_Host_Game" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 107.0
+margin_right = 271.0
+margin_bottom = 170.0
+text = "Host Game"
+script = null
+
+[node name="But_Search_Join" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 174.0
+margin_right = 271.0
+margin_bottom = 237.0
+text = "Search and Join Game"
+script = null
+
+[node name="But_MainMenu" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 241.0
+margin_right = 271.0
+margin_bottom = 304.0
+text = "Main Menu"
+next_scene_path = "res://Screens/MenuScreen.tscn"
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -177.0
+margin_top = -44.0
+margin_right = -5.0
+margin_bottom = -6.0
+text = "Version: 0.0.0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="VBoxContainer/But_Multi_Join" to="VBoxContainer/But_Multi_Join" method="_on_But_ResumeGame_button_up"]

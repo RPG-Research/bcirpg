@@ -16,6 +16,13 @@ var uses_current = 0
 var recharge = false
 var reload = false
 var modifier = 0
+
+#Game system source/output values:
+var Game_toDisplay = false
+var Game_Raw = ""
+var Game_Name = ""
+var Game_Value = 0
+var Game_Extras = ""
 	
 func to_string() -> String:
 	var output_text = "name:" + str(name)
