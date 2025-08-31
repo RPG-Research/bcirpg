@@ -1,0 +1,26 @@
+{
+	"GAMES":["OPEND6_FANTASY", "DUNGEONS&DRAGONS", "BCIRPG_PERCENTILE"],
+	"CONVERSION":{
+		"OPEND6_FANTASY":{
+			"IN":"",
+			"OUT":""
+		},
+		"DUNGEONS&DRAGONS":{
+			"IN":"*5",
+			"OUT":"/5"
+		},
+	},
+
+	"ATTRIBUTES":{
+		"OPEND6_FANTASY":{
+		},
+		"DUNGEONS&DRAGONS":{
+			"STR":"ST",
+			"INT":"RE+ME",
+			"WIS":"IN+EM",
+			"DEX":"AG+MD+QU",
+			"CON":"CO",
+			"CHR":"PR+SD+MX+CH"						
+		},
+	}
+}

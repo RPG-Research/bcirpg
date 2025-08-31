@@ -1,0 +1,19 @@
+{
+	"GENRES":["FANTASY", "SCIENCE_FICTION", "MYSTERY"],
+	"REPLACEMENTS":{
+		"FANTASY":{
+			"boat":"frigate",
+			"shipwrecked":"shipwrecked",
+			"hatch":"hatch"
+		},
+		"SCIENCE_FICTION":{
+			"boat":"ship",
+			"shipwrecked":"crashed",
+			"hatch":"entryway"
+		},	
+		"MYSTERY":{
+			"boat":"cruise ship",
+			"hatch":"gangway"
+		}
+	}
+}

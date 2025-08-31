@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <Location>
+    <Id>Boat_000</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>The game has begun! You may select from the options below. You are in a boat. You have been shipwrecked. You can leave the boat through a hatch.</Text>
+    <Option_Labels_001>Examine Ship</Option_Labels_001>
+    <Option_Labels_002>Climb out through hatch</Option_Labels_002>
+    <Option_Labels_003>Play the fiddle!</Option_Labels_003>
+    <Option_Labels_004>Rest</Option_Labels_004>
+    <Option_Labels_005>Meditate</Option_Labels_005>
+    <Option_GoTos_001>Boat_002</Option_GoTos_001>
+    <Option_GoTos_002>Shore_001</Option_GoTos_002>
+    <Option_GoTos_003>Misc_001</Option_GoTos_003>
+    <Option_GoTos_004>Misc_002</Option_GoTos_004>
+    <Option_GoTos_005>Misc_003</Option_GoTos_005>
+  </Location>
+  <Location>
+    <Id>Boat_001</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>The boat rocks gently. You can leave the boat through a hatch. There is also now a test option.</Text>
+    <Option_Labels_001>Examine Ship</Option_Labels_001>
+    <Option_Labels_002>Climb out through hatch</Option_Labels_002>
+    <Option_Labels_003>Play the fiddle!</Option_Labels_003>
+    <Option_Labels_004>Rest</Option_Labels_004>
+    <Option_Labels_005>Meditate</Option_Labels_005>
+    <Option_Labels_006>Run die roll test</Option_Labels_006>
+    <Option_GoTos_001>Boat_002</Option_GoTos_001>
+    <Option_GoTos_002>Shore_001</Option_GoTos_002>
+    <Option_GoTos_003>Misc_001</Option_GoTos_003>
+    <Option_GoTos_004>Misc_002</Option_GoTos_004>
+    <Option_GoTos_005>Misc_003</Option_GoTos_005>
+    <Option_GoTos_006>Test_000</Option_GoTos_006>
+  </Location>
+  <Location>
+    <Id>Boat_002</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>The boat is old and wrecked.</Text>
+    <Option_Labels_001>Continue</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+  <Location>
+    <Id>Shore_001</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>You&#x27;ve reached the shore!</Text>
+    <Option_Labels_001>Return to boat</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+  <Location>
+    <Id>Misc_001</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>You pull a fiddle from your sack and play it, while dancing around merrily.  Great fun is had.</Text>
+    <Option_Labels_001>Resume your quest</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+  <Location>
+    <Id>Misc_002</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>You pull out a blanket, settle your burdens and take a short rest.</Text>
+    <Option_Labels_001>Resume your quest</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+  <Location>
+    <Id>Misc_003</Id>
+    <Action>ShowText</Action>
+    <A_Params></A_Params>
+    <Text>You find a quiet corner on the boat, put down your burden, and feel the rocking of the boat.  You rest mind and body, and really I&#x27;m experimenting with options and sizes of them, added via XML here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.</Text>
+    <Option_Labels_001>Resume your quest</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+  <Location>
+    <Id>Test_000</Id>
+    <Action>TestDieRollAction</Action>
+    <A_Params>4</A_Params>
+    <A_Params>6</A_Params>
+    <Text>NA</Text>
+    <Option_Labels_001>NA</Option_Labels_001>
+    <Option_GoTos_001>Boat_001</Option_GoTos_001>
+  </Location>
+</root>
