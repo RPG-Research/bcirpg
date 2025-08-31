@@ -31,10 +31,13 @@ func _ready() -> void:
 func _on_Button_pressed():
 	$FileDialog.popup()
 
-# Opens the file dialog popup when the custom hotkey (e.g., Ctrl + O) is pressed
+#takes appropriate action when the custom hotkey is pressed
 func _unhandled_input(event):
 	if Input.is_action_pressed("open_file_hotkey"):
 		$FileDialog.popup()
+
+	if Input.is_action_pressed("save_character_file_hotkey"):
+		_save_data_to_singleton()
 
 #FUNCTION populate preset character format
 #Params: file we have opened and are reading
