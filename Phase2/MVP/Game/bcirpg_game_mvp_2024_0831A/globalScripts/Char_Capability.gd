@@ -19,10 +19,10 @@ var modifier = 0
 
 #Game system source/output values:
 var Game_toDisplay = false
-var Game_Raw = ""
-var Game_Name = ""
+var Game_Raw
+var Game_Name
 var Game_Value = 0
-var Game_Extras = ""
+var Game_Extras
 	
 func to_string() -> String:
 	var output_text = "name:" + str(name)
@@ -32,4 +32,6 @@ func to_string() -> String:
 	output_text = output_text + ",impact_amount:" + str(impact_amount) + ",uses_max:" + str(uses_max)
 	output_text = output_text + ",uses_current:" + str(uses_current) + ",recharge:" + str(recharge)
 	output_text = output_text + ",reload:" + str(reload) + ",modifier:" + str(modifier)
+	output_text = output_text + ",Game_Name:" + str(Game_Name) + ",Game_Value:" + str(Game_Value)
+	output_text = output_text + ",Game_Extras:" + str(Game_Extras)
 	return output_text

@@ -149,7 +149,7 @@ func add_genre_options():
 func add_game_options():
 	var gameChoices = GSP.get_game_options()
 	for game in gameChoices:
-		if(game != "OPEND6"):
+		if(game != "OPEND6_FANTASY"):
 			saveObject.settingsInstance.game_options.append(game)
 		game_dropdown.add_item(str(game).to_lower())
 

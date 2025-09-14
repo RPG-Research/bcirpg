@@ -62,22 +62,36 @@ var quote = "..."
 func to_string_perc_PC() -> String:
 	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
-		pcText = pcText + str(cap.name) + ": " + str(int(cap.score) + int(cap.modifier)) + "\n"
+		if cap.name != null:
+			pcText = pcText + str(cap.name) + ": " + str(int(cap.score) + int(cap.modifier)) + "\n"
 	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
 
 
-#Simple print the values in output; saved to template's PC text field.
 func to_string_output_PC() -> String:
-	pcText = "NAME: " + name + "\nPROF: " + profession + "\nQUOTE: " + quote + "\n"
-	var i = 0
-	for out_label in output_labels:
-		if output_scores_A.size() > i:
-			pcText = pcText + out_label + str(output_scores_A[i])
-		if is_output_B:
-			pcText = pcText + output_A_label
-			if(output_scores_B.size() > i && output_scores_B[i] != 0):
-				pcText = pcText + " " + output_B_label + str(output_scores_B[i])
-		pcText = pcText + "\n" 
-		i = i+1
+	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
+	for cap in player_capabilities:
+		if cap.Game_Name != null:
+			pcText = pcText + str(cap.Game_Name) + ": " + str(int(cap.Game_Value))
+			if cap.Game_Extras != null:
+				pcText = pcText + "D+" + str(cap.Game_Extras) + "\n"
+			else:
+				pcText = pcText +"\n"
+				
+	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
+	
+#Simple print the values in output; saved to template's PC text field.
+#func to_string_output_PC() -> String:
+#	pcText = "NAME: " + name + "\nPROF: " + profession + "\nQUOTE: " + quote + "\n"
+#	var i = 0
+#	for out_label in output_labels:
+#		if output_scores_A.size() > i:
+#			pcText = pcText + out_label + str(output_scores_A[i])
+#		if is_output_B:
+#			pcText = pcText + output_A_label
+#			if(output_scores_B.size() > i && output_scores_B[i] != 0):
+#				pcText = pcText + " " + output_B_label + str(output_scores_B[i])
+#		pcText = pcText + "\n" 
+#		i = i+1
+#	return pcText

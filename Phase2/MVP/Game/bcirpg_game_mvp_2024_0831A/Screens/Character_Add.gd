@@ -358,14 +358,17 @@ func save_data_to_singleton() -> void:
 			
 #TODO: Doug 8/31/25: For each, we create a new capability, and set the Game values 
 #	with the output flag to true. Conversion between systems happens downstream.
-		pSingleton.populate_default_character()
+		var i = 0;
 		for named in char_labels:
 			var current = pSingleton.Capability_Source.new()
 			current.Game_Name = named
 			current.Game_toDisplay = true
+			current.Game_Value = char_values_A[i]
+			current.Game_Extras = char_values_B[i]
 			pSingleton.player_capabilities.append(current)
+			i = i+1;
 	#DKM TEMP (8/31/25): Testing this:
-		#print(pSingleton.to_string_perc_PC())
+		print(pSingleton.to_string_output_PC())
 #Prior system:
 		pSingleton.output_labels = char_labels
 		pSingleton.output_scores_A  = char_values_A
