@@ -71,7 +71,7 @@ func to_string_perc_PC() -> String:
 func to_string_output_PC() -> String:
 	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
-		if cap.Game_Name != null:
+		if cap.Game_Name != null && cap.Game_toDisplay:
 			pcText = pcText + str(cap.Game_Name) + ": " + str(int(cap.Game_Value))
 			if cap.Game_Extras != null:
 				pcText = pcText + "D+" + str(cap.Game_Extras) + "\n"

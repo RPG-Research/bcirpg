@@ -356,8 +356,7 @@ func save_data_to_singleton() -> void:
 					char_values_A.append(int(child_box.text))
 			box_count = box_count +1
 			
-#TODO: Doug 8/31/25: For each, we create a new capability, and set the Game values 
-#	with the output flag to true. Conversion between systems happens downstream.
+	#Output capabilities are created here, for general input. 
 		var i = 0;
 		for named in char_labels:
 			var current = pSingleton.Capability_Source.new()
@@ -367,12 +366,14 @@ func save_data_to_singleton() -> void:
 			current.Game_Extras = char_values_B[i]
 			pSingleton.player_capabilities.append(current)
 			i = i+1;
-	#DKM TEMP (8/31/25): Testing this:
-		print(pSingleton.to_string_output_PC())
+	#TODO: 9/21/25 Stopped here. Now run the correct converter via GSP to update the player
+	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
+		pSingleton = GSP.char_sheet_converter(settings.game_selection, pSingleton, true)
 #Prior system:
-		pSingleton.output_labels = char_labels
-		pSingleton.output_scores_A  = char_values_A
-		pSingleton.output_scores_B  = char_values_B
+#		pSingleton.output_labels = char_labels
+#		pSingleton.output_scores_A  = char_values_A
+#		pSingleton.output_scores_B  = char_values_B
+
 #FUNCTION save character csv
 #Params: none
 #Returns: Nothing; all work done in function

@@ -41,15 +41,24 @@ func char_sheet_converter (game:String, source_char:playerCharacterTemplate, cha
 #Notes: Assumes library can be accessed, game_dictionary has been
 #	already written, and game system noted. Returns both ability score sets in the after/output char
 func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharacterTemplate:
-	if source_char.output_labels.size() > 0 && source_char.output_labels.size() == source_char.output_scores_A.size():
-		#DKM TEMP (9/15/24: STOPPED HERE; working through this variable loading)
+	#Prior method
+	#if source_char.output_labels.size() > 0 && source_char.output_labels.size() == source_char.output_scores_A.size():
+	if source_char.player_capabilities.size() > 0:
 		get_conversion_rules()
 		print(conversion_class.get_HW())
 		var ability_match_dict = conversion_class.get_ability_match()
-		print("TEST: iterating provided abilities:")
-		for key_ab in ability_match_dict:
-			print(key_ab + ": ")
-			print(ability_match_dict[key_ab] + "/n")
+		for key_perc_ab in ability_match_dict:
+			var target_ab = ability_match_dict[key_perc_ab].get_slice("|", 0)
+			var funct = ability_match_dict[key_perc_ab].get_slice("|", 1)
+			#TODO/DKM TEMP: 9/21/25: Stopped here, now we need to call the function and make conversions
+			#	in capability.
+			print("TEMP: I'm looking for: " + target_ab + "; to convert to: " + key_perc_ab + "; using function: " + funct)
+			#For complex conversions, split needed abilities:
+			if "/" in target_ab:
+					var target_ab_1 = target_ab.get_slice("/", 0)
+					var target_ab_2 = target_ab.get_slice("/", 1)
+					print("TEMP2: Two part conversion needed, using: " + target_ab_1 + " and " + target_ab_2)
+			#TODO/DKM TEMP: 9/21/25: Stopped here, now we need to call the function 2 here and make conversions
 		#match loc_child_node_name:
 	return source_char
 	
