@@ -364,6 +364,7 @@ func save_data_to_singleton() -> void:
 			current.Game_toDisplay = true
 			current.Game_Value = char_values_A[i]
 			current.Game_Extras = char_values_B[i]
+			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
 			pSingleton.player_capabilities.append(current)
 			i = i+1;
 	#TODO: 9/21/25 Stopped here. Now run the correct converter via GSP to update the player

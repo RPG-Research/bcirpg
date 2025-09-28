@@ -28,8 +28,17 @@ func get_HW() -> String:
 #DKM TEMP:
 #Dice = 1+((Percentile #)/25), rounded down)
 #Bonus = (Remainder of the division above)/10, rounded down
-func FUNC_1 (die:int, bonus:int) -> int:
-	return(0)
+func FUNC_1 (score:String) -> int:
+	#Provided includes a plus
+	var extra = 0
+	var core = 0
+	if(score.find("+")>0):
+		extra = score.get_slice("+", 1).to_int()
+	var die = score.get_slice("D", 0).to_int()
+	if(die > 0):
+		core = (die-1)*25
+	var mods = extra*10
+	return(core+mods)
 	
 #DKM TEMP:
 #First average dice (add/2; remainder to +; Plus of 3 and up adds D+1?), then as above
