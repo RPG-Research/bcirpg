@@ -42,5 +42,26 @@ func FUNC_1 (score:String) -> int:
 	
 #DKM TEMP:
 #First average dice (add/2; remainder to +; Plus of 3 and up adds D+1?), then as above
-func FUNC_2 (source:String) -> int:
-	return(0)
+func FUNC_2 (score1:String, score2:String) -> int:
+	#Provided includes a plus
+	var extra = 0
+	var core = 0
+	var die = 0
+	#First combine the additions, and if 3+, increment the D
+	if(score1.find("+")>0):
+		extra = score1.get_slice("+", 1).to_int()
+	if(score2.find("+")>0):
+		extra = extra + score2.get_slice("+", 1).to_int()		
+	var die1 = score1.get_slice("D", 0).to_int()
+	var die2 = score2.get_slice("D", 0).to_int()
+	var dieCombo = die1 + die2
+	if(extra >=3):
+		extra = extra-3
+		dieCombo = dieCombo+1
+	#Now average:
+	die = dieCombo/2
+	if(die > 0):
+		core = (die-1)*25
+	var mods = extra*10
+	return(core+mods)	
+

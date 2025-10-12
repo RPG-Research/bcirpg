@@ -48,25 +48,35 @@ func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharact
 		print(conversion_class.get_HW())
 		var ability_match_dict = conversion_class.get_ability_match()
 		for key_perc_ab in ability_match_dict:
+			var target_ab_1 =""
+			var target_ab_2 =""
 			var target_ab = ability_match_dict[key_perc_ab].get_slice("|", 0)
 			var funct = ability_match_dict[key_perc_ab].get_slice("|", 1)
 			#print("TEMP: I'm looking for: " + target_ab + "; to convert to: " + key_perc_ab + "; using function: " + funct)
 			#For complex conversions, split needed abilities:
 			if "/" in target_ab:
-					var target_ab_1 = target_ab.get_slice("/", 0)
-					var target_ab_2 = target_ab.get_slice("/", 1)
-					#print("TEMP2: Two part conversion needed, using: " + target_ab_1 + " and " + target_ab_2)
-					#TODO/DKM TEMP: 9/21/25: Stopped here, now we need to call the function 2 here and make conversions
+					target_ab_1 = target_ab.get_slice("/", 0)
+					target_ab_2 = target_ab.get_slice("/", 1)
 			#Now iterate and find the abilities for conversion:
 			for player_cap in source_char.player_capabilities:
 				if(player_cap.Game_Name.length() >0 && player_cap.Game_Name.strip_edges(true,true).to_upper() == target_ab.strip_edges(true,true).to_upper()):
 					if (funct.strip_edges(true,true).to_upper() == "FUNC_1"):
-						player_cap.score = conversion_class.FUNC_1(player_cap.Game_Raw)
-						player_cap.name = key_perc_ab.strip_edges(true,true).to_upper()
-					elif(funct.strip_edges(true,true).to_upper() == "FUNC_2"):
-						pass
-					print("TEMP: cap named:" + player_cap.name + ", with score: " + str(player_cap.score) + "; from " + player_cap.Game_Name + " with raw of " + player_cap.Game_Raw)
-		
+						var backendCap = source_char.Capability_Source.new()
+						backendCap.score = conversion_class.FUNC_1(player_cap.Game_Raw)
+						backendCap.name = key_perc_ab.strip_edges(true,true).to_upper()
+						backendCap.Game_Name = "NA"
+						source_char.player_capabilities.append(backendCap)
+				#For 2 parters, preserve the first and go get the second:
+				elif(player_cap.Game_Name.length() >0 && player_cap.Game_Name.strip_edges(true,true).to_upper() == target_ab_1.strip_edges(true,true).to_upper() && (funct.strip_edges(true,true).to_upper() == "FUNC_2")):
+					var conversion_source1 = player_cap.Game_Raw
+					for player_cap2 in source_char.player_capabilities:
+						if(player_cap2.Game_Name.length() >0 && player_cap2.Game_Name.strip_edges(true,true).to_upper() == target_ab_2.strip_edges(true,true).to_upper()):
+							var backendCap = source_char.Capability_Source.new()
+							backendCap.score = conversion_class.FUNC_2(conversion_source1, player_cap2.Game_Raw)
+							backendCap.name = key_perc_ab.strip_edges(true,true).to_upper()
+							backendCap.Game_Name = "NA"
+							source_char.player_capabilities.append(backendCap)
+	print ("Printing perc: " + source_char.to_string_perc_PC())
 	return source_char
 	
 #FUNCTION build output character
