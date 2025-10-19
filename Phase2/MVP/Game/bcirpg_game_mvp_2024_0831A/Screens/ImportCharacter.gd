@@ -49,7 +49,7 @@ func _unhandled_input(event):
 func _populate_output_character_format():
 	var i = 0
 	#make a new textbox for each header piece
-	var set_labels = ["NAME:","PROFESSION:","QUOTE:"]
+	var set_labels = ["NAME","PROFESSION","QUOTE"]
 	for set in set_labels:
 		var setLine = Label.new()
 		setLine.text = set 
@@ -77,7 +77,7 @@ func _populate_output_character_format():
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
 			cust_cap_count = cust_cap_count+1
-			textLine.text = label + ":"
+			textLine.text = label
 			var textBox = LineEdit.new()
 			$ScrollContainer/VBoxContainer.add_child(textBox)
 			cust_cap_count = cust_cap_count+1	
@@ -86,7 +86,7 @@ func _populate_output_character_format():
 		for label in pSingleton.output_labels:
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
-			textLine.text = label.to_upper() + ":"
+			textLine.text = label.to_upper()
 			i = i+1
 			#match to content, assuming it exists and aligns
 			if(pSingleton.output_scores_A.size()>= i):
@@ -117,7 +117,7 @@ func _populate_preset_character_format(file:File):
 			#make a new textbox for each header piece
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
-			textLine.text = csvStrHeaderArray[i].to_upper() + ":"
+			textLine.text = csvStrHeaderArray[i].to_upper()
 			
 			#match to content, assuming it exists and aligns
 			if(csvStrContentsArray.size()>= i):
@@ -125,7 +125,7 @@ func _populate_preset_character_format(file:File):
 				$ScrollContainer/VBoxContainer.add_child(textBox)
 				textBox.text = csvStrContentsArray[i]
 				
-			if(textLine.text=="QUOTE:"):
+			if(textLine.text=="QUOTE"):
 					#Add a button to add new capacities at the bottom:
 				var add_cap_but = Cap_New_Button.instance()
 				add_cap_but.text = "Add New Capacity"
@@ -197,77 +197,77 @@ func _save_data_to_singleton() -> void:
 			if is_label:
 				var label_value = child_box.text.strip_edges(true,true).to_upper()
 				match label_value:
-					"NAME:":
+					"NAME":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.name = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"PROFESSION:":
+					"PROFESSION":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.profession = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"QUOTE:":
+					"QUOTE":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.quote = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
 				#DKM TEMP (2/9/25): May want to rethink building the custom on player and updating here. WIP.
 				#	This is otherwise EXTREMELY manual
-					"AG:":
+					"AG":
 						print("Check: AG found!")
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[0].score = str($ScrollContainer/VBoxContainer.get_child(box_count+2).text)
 							print("AG set to:" + pSingleton.player_capabilities[0].score)
 						box_count = box_count+3
-					"APP:":
+					"APP":
 						print("Check: APP found!")
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[1].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 							print("AG set to:" + pSingleton.player_capabilities[1].score)
 						box_count = box_count+2
-					"CO:":
+					"CO":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[2].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"QU:":
+					"QU":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[3].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MD:":
+					"MD":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[4].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ST:":
+					"ST":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[5].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"CH:":
+					"CH":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[6].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"EM:":
+					"EM":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[7].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"IN:":
+					"IN":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[8].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ME:":
+					"ME":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[9].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MX:":
+					"MX":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[10].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"PR:":
+					"PR":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[11].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"RE:":
+					"RE":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[12].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"SD:":
+					"SD":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[13].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
@@ -332,17 +332,17 @@ func _save_data_to_singleton() -> void:
 			if is_label:
 				var label_value = child_box.text.strip_edges(true,true).to_upper()
 				match label_value:
-					"NAME:":
+					"NAME":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.name = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						print("TEMP name found! As : " + str(pSingleton.name))
 						skip_next = true
-					"PROFESSION:":
+					"PROFESSION":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.profession = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						print("TEMP prof found! As : " + str(pSingleton.profession))
 						skip_next = true
-					"QUOTE:":
+					"QUOTE":
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.quote = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						print("TEMP quote found! As : " + str(pSingleton.quote))
@@ -361,9 +361,24 @@ func _save_data_to_singleton() -> void:
 				else: 
 					char_values_A.append(int(child_box.text))
 			box_count = box_count +1
-		pSingleton.output_labels = char_labels
-		pSingleton.output_scores_A  = char_values_A
-		pSingleton.output_scores_B  = char_values_B
+#Prior system:
+#		pSingleton.output_labels = char_labels
+#		pSingleton.output_scores_A  = char_values_A
+#		pSingleton.output_scores_B  = char_values_B
+	#Output capabilities are created here, for general input. 
+		var i = 0;
+		for named in char_labels:
+			var current = pSingleton.Capability_Source.new()
+			current.Game_Name = named
+			print("TEMP: name: " + named)
+			current.Game_toDisplay = true
+			current.Game_Value = char_values_A[i]
+			current.Game_Extras = char_values_B[i]
+			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+			pSingleton.player_capabilities.append(current)
+			i = i+1;
+	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
+		pSingleton = GSP.char_sheet_converter(settings.game_selection, pSingleton, true)
 	
 #FUNCTION save character csv
 #Params: none

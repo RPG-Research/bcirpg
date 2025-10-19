@@ -119,7 +119,7 @@ func _populate_output_character_format():
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
 			cust_cap_count = cust_cap_count+1
-			textLine.text = label + ":"
+			textLine.text = label
 			var textBox = LineEdit.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
 			cust_cap_count = cust_cap_count+1	
@@ -209,61 +209,61 @@ func save_data_to_singleton() -> void:
 						box_count = box_count+2
 				#DKM TEMP (2/9/25): May want to rethink building the custom on player and updating here. WIP.
 				#	This is otherwise EXTREMELY manual
-					"AG:":
+					"AG":
 						print("Check: AG found!")
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[0].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+2).text)
 							print("AG set to:" + pSingleton.player_capabilities[0].score)
 						box_count = box_count+3
-					"APP:":
+					"APP":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[1].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"CO:":
+					"CO":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[2].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"QU:":
+					"QU":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[3].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MD:":
+					"MD":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[4].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ST:":
+					"ST":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[5].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"CH:":
+					"CH":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[6].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"EM:":
+					"EM":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[7].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"IN:":
+					"IN":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[8].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ME:":
+					"ME":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[9].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MX:":
+					"MX":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[10].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"PR:":
+					"PR":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[11].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"RE:":
+					"RE":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[12].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"SD:":
+					"SD":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[13].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
@@ -367,7 +367,6 @@ func save_data_to_singleton() -> void:
 			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
 			pSingleton.player_capabilities.append(current)
 			i = i+1;
-	#TODO: 9/21/25 Stopped here. Now run the correct converter via GSP to update the player
 	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
 		pSingleton = GSP.char_sheet_converter(settings.game_selection, pSingleton, true)
 #Prior system:

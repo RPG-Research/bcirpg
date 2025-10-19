@@ -65,7 +65,10 @@ func _ready() -> void:
 	
 	current_text.show()
 	#Load character sheet:
-	pSingleton.pc.to_string_output_PC()
+	if (settings.game_selection == "BCIRPG_PERCENTILE"):
+		pSingleton.pc.to_string_perc_PC()
+	else:
+		pSingleton.pc.to_string_output_PC()
 	charSheet.text = pSingleton.pc.pcText
 	
 	#DKM TEMP: 6/2/24 testing initial access of GAL code
