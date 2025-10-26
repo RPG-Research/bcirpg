@@ -10,7 +10,8 @@ onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 onready var pSingleton = get_node("/root/PlayerCharacter").pc
 
 const Perc_Cap = preload("res://UserInterface/Capacity.tscn")
-var cust_cap_count = 0
+#Import functionality has 2 extra fields
+var cust_cap_count = 2
 
 #GSP is to hold instantiated GSP_Layer; needed for calling necessary conversion functionality
 const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
@@ -66,13 +67,7 @@ func _populate_output_character_format():
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
-		#Add a button to add new capacities at the bottom:
-		var add_cap_but = Cap_New_Button.instance()
-		add_cap_but.text = "Add New Capacity"
-		add_cap_but.destinationLabel = "NA"
-		$ScrollContainer/VBoxContainer.add_child(add_cap_but)
-		$ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
-		cust_cap_count = cust_cap_count+1
+		_add_capability_button()
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
@@ -113,29 +108,23 @@ func _populate_preset_character_format(file:File):
 	while file.eof_reached() == false:
 		var csvStrHeaderArray = file.get_csv_line()
 		var csvStrContentsArray = file.get_csv_line()
+		cust_cap_count = 0
 		for i in csvStrHeaderArray.size():
 			#make a new textbox for each header piece
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
+			cust_cap_count = cust_cap_count + 1
 			textLine.text = csvStrHeaderArray[i].to_upper()
 			
 			#match to content, assuming it exists and aligns
 			if(csvStrContentsArray.size()>= i):
 				var textBox = LineEdit.new()
 				$ScrollContainer/VBoxContainer.add_child(textBox)
+				cust_cap_count = cust_cap_count + 1
 				textBox.text = csvStrContentsArray[i]
 				
 			if(textLine.text=="QUOTE"):
-					#Add a button to add new capacities at the bottom:
-				var add_cap_but = Cap_New_Button.instance()
-				add_cap_but.text = "Add New Capacity"
-				add_cap_but.destinationLabel = "NA"
-				$ScrollContainer/VBoxContainer.add_child(add_cap_but)
-				#DKM TEMP: 3/16/25 we still need to connect the capacity to add or remove new capabilities here as in add character. 
-				#	But as this only for backend testing (the game system rules will determine what can be added, etc
-				#		this isn't worth the time at present.)
-				#$ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
-				cust_cap_count = cust_cap_count+1
+				_add_capability_button()
 				
 	_save_data_to_singleton()
 	
@@ -424,6 +413,19 @@ func _on_Save_Button_pressed():
 	_save_data_to_singleton()
 	_save_data_to_csv()
 	
+
+#FUNCTION helper rem cap pressed
+#Params: the parent node of the remove button being pressed
+#Returns: Nothing; all work done in function
+#Notes: Connecting to a capacity's internal button signal, this function's goal is
+#	to remove the capacity on the button pressed from the character sheet. 
+func _on_rem_cap_pressed(cap_par: Node) -> void:
+	print("Connection made! Passed name is: " + cap_par.name)
+	#var target_cap = $ScrollContainer/VBoxContainer.find_child(child_idx)
+	$ScrollContainer/VBoxContainer.remove_child(cap_par)
+	#target_cap.queue_free()
+	cust_cap_count = cust_cap_count-1
+
 #FUNCTION helper add cap pressed
 #Params: NA, this is currently un-used. Retained to salvage the options button
 #Returns: Nothing; all work done in function
@@ -440,3 +442,13 @@ func _on_new_cap_pressed(NA: String) -> void:
 	#This sets the child count currently for future reference (to enable dynamic removes)
 	cap_node_but.cap_setting = $ScrollContainer/VBoxContainer.get_child(cust_cap_count-1)
 	cap_node_but.connect("rem_cap_pressed", self, "_on_rem_cap_pressed") 
+
+func _add_capability_button() -> void:
+	#Add a button to add new capacities at the bottom:
+	var add_cap_but = Cap_New_Button.instance()
+	add_cap_but.text = "Add New Capacity"
+	add_cap_but.destinationLabel = "NA"
+	$ScrollContainer/VBoxContainer.add_child(add_cap_but)
+	if($ScrollContainer/VBoxContainer.get_child(cust_cap_count) != null):
+		$ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
+	cust_cap_count = cust_cap_count+1
