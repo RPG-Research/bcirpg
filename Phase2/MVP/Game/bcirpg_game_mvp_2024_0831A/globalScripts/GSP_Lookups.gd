@@ -59,6 +59,16 @@ func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharact
 					target_ab_2 = target_ab.get_slice("/", 1)
 			#Now iterate and find the abilities for conversion:
 			for player_cap in source_char.player_capabilities:
+				#For capabilities added as additional:
+				if(player_cap.Game_Name == null):
+					player_cap.Game_Name = player_cap.name
+					if(player_cap.Game_Raw == null):
+						player_cap.Game_Raw = str(player_cap.score)
+					var backendCap = source_char.duplicate_core_capability(player_cap)
+					backendCap.score = conversion_class.FUNC_1(player_cap.Game_Raw)
+					backendCap.Game_Name = "NA"
+					backendCap.Game_toDisplay = false
+					source_char.player_capabilities.append(backendCap)	
 				if(player_cap.Game_Name.length() >0 && player_cap.Game_Name.strip_edges(true,true).to_upper() == target_ab.strip_edges(true,true).to_upper()):
 					if (funct.strip_edges(true,true).to_upper() == "FUNC_1"):
 						var backendCap = source_char.Capability_Source.new()
@@ -66,6 +76,7 @@ func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharact
 						backendCap.name = key_perc_ab.strip_edges(true,true).to_upper()
 						backendCap.Game_Name = "NA"
 						source_char.player_capabilities.append(backendCap)
+						player_cap.Game_toDisplay = false
 				#For 2 parters, preserve the first and go get the second:
 				elif(player_cap.Game_Name.length() >0 && player_cap.Game_Name.strip_edges(true,true).to_upper() == target_ab_1.strip_edges(true,true).to_upper() && (funct.strip_edges(true,true).to_upper() == "FUNC_2")):
 					var conversion_source1 = player_cap.Game_Raw
@@ -76,6 +87,7 @@ func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharact
 							backendCap.name = key_perc_ab.strip_edges(true,true).to_upper()
 							backendCap.Game_Name = "NA"
 							source_char.player_capabilities.append(backendCap)
+							player_cap2.Game_toDisplay = false
 	print ("Printing perc: " + source_char.to_string_perc_PC())
 	return source_char
 	

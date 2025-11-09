@@ -18,7 +18,7 @@ var reload = false
 var modifier = 0
 
 #Game system source/output values:
-var Game_toDisplay = false
+var Game_toDisplay = true
 var Game_Raw
 var Game_Name
 var Game_Value = 0
@@ -35,3 +35,4 @@ func to_string() -> String:
 	output_text = output_text + ",Game_Name:" + str(Game_Name) + ",Game_Value:" + str(Game_Value)
 	output_text = output_text + ",Game_Extras:" + str(Game_Extras)
 	return output_text
+	

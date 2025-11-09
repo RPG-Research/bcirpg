@@ -44,11 +44,11 @@ func set_defense () -> void:
 #	Settings. In other settings, output B will often not be used.
 var output_extras = ["Name","Profession","Quote"]
 var output_labels = ["Agility","Coordination","Physique","Charisma","Intellect","Acumen"]
-var output_scores_A = [2,2,2,4,4,4]
+var output_scores_A = [0,0,0,0,0,0]
 var output_A_label = "D"
 var is_output_B = true
 var output_B_label = "+"
-var output_scores_B = [1,0,2,0,0,0]
+var output_scores_B = [0,0,0,0,0,0]
 
 
 var pcText = ""
@@ -62,7 +62,7 @@ var quote = "..."
 func to_string_perc_PC() -> String:
 	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
-		if cap.name != null:
+		if (cap.name != null && cap.Game_toDisplay != false):
 			pcText = pcText + str(cap.name) + ": " + str(int(cap.score) + int(cap.modifier)) + "\n"
 	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
@@ -71,7 +71,7 @@ func to_string_perc_PC() -> String:
 func to_string_output_PC() -> String:
 	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
-		if cap.Game_Name != null && cap.Game_toDisplay:
+		if cap.Game_Name != null && cap.Game_Name != "NA":
 			pcText = pcText + str(cap.Game_Name) + ": " + str(int(cap.Game_Value))
 			if cap.Game_Extras != null:
 				pcText = pcText + "D+" + str(cap.Game_Extras) + "\n"
@@ -80,6 +80,23 @@ func to_string_output_PC() -> String:
 				
 	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
+	
+func duplicate_core_capability (source_cap:Char_Capability) -> Char_Capability:
+	var new_cap = Char_Capability.new()
+	new_cap.name = source_cap.name
+	new_cap.score = source_cap.score
+	new_cap.attack = source_cap.attack
+	new_cap.defend = source_cap.defend
+	new_cap.use_range = source_cap.use_range
+	new_cap.duration = source_cap.duration
+	new_cap.impact_target = source_cap.impact_target
+	new_cap.impact_amount = source_cap.impact_amount
+	new_cap.uses_max = source_cap.uses_max
+	new_cap.uses_current = source_cap.uses_current
+	new_cap.recharge = source_cap.recharge
+	new_cap.reload = source_cap.reload
+	new_cap.modifier = source_cap.modifier
+	return new_cap
 	
 #Simple print the values in output; saved to template's PC text field.
 #func to_string_output_PC() -> String:

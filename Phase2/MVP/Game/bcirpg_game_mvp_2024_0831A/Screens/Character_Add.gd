@@ -105,16 +105,18 @@ func _populate_output_character_format():
 	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
 	#	the Capabilities system is tested. These values should be set on the GSP as
 	#	per all systems. 
+	
+	#Add a button to add new capacities:
+	var add_cap_but = Cap_New_Button.instance()
+	add_cap_but.text = "Add New Capacity"
+	add_cap_but.destinationLabel = "NA"
+	$Title/ScrollContainer/VBoxContainer.add_child(add_cap_but)
+	$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
+	cust_cap_count = cust_cap_count+1
+	
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
-		#Add a button to add new capacities at the bottom:
-		var add_cap_but = Cap_New_Button.instance()
-		add_cap_but.text = "Add New Capacity"
-		add_cap_but.destinationLabel = "NA"
-		$Title/ScrollContainer/VBoxContainer.add_child(add_cap_but)
-		$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
-		cust_cap_count = cust_cap_count+1
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
@@ -122,18 +124,19 @@ func _populate_output_character_format():
 			textLine.text = label
 			var textBox = LineEdit.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
-			cust_cap_count = cust_cap_count+1	
-
+			cust_cap_count = cust_cap_count+1
 	else:
 		for label in pSingleton.output_labels:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
+			cust_cap_count = cust_cap_count+1
 			textLine.text = label.to_upper()
 			i = i+1
 			#match to content, assuming it exists and aligns
 			if(pSingleton.output_scores_A.size()>= i):
 				var textBox = LineEdit.new()
 				$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+				cust_cap_count = cust_cap_count+1
 				var ability_text = str(pSingleton.output_scores_A[i-1])
 				if(pSingleton.output_A_label.length() > 0):
 					ability_text = ability_text + pSingleton.output_A_label
@@ -142,7 +145,7 @@ func _populate_output_character_format():
 							ability_text = ability_text + pSingleton.output_B_label
 						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
 				textBox.text = ability_text
-
+				
 #FUNCTION helper rem cap pressed
 #Params: the parent node of the remove button being pressed
 #Returns: Nothing; all work done in function
@@ -344,6 +347,43 @@ func save_data_to_singleton() -> void:
 					_:
 						skip_next = false
 						char_labels.append(child_box.text.strip_edges(true,true).to_upper())
+			#Capacity object:
+			elif child_box.get_class() == "PanelContainer":
+				var new_cap = pSingleton.Capability_Source.new()
+				var cap_source = child_box.get_children()[0].get_children()
+				for cap_item in cap_source[0].get_children():
+					if cap_item.get_name() == "LocaleName" || cap_item.get_name() == "But_RemC":
+						pass
+					elif cap_item.get_class() != "Label":
+						match cap_item.get_name():
+							"CapName":
+								new_cap.name = str(cap_item.text)
+							"Score":
+								new_cap.score = int(cap_item.text)
+							"AttackBox":
+								new_cap.attack = cap_item.is_pressed()
+							"DefendBox":
+								new_cap.defend = cap_item.is_pressed()
+							"Use_Range":
+								new_cap.use_range = int(cap_item.text)
+							"Duration":
+								new_cap.duration = int(cap_item.text)
+							"Impact_Target":
+								new_cap.impact_target = str(cap_item.text)
+							"Impact_Amount":
+								new_cap.impact_amount = int(cap_item.text)
+							"Uses_Max":
+								new_cap.uses_max = int(cap_item.text)
+							"Uses_Current":
+								new_cap.uses_current = int(cap_item.text)
+							"Recharge":
+								new_cap.recharge = cap_item.is_pressed()
+							"Reload":
+								new_cap.reload = cap_item.is_pressed()
+							"Modifier":
+								new_cap.modifier = int(cap_item.text)
+				print ("Cap values saved as: " + new_cap.to_string())
+				pSingleton.player_capabilities.append(new_cap)
 			elif !skip_next:
 				print ("TEMP: raw value returned is:" + child_box.text)
 				#Output B in use means we have a multi-part attributes system

@@ -64,10 +64,11 @@ func _populate_output_character_format():
 	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
 	#	the Capabilities system is tested. These values should be set on the GSP as
 	#	per all systems. 
+	_add_capability_button()
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
-		_add_capability_button()
+
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
@@ -81,12 +82,14 @@ func _populate_output_character_format():
 		for label in pSingleton.output_labels:
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
+			cust_cap_count = cust_cap_count+1
 			textLine.text = label.to_upper()
 			i = i+1
 			#match to content, assuming it exists and aligns
 			if(pSingleton.output_scores_A.size()>= i):
 				var textBox = LineEdit.new()
 				$ScrollContainer/VBoxContainer.add_child(textBox)
+				cust_cap_count = cust_cap_count+1
 				var ability_text = str(pSingleton.output_scores_A[i-1])
 				if(pSingleton.output_A_label.length() > 0):
 					ability_text = ability_text + pSingleton.output_A_label
