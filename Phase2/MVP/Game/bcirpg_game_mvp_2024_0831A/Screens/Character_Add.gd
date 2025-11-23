@@ -189,8 +189,8 @@ func save_data_to_singleton() -> void:
 	var is_label = true
 	var skip_next = false
 	var box_count = 0
-	#DKM TEMP (2/2/25): As testing direct-access for bcirpg percentile, this game type bypasses
-	#	the output character attributes and writes directly to the backend stats. 
+	#For repeated saves, start fresh:
+	pSingleton.clear_character()
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.populate_default_character()
 		for child_box in $Title/ScrollContainer/VBoxContainer.get_children():

@@ -129,7 +129,6 @@ func _populate_preset_character_format(file:File):
 			if(textLine.text=="QUOTE"):
 				_add_capability_button()
 				
-	_save_data_to_singleton()
 	
 	# Set focus order for dynamically created LineEdit fields
 	var previous_control = $VBoxContainer2/Save_Button
@@ -180,8 +179,8 @@ func _save_data_to_singleton() -> void:
 	var is_label = true
 	var skip_next = false
 	var box_count = 0
-	#DKM TEMP (2/2/25): As testing direct-access for bcirpg percentile, this game type bypasses
-	#	the output character attributes and writes directly to the backend stats. 
+	#For repeated saves, start fresh:
+	pSingleton.clear_character()
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.populate_default_character()
 		for child_box in $ScrollContainer/VBoxContainer.get_children():
@@ -342,7 +341,45 @@ func _save_data_to_singleton() -> void:
 					_:
 						skip_next = false
 						char_labels.append(child_box.text.strip_edges(true,true).to_upper())
-			elif !skip_next:
+			#Capacity object:
+			elif child_box.get_class() == "PanelContainer":
+				print("TEMP: Found a panel container!")
+				var new_cap = pSingleton.Capability_Source.new()
+				var cap_source = child_box.get_children()[0].get_children()
+				for cap_item in cap_source[0].get_children():
+					if cap_item.get_name() == "LocaleName" || cap_item.get_name() == "But_RemC":
+						pass
+					elif cap_item.get_class() != "Label":
+						match cap_item.get_name():
+							"CapName":
+								new_cap.name = str(cap_item.text)
+							"Score":
+								new_cap.score = int(cap_item.text)
+							"AttackBox":
+								new_cap.attack = cap_item.is_pressed()
+							"DefendBox":
+								new_cap.defend = cap_item.is_pressed()
+							"Use_Range":
+								new_cap.use_range = int(cap_item.text)
+							"Duration":
+								new_cap.duration = int(cap_item.text)
+							"Impact_Target":
+								new_cap.impact_target = str(cap_item.text)
+							"Impact_Amount":
+								new_cap.impact_amount = int(cap_item.text)
+							"Uses_Max":
+								new_cap.uses_max = int(cap_item.text)
+							"Uses_Current":
+								new_cap.uses_current = int(cap_item.text)
+							"Recharge":
+								new_cap.recharge = cap_item.is_pressed()
+							"Reload":
+								new_cap.reload = cap_item.is_pressed()
+							"Modifier":
+								new_cap.modifier = int(cap_item.text)
+				print ("Cap values saved as: " + new_cap.to_string())
+				pSingleton.player_capabilities.append(new_cap)	
+			elif !skip_next && child_box.get_class() != "PanelContainer":
 				print ("TEMP: raw value returned is:" + child_box.text)
 				#Output B in use means we have a multi-part attributes system
 				if pSingleton.is_output_B:
@@ -360,15 +397,16 @@ func _save_data_to_singleton() -> void:
 	#Output capabilities are created here, for general input. 
 		var i = 0;
 		for named in char_labels:
-			var current = pSingleton.Capability_Source.new()
-			current.Game_Name = named
-			print("TEMP: name: " + named)
-			current.Game_toDisplay = true
-			current.Game_Value = char_values_A[i]
-			current.Game_Extras = char_values_B[i]
-			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
-			pSingleton.player_capabilities.append(current)
-			i = i+1;
+			if(char_values_A.size() >= i+1):
+				var current = pSingleton.Capability_Source.new()
+				current.Game_Name = named
+				print("TEMP: name: " + named)
+				current.Game_toDisplay = true
+				current.Game_Value = char_values_A[i]
+				current.Game_Extras = char_values_B[i]
+				current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+				pSingleton.player_capabilities.append(current)
+				i = i+1;
 	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
 		pSingleton = GSP.char_sheet_converter(settings.game_selection, pSingleton, true)
 	
@@ -415,7 +453,6 @@ func _save_data_to_csv() -> void:
 func _on_Save_Button_pressed():
 	_save_data_to_singleton()
 	_save_data_to_csv()
-	
 
 #FUNCTION helper rem cap pressed
 #Params: the parent node of the remove button being pressed

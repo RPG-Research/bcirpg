@@ -97,7 +97,10 @@ func duplicate_core_capability (source_cap:Char_Capability) -> Char_Capability:
 	new_cap.reload = source_cap.reload
 	new_cap.modifier = source_cap.modifier
 	return new_cap
-	
+
+func clear_character():
+	player_capabilities.clear()
+
 #Simple print the values in output; saved to template's PC text field.
 #func to_string_output_PC() -> String:
 #	pcText = "NAME: " + name + "\nPROF: " + profession + "\nQUOTE: " + quote + "\n"
