@@ -6,7 +6,7 @@ valid=false
 
 [deps]
 
-source_file="res://_userFiles/characterFiles/Testing_OpenD6_Char.csv"
+source_file="res://_userFiles/characterFiles_2025_1123ABU/Gandalf_data.csv"
 [params]
 
 compress=true

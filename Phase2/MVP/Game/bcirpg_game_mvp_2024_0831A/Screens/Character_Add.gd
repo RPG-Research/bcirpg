@@ -105,35 +105,38 @@ func _populate_output_character_format():
 	#DKM TEMP (12/22/24): Putting in direct access to the percentile system, as 
 	#	the Capabilities system is tested. These values should be set on the GSP as
 	#	per all systems. 
+	
+	#Add a button to add new capacities:
+	var add_cap_but = Cap_New_Button.instance()
+	add_cap_but.text = "Add New Capacity"
+	add_cap_but.destinationLabel = "NA"
+	$Title/ScrollContainer/VBoxContainer.add_child(add_cap_but)
+	$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
+	cust_cap_count = cust_cap_count+1
+	
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
-		#Add a button to add new capacities at the bottom:
-		var add_cap_but = Cap_New_Button.instance()
-		add_cap_but.text = "Add New Capacity"
-		add_cap_but.destinationLabel = "NA"
-		$Title/ScrollContainer/VBoxContainer.add_child(add_cap_but)
-		$Title/ScrollContainer/VBoxContainer.get_child(cust_cap_count).connect("option_pressed", self, "_on_new_cap_pressed")
-		cust_cap_count = cust_cap_count+1
 		for label in pSingleton.source_backend_capabilities:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
 			cust_cap_count = cust_cap_count+1
-			textLine.text = label + ":"
+			textLine.text = label
 			var textBox = LineEdit.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
-			cust_cap_count = cust_cap_count+1	
-
+			cust_cap_count = cust_cap_count+1
 	else:
 		for label in pSingleton.output_labels:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
+			cust_cap_count = cust_cap_count+1
 			textLine.text = label.to_upper()
 			i = i+1
 			#match to content, assuming it exists and aligns
 			if(pSingleton.output_scores_A.size()>= i):
 				var textBox = LineEdit.new()
 				$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+				cust_cap_count = cust_cap_count+1
 				var ability_text = str(pSingleton.output_scores_A[i-1])
 				if(pSingleton.output_A_label.length() > 0):
 					ability_text = ability_text + pSingleton.output_A_label
@@ -142,7 +145,7 @@ func _populate_output_character_format():
 							ability_text = ability_text + pSingleton.output_B_label
 						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
 				textBox.text = ability_text
-
+				
 #FUNCTION helper rem cap pressed
 #Params: the parent node of the remove button being pressed
 #Returns: Nothing; all work done in function
@@ -186,8 +189,8 @@ func save_data_to_singleton() -> void:
 	var is_label = true
 	var skip_next = false
 	var box_count = 0
-	#DKM TEMP (2/2/25): As testing direct-access for bcirpg percentile, this game type bypasses
-	#	the output character attributes and writes directly to the backend stats. 
+	#For repeated saves, start fresh:
+	pSingleton.clear_character()
 	if (settings.game_selection == "BCIRPG_PERCENTILE"):
 		pSingleton.populate_default_character()
 		for child_box in $Title/ScrollContainer/VBoxContainer.get_children():
@@ -209,61 +212,61 @@ func save_data_to_singleton() -> void:
 						box_count = box_count+2
 				#DKM TEMP (2/9/25): May want to rethink building the custom on player and updating here. WIP.
 				#	This is otherwise EXTREMELY manual
-					"AG:":
+					"AG":
 						print("Check: AG found!")
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[0].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+2).text)
 							print("AG set to:" + pSingleton.player_capabilities[0].score)
 						box_count = box_count+3
-					"APP:":
+					"APP":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[1].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"CO:":
+					"CO":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[2].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"QU:":
+					"QU":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[3].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MD:":
+					"MD":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[4].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ST:":
+					"ST":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[5].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"CH:":
+					"CH":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[6].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"EM:":
+					"EM":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[7].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"IN:":
+					"IN":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[8].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"ME:":
+					"ME":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[9].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"MX:":
+					"MX":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[10].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"PR:":
+					"PR":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[11].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"RE:":
+					"RE":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[12].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
-					"SD:":
+					"SD":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[13].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
@@ -344,6 +347,45 @@ func save_data_to_singleton() -> void:
 					_:
 						skip_next = false
 						char_labels.append(child_box.text.strip_edges(true,true).to_upper())
+			#Capacity object:
+			elif child_box.get_class() == "PanelContainer":
+				var new_cap = pSingleton.Capability_Source.new()
+				var cap_source = child_box.get_children()[0].get_children()
+				for cap_item in cap_source[0].get_children():
+					if cap_item.get_name() == "LocaleName" || cap_item.get_name() == "But_RemC":
+						pass
+					elif cap_item.get_class() != "Label":
+						match cap_item.get_name():
+							"CapName":
+								new_cap.name = str(cap_item.text)
+							"Score":
+								new_cap.Game_Raw = cap_item.text
+							"AttackBox":
+								new_cap.attack = cap_item.is_pressed()
+							"DefendBox":
+								new_cap.defend = cap_item.is_pressed()
+							"Use_Range":
+								new_cap.use_range = int(cap_item.text)
+							"Duration":
+								new_cap.duration = int(cap_item.text)
+							"Impact_Target":
+								new_cap.impact_target = str(cap_item.text)
+							"Impact_Amount":
+								new_cap.impact_amount = int(cap_item.text)
+							"Uses_Max":
+								new_cap.uses_max = int(cap_item.text)
+							"Uses_Current":
+								new_cap.uses_current = int(cap_item.text)
+							"Recharge":
+								new_cap.recharge = cap_item.is_pressed()
+							"Reload":
+								new_cap.reload = cap_item.is_pressed()
+							"Modifier":
+								new_cap.modifier = int(cap_item.text)
+				#Manually entered caps are in the game format, part of external char sheet
+				new_cap.Game_toDisplay = false
+				print ("Cap values saved as: " + new_cap.to_string())
+				pSingleton.player_capabilities.append(new_cap)
 			elif !skip_next:
 				print ("TEMP: raw value returned is:" + child_box.text)
 				#Output B in use means we have a multi-part attributes system
@@ -356,8 +398,7 @@ func save_data_to_singleton() -> void:
 					char_values_A.append(int(child_box.text))
 			box_count = box_count +1
 			
-#TODO: Doug 8/31/25: For each, we create a new capability, and set the Game values 
-#	with the output flag to true. Conversion between systems happens downstream.
+	#Output capabilities are created here, for general input. 
 		var i = 0;
 		for named in char_labels:
 			var current = pSingleton.Capability_Source.new()
@@ -365,14 +406,16 @@ func save_data_to_singleton() -> void:
 			current.Game_toDisplay = true
 			current.Game_Value = char_values_A[i]
 			current.Game_Extras = char_values_B[i]
+			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
 			pSingleton.player_capabilities.append(current)
 			i = i+1;
-	#DKM TEMP (8/31/25): Testing this:
-		print(pSingleton.to_string_output_PC())
+	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
+		pSingleton = GSP.char_sheet_converter(settings.game_selection, pSingleton, true)
 #Prior system:
-		pSingleton.output_labels = char_labels
-		pSingleton.output_scores_A  = char_values_A
-		pSingleton.output_scores_B  = char_values_B
+#		pSingleton.output_labels = char_labels
+#		pSingleton.output_scores_A  = char_values_A
+#		pSingleton.output_scores_B  = char_values_B
+
 #FUNCTION save character csv
 #Params: none
 #Returns: Nothing; all work done in function
@@ -388,23 +431,39 @@ func save_data_to_csv() -> void:
 	var file = File.new()
 	if file.open(file_path, File.WRITE) == OK:
 		var csv_labels = ""
-		for extra in pSingleton.output_extras:
-			csv_labels = csv_labels + extra + ","
-		for name in pSingleton.output_labels:
-			csv_labels = csv_labels + name + ","
+		#Prior system for labels:
+#		for extra in pSingleton.output_extras:
+#			csv_labels = csv_labels + extra + ","
+#		for name in pSingleton.output_labels:
+#			csv_labels = csv_labels + name + ","
+		csv_labels = "Name,Profession,Quote,"
+		for named_ability in pSingleton.player_capabilities:
+			if named_ability.Game_Name != null && named_ability.Game_Name != "NA":
+				csv_labels = csv_labels + named_ability.Game_Name + ","
 		csv_labels = csv_labels + "\n"
+		#Now print the values:
 		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
-		var labels_counter = 0
-		for val in pSingleton.output_scores_A:
-			csv_labels = csv_labels + str(val)
-			if pSingleton.output_A_label.length() > 0:
-				 csv_labels = csv_labels + str(pSingleton.output_A_label)
-			if pSingleton.is_output_B:
-				if pSingleton.output_B_label.length() > 0:
-					csv_labels = csv_labels + " " + str(pSingleton.output_B_label) + " "
-					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
-			labels_counter = labels_counter +1
-			csv_labels = csv_labels + ","
+		for val in pSingleton.player_capabilities:
+			if val.Game_Name != null && val.Game_Name != "NA":
+				if val.Game_Raw != null:
+					csv_labels = csv_labels + str(val.Game_Raw)
+				else:
+					csv_labels = csv_labels + str(int(val.Game_Value))
+					if val.Game_Extras != null:
+						csv_labels = csv_labels + "D+" + str(val.Game_Extras)
+				csv_labels = csv_labels + ","
+		#Prior system for scores:
+		#var labels_counter = 0
+#		for val in pSingleton.output_scores_A:
+#			csv_labels = csv_labels + str(val)
+#			if pSingleton.output_A_label.length() > 0:
+#				 csv_labels = csv_labels + str(pSingleton.output_A_label)
+#			if pSingleton.is_output_B:
+#				if pSingleton.output_B_label.length() > 0:
+#					csv_labels = csv_labels + " " + str(pSingleton.output_B_label) + " "
+#					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
+#			labels_counter = labels_counter +1
+#			csv_labels = csv_labels + ","
 		#TO DO:add the values, too.
 		file.store_string(csv_labels)
 		file.close()

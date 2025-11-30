@@ -27,11 +27,11 @@ func get_ability_match() -> Dictionary:
 
 # Direct percentile → D20 formula: round(percentile / 5) + 1
 func FUNC_1(value: int) -> int:
-	return clamp(round(value / 5.0) + 1, 1, 20)
+	return int(clamp(round(value / 5.0) + 1, 1, 20))
 
 # Averages of specific stat groups
 func FUNC_AVG_RE_ME(re_val: int, me_val: int) -> int:
-	var avg = (re_val + me_val) / 2.0s
+	var avg = (re_val + me_val) / 2.0
 	return FUNC_1(avg)
 
 func FUNC_AVG_IN_EM(in_val: int, em_val: int) -> int:
