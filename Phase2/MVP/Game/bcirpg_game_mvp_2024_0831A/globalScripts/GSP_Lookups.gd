@@ -67,8 +67,8 @@ func _build_percentile_char (source_char:playerCharacterTemplate)->playerCharact
 					var backendCap = source_char.duplicate_core_capability(player_cap)
 					backendCap.score = conversion_class.FUNC_1(player_cap.Game_Raw)
 					backendCap.Game_Name = "NA"
-					backendCap.Game_toDisplay = false
 					source_char.player_capabilities.append(backendCap)	
+					player_cap.Game_toDisplay = false
 				if(player_cap.Game_Name.length() >0 && player_cap.Game_Name.strip_edges(true,true).to_upper() == target_ab.strip_edges(true,true).to_upper()):
 					if (funct.strip_edges(true,true).to_upper() == "FUNC_1"):
 						var backendCap = source_char.Capability_Source.new()

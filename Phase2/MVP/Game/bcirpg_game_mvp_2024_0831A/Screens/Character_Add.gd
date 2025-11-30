@@ -359,7 +359,7 @@ func save_data_to_singleton() -> void:
 							"CapName":
 								new_cap.name = str(cap_item.text)
 							"Score":
-								new_cap.score = int(cap_item.text)
+								new_cap.Game_Raw = cap_item.text
 							"AttackBox":
 								new_cap.attack = cap_item.is_pressed()
 							"DefendBox":
@@ -382,6 +382,8 @@ func save_data_to_singleton() -> void:
 								new_cap.reload = cap_item.is_pressed()
 							"Modifier":
 								new_cap.modifier = int(cap_item.text)
+				#Manually entered caps are in the game format, part of external char sheet
+				new_cap.Game_toDisplay = false
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
 			elif !skip_next:
@@ -429,23 +431,39 @@ func save_data_to_csv() -> void:
 	var file = File.new()
 	if file.open(file_path, File.WRITE) == OK:
 		var csv_labels = ""
-		for extra in pSingleton.output_extras:
-			csv_labels = csv_labels + extra + ","
-		for name in pSingleton.output_labels:
-			csv_labels = csv_labels + name + ","
+		#Prior system for labels:
+#		for extra in pSingleton.output_extras:
+#			csv_labels = csv_labels + extra + ","
+#		for name in pSingleton.output_labels:
+#			csv_labels = csv_labels + name + ","
+		csv_labels = "Name,Profession,Quote,"
+		for named_ability in pSingleton.player_capabilities:
+			if named_ability.Game_Name != null && named_ability.Game_Name != "NA":
+				csv_labels = csv_labels + named_ability.Game_Name + ","
 		csv_labels = csv_labels + "\n"
+		#Now print the values:
 		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
-		var labels_counter = 0
-		for val in pSingleton.output_scores_A:
-			csv_labels = csv_labels + str(val)
-			if pSingleton.output_A_label.length() > 0:
-				 csv_labels = csv_labels + str(pSingleton.output_A_label)
-			if pSingleton.is_output_B:
-				if pSingleton.output_B_label.length() > 0:
-					csv_labels = csv_labels + " " + str(pSingleton.output_B_label) + " "
-					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
-			labels_counter = labels_counter +1
-			csv_labels = csv_labels + ","
+		for val in pSingleton.player_capabilities:
+			if val.Game_Name != null && val.Game_Name != "NA":
+				if val.Game_Raw != null:
+					csv_labels = csv_labels + str(val.Game_Raw)
+				else:
+					csv_labels = csv_labels + str(int(val.Game_Value))
+					if val.Game_Extras != null:
+						csv_labels = csv_labels + "D+" + str(val.Game_Extras)
+				csv_labels = csv_labels + ","
+		#Prior system for scores:
+		#var labels_counter = 0
+#		for val in pSingleton.output_scores_A:
+#			csv_labels = csv_labels + str(val)
+#			if pSingleton.output_A_label.length() > 0:
+#				 csv_labels = csv_labels + str(pSingleton.output_A_label)
+#			if pSingleton.is_output_B:
+#				if pSingleton.output_B_label.length() > 0:
+#					csv_labels = csv_labels + " " + str(pSingleton.output_B_label) + " "
+#					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
+#			labels_counter = labels_counter +1
+#			csv_labels = csv_labels + ","
 		#TO DO:add the values, too.
 		file.store_string(csv_labels)
 		file.close()

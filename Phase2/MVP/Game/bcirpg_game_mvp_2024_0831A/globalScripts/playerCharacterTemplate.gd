@@ -72,12 +72,14 @@ func to_string_output_PC() -> String:
 	pcText = "NAME: " + str(name) + "\nPROF: " + str(profession) + "\n"
 	for cap in player_capabilities:
 		if cap.Game_Name != null && cap.Game_Name != "NA":
-			pcText = pcText + str(cap.Game_Name) + ": " + str(int(cap.Game_Value))
-			if cap.Game_Extras != null:
-				pcText = pcText + "D+" + str(cap.Game_Extras) + "\n"
+			pcText = pcText + str(cap.Game_Name) + ": "
+			if cap.Game_Raw != null:
+				pcText = pcText + cap.Game_Raw
 			else:
-				pcText = pcText +"\n"
-				
+				pcText = pcText + str(int(cap.Game_Value))
+				if cap.Game_Extras != null:
+					pcText = pcText + "D+" + str(cap.Game_Extras)
+			pcText = pcText + "\n"
 	pcText = pcText + "QUOTE: " + str(quote)
 	return pcText
 	
