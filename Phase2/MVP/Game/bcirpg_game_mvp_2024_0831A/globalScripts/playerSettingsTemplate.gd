@@ -9,7 +9,7 @@ class_name PlayerSettingsTemplate
 var inputName = "none"
 var riskFactor = 0
 var brightness = 3
-var fontSize = 11
+var fontSize = 3.0
 var volume = 6
 var bClosedCaptions = true
 var bdevConsole = false

@@ -42,3 +42,24 @@ func load_themeFile() -> void:
 		settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
 	else:
 		settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+
+func load_fontSize(theme):
+	var fontToUse
+	match settingsInstance.fontSize:
+		1.0:
+			fontToUse = load("res://assets/liberation_serif.tres")
+		2.0:
+			fontToUse = load("res://assets/liberation_serif_20pt.tres")
+		3.0:
+			fontToUse = load("res://assets/liberation_serif_30pt.tres")
+		4.0:
+			fontToUse = load("res://assets/liberation_serif_40pt.tres")
+		_:
+			fontToUse = load("res://assets/liberation_serif_50pt.tres")
+			
+	theme.set_font("font","Button", fontToUse)
+	theme.set_font("font","ItemList", fontToUse)
+	theme.set_font("font","Label", fontToUse)
+	theme.set_font("font","LineEdit", fontToUse)
+	theme.set_font("font","Tabs", fontToUse)
+	theme.set_font("font","TextEdit", fontToUse)

@@ -51,6 +51,7 @@ var regionsArray
 func _ready() -> void: 
 	save_module()
 	theme=load(settings.themeFile)
+	GlobalSaveInstance.load_fontSize(theme)
 	
 	#Sets a default button to grab focus
 	#Node Builders should override this by setting the focused button to the first selectable option
