@@ -52,6 +52,9 @@ func _ready() -> void:
 	save_module()
 	theme=load(settings.themeFile)
 	
+	#Sets a default button to grab focus
+	#Node Builders should override this by setting the focused button to the first selectable option
+	$Background/MarginContainer/Rows/ItemList/But_MoreOptions.grab_focus()
 	
 	#DKM TEMP: note the original JSON builder passes the starting space back, as it operates in a flat 
 	#	location hierarchy. The XML builder implements a hierarchy of locations, and therefore returns
@@ -294,7 +297,7 @@ func runXML_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_XML[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	#options_container.get_child(0).grab_focus()
+	options_container.get_child(0).grab_focus()
 	return nodeArray_XML
 
 
