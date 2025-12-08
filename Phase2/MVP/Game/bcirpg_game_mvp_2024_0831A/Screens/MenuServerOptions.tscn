@@ -2,7 +2,8 @@
 
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Screens/MenuServerOptions.gd" type="Script" id=2]
-[ext_resource path="res://assets/ui_controlNode_dark_theme.tres" type="Theme" id=6]
+[ext_resource path="res://assets/Themes/ui_controlNode_dark_theme.tres" type="Theme" id=6]
+
 
 [node name="MenuServerOptions" type="Control"]
 anchor_right = 1.0

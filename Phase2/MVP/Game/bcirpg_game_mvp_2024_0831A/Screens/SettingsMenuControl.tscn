@@ -14,6 +14,7 @@ theme = SubResource( 1 )
 script = ExtResource( 1 )
 genre_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer/OptionBut_Genre")
 game_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer/OptionBut_Game")
+theme_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/OptionBut_Theme")
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -299,10 +300,15 @@ margin_right = 155.0
 margin_bottom = 32.0
 auto_height = true
 
-[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+[node name="OptionBut_Theme" type="OptionButton" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
 margin_top = 36.0
 margin_right = 155.0
-margin_bottom = 63.0
+margin_bottom = 61.0
+
+[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 65.0
+margin_right = 155.0
+margin_bottom = 92.0
 
 [node name="VisualKeyBoardLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
 margin_top = 4.0
@@ -316,9 +322,9 @@ margin_right = 138.0
 margin_bottom = 27.0
 
 [node name="HBoxKeyboardLayout" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
-margin_top = 67.0
+margin_top = 96.0
 margin_right = 155.0
-margin_bottom = 86.0
+margin_bottom = 115.0
 
 [node name="LayoutLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxKeyboardLayout"]
 margin_right = 120.0
@@ -326,9 +332,9 @@ margin_bottom = 19.0
 text = "Layout Preference:"
 
 [node name="LayoutItemList" type="ItemList" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
-margin_top = 90.0
+margin_top = 119.0
 margin_right = 155.0
-margin_bottom = 99.0
+margin_bottom = 128.0
 auto_height = true
 
 [connection signal="button_up" from="HBoxBottomRow/But_ChangeScene" to="HBoxBottomRow/But_ChangeScene" method="_on_But_NewGame_button_up"]

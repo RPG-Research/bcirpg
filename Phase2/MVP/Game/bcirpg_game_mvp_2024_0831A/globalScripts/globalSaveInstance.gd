@@ -28,9 +28,11 @@ func load_settings_file():
 	#Keyboard:
 	settingsInstance.visualKeyboardLayout = config.get_value("virtual_keyboard", "keyboard_layout")	
 	#Theme:
-	settingsInstance.themeChoiceInt = config.get_value("theme", "theme_selection")	
+	#settingsInstance.themeChoice = config.get_value("theme", "theme_selection")
+	settingsInstance.themeFile = config.get_value("theme", "theme_selection")
+	print(settingsInstance.themeFile)
 	
-	load_themeFile()
+	#load_themeFile()
 	
 	#DKM TEMP: working
 	print("Input name loaded as: " + str(settingsInstance.inputName))
@@ -38,10 +40,13 @@ func load_settings_file():
 	
 func load_themeFile() -> void:
 	#DKM TEMP: this shouldn't be hard-coded:
-	if(settingsInstance.themeChoiceInt == 1):
-		settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
-	else:
-		settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+#	if(settingsInstance.themeChoice == 1):
+#		settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
+#	else:
+#		settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+
+	#settingsInstance.themeFile =  "res://assets/Themes/" + settingsInstance.themeChoice
+	pass
 
 func load_fontSize(theme):
 	var fontToUse

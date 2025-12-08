@@ -7,6 +7,10 @@ extends Control
 #Allow us to link to the dropdowns on the UI:
 export (NodePath) var genre_dropdown_path
 export (NodePath) var game_dropdown_path
+export (NodePath) var theme_dropdown_path
+
+#Allows us to set the directory where themes will be looked for
+export var theme_directory_path: String = "res://assets/Themes/"
 
 # Items to Fill the dropdown Lists
 onready var keyboardContents = ["Qwerty", "Dvorak", "Alphabetical"]
@@ -17,6 +21,7 @@ onready var saveObject = get_node('/root/GlobalSaveInstance')
 
 onready var genre_dropdown = get_node(genre_dropdown_path)
 onready var game_dropdown = get_node(game_dropdown_path)
+onready var theme_dropdown = get_node(theme_dropdown_path)
 
 #res://SettingsMenuControl.tscn
 
@@ -26,6 +31,9 @@ onready var GAL = Genre_Layer.new()
 #GSP is to hold instantiated GSP_Layer; needed for getting game types
 const Game_Layer := preload("res://globalScripts/GSP_Lookups.gd")
 onready var GSP = Game_Layer.new()
+
+#Dictionary to store file paths for themes and their corresponding names, will be a 2D array
+var themes_names_paths_dict = {}
 
 # Vars For UI Widgets
 onready var NameVar = get_node('SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/DisplayNameLineEdit')
@@ -67,16 +75,21 @@ func saveToInstance():
 	var savedKeyboardItems = keyboardLayoutList.get_selected_items() 
 	var keyboardSelection = savedKeyboardItems[0]
 	saveObject.settingsInstance.visualKeyboardLayout = keyboardSelection
-	var savedThemeItems = themeChoiceList.get_selected_items() 
-	var themeSelection = savedThemeItems[0]
-	saveObject.settingsInstance.themeChoiceInt = themeSelection
-	#DKM TEMP: for web version, setting this to the singleton without requiring reprocess of file
-	if(saveObject.settingsInstance.themeChoiceInt == 1):
-		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
-	else:
-		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+	
+#	var savedThemeItems = themeChoiceList.get_selected_items() 
+#	var themeSelection = savedThemeItems[0]
+#	saveObject.settingsInstance.themeChoiceInt = themeSelection
+#	#DKM TEMP: for web version, setting this to the singleton without requiring reprocess of file
+#	if(saveObject.settingsInstance.themeChoiceInt == 1):
+#		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_light_theme.tres"
+#	else:
+#		saveObject.settingsInstance.themeFile = "res://assets/ui_controlNode_dark_theme.tres"
+
+	print(theme_dropdown.get_selected_id())
+	saveObject.settingsInstance.themeFile = themes_names_paths_dict[theme_dropdown.get_item_text(theme_dropdown.get_selected_id())]
 	#Load selected theme:
 	theme=load(saveObject.settingsInstance.themeFile)
+	
 	#Trigger re-load of the file name
 	#saveObject.load_settings_file()
 	#theme=load(saveObject.settingsInstance.themeFile)
@@ -98,15 +111,12 @@ func saveFile():
 
 	var keyboardSelection = savedKeyboardItems[0]
 	
-	var savedThemeItems = themeChoiceList.get_selected_items() 
-
-	var themeSelection = savedThemeItems[0]
-	
 	print(typeof(keyboardSelection))
 	
 	iniFile.set_value("virtual_keyboard", "keyboard_layout", keyboardSelection)
 	
-	iniFile.set_value("theme", "theme_selection", themeSelection)
+	# save the filepath to the theme we're using
+	iniFile.set_value("theme", "theme_selection", themes_names_paths_dict[theme_dropdown.get_item_text(theme_dropdown.get_selected_id())])
 	
 	iniFile.set_value("player_preferences", "genre_selection", saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()])
 	iniFile.set_value("player_preferences", "game_selection", saveObject.settingsInstance.game_options[game_dropdown.get_selected_id()])
@@ -152,13 +162,78 @@ func add_game_options():
 		if(game != "OPEND6_FANTASY"):
 			saveObject.settingsInstance.game_options.append(game)
 		game_dropdown.add_item(str(game).to_lower())
+		
+#FUNCTION: Add Theme Options (to dropdown and dictionary)
+#PARAMS: None
+#Returns: None
+#Notes: loads themes from theme_directory_path, themes_names_paths_dict is edited
+func add_theme_options():
+	var themeChoices = get_theme_paths()
+	for theme_path in themeChoices:
+		var theme_name = get_theme_name(theme_path)
+		theme_dropdown.add_item(theme_name)
+		themes_names_paths_dict[theme_name] = theme_path
+		
+#FUNCTION: Get Theme Paths
+#PARAMS: None
+#Returns: array of valid theme paths from theme_directory_path
+#Notes: 
+func get_theme_paths():
+	var theme_path_array = []
+	var theme_directory = Directory.new()
+	if theme_directory.open(theme_directory_path) == OK:
+		# start a stream to list files and directories
+		theme_directory.list_dir_begin(true)
+		var file_name = theme_directory.get_next()
+		var file_path = theme_directory_path + file_name
+		print(file_path)
+		while ResourceLoader.exists(file_path) || theme_directory.file_exists(theme_directory_path + file_name):
+			# make sure the file is a theme file
+			# check for the text " gd_resource type="Theme" "
+			var file = File.new()
+			# concatenate theme directory and file name
+			file.open(file_path, File.READ)
+			var file_first_line = file.get_line()
+			print(file_first_line)
+			if file_first_line.find("gd_resource type=\"Theme\"") != -1:
+				#file is a theme file
+				theme_path_array.append(file_path)
+				#print("appending " + get_theme_name(file_path) + " to theme path array")
+			file_name = theme_directory.get_next()
+			file_path = theme_directory_path + file_name
+		theme_directory.list_dir_end()
+		return theme_path_array
 
+#FUNCTION: Get Theme Name
+#PARAMS: path to theme
+#Returns: name of theme resource or theme's filename if theme has no name
+#Notes: 
+func get_theme_name(theme_path) -> String:
+	var regex = RegEx.new()
+	regex.compile("resource_name = \"(.*)\"")
+
+	var theme_file = File.new()
+	theme_file.open(theme_path, File.READ)
+	var file_text = theme_file.get_as_text()
+	# get the first capture group from the regex as the name
+	var regex_result = regex.search(file_text)
+
+	if regex_result != null:
+		# if the theme has a name
+		var theme_name = regex_result.get_string(1)
+		return theme_name
+	
+	regex.compile(".*\/(.*$)")
+	return regex.search(theme_path).get_string(1)
+	
 		
 func _ready():
 	#Get our initial genre options for dropdown:
 	add_genre_options()
 	#Get our initial game system options for dropdown:
 	add_game_options()	
+	#Get theme options for dropdown:
+	add_theme_options()
 	
 	#Get the singleton's values for initial settings:
 	NameVar.text = saveObject.settingsInstance.inputName
@@ -171,6 +246,15 @@ func _ready():
 	#genre_dropdown.select(saveObject.settingsInstance.genre_selection)
 	genre_dropdown.select(saveObject.settingsInstance.genre_options.find(saveObject.settingsInstance.genre_selection))
 	game_dropdown.select(saveObject.settingsInstance.game_options.find(saveObject.settingsInstance.game_selection))
+	
+	#loop through the theme dropdown ooptions until we find the one that matches the name of the saved theme and select it
+	for i in range(theme_dropdown.get_item_count()):
+		print("theme dropdown i = " + str(i))
+		print("theme dropdown text = " + theme_dropdown.get_item_text(i))
+		if theme_dropdown.get_item_text(i) == get_theme_name(saveObject.settingsInstance.themeFile):
+				theme_dropdown.select(i)
+				print("yeehaw")
+				break
 		
 	print(NameVar.get_path())
 	
@@ -180,14 +264,7 @@ func _ready():
 	
 	keyboardLayoutList.select(0,true)
 	
-# 	Init Theme Choice List
-
-	for i in range(2):
-		themeChoiceList.add_item(themeContents[i],null,true)
-	
 	keyboardLayoutList.select(saveObject.settingsInstance.visualKeyboardLayout,true)
-	
-	themeChoiceList.select(saveObject.settingsInstance.themeChoiceInt,true)
 	
 	#Load selected theme:
 	theme=load(saveObject.settingsInstance.themeFile)
