@@ -62,6 +62,7 @@ func load_fontSize(theme):
 		_:
 			fontToUse = load("res://assets/liberation_serif_50pt.tres")
 			
+	theme.set_font("font","font", fontToUse)
 	theme.set_font("font","Button", fontToUse)
 	theme.set_font("font","ItemList", fontToUse)
 	theme.set_font("font","Label", fontToUse)
