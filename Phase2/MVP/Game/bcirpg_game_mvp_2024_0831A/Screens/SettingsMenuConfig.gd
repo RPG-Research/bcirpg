@@ -168,41 +168,49 @@ func add_game_options():
 #Returns: None
 #Notes: loads themes from theme_directory_path, themes_names_paths_dict is edited
 func add_theme_options():
-	var themeChoices = get_theme_paths()
+	var themeChoices = get_theme_paths_recursive(theme_directory_path)
 	for theme_path in themeChoices:
 		var theme_name = get_theme_name(theme_path)
 		theme_dropdown.add_item(theme_name)
 		themes_names_paths_dict[theme_name] = theme_path
 		
-#FUNCTION: Get Theme Paths
+#FUNCTION: Get Theme Paths Recursive
 #PARAMS: None
-#Returns: array of valid theme paths from theme_directory_path
+#Returns: array of valid theme paths from theme_directory_path and subdirectories
 #Notes: 
-func get_theme_paths():
-	var theme_path_array = []
-	var theme_directory = Directory.new()
-	if theme_directory.open(theme_directory_path) == OK:
+func get_theme_paths_recursive(directory_path) -> Array:
+	var to_return_array = []
+	var directory = Directory.new()
+	# open() can return OK, FAILED, or ERR_...
+	if directory.open(directory_path) == OK:
 		# start a stream to list files and directories
-		theme_directory.list_dir_begin(true)
-		var file_name = theme_directory.get_next()
-		var file_path = theme_directory_path + file_name
+		directory.list_dir_begin(true, true) # "true" leaves out . and .. directories and hidden files
+		var file_name = directory.get_next()
+		var file_path = directory_path + file_name
 		print(file_path)
-		while ResourceLoader.exists(file_path) || theme_directory.file_exists(theme_directory_path + file_name):
-			# make sure the file is a theme file
-			# check for the text " gd_resource type="Theme" "
-			var file = File.new()
-			# concatenate theme directory and file name
-			file.open(file_path, File.READ)
-			var file_first_line = file.get_line()
-			print(file_first_line)
-			if file_first_line.find("gd_resource type=\"Theme\"") != -1:
-				#file is a theme file
-				theme_path_array.append(file_path)
-				#print("appending " + get_theme_name(file_path) + " to theme path array")
-			file_name = theme_directory.get_next()
-			file_path = theme_directory_path + file_name
-		theme_directory.list_dir_end()
-		return theme_path_array
+		# I don't know if this is the correct way to check for file existence
+		# in an ideal world, this finds bundled resources, but I genuinely have no idea if this is the right way to do that
+		while file_name != "":
+			# check if the file is actually a directory
+			if directory.current_is_dir():
+				file_path = file_path + "/"
+				to_return_array.append_array(get_theme_paths_recursive(file_path))
+			elif ResourceLoader.exists(file_path) || directory.file_exists(file_path):
+				# make sure the file is a theme file
+				# check for the text "gd_resource type=\"Theme\""
+				# this should be more efficient than loading the whole resource, then checking its type?
+				var file = File.new()
+				file.open(file_path, File.READ)
+				var file_first_line = file.get_line()
+				if file_first_line.find("gd_resource type=\"Theme\"") != -1:
+					#file is a theme file
+					to_return_array.append(file_path)
+			file_name = directory.get_next()
+			file_path = directory_path + file_name
+		directory.list_dir_end()
+		return to_return_array
+	else:
+		return []
 
 #FUNCTION: Get Theme Name
 #PARAMS: path to theme
@@ -249,11 +257,10 @@ func _ready():
 	
 	#loop through the theme dropdown ooptions until we find the one that matches the name of the saved theme and select it
 	for i in range(theme_dropdown.get_item_count()):
-		print("theme dropdown i = " + str(i))
-		print("theme dropdown text = " + theme_dropdown.get_item_text(i))
+		#print("theme dropdown i = " + str(i))
+		#print("theme dropdown text = " + theme_dropdown.get_item_text(i))
 		if theme_dropdown.get_item_text(i) == get_theme_name(saveObject.settingsInstance.themeFile):
 				theme_dropdown.select(i)
-				print("yeehaw")
 				break
 		
 	print(NameVar.get_path())
