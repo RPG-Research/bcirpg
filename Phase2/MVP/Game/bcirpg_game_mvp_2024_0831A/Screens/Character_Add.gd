@@ -126,25 +126,38 @@ func _populate_output_character_format():
 			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
 			cust_cap_count = cust_cap_count+1
 	else:
-		for label in pSingleton.output_labels:
+		#for label in pSingleton.output_labels:
+		var game_labels = GSP.get_game_abilities(settings.game_selection)
+		var input_type = GSP.get_game_input_type(settings.game_selection)
+		for label in game_labels:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
 			cust_cap_count = cust_cap_count+1
 			textLine.text = label.to_upper()
 			i = i+1
+			var textBox = LineEdit.new()
+			$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+			#DKM TEMP: We need to parse this on delim and build accordingly
+			var ability_text = "0"
+			if (input_type == "Int/D+/Int"):
+				ability_text = "0D+0"
+			else:
+				ability_text = "0"
+			textBox.text = ability_text
+			cust_cap_count = cust_cap_count+1
 			#match to content, assuming it exists and aligns
-			if(pSingleton.output_scores_A.size()>= i):
-				var textBox = LineEdit.new()
-				$Title/ScrollContainer/VBoxContainer.add_child(textBox)
-				cust_cap_count = cust_cap_count+1
-				var ability_text = str(pSingleton.output_scores_A[i-1])
-				if(pSingleton.output_A_label.length() > 0):
-					ability_text = ability_text + pSingleton.output_A_label
-					if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
-						if(pSingleton.output_B_label.length() > 0):
-							ability_text = ability_text + pSingleton.output_B_label
-						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
-				textBox.text = ability_text
+#∂			if(pSingleton.output_scores_A.size()>= i):
+#				var textBox = LineEdit.new()
+#				$Title/ScrollContainer/VBoxContainer.add_child(textBox)
+#				cust_cap_count = cust_cap_count+1
+#				var ability_text = str(pSingleton.output_scores_A[i-1])
+#				if(pSingleton.output_A_label.length() > 0):
+#					ability_text = ability_text + pSingleton.output_A_label
+#					if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
+#						if(pSingleton.output_B_label.length() > 0):
+#							ability_text = ability_text + pSingleton.output_B_label
+#						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
+#				textBox.text = ability_text
 				
 #FUNCTION helper rem cap pressed
 #Params: the parent node of the remove button being pressed

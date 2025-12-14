@@ -3,6 +3,8 @@
 
 class_name OpenD6_Fantasy_Converter
 
+const system_abilities = ["AGILITY", "COORDINATION", "PHYSIQUE", "CHARISMA", "INTELLECT", "ACUMEN"]
+
 const ability_match = { "AG":"AGILITY|FUNC_1",
 	"APP":"CHARISMA|FUNC_1",
 	"CO":"PHYSIQUE|FUNC_1",
@@ -21,6 +23,12 @@ const ability_match = { "AG":"AGILITY|FUNC_1",
 
 func get_ability_match()->Dictionary:
 	return ability_match
+	
+func get_system_abilities()->Array:
+	return system_abilities
+	
+func get_system_input_type()->String:
+	return "Int/D+/Int"
 
 func get_HW() -> String:
 	return ("Hello Open D6 World!")
