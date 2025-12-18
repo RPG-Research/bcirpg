@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Screens/ImportCharacter.gd" type="Script" id=1]
 [ext_resource path="res://UserInterface/But_PlayButton.gd" type="Script" id=2]
 [ext_resource path="res://UserInterface/Title.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UserInterface/But_ChangeScene.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Screens/FileDialog.gd" type="Script" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -35,6 +36,7 @@ rect_min_size = Vector2( 400, 140 )
 window_title = "Open a File"
 mode = 0
 access = 2
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -119,5 +121,6 @@ margin_right = 58.0
 margin_bottom = 24.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="visibility_changed" from="FileDialog" to="FileDialog" method="_on_FileDialog_visibility_changed"]
 [connection signal="pressed" from="VBoxContainer2/But_OpenFile" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/Save_Button" to="." method="_on_Save_Button_pressed"]
