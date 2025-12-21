@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Screens/SettingsMenuConfig.gd" type="Script" id=1]
 [ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=2]
 [ext_resource path="res://UserInterface/But_ChangeScene.gd" type="Script" id=3]
+[ext_resource path="res://UserInterface/SliderControls.gd" type="Script" id=4]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 2 )
@@ -94,6 +95,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="BrightnessLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
 margin_top = 43.0
@@ -111,6 +113,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="RootVboxPlayerPreferences" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
 margin_left = 368.0
@@ -169,6 +172,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
 margin_top = 99.0
@@ -231,6 +235,7 @@ max_value = 10.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="HBoxClosedCaptions" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
 margin_top = 43.0
