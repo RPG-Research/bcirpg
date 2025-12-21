@@ -298,7 +298,7 @@ func runXML_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_XML[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	options_container.get_child(0).grab_focus()
+	options_container.get_child(0).call_deferred("grab_focus")
 	return nodeArray_XML
 
 

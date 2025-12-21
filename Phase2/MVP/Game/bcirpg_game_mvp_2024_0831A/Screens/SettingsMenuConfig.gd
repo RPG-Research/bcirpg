@@ -275,3 +275,5 @@ func _ready():
 	
 	#Load selected theme:
 	theme=load(saveObject.settingsInstance.themeFile)
+	
+	$HBoxBottomRow/But_ChangeScene.call_deferred("grab_focus")
