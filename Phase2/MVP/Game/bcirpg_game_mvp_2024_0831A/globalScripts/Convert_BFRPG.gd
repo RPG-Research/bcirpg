@@ -6,6 +6,7 @@ class_name BFRPG_Converter
 
 const system_abilities = ["STR", "INT", "WIS", "DEX", "CON", "CHR"]
 
+
 const ability_match = { "AG":"DEX|FUNC_1",
 	"APP":"CHR|FUNC_1",
 	"CO":"CON|FUNC_1",
@@ -53,5 +54,5 @@ func FUNC_2 (score1:String, score2:String) -> int:
 	if(core2 > 0):
 		if (core2 > 20):
 			core2 = 20
-	perc = round((core1 + core2)/2)
+	perc = (round((core1 + core2)/2)*5)
 	return(perc)

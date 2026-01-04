@@ -129,6 +129,8 @@ func _populate_output_character_format():
 		#for label in pSingleton.output_labels:
 		var game_labels = GSP.get_game_abilities(settings.game_selection)
 		var input_type = GSP.get_game_input_type(settings.game_selection)
+		if input_type.strip_edges(true,true).to_upper() == "INT":
+			pSingleton.is_output_B = false
 		for label in game_labels:
 			var textLine = Label.new()
 			$Title/ScrollContainer/VBoxContainer.add_child(textLine)
@@ -418,8 +420,11 @@ func save_data_to_singleton() -> void:
 			current.Game_Name = named
 			current.Game_toDisplay = true
 			current.Game_Value = char_values_A[i]
-			current.Game_Extras = char_values_B[i]
-			current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+			if pSingleton.is_output_B:
+				current.Game_Extras = char_values_B[i]
+				current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+			else:
+				current.Game_Raw = str(current.Game_Value)
 			pSingleton.player_capabilities.append(current)
 			i = i+1;
 	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate

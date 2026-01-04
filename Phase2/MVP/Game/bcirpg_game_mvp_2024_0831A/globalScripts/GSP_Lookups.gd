@@ -160,3 +160,4 @@ func get_game_input_type(game:String) ->String:
 		game_system_used = game
 	get_conversion_rules()
 	return (conversion_class.get_system_input_type())
+	

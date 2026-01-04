@@ -46,6 +46,7 @@ var output_extras = ["Name","Profession","Quote"]
 var output_labels = ["Agility","Coordination","Physique","Charisma","Intellect","Acumen"]
 var output_scores_A = [0,0,0,0,0,0]
 var output_A_label = "D"
+#Used for multi-part game stats, like OpenD6 (default)'s #D+# format.
 var is_output_B = true
 var output_B_label = "+"
 var output_scores_B = [0,0,0,0,0,0]
