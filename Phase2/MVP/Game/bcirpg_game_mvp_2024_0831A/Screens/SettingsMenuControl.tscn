@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Screens/SettingsMenuConfig.gd" type="Script" id=1]
 [ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=2]
 [ext_resource path="res://UserInterface/But_ChangeScene.gd" type="Script" id=3]
-[ext_resource path="res://UserInterface/SliderControls.gd" type="Script" id=4]
+[ext_resource path="res://UserInterface/Slider_Controls.gd" type="Script" id=4]
+[ext_resource path="res://UserInterface/ItemList_Controls.gd" type="Script" id=5]
+[ext_resource path="res://UserInterface/OptionBut_Controls.gd" type="Script" id=6]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 2 )
@@ -188,6 +190,7 @@ text = "Genre Selection:"
 margin_top = 23.0
 margin_right = 145.0
 margin_bottom = 48.0
+script = ExtResource( 6 )
 
 [node name="LabelGS" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer"]
 margin_top = 52.0
@@ -199,6 +202,7 @@ text = "Game System:"
 margin_top = 75.0
 margin_right = 145.0
 margin_bottom = 100.0
+script = ExtResource( 6 )
 
 [node name="RootVboxGeneralSettings" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
 margin_left = 545.0
@@ -309,6 +313,7 @@ auto_height = true
 margin_top = 36.0
 margin_right = 155.0
 margin_bottom = 61.0
+script = ExtResource( 6 )
 
 [node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
 margin_top = 65.0
@@ -341,5 +346,6 @@ margin_top = 119.0
 margin_right = 155.0
 margin_bottom = 128.0
 auto_height = true
+script = ExtResource( 5 )
 
 [connection signal="button_up" from="HBoxBottomRow/But_ChangeScene" to="HBoxBottomRow/But_ChangeScene" method="_on_But_NewGame_button_up"]
