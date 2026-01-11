@@ -228,10 +228,8 @@ func save_data_to_singleton() -> void:
 				#DKM TEMP (2/9/25): May want to rethink building the custom on player and updating here. WIP.
 				#	This is otherwise EXTREMELY manual
 					"AG":
-						print("Check: AG found!")
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[0].score = str($Title/ScrollContainer/VBoxContainer.get_child(box_count+2).text)
-							print("AG set to:" + pSingleton.player_capabilities[0].score)
 						box_count = box_count+3
 					"APP":
 						if $Title/ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
@@ -322,6 +320,10 @@ func save_data_to_singleton() -> void:
 								new_cap.modifier = int(cap_item.text)
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
+		#Set output values for percentile:
+		for set_cap in pSingleton.player_capabilities:
+			set_cap.Game_Name = set_cap.name
+			set_cap.Game_Value = set_cap.score
 		pSingleton.set_health()
 		pSingleton.set_defense()
 		#Now set output values, too:

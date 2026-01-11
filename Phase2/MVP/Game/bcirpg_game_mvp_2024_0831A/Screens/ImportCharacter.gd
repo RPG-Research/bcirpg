@@ -276,6 +276,14 @@ func _save_data_to_singleton() -> void:
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[13].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
+					#For imported custom capabilities:
+					_:
+						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							var new_cap = pSingleton.Capability_Source.new()
+							new_cap.name = label_value
+							new_cap.score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+							pSingleton.player_capabilities.append(new_cap)
+						box_count = box_count+2
 				print("DEBUG, current box count is: " + str(box_count))
 			#Capacity object:
 			elif child_box.get_class() == "PanelContainer":
@@ -314,6 +322,10 @@ func _save_data_to_singleton() -> void:
 								new_cap.modifier = int(cap_item.text)
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
+		#Set output values for percentile:
+		for set_cap in pSingleton.player_capabilities:
+			set_cap.Game_Name = set_cap.name
+			set_cap.Game_Value = set_cap.score
 		pSingleton.set_health()
 		pSingleton.set_defense()
 		#Now set output values, too:
