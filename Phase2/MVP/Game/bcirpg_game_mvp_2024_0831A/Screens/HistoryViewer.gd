@@ -23,8 +23,6 @@ func _ready() -> void:
 
 	print("Loaded history array size is: " + str(history_source.output_history_array.size()))
 	update_pager()
-	
-	$Background/MarginContainer/Rows/ItemList/But_ChangeScene.call_deferred("grab_focus")
 	#DKM TEMP:
 #	page_displayer.text = "1"
 #	if(current_history.get_child_count() > 0):

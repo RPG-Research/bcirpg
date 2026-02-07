@@ -8,4 +8,4 @@ onready var settings = get_node("/root/GlobalSaveInstance").settingsInstance
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	theme=load(settings.themeFile)
-	$VBoxContainer/But_Multi_Join.call_deferred("grab_focus")
+	$VBoxContainer/But_Multi_Join.grab_focus()
