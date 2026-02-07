@@ -31,6 +31,7 @@ var degreeOfSuccess
 
 #Constructor for diemanager class
 func _init(dice, percent):
+	randomize()  # Seed RNG once for this DieManager instance
 	desiredDice = dice
 	neededPercentageToPass = percent
 	loadData()
@@ -78,8 +79,8 @@ func returnDiePercentage(inputedDie):
 	
 	#Checks if a percentageroll is being done
 	if isPercentageRoll:
-		#This conditional is used to detemrine if the rolled value is
-		#for the tens or ones digit
+		# Percentile: treat a d10 roll of 10 as digit 0
+		# (00 will later be interpreted as 100 in rollDice())
 		return float(rolledVal % 10)
 	
 	return float(rolledVal) / float(inputedDie.numFaces)
@@ -98,7 +99,14 @@ func rollDice():
 	var sumOfPercentages = 0
 	
 	if isPercentageRoll:
-		sumOfPercentages += (returnDiePercentage(diceUsed[0]) / 10.0) + (returnDiePercentage(diceUsed[1]) / 100.0)
+		# Percentile roll using two d10s:
+		# tens digit: 0-9, ones digit: 0-9
+		var tens_digit = int(returnDiePercentage(diceUsed[0]))
+		var ones_digit = int(returnDiePercentage(diceUsed[1]))
+		var percentile_int = (tens_digit * 10) + ones_digit  # 0..99
+		if percentile_int == 0:
+			percentile_int = 100  # interpret 00 as 100
+		sumOfPercentages += float(percentile_int) / 100.0
 	else:
 		#DKM TEMP: not percentage roll:
 		print("TEMP: not percentage roll")
@@ -120,9 +128,9 @@ func rollDice():
 		
 		result.append(stepify((float(sumOfPercentages) / float(denominator)), 0.0001))
 		
-	passedRoll = (result[1] >= neededPercentageToPass)
+	passedRoll = (result[1] <= neededPercentageToPass)
 #NOTE: degree of success is always calculated regardlesss of success/failure. Let me know if this should be changed	
-	degreeOfSuccess = result[1] - neededPercentageToPass
+	degreeOfSuccess = neededPercentageToPass - result[1]
 	result.append(passedRoll)
 	result.append(neededPercentageToPass)
 	result.append(degreeOfSuccess)

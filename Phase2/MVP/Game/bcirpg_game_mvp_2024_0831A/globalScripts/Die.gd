@@ -12,8 +12,6 @@ func _init(value):
 
 #returns an integer value of the rolled result (assuming the die is a valid type)
 func rollDie():
-	randomize()
-	
 	var rolledNum
 	rolledNum = randi() % numFaces + 1
 	return rolledNum

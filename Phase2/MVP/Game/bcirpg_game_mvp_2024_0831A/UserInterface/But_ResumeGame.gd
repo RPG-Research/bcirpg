@@ -11,4 +11,4 @@ func _on_But_ResumeGame_button_up():
 	#DKM TEMP: cleanup this scene!
 	thisScene.queue_free()
 	root.add_child(gameScene)
-	gameScene.get_node("Background/MarginContainer/Rows/ItemList/But_MoreOptions").call_deferred("grab_focus")
+
