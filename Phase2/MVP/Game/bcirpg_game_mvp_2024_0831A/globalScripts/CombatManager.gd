@@ -48,16 +48,56 @@ var combat_active = false
 var current_turn = "player"  # "player" or "opponent"
 var round_number = 0
 
+# Per-character defending state (avoids requiring a `defending` field on character scripts)
+var _defending_state = {}
+
 # Initialize the combat manager
 func _init():
 	# Create a die manager for percentage dice (two d10s)
 	dieManager = DieManager.new([10, 10], 0.5)
+
+
+# --- Helpers for compatibility with different character data models ---
+
+func _char_id(ch):
+	if ch == null:
+		return 0
+	if ch.has_method("get_instance_id"):
+		return ch.get_instance_id()
+	return int(ch)
+
+func _is_alive(ch):
+	if ch == null:
+		return false
+	if ch.has_method("is_alive"):
+		return ch.is_alive()
+	# Fallback: treat objects with hp as alive if hp > 0
+	if ch.get("hp") != null:
+		return int(ch.get("hp")) > 0
+	return true
+
+func _apply_damage(ch, damage):
+	if ch == null:
+		return
+	if ch.has_method("take_damage"):
+		ch.take_damage(damage)
+		return
+	# Fallback: subtract from hp if present
+	if ch.get("hp") != null:
+		ch.set("hp", int(ch.get("hp")) - int(damage))
+
+func _is_defending(ch):
+	return _defending_state.get(_char_id(ch), false)
+
+func _set_defending(ch, value):
+	_defending_state[_char_id(ch)] = bool(value)
 
 # Start a new combat encounter
 func start_combat(player_ref, opponent_ref):
 	player = player_ref
 	opponent = opponent_ref
 	combat_active = true
+	_defending_state = {}
 	round_number = 1
 	current_turn = "player"
 	
@@ -68,8 +108,8 @@ func end_combat():
 	combat_active = false
 	
 	var result = "Combat ended."
-	if player.is_alive():
-		if !opponent.is_alive():
+	if _is_alive(player):
+		if !_is_alive(opponent):
 			result += " " + player.name + " is victorious!"
 		else:
 			result += " Combat was interrupted."
@@ -85,6 +125,8 @@ func next_turn():
 	else:
 		current_turn = "player"
 		round_number += 1
+		# New round: clear any lingering defensive stances
+		_defending_state = {}
 	
 	return "Round " + str(round_number) + ", " + current_turn + "'s turn."
 
@@ -101,6 +143,9 @@ func attack(attacker, defender, stat_or_skill, difficulty="AVERAGE"):
 	# Apply difficulty modifier to the base percentage
 	var difficulty_mod = DIFFICULTY_MODIFIER[difficulty]
 	var modified_percentage = clamp(base_percentage + difficulty_mod, 0, 100) / 100.0
+	# If the defender is defending, make the attack harder (simple MVP rule)
+	if _is_defending(defender):
+		modified_percentage = max(0.0, modified_percentage - 0.20)
 	
 	# Set up the die manager with the modified percentage as the passing threshold
 	dieManager.clearData()
@@ -131,40 +176,59 @@ func attack(attacker, defender, stat_or_skill, difficulty="AVERAGE"):
 		var damage = int(base_damage * strength_modifier * (1 + max(0, roll_result[4])))
 		
 		# Apply damage to defender
-		defender.take_damage(damage)
+		_apply_damage(defender, damage)
+		# Consumes the defending stance once attacked
+		_set_defending(defender, false)
 		
 		result["damage"] = damage
 		result["message"] = attacker.name + " successfully attacks " + defender.name + " for " + str(damage) + " damage!"
 	else:
 		result["damage"] = 0
 		result["message"] = attacker.name + " attempts to attack " + defender.name + " but misses!"
+		# Consumes the defending stance once targeted
+		_set_defending(defender, false)
 	
 	return result
 
 # Perform a defend action - increases defense for next round
 func defend(character):
-	character.defending = true
+	_set_defending(character, true)
 	return character.name + " takes a defensive stance."
 
 # Check if character has the given stat or skill
 func has_stat_or_skill(character, stat_or_skill):
-	if stat_or_skill in character.attributes:
+	var attrs = character.get("attributes")
+	if attrs != null and stat_or_skill in attrs:
 		return true
-	elif stat_or_skill in character.skills:
+	var skills = character.get("skills")
+	if skills != null and stat_or_skill in skills:
 		return true
+	var caps = character.get("player_capabilities")
+	if caps != null:
+		for c in caps:
+			if c != null and c.name == stat_or_skill:
+				return true
 	return false
 
 # Get the value of a character's stat or skill
 func get_character_value(character, stat_or_skill):
-	if stat_or_skill in character.attributes:
-		return character.attributes[stat_or_skill]
-	elif stat_or_skill in character.skills:
-		return character.skills[stat_or_skill]
+	var attrs = character.get("attributes")
+	if attrs != null and stat_or_skill in attrs:
+		return attrs[stat_or_skill]
+	var skills = character.get("skills")
+	if skills != null and stat_or_skill in skills:
+		return skills[stat_or_skill]
+	# Fallback: BCI-RPG character model uses player_capabilities (Array[Char_Capability])
+	var caps = character.get("player_capabilities")
+	if caps != null:
+		for c in caps:
+			if c != null and c.name == stat_or_skill:
+			return c.score
 	return 0
 
 # Execute an AI turn for the opponent. (Not literal AI fyi. This is just for the computer's turns)
 func execute_ai_turn():
-	if !combat_active || current_turn != "opponent" || !opponent.is_alive():
+	if !combat_active || current_turn != "opponent" || !_is_alive(opponent):
 		return "No valid opponent turn to execute."
 	
 	var action_result = ""
@@ -203,7 +267,7 @@ func run_test_combat(player_ref, opponent_ref):
 			var attack_result = attack(player, opponent, "ST")
 			combat_log.append(attack_result["message"])
 			
-			if !opponent.is_alive():
+			if !_is_alive(opponent):
 				combat_log.append(end_combat())
 				break
 				
@@ -211,7 +275,7 @@ func run_test_combat(player_ref, opponent_ref):
 		else:
 			combat_log.append(execute_ai_turn())
 			
-			if !player.is_alive():
+			if !_is_alive(player):
 				combat_log.append(end_combat())
 				break
 	

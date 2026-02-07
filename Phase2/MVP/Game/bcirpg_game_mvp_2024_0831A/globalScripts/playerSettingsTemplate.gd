@@ -9,7 +9,7 @@ class_name PlayerSettingsTemplate
 var inputName = "none"
 var riskFactor = 0
 var brightness = 3
-var fontSize = 3.0
+var fontSize = 11
 var volume = 6
 var bClosedCaptions = true
 var bdevConsole = false
@@ -23,7 +23,9 @@ var game_selection = game_options[0]
 # Setting of 0 is Qwerty, Setting of 1 is Davorak, Setting of 2 is Alphabetical 
 var visualKeyboardLayout = 0
 
-var themeFile = "res://assets/Themes/Dark Theme/ui_controlNode_dark_theme.tres"
+# Setting of 0 is dark, setting of 1 is light, and so on
+var themeChoiceInt = 0
+var themeFile = "res://assets/ui_controlNode_dark_theme.tres"
 
 func _ready():
 	pass

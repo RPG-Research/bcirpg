@@ -37,6 +37,7 @@
         <Option_Labels_007>Travel to the Forgotten Realms</Option_Labels_007>
         <Option_Labels_008>Try to lift a heavy weight! (Strength check test.)</Option_Labels_008>
         <Option_Labels_009>Examine the hold more closely? (Intuition check test.)</Option_Labels_009>
+        <Option_Labels_010>Start extended conflict (combat test)</Option_Labels_010>
         <Option_GoTos_001>Boat_002</Option_GoTos_001>
         <Option_GoTos_002>Shore_001</Option_GoTos_002>
         <Option_GoTos_003>Misc_001</Option_GoTos_003>
@@ -45,7 +46,8 @@
         <Option_GoTos_006>Test_000</Option_GoTos_006>
         <Option_GoTos_007>Test_001</Option_GoTos_007>  
         <Option_GoTos_008>Test_002</Option_GoTos_008>  
-        <Option_GoTos_009>Test_003</Option_GoTos_009>                
+        <Option_GoTos_009>Test_003</Option_GoTos_009>
+        <Option_GoTos_010>Test_004</Option_GoTos_010>                
       </Space>
       <Space>
         <Id>Boat_002</Id>
@@ -55,7 +57,6 @@
         <Option_Labels_001>Continue</Option_Labels_001>
         <Option_GoTos_001>Boat_001</Option_GoTos_001>
       </Space>
-      <Space>
       <Space>
         <Id>Boat_003</Id>
         <Action>ShowText</Action>
@@ -135,7 +136,15 @@
         <Option_Labels_002>A peg on the wall twists in a way you didn't expect...</Option_Labels_002>
         <Option_GoTos_002>Boat_003</Option_GoTos_002>
       </Space>                 
-    </Location>
+          <Space>
+        <Id>Test_004</Id>
+        <Action>StartExtendedConflict</Action>
+        <A_Params>Bandit</A_Params>
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+</Location>
     <Location>
       <Name>Tempestuous Seas</Name>
       <Description>A test location away from the island; rampant with sea monsters and storms!</Description>
