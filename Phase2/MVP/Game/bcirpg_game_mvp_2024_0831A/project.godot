@@ -115,22 +115,23 @@ PlayerCharacter="*res://globalScripts/PlayerCharacter.gd"
 DiceRoller="*res://globalScripts/DiceRoller.gd"
 GlobalSaveInstance="*res://globalScripts/globalSaveInstance.gd"
 GameCurrent="*res://globalScripts/gameCurrent.gd"
+JavaScriptFileManager="*res://globalScripts/JavaScriptFileManager.gd"
 
 [input]
 
 open_file_hotkey={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":79,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":79,"unicode":0,"echo":false,"script":null)
  ]
 }
 save_character_file_hotkey={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":83,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":83,"unicode":0,"echo":false,"script":null)
  ]
 }
 back_to_main_menu_hotkey={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":77,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":true,"command":true,"pressed":false,"scancode":0,"physical_scancode":77,"unicode":0,"echo":false,"script":null)
  ]
 }
 
