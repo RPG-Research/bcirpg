@@ -1,13 +1,3 @@
 [remap]
 
-importer="csv_translation"
-type="Translation"
-valid=false
-
-[deps]
-
-source_file="res://_userFiles/characterFiles_2025_1123ABU/Sir Test von Testerly_incorrectFormatTest.csv"
-[params]
-
-compress=true
-delimiter=0
+importer="keep"
