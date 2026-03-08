@@ -51,6 +51,7 @@ var regionsArray
 func _ready() -> void: 
 	save_module()
 	theme=load(settings.themeFile)
+	GlobalSaveInstance.load_fontSize(theme)
 	
 	#Sets a default button to grab focus
 	#Node Builders should override this by setting the focused button to the first selectable option
@@ -297,7 +298,7 @@ func runXML_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_XML[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	options_container.get_child(0).grab_focus()
+	options_container.get_child(0).call_deferred("grab_focus")
 	return nodeArray_XML
 
 

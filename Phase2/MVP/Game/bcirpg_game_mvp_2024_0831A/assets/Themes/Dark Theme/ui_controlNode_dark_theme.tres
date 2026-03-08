@@ -1,11 +1,13 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
 
-[ext_resource path="res://assets/sbf_black.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/Themes/Dark Theme/sbf_black.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/liberation_serif_30pt.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/liberation_serif_20pt.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/Themes/Dark Theme/sbf_white_focus.tres" type="StyleBox" id=5]
 
 [resource]
+resource_name = "Dark Theme"
 Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -13,7 +15,7 @@ Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = ExtResource( 2 )
 Button/styles/disabled = null
-Button/styles/focus = null
+Button/styles/focus = ExtResource( 5 )
 Button/styles/hover = null
 Button/styles/normal = ExtResource( 1 )
 Button/styles/pressed = ExtResource( 1 )

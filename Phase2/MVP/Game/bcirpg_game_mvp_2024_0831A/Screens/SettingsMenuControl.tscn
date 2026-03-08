@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Screens/SettingsMenuConfig.gd" type="Script" id=1]
 [ext_resource path="res://assets/liberation_serif.tres" type="DynamicFont" id=2]
 [ext_resource path="res://UserInterface/But_ChangeScene.gd" type="Script" id=3]
+[ext_resource path="res://UserInterface/Slider_Controls.gd" type="Script" id=4]
+[ext_resource path="res://UserInterface/ItemList_Controls.gd" type="Script" id=5]
+[ext_resource path="res://UserInterface/OptionBut_Controls.gd" type="Script" id=6]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 2 )
@@ -14,6 +17,7 @@ theme = SubResource( 1 )
 script = ExtResource( 1 )
 genre_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer/OptionBut_Genre")
 game_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer/OptionBut_Game")
+theme_dropdown_path = NodePath("SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/OptionBut_Theme")
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -93,6 +97,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="BrightnessLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls/VisualControlsLabel/VisualControlsVBox"]
 margin_top = 43.0
@@ -110,6 +115,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="RootVboxPlayerPreferences" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
 margin_left = 368.0
@@ -168,6 +174,7 @@ value = 5.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances"]
 margin_top = 99.0
@@ -183,6 +190,7 @@ text = "Genre Selection:"
 margin_top = 23.0
 margin_right = 145.0
 margin_bottom = 48.0
+script = ExtResource( 6 )
 
 [node name="LabelGS" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxPlayerPreferences/Label/VBoxPlayerPreferances/VBoxContainer"]
 margin_top = 52.0
@@ -194,6 +202,7 @@ text = "Game System:"
 margin_top = 75.0
 margin_right = 145.0
 margin_bottom = 100.0
+script = ExtResource( 6 )
 
 [node name="RootVboxGeneralSettings" type="VBoxContainer" parent="SettingsScroll/HBoxContainer"]
 margin_left = 545.0
@@ -230,6 +239,7 @@ max_value = 10.0
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+script = ExtResource( 4 )
 
 [node name="HBoxClosedCaptions" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxGeneralSettings/GeneralSettingsLabel/VBoxContainer"]
 margin_top = 43.0
@@ -299,10 +309,16 @@ margin_right = 155.0
 margin_bottom = 32.0
 auto_height = true
 
-[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+[node name="OptionBut_Theme" type="OptionButton" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
 margin_top = 36.0
 margin_right = 155.0
-margin_bottom = 63.0
+margin_bottom = 61.0
+script = ExtResource( 6 )
+
+[node name="HBoxVirtualKeyboardEnabled" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
+margin_top = 65.0
+margin_right = 155.0
+margin_bottom = 92.0
 
 [node name="VisualKeyBoardLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxVirtualKeyboardEnabled"]
 margin_top = 4.0
@@ -316,9 +332,9 @@ margin_right = 138.0
 margin_bottom = 27.0
 
 [node name="HBoxKeyboardLayout" type="HBoxContainer" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
-margin_top = 67.0
+margin_top = 96.0
 margin_right = 155.0
-margin_bottom = 86.0
+margin_bottom = 115.0
 
 [node name="LayoutLabel" type="Label" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer/HBoxKeyboardLayout"]
 margin_right = 120.0
@@ -326,9 +342,10 @@ margin_bottom = 19.0
 text = "Layout Preference:"
 
 [node name="LayoutItemList" type="ItemList" parent="SettingsScroll/HBoxContainer/RootVboxVisualControls2/Label2/VBoxContainer"]
-margin_top = 90.0
+margin_top = 119.0
 margin_right = 155.0
-margin_bottom = 99.0
+margin_bottom = 128.0
 auto_height = true
+script = ExtResource( 5 )
 
 [connection signal="button_up" from="HBoxBottomRow/But_ChangeScene" to="HBoxBottomRow/But_ChangeScene" method="_on_But_NewGame_button_up"]
