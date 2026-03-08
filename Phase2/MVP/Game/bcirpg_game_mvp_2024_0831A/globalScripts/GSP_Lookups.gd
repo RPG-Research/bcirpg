@@ -144,3 +144,20 @@ func get_conversion_rules() ->void:
 	else:
 		var Conversion_Class := load(conversion_file_path)
 		conversion_class = Conversion_Class.new()
+		
+#FUNCTION: Get Ability Scores
+#Params: None 
+#Returns: Makes connection to conversion (TBD)
+#Notes: None
+func get_game_abilities(game:String) ->Array:
+	if access_library() && game_dictionary[game_options_label].has(game):
+		game_system_used = game
+	get_conversion_rules()
+	return (conversion_class.get_system_abilities())
+	
+func get_game_input_type(game:String) ->String:
+	if access_library() && game_dictionary[game_options_label].has(game):
+		game_system_used = game
+	get_conversion_rules()
+	return (conversion_class.get_system_input_type())
+	

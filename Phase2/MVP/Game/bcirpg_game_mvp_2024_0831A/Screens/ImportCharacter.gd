@@ -79,25 +79,40 @@ func _populate_output_character_format():
 			cust_cap_count = cust_cap_count+1	
 
 	else:
-		for label in pSingleton.output_labels:
+		#for label in pSingleton.output_labels:
+		var game_labels = GSP.get_game_abilities(settings.game_selection)
+		var input_type = GSP.get_game_input_type(settings.game_selection)
+		if input_type.strip_edges(true,true).to_upper() == "INT":
+			pSingleton.is_output_B = false
+		for label in game_labels:
 			var textLine = Label.new()
 			$ScrollContainer/VBoxContainer.add_child(textLine)
 			cust_cap_count = cust_cap_count+1
 			textLine.text = label.to_upper()
 			i = i+1
+			var textBox = LineEdit.new()
+			$ScrollContainer/VBoxContainer.add_child(textBox)
+			#DKM TEMP: We need to parse this on delim and build accordingly
+			var ability_text = "0"
+			if (input_type == "Int/D+/Int"):
+				ability_text = "0D+0"
+			else:
+				ability_text = "0"
+			textBox.text = ability_text
+			cust_cap_count = cust_cap_count+1
 			#match to content, assuming it exists and aligns
-			if(pSingleton.output_scores_A.size()>= i):
-				var textBox = LineEdit.new()
-				$ScrollContainer/VBoxContainer.add_child(textBox)
-				cust_cap_count = cust_cap_count+1
-				var ability_text = str(pSingleton.output_scores_A[i-1])
-				if(pSingleton.output_A_label.length() > 0):
-					ability_text = ability_text + pSingleton.output_A_label
-					if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
-						if(pSingleton.output_B_label.length() > 0):
-							ability_text = ability_text + pSingleton.output_B_label
-						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
-				textBox.text = ability_text
+#			if(pSingleton.output_scores_A.size()>= i):
+#				var textBox = LineEdit.new()
+#				$ScrollContainer/VBoxContainer.add_child(textBox)
+#				cust_cap_count = cust_cap_count+1
+#				var ability_text = str(pSingleton.output_scores_A[i-1])
+#				if(pSingleton.output_A_label.length() > 0):
+#					ability_text = ability_text + pSingleton.output_A_label
+#					if(pSingleton.is_output_B && pSingleton.output_scores_B.size()>= i):
+#						if(pSingleton.output_B_label.length() > 0):
+#							ability_text = ability_text + pSingleton.output_B_label
+#						ability_text = ability_text + str(pSingleton.output_scores_B[i-1])
+#				textBox.text = ability_text
 
 			
 #FUNCTION populate preset character format
@@ -262,6 +277,14 @@ func _save_data_to_singleton() -> void:
 						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
 							pSingleton.player_capabilities[13].score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
 						box_count = box_count+2
+					#For imported custom capabilities:
+					_:
+						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							var new_cap = pSingleton.Capability_Source.new()
+							new_cap.name = label_value
+							new_cap.score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+							pSingleton.player_capabilities.append(new_cap)
+						box_count = box_count+2
 				print("DEBUG, current box count is: " + str(box_count))
 			#Capacity object:
 			elif child_box.get_class() == "PanelContainer":
@@ -300,6 +323,10 @@ func _save_data_to_singleton() -> void:
 								new_cap.modifier = int(cap_item.text)
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
+		#Set output values for percentile:
+		for set_cap in pSingleton.player_capabilities:
+			set_cap.Game_Name = set_cap.name
+			set_cap.Game_Value = set_cap.score
 		pSingleton.set_health()
 		pSingleton.set_defense()
 		#Now set output values, too:
@@ -403,8 +430,11 @@ func _save_data_to_singleton() -> void:
 				print("TEMP: name: " + named)
 				current.Game_toDisplay = false
 				current.Game_Value = char_values_A[i]
-				current.Game_Extras = char_values_B[i]
-				current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+				if pSingleton.is_output_B:
+					current.Game_Extras = char_values_B[i]
+					current.Game_Raw = str(char_values_A[i]) + "D+" + str(char_values_B[i])
+				else:
+					current.Game_Raw = str(current.Game_Value)
 				pSingleton.player_capabilities.append(current)
 				i = i+1;
 	#	Ref: char_sheet_converter (game:String, source_char:playerCharacterTemplate, char_in:bool)->playerCharacterTemplate
