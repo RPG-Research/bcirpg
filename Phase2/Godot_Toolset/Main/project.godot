@@ -28,6 +28,11 @@ config/icon="res://icon.png"
 
 SpecialAbility="*res://middleware/specialabliities/SpecialAbility.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
 [global]
 
 filters=false

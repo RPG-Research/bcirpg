@@ -6,56 +6,108 @@ onready var display_tree = get_node(display_tree_path)
 export var file_dialog_path : NodePath
 onready var file_dialog = get_node(file_dialog_path)
 
-var replacements_dict : Dictionary = {}
-var genre_array : Array = [] # doesn't seem strictly necessary; for export into expected format
+export var add_button_texture : Texture
+export var remove_button_texture : Texture
+
+#var replacements_dict : Dictionary = {}
+#var genre_array : Array = [] # doesn't seem strictly necessary; for export into expected format
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	display_tree.set_hide_root(true)
+	display_tree.columns = 4
+	display_tree.set_column_min_width(0, 32)
+	display_tree.set_column_expand(0, false)
+	display_tree.set_column_min_width(2, 32)
+	display_tree.set_column_expand(2, false)
+	display_tree.connect("button_pressed", self, "_on_tree_button_pressed")
 
 func _get_data_as_json():
-	var json_data = {"GENRES":genre_array, "REPLACEMENTS":replacements_dict}
+	var tree_dict = _display_tree_to_dict()
+	var json_data = {"GENRES":tree_dict.keys(), "REPLACEMENTS":tree_dict}
 	return to_json(json_data)
 	
 func _load_data_from_json(json_text):
 	var parsed_json = parse_json(json_text)
 	print(parsed_json)
-	replacements_dict = parsed_json.get("REPLACEMENTS")
-	genre_array = parsed_json.get("GENRES")
+	var replacements_dict = parsed_json.get("REPLACEMENTS")
+	#genre_array = parsed_json.get("GENRES")
+	_refresh_tree()
+	_fill_tree(replacements_dict)
 
 func _add_genre(genre_name : String):
-	# add genre to genre_dict
-	if (genre_array.has(genre_name)):
-		print("that genre already exists!")
-		return
-		
-	genre_array.append(genre_name)
-	replacements_dict[genre_name] = {}
+	# add genre to tree
+	# todo: prevent duplicates????
+	
+	var new_genre = display_tree.create_item(display_tree.get_root())
+	new_genre.set_text(1, genre_name)
+	new_genre.set_editable(1, true)
+	new_genre.set_expand_right(1, true)
+	new_genre.add_button(0, remove_button_texture, -1, false, "Remove Genre")
+	
+	return new_genre
+	
+func _add_replacement(genre_node, generic, replacement):
+	var new_replacement = display_tree.create_item(genre_node)
+	new_replacement.set_text(1, generic)
+	new_replacement.set_text(2, " -> ")
+	new_replacement.set_text(3, replacement)
+	
+	new_replacement.set_editable(1, true)
+	new_replacement.set_editable(3, true)
+	
+	new_replacement.set_selectable(2, false)
+	
+	new_replacement.add_button(0, remove_button_texture, -1, false, "Remove Replacement")
+	
+	return new_replacement
 
-func _remove_genre(genre_name: String):
-	# doesn't cause any problems if the genre_name isn't there
-	genre_array.erase(genre_name)
-	replacements_dict.erase(genre_name)
+func _add_genre_button():
+	var add_genre_button = display_tree.create_item(display_tree.get_root())
+	add_genre_button.add_button(0, add_button_texture, -1, false, "Add Genre")
+	add_genre_button.set_selectable(1, false)
+	add_genre_button.set_selectable(2, false)
+	add_genre_button.set_selectable(3, false)
 
-# also works to override an existing replacement; will add a genre if it doesn't exist because why not?
-func _add_replacement(genre_name:String, generic:String, replacement:String):
-	if !replacements_dict.has(genre_name):
-		_add_genre(genre_name)
-	replacements_dict[genre_name][generic] = replacement
-
-func _remove_replacement(genre_name:String, generic:String):
-	replacements_dict[genre_name].erase(generic)
+func _add_replacement_button(genre_node):
+	var add_replacement_button = display_tree.create_item(genre_node)
+	add_replacement_button.add_button(0, add_button_texture, -1, false, "Add Replacement")
+	add_replacement_button.set_selectable(1, false)
+	add_replacement_button.set_selectable(2, false)
+	add_replacement_button.set_selectable(3, false)
 
 
-func _fill_tree(): # why, yes, i am iterating through dicts. cry about it
+func _display_tree_to_dict():
+	var tree_dict = {} # make a dict to store our tree in
+	var current_genre = display_tree.get_root().get_children() # the root exists to store our subtrees; we don't want it in the dict
+
+	while current_genre != null:
+		var current_genre_text = current_genre.get_text(1)
+		if current_genre_text != "": # currently, the buttons are blank tree items with texture buttons in them, so we'll skip them
+			tree_dict[current_genre_text] = {}
+			var current_generic = current_genre.get_children() # fyi, get_children actually just gets the first child item
+			
+			while current_generic != null:
+				var current_generic_text = current_generic.get_text(1)
+				if current_generic_text != "":
+					tree_dict[current_genre_text][current_generic_text] = current_generic.get_text(3)
+				current_generic = current_generic.get_next()
+				
+		current_genre = current_genre.get_next()
+	return tree_dict
+
+func _fill_tree(replacements_dict): # why, yes, i am iterating through dicts. cry about it
 	for genre in replacements_dict.keys():
-		var genre_node = display_tree.create_item(display_tree.get_root())
-		genre_node.set_text(0, genre)
+		var genre_node = _add_genre(genre)
+		
 		for generic in replacements_dict[genre].keys():
 			var replacement = replacements_dict[genre][generic]
-			var replacement_node = display_tree.create_item(genre_node)
-			replacement_node.set_text(0, generic + " -> " + replacement)
+			_add_replacement(genre_node, generic, replacement)
+			
+		_add_replacement_button(genre_node)
+	_add_genre_button()
+	#_add_tree_buttons()
 
 func _refresh_tree():
 	display_tree.clear()
@@ -65,7 +117,7 @@ func _refresh_tree():
 
 func _on_LoadButton_pressed():
 	file_dialog.set_mode(FileDialog.MODE_OPEN_FILE)
-	file_dialog.popup()
+	file_dialog.popup_centered()
 
 func _on_SaveButton_pressed():
 	file_dialog.set_mode(FileDialog.MODE_SAVE_FILE)
@@ -77,11 +129,34 @@ func _on_FileDialog_file_selected(path):
 		file.open(path, File.READ)
 		var file_text = file.get_as_text()
 		_load_data_from_json(file_text)
-		_refresh_tree()
-		_fill_tree()
+		
+		#_fill_tree()
 	elif file_dialog.get_mode() == FileDialog.MODE_SAVE_FILE:
 		if file.file_exists(path):
-			print("existing file; jusst fyi it's gonna overwrite")
+			print("existing file; just fyi it's gonna overwrite")
 		file.open(path, File.WRITE)
 		file.store_string(_get_data_as_json())
 	file.close()
+	
+func _on_NewButton_pressed():
+	_refresh_tree()
+	_add_genre_button()
+	
+func _on_tree_button_pressed(button_tree_item, column, id):
+	var button_index = button_tree_item.get_button_by_id(0, id)
+	var button_texture = button_tree_item.get_button(0, button_index)
+	
+	if button_texture == remove_button_texture:
+		button_tree_item.get_parent().remove_child(button_tree_item)
+		button_tree_item.free()
+	elif button_texture == add_button_texture:
+		if button_tree_item.get_parent() == display_tree.get_root():
+			print("adding genre")
+			var new_genre_node = _add_genre("")
+			_add_replacement_button(new_genre_node)
+		else:
+			print("adding replacement")
+			_add_replacement(button_tree_item.get_parent(), "", "")
+		button_tree_item.move_to_bottom()
+	else:
+		print("unrecognized button! Initializing self-destruct sequence.")

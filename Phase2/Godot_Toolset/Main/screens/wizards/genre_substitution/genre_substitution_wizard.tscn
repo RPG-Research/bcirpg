@@ -1,54 +1,71 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://screens/wizards/genre_substitution/genre_substitution_wizard.gd" type="Script" id=1]
+[ext_resource path="res://assets/add_button_texture.png" type="Texture" id=2]
+[ext_resource path="res://assets/remove_button_texture.png" type="Texture" id=3]
 
 [node name="GenreSubstitutionWizard" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 7
+size_flags_vertical = 3
 script = ExtResource( 1 )
-display_tree_path = NodePath("VBoxContainer/DisplayTree")
+display_tree_path = NodePath("DisplayTree")
 file_dialog_path = NodePath("FileDialog")
+add_button_texture = ExtResource( 2 )
+remove_button_texture = ExtResource( 3 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
-visible = true
+margin_right = 1024.0
+margin_bottom = 600.0
 popup_exclusive = true
 window_title = "Open a File"
 resizable = true
 mode = 0
 access = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.125
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 298.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_right = 510.0
-margin_bottom = 298.0
+[node name="LoadButton" type="Button" parent="HBoxContainer"]
+margin_right = 338.0
+margin_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 514.0
-margin_right = 1024.0
-margin_bottom = 298.0
+[node name="SaveButton" type="Button" parent="HBoxContainer"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
 
-[node name="DisplayTree" type="Tree" parent="VBoxContainer"]
-margin_top = 302.0
+[node name="NewButton" type="Button" parent="HBoxContainer"]
+margin_left = 685.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="DisplayTree" type="Tree" parent="."]
+anchor_top = 0.125
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/NewButton" to="." method="_on_NewButton_pressed"]
