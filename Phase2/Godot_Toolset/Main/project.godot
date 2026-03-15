@@ -21,12 +21,17 @@ _global_script_class_icons={
 [application]
 
 config/name="bcirpg_toolset"
-run/main_scene="res://screens/wizards/character_creation/character_creation_wizard.tscn"
+run/main_scene="res://screens/main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 SpecialAbility="*res://middleware/specialabliities/SpecialAbility.gd"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [global]
 
