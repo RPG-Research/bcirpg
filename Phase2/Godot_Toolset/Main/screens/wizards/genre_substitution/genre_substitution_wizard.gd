@@ -7,6 +7,7 @@ export var file_dialog_path : NodePath
 onready var file_dialog = get_node(file_dialog_path)
 
 export var add_button_texture : Texture
+export var add_button_texture_2 : Texture
 export var remove_button_texture : Texture
 
 #var replacements_dict : Dictionary = {}
@@ -65,7 +66,7 @@ func _add_replacement(genre_node, generic, replacement):
 
 func _add_genre_button():
 	var add_genre_button = display_tree.create_item(display_tree.get_root())
-	add_genre_button.add_button(0, add_button_texture, -1, false, "Add Genre")
+	add_genre_button.add_button(0, add_button_texture_2, -1, false, "Add Genre")
 	add_genre_button.set_selectable(1, false)
 	add_genre_button.set_selectable(2, false)
 	add_genre_button.set_selectable(3, false)
