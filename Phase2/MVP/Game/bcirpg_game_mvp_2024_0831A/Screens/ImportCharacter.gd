@@ -29,13 +29,14 @@ func _ready() -> void:
 	#$VBoxContainer2/But_OpenFile.call_deferred("grab_focus")
 	$But_Play.call_deferred("grab_focus") #This will grab focus on the "Start Game" option by default
 
-func _on_Button_pressed():
-	open_file_dialog()
+func _on_OpenFile_Button_pressed():
+	_open_file_dialog()
 
 #takes appropriate action when the custom hotkey is pressed
 func _unhandled_input(event):
 	if Input.is_action_pressed("open_file_hotkey"):
-		$FileDialog.popup()
+		#$FileDialog.popup()
+		_open_file_dialog()
 
 	if Input.is_action_pressed("save_character_file_hotkey"):
 		_save_data_to_singleton()
@@ -46,7 +47,7 @@ func _unhandled_input(event):
 #Notes: decides how to open a file based on whether or not javascript is present (HTML5 build)
 #	non-HTML5 versions continue in _on_FileDialog_file_selected
 #	HTML5 continues in _js_populate_preset_character_format
-func open_file_dialog():
+func _open_file_dialog():
 	if OS.has_feature('JavaScript'):
 		var file_text = yield(JavaScriptFileManager.open_file_dialog_get_text(), "completed")
 		_clear_char_sheet()
@@ -475,12 +476,19 @@ func _save_data_to_singleton() -> void:
 #		for a file name, we need to validate it. 
 func _save_data_to_csv() -> void:
 	var file_path = ""
+	var file # we'll only be using this on the desktop version, not the browser
 	if str(pSingleton.name) != "":
-		file_path = "user://" + str(pSingleton.name) + "_data.csv"
+		file_path = str(pSingleton.name) + "_data.csv"
 	else: 
-		 file_path = "user://character_data.csv"
-	var file = File.new()
-	if file.open(file_path, File.WRITE) == OK:
+		 file_path = "character_data.csv"
+	
+	# if not on the browser, we can save to the user directory
+	# if we ARE in the browser, we have to prompt the user where to save it, so the file path is just the name
+	if !OS.has_feature('JavaScript'):
+		file_path = "user://" + file_path
+		file = File.new() # this only needs to be set in desktop, browser saves using the JavaScript bridge
+	
+	if (!OS.has_feature('JavaScript') && file.open(file_path, File.WRITE) == OK) || OS.has_feature('JavaScript'):
 		var csv_labels = ""
 		#Prior system for labels:
 #		for extra in pSingleton.output_extras:
@@ -516,8 +524,12 @@ func _save_data_to_csv() -> void:
 #			labels_counter = labels_counter +1
 #			csv_labels = csv_labels + ","
 		#TO DO:add the values, too.
-		file.store_string(csv_labels)
-		file.close()
+		if !OS.has_feature('JavaScript'):
+			file.store_string(csv_labels)
+			file.close()
+		else:
+			# for browser saving, we need to convert the string to a PoolByteArray
+			JavaScript.download_buffer(csv_labels.to_utf8(), file_path) # may not be necessary to define MIME type
 		print("Data saved to ", file_path)
 		print(OS.get_data_dir())
 	else:

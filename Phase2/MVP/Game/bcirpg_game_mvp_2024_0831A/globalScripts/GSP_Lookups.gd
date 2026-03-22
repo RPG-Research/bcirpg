@@ -137,10 +137,16 @@ func get_game_options() ->Array:
 func get_conversion_rules() ->void:
 	var rules_test = "";
 	conversion_file_path = global_path_prefix + "Convert_" + game_system_used + ".gd"
-	var file = File.new()
-	var error = file.open(conversion_file_path, file.READ)
-	if error != OK:
-		print("Error finding conversion rules in library " + error)
-	else:
+	
+	# unfortunately, the check below breaks on browser, so we'll skip it
+	if OS.has_feature('JavaScript'):
 		var Conversion_Class := load(conversion_file_path)
 		conversion_class = Conversion_Class.new()
+	else:
+		var file = File.new()
+		var error = file.open(conversion_file_path, file.READ)
+		if error != OK:
+			print("Error finding conversion rules in library " + error)
+		else:
+			var Conversion_Class := load(conversion_file_path)
+			conversion_class = Conversion_Class.new()
