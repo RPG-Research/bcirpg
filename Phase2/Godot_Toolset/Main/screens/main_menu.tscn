@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://user_interface/button_change_scene.gd" type="Script" id=1]
+[ext_resource path="res://user_interface/button_opene_scene_in_window.gd" type="Script" id=2]
 
 [node name="menu" type="Control"]
 anchor_right = 1.0
@@ -16,13 +16,15 @@ anchor_bottom = 0.875
 margin_right = 340.0
 margin_bottom = 20.0
 text = "Character Creation"
-script = ExtResource( 1 )
-next_scene_path = "res://screens/wizards/character_creation/character_creation_wizard.tscn"
+script = ExtResource( 2 )
+scene_path = "res://screens/wizards/character_creation/character_creation_wizard.tscn"
+window_title = "Character Editor"
 
 [node name="ButtonGenreSubstitution" type="Button" parent="VBoxContainer"]
 margin_top = 24.0
 margin_right = 340.0
 margin_bottom = 44.0
 text = "Genre Substitution"
-script = ExtResource( 1 )
-next_scene_path = "res://screens/wizards/genre_substitution/genre_substitution_wizard.tscn"
+script = ExtResource( 2 )
+scene_path = "res://screens/wizards/genre_substitution/genre_substitution_wizard.tscn"
+window_title = "Genre Substitution"

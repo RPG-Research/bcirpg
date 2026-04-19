@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/remove_button_texture_2.png" type="Texture" id=1]
 [ext_resource path="res://assets/add_button_texture.png" type="Texture" id=2]
 [ext_resource path="res://assets/remove_button_texture.png" type="Texture" id=3]
 [ext_resource path="res://assets/add_button_texture_2.png" type="Texture" id=4]
-[ext_resource path="res://user_interface/button_change_scene.gd" type="Script" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -195,47 +194,6 @@ resizable = true
 mode = 0
 access = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 0.075
-
-[node name="BackButton" type="Button" parent="HBoxContainer"]
-margin_right = 253.0
-margin_bottom = 45.0
-size_flags_horizontal = 3
-text = "Back"
-script = ExtResource( 5 )
-next_scene_path = "res://screens/main_menu.tscn"
-
-[node name="LoadButton" type="Button" parent="HBoxContainer"]
-margin_left = 257.0
-margin_right = 510.0
-margin_bottom = 45.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Load"
-
-[node name="SaveButton" type="Button" parent="HBoxContainer"]
-margin_left = 514.0
-margin_right = 767.0
-margin_bottom = 45.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Save"
-
-[node name="NewButton" type="Button" parent="HBoxContainer"]
-margin_left = 771.0
-margin_right = 1024.0
-margin_bottom = 45.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-text = "New"
-
 [node name="DisplayTree" type="Tree" parent="."]
 anchor_top = 0.075
 anchor_right = 1.0
@@ -244,6 +202,38 @@ margin_right = 1.0
 margin_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.075
+
+[node name="LoadButton" type="Button" parent="HBoxContainer"]
+margin_right = 338.0
+margin_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Load"
+
+[node name="SaveButton" type="Button" parent="HBoxContainer"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+
+[node name="NewButton" type="Button" parent="HBoxContainer"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "New"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
