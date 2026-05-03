@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://screens/wizards/module_creation/module_creation_wizard.gd" type="Script" id=1]
+
+[node name="adventure_creation_wizard" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+region_grid_path = NodePath("RegionGrid")
+file_dialog_path = NodePath("FileDialog")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -59.0
+margin_bottom = -50.0
+access = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.05
+
+[node name="ButtonLoad" type="Button" parent="HBoxContainer"]
+margin_right = 338.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="ButtonSave" type="Button" parent="HBoxContainer"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="ButtonNew" type="Button" parent="HBoxContainer"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "New"
+
+[node name="RegionGrid" type="GridContainer" parent="."]
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="pressed" from="HBoxContainer/ButtonLoad" to="." method="_on_ButtonLoad_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonSave" to="." method="_on_ButtonSave_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonNew" to="." method="_on_ButtonNew_pressed"]

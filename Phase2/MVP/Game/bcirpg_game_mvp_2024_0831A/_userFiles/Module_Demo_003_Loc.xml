@@ -56,7 +56,6 @@
         <Option_GoTos_001>Boat_001</Option_GoTos_001>
       </Space>
       <Space>
-      <Space>
         <Id>Boat_003</Id>
         <Action>ShowText</Action>
         <A_Params></A_Params>
