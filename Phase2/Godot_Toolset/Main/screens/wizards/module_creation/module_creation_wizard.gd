@@ -7,6 +7,8 @@ onready var region_grid = get_node(region_grid_path)
 export var file_dialog_path: NodePath
 onready var file_dialog = get_node(file_dialog_path)
 
+var module_dict
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -52,29 +54,36 @@ func _on_FileDialog_file_selected(path):
 				XMLParser.NODE_ELEMENT:
 					node_name = xml_parser.get_node_name()
 					# each node element is its own dictionary
-					var new_dict : Dictionary = {}
+					var new_data
 					
 					# each element is added to the name stack so we know what element(s) we're inside
 					node_name_stack.append(node_name)
 					
 					# a properly-formatted xml has only one root, and we have one dictionary to hold all the smaller dictionaries
 					if node_name == "root":
-						node_stack.append(new_dict)
+						new_data = []
+						node_stack.append(new_data)
 					else:
 						# first, we'll check if this is a node type that should be an array
-						if nodes_with_multiples.has(node_name):
-							# now that we know it should be an array, we'll check if the array already exists
-							if !node_stack[-1].has(node_name):
-								# if it doesn't, we'll make a new array
-								node_stack[-1][node_name] = []
-							# now we add to the new or existing array
-							node_stack[-1][node_name].append(new_dict)
-						else:
-							# if there shouldn't be multiples, we add it directly, replacing any potential duplicates
-							node_stack[-1][node_name] = new_dict
+						if nodes_with_multiples.has(node_name): # node is an array
+							new_data = []
+							# next, we'll check if the parent is an array
+							if node_stack[-1] is Array:
+								node_stack[-1].append({node_name: new_data})
+							else:
+								node_stack[-1][node_name] = new_data
+							node_stack.append(new_data)
+						else: # node is not an array
+							new_data = {}
+							# next, we'll check if the parent is an array
+							if node_stack[-1] is Array:
+								node_stack[-1].append(new_data)
+							else:
+								node_stack[-1][node_name] = new_data
+							node_stack.append(new_data)
 							
 						# we always add the new dict to the node stack so we can add children to it directly
-						node_stack.append(new_dict)
+						#node_stack.append(new_dict)
 				XMLParser.NODE_ELEMENT_END:
 					node_name = xml_parser.get_node_name()
 					#print("popping " + node_name)
@@ -94,4 +103,11 @@ func _on_FileDialog_file_selected(path):
 							var node_text = xml_parser.get_node_data()
 							#print("adding text: " + node_text)
 							node_stack[-1][node_name_stack[-1]] = node_text
-	print(node_stack[0])
+							#print(node_text)
+							break
+	module_dict = node_stack[0]
+	display_module_dict()
+
+func display_module_dict():
+	print(module_dict)
+	pass
