@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "ConflictResultsProcess",
 "language": "GDScript",
 "path": "res://middleware/conflictResults/conflictResults.gd"
+}, {
+"base": "Control",
+"class": "RegionObject",
+"language": "GDScript",
+"path": "res://screens/wizards/module_creation/region_object.gd"
 } ]
 _global_script_class_icons={
-"ConflictResultsProcess": ""
+"ConflictResultsProcess": "",
+"RegionObject": ""
 }
 
 [application]
