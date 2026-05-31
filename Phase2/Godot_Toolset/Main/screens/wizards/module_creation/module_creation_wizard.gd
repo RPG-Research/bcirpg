@@ -96,8 +96,10 @@ func _on_FileDialog_file_selected(path):
 						# this might be the place to save something?
 				XMLParser.NODE_TEXT:
 					# first make sure we're in an element that should have text
+					var text_to_check = node_name_stack[-1].rstrip("0123456789")
+					
 					for text_node_label in nodes_with_text:
-						if node_name_stack[-1].rstrip("0123456789")  == text_node_label: # this means we have a valid node for storing text
+						if text_to_check  == text_node_label: # this means we have a valid node for storing text
 							var node_text = xml_parser.get_node_data()
 							node_stack[-1][node_name_stack[-1]] = node_text
 							break
@@ -111,10 +113,10 @@ func display_module_dict():
 	# each set of regions, location, spaces, labels, and gotos should be stored in its own grid within the aforementioned object
 	#      actually maybe labels and gotos should be in a list
 	# other variables should be displayed in a non-grid way in the object instead
-	_display_module_dict_recursive(module_dict, region_grid)
+	_display_module_dict_recursive(module_dict, region_grid, null)
 	region_grid.columns = round(sqrt(region_grid.get_child_count()))
 
-func _display_module_dict_recursive(object_to_display, holder_object):
+func _display_module_dict_recursive(object_to_display, holder_object, key):
 	# holder should already be of the correct type
 	# create the right structure to display object_to_display
 	# put object_to_display in holder object_to_display
@@ -125,17 +127,21 @@ func _display_module_dict_recursive(object_to_display, holder_object):
 	
 	# end of the line...
 	if object_to_display is String:
-		# create a LineEdit (temp)
-		var new_line_edit = LineEdit.new()
+		var new_key_pair = HBoxContainer.new()
+		var new_key_text = Label.new()
+		var new_text = LineEdit.new()
+		new_key_pair.add_child(new_key_text)
+		new_key_pair.add_child(new_text)
 		
-		#new_line_edit.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		#new_line_edit.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-		new_line_edit.text = object_to_display
+		new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+		new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+		new_key_text.text = key
+		new_text.text = object_to_display
 		
 		if holder_object is RegionObject:
-			holder_object.add_to_region_box(new_line_edit)
+			holder_object.add_to_region_box(new_key_pair)
 		else :
-			holder_object.add_child(new_line_edit)
+			holder_object.add_child(new_key_pair)
 		return
 	elif object_to_display is Array:
 		new_holder_object = GridContainer.new()
@@ -153,13 +159,13 @@ func _display_module_dict_recursive(object_to_display, holder_object):
 		holder_object.add_child(new_holder_object)
 	
 	# create the correct holder object for each child and call the method recursively to insert them into the new holder object
-	for key in object_to_display:
+	for new_key in object_to_display:
 		var item
 		
 		if object_to_display is Dictionary: # if the object is a dictionary, then we need to search by key
-			item = object_to_display[key]
+			item = object_to_display[new_key]
 		else:
-			item = key
-			key = null
+			item = new_key
+			new_key = null
 		
-		_display_module_dict_recursive(item, new_holder_object)
+		_display_module_dict_recursive(item, new_holder_object, new_key)
