@@ -112,8 +112,14 @@ func display_module_dict():
 	#      actually maybe labels and gotos should be in a list
 	# other variables should be displayed in a non-grid way in the object instead
 	_display_module_dict_recursive(module_dict, region_grid)
+	region_grid.columns = round(sqrt(region_grid.get_child_count()))
 
 func _display_module_dict_recursive(object_to_display, holder_object):
+	# holder should already be of the correct type
+	# create the right structure to display object_to_display
+	# put object_to_display in holder object_to_display
+	# if object_to_display has children, dtermine the correct holder object and recurse with holder and child
+	
 	# create the correct object for self and insert it into the given holder object
 	var new_holder_object
 	
@@ -122,15 +128,13 @@ func _display_module_dict_recursive(object_to_display, holder_object):
 		# create a LineEdit (temp)
 		var new_line_edit = LineEdit.new()
 		
-		new_line_edit.anchor_right = 1.0
-		new_line_edit.anchor_bottom = 1.0
-		new_line_edit.size_flags_horizontal = Control.SIZE_EXPAND
-		new_line_edit.size_flags_vertical = Control.SIZE_EXPAND
+		#new_line_edit.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+		#new_line_edit.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
 		new_line_edit.text = object_to_display
 		
 		if holder_object is RegionObject:
 			holder_object.add_to_region_box(new_line_edit)
-		else:
+		else :
 			holder_object.add_child(new_line_edit)
 		return
 	elif object_to_display is Array:
@@ -139,10 +143,14 @@ func _display_module_dict_recursive(object_to_display, holder_object):
 	elif object_to_display is Dictionary:
 		new_holder_object = region_object_scene.instance()
 		
-	new_holder_object.anchor_right = 1.0
-	new_holder_object.anchor_bottom = 1.0
-	new_holder_object.size_flags_horizontal = Control.SIZE_EXPAND
-	new_holder_object.size_flags_vertical = Control.SIZE_EXPAND
+	new_holder_object.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+	new_holder_object.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+	
+	# add the object to the holder_object
+	if holder_object is RegionObject:
+		holder_object.add_to_region_box(new_holder_object)
+	else:
+		holder_object.add_child(new_holder_object)
 	
 	# create the correct holder object for each child and call the method recursively to insert them into the new holder object
 	for key in object_to_display:
@@ -154,25 +162,4 @@ func _display_module_dict_recursive(object_to_display, holder_object):
 			item = key
 			key = null
 		
-		if item is Dictionary:
-			# in this case, we likely have a region, location, or space
-			# we'll want to make a region object
-			if holder_object is RegionObject:
-				holder_object.add_to_region_box(new_holder_object)
-			else:
-				holder_object.add_child(new_holder_object)
-			_display_module_dict_recursive(item, new_holder_object)
-		elif item is Array:
-			# in this case, we likely have an array of regions, locations, or spaces
-			# we'll want to make a new grid
-			if holder_object is RegionObject:
-				holder_object.add_to_region_box(new_holder_object)
-			else:
-				holder_object.add_child(new_holder_object)
-			_display_module_dict_recursive(item, new_holder_object)
-		elif item is String:
-			# in this case, we likely have a text node
-			# strings should get added directly to the holder
-			_display_module_dict_recursive(item, holder_object)
-		else:
-			print("Item in object to display is not an expected type.")
+		_display_module_dict_recursive(item, new_holder_object)
