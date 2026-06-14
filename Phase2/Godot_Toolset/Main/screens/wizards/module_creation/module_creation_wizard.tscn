@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://screens/wizards/module_creation/module_creation_wizard.gd" type="Script" id=1]
 [ext_resource path="res://screens/wizards/module_creation/region_object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://screens/wizards/module_creation/zoom_and_drag.gd" type="Script" id=3]
 
 [node name="adventure_creation_wizard" type="Control"]
 anchor_right = 1.0
@@ -9,7 +10,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-region_grid_path = NodePath("VBoxContainer/ScrollContainer/RegionGrid")
+region_grid_path = NodePath("VBoxContainer/ZoomContainer/ZoomSubContainer/RegionGrid")
 file_dialog_path = NodePath("FileDialog")
 region_object_scene = ExtResource( 2 )
 
@@ -58,15 +59,24 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "New"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ZoomContainer" type="Control" parent="VBoxContainer"]
 margin_top = 33.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.95
+script = ExtResource( 3 )
+zoom_subcontainer_path = NodePath("ZoomSubContainer")
 
-[node name="RegionGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="ZoomSubContainer" type="Control" parent="VBoxContainer/ZoomContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="RegionGrid" type="GridContainer" parent="VBoxContainer/ZoomContainer/ZoomSubContainer"]
 margin_right = 1024.0
 margin_bottom = 567.0
 size_flags_horizontal = 3

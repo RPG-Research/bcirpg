@@ -14,6 +14,8 @@ var nodes_with_multiples = ["Region", "Location", "Space"]
 
 var module_dict
 
+var region_object_array = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -148,6 +150,8 @@ func _display_module_dict_recursive(object_to_display, holder_object, key):
 		new_holder_object.columns = round(sqrt(object_to_display.size()))
 	elif object_to_display is Dictionary:
 		new_holder_object = region_object_scene.instance()
+		region_object_array.append(new_holder_object)
+		new_holder_object.connect("highlight_destination_signal", self, "highlight_options")
 		
 	new_holder_object.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
 	new_holder_object.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
@@ -158,7 +162,7 @@ func _display_module_dict_recursive(object_to_display, holder_object, key):
 	else:
 		holder_object.add_child(new_holder_object)
 	
-	# create the correct holder object for each child and call the method recursively to insert them into the new holder object
+	# call the method recursively to insert sub-items into the new holder object
 	for new_key in object_to_display:
 		var item
 		
@@ -169,3 +173,8 @@ func _display_module_dict_recursive(object_to_display, holder_object, key):
 			new_key = null
 		
 		_display_module_dict_recursive(item, new_holder_object, new_key)
+
+
+func highlight_options(destination_text):
+	for region_object in region_object_array:
+		region_object.highlight_destination(destination_text)
