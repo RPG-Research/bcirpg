@@ -4,7 +4,7 @@ export var zoom_subcontainer_path: NodePath
 onready var zoom_subcontainer = get_node(zoom_subcontainer_path)
 
 var zoom_speed = 0.01
-var zoom_offset_power = 0.1
+var zoom_offset_power = 0.5
 
 var is_dragging = false
 

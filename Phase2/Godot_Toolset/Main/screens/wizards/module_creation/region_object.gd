@@ -19,10 +19,10 @@ func add_to_region_box(given_node):
 
 func _gui_input(event):
 	if event is InputEventMouseButton:
-		if event.pressed:
+		if event.pressed && event.button_index == BUTTON_LEFT:
 			is_dragging = true
 			get_destination()
-		else:
+		if !event.pressed:
 			is_dragging = false
 				
 	elif event is InputEventMouseMotion:
