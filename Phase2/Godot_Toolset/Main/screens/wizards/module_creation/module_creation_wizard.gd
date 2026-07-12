@@ -1,13 +1,18 @@
 extends Control
 
 
-export var region_grid_path: NodePath
-onready var region_grid = get_node(region_grid_path)
+export var region_container_path: NodePath
+onready var region_container = get_node(region_container_path)
 
 export var file_dialog_path: NodePath
 onready var file_dialog = get_node(file_dialog_path)
 
 export var region_object_scene: PackedScene
+
+export var space_display_height: int
+export var space_display_height_margin: int
+export var space_display_width: int
+export var space_display_width_margin: int
 
 var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "A_Params", "Text", "Option_Labels", "Option_GoTos"]
 var nodes_with_multiples = ["Region", "Location", "Space"]
@@ -15,6 +20,9 @@ var nodes_with_multiples = ["Region", "Location", "Space"]
 var module_dict
 
 var region_object_array = []
+var space_dict = {}
+var space_start
+var space_dict_displayed = [] # array of already-displayed spaces to prevent looping
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -105,117 +113,89 @@ func _on_FileDialog_file_selected(path):
 	display_module_dict()
 
 func display_module_dict():
-	#print(module_dict)
-	# here we should recursively traverse the module dict and display it, ig
-	# each region, location, and space should be its own object
-	# each set of regions, location, spaces, labels, and gotos should be stored in its own grid within the aforementioned object
-	#      actually maybe labels and gotos should be in a list
-	# other variables should be displayed in a non-grid way in the object instead
-	#_display_module_dict_recursive(module_dict, region_grid, null)
-	_construct_display_tree(module_dict, null, region_grid)
-	region_grid.columns = round(sqrt(region_grid.get_child_count()))
+	_construct_display_tree(module_dict, false, null)
+	space_dict_displayed.append(space_start)
+	_display_tree(space_start, Vector2(0,0))
+	#print(space_dict)
+	#print(space_start)
 
-func _display_module_dict_recursive(object_to_display, holder_object, key):
-	# holder should already be of the correct type
-	# create the right structure to display object_to_display
-	# put object_to_display in holder object_to_display
-	# if object_to_display has children, dtermine the correct holder object and recurse with holder and child
+func _display_tree(current_branch_id, current_location):
+	# we want to show space_dict as a branching tree, stsrting with space_start
+	print("displaying ", current_branch_id)
 	
-	# create the correct object for self and insert it into the given holder object
-	var new_holder_object
+	var new_display_object = region_object_scene.instance()
+	region_container.add_child(new_display_object)
 	
-	# end of the line...
-	if object_to_display is String:
-		var new_key_pair = HBoxContainer.new()
-		var new_key_text = Label.new()
-		var new_text = LineEdit.new()
-		new_key_pair.add_child(new_key_text)
-		new_key_pair.add_child(new_text)
-		
-		new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-		new_key_text.text = key
-		new_text.text = object_to_display
-		
-		if holder_object is RegionObject:
-			holder_object.add_to_region_box(new_key_pair)
+	var space_object = space_dict[current_branch_id]["Object"]
+	
+	for key in space_object:
+		if nodes_with_text.has(key.rstrip("1234567890_")) && space_object[key].has("Text"):
+			var new_key_pair = HBoxContainer.new()
+			var new_key_text = Label.new()
+			var new_text = LineEdit.new()
+			new_key_pair.add_child(new_key_text)
+			new_key_pair.add_child(new_text)
+			
+			new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+			new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+			new_key_text.text = key
+			new_text.text =  space_object[key]["Text"]
+				
+			new_display_object.add_to_region_box(new_key_pair)
+			new_display_object.rect_position = current_location
+			new_display_object.rect_size = Vector2(space_display_width, space_display_height)
+			
+	var to_display = []
+	for id in space_dict[current_branch_id]["Gotos"]: # determine the branches left to display
+		if !space_dict_displayed.has(id):
+			to_display.append(id)
 		else:
-			holder_object.add_child(new_key_pair)
-		return
-	elif object_to_display is Array:
-		new_holder_object = GridContainer.new()
-		new_holder_object.columns = round(sqrt(object_to_display.size()))
-	elif object_to_display is Dictionary:
-		new_holder_object = region_object_scene.instance()
-		region_object_array.append(new_holder_object)
-		new_holder_object.connect("highlight_destination_signal", self, "highlight_options")
-		
-	new_holder_object.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-	new_holder_object.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+			print(id, " already displayed")
+	print("num gotos: ", to_display.size())
 	
-	# add the object to the holder_object
-	if holder_object is RegionObject:
-		holder_object.add_to_region_box(new_holder_object)
-	else:
-		holder_object.add_child(new_holder_object)
-	
-	# call the method recursively to insert sub-items into the new holder object
-	for new_key in object_to_display:
-		var item
-		
-		if object_to_display is Dictionary: # if the object is a dictionary, then we need to search by key
-			item = object_to_display[new_key]
-		else:
-			item = new_key
-			new_key = null
-		
-		_display_module_dict_recursive(item, new_holder_object, new_key)
+	var branch_display_height = to_display.size() * space_display_height + (to_display.size() - 1) * space_display_height_margin
+	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2) - (branch_display_height/2))
+	for id in to_display:
+		space_dict_displayed.append(id)
+		_display_tree(id, branch_display_location)
+		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
 
-func _construct_display_tree(search_object, key, holder_object):
+func _construct_display_tree(search_object, inside_space, space_id):
 	# we want to only display options for now and what they link to
 	# we'll traverse the module dict, i guess?
-	var new_holder_object = holder_object # we change the holder object if we find a space to store children in
+	#var new_holder_object = holder_object # we change the holder object if we find a space to store children in
 	
-	if holder_object is RegionObject && nodes_with_text.has(key) && search_object.has("Text"): # region object means we're in a Space, also text can be empty
-		print("text node: ", key)
-		var new_key_pair = HBoxContainer.new()
-		var new_key_text = Label.new()
-		var new_text = LineEdit.new()
-		new_key_pair.add_child(new_key_text)
-		new_key_pair.add_child(new_text)
-		
-		new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-		new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-		new_key_text.text = key
-		new_text.text = search_object["Text"]
-		
-		new_holder_object.add_to_region_box(new_key_pair)
-	elif search_object is Dictionary && search_object["Type"] == "Space":
-		# we want to display the object
-		print("FOUND SPACE!")
-		new_holder_object = region_object_scene.instance()
-		holder_object.add_child(new_holder_object)
-		#new_holder_object.rect_size(Vector2(100,100))
+	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"): # region object means we're in a Space, also text can be empty
+		if search_object["Type"] == "Option_GoTos":
+			if !space_dict[space_id].has("Gotos"):
+				space_dict[space_id]["Gotos"] = []
+			space_dict[space_id]["Gotos"].append(search_object["Text"])
+		elif search_object["Type"] == "Start" && search_object["Text"] == "True":
+			space_start = space_id
+	elif search_object is Dictionary && search_object["Type"] == "Space": # this means we have a space
+		inside_space = true
 
 	if search_object is Dictionary || search_object is Array:
 		#print("looping")
-		for new_key in search_object:
+		for key in search_object:
 			var item
 			if search_object is Dictionary: # if the object is a dictionary, then we need to search by key
-				# print("searching ", key, " in ", search_object["Type"])
-				item = search_object[new_key]
+				if search_object["Type"] == "Space": # add space to the space dict so we can map connections
+					space_id = search_object["Id"]["Text"]
+					if !space_dict.has(space_id):
+						space_dict[space_id] = {}
+						space_dict[space_id]["Object"] = search_object
+					
+				item = search_object[key]
 			elif search_object is Array:
 				# print("searching array")
-				item = new_key
+				item = key
 			else:
 				print("unexpected search object type: ", typeof(search_object))
 				# can't quite figure out how to access the enum to just convert this to the key text, but you can just compare to Variant.Types in GlobalScope
 			
-			if nodes_with_text.has(new_key) && search_object["Type"] == "Space": # never true?? might be one layer further in...
-				pass
-			
 			if !(item is String): # type is just for checking what sort of object we're in, and it doesn't need to be traversed
-				_construct_display_tree(item, new_key, new_holder_object)
+				_construct_display_tree(item, inside_space, space_id)
 	else:
 		print("unsearchable object: ", typeof(search_object), " " + search_object)
 

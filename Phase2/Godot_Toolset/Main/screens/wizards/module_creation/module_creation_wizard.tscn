@@ -10,9 +10,13 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-region_grid_path = NodePath("VBoxContainer/ZoomContainer/ZoomSubContainer/RegionGrid")
+region_container_path = NodePath("VBoxContainer/ZoomContainer/ZoomSubContainer/RegionContainer")
 file_dialog_path = NodePath("FileDialog")
 region_object_scene = ExtResource( 2 )
+space_display_height = 256
+space_display_height_margin = 16
+space_display_width = 512
+space_display_width_margin = 16
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_right = 1.0
@@ -72,13 +76,15 @@ zoom_subcontainer_path = NodePath("ZoomSubContainer")
 [node name="ZoomSubContainer" type="Control" parent="VBoxContainer/ZoomContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="RegionGrid" type="GridContainer" parent="VBoxContainer/ZoomContainer/ZoomSubContainer"]
+[node name="RegionContainer" type="Control" parent="VBoxContainer/ZoomContainer/ZoomSubContainer"]
 margin_right = 1024.0
 margin_bottom = 567.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
