@@ -23,6 +23,7 @@ var region_object_array = []
 var space_dict = {}
 var space_start
 var space_dict_displayed = [] # array of already-displayed spaces to prevent looping
+var connection_dict = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,8 +31,10 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if space_start != null:
+		_update_tree_connections()
+	
 
 
 func _on_ButtonLoad_pressed():
@@ -118,13 +121,38 @@ func display_module_dict():
 	_display_tree(space_start, Vector2(0,0))
 	#print(space_dict)
 	#print(space_start)
+	_display_tree_connections(space_start)
+
+func _update_tree_connections():
+	for i in connection_dict.keys():
+		for j in connection_dict[i].keys():
+			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["RegionObject"].rect_size.x,0))
+			connection_dict[i][j].set_point_position(1, space_dict[j]["RegionObject"].rect_position - space_dict[i]["RegionObject"].rect_position)
+
+func _display_tree_connections(current_branch_id):
+	# go through each branch, drawing lines from each connection to it's child
+	var space_object = space_dict[current_branch_id]["RegionObject"]
+	
+	if !connection_dict.has(current_branch_id):
+		connection_dict[current_branch_id] = {}
+		for id in space_dict[current_branch_id]["Gotos"]:
+			#draw a line from the current object to the new one, then do the same for the new object
+			var new_line = Line2D.new()
+			space_object.add_child(new_line)
+			new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
+			var new_space_object = space_dict[id]["RegionObject"]
+			new_line.add_point(new_space_object.rect_position)
+			connection_dict[current_branch_id][id] = new_line
+			_display_tree_connections(id)
 
 func _display_tree(current_branch_id, current_location):
-	# we want to show space_dict as a branching tree, stsrting with space_start
+	# we want to show space_dict as a branching tree, starting with space_start
 	print("displaying ", current_branch_id)
 	
 	var new_display_object = region_object_scene.instance()
 	region_container.add_child(new_display_object)
+	
+	space_dict[current_branch_id]["RegionObject"] = new_display_object # might as well make the object easier to access later
 	
 	var space_object = space_dict[current_branch_id]["Object"]
 	
@@ -154,7 +182,7 @@ func _display_tree(current_branch_id, current_location):
 	print("num gotos: ", to_display.size())
 	
 	var branch_display_height = to_display.size() * space_display_height + (to_display.size() - 1) * space_display_height_margin
-	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2) - (branch_display_height/2))
+	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2.0) - (branch_display_height/2.0))
 	for id in to_display:
 		space_dict_displayed.append(id)
 		_display_tree(id, branch_display_location)
