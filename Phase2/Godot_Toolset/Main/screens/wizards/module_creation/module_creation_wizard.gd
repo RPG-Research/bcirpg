@@ -7,7 +7,10 @@ onready var region_container = get_node(region_container_path)
 export var file_dialog_path: NodePath
 onready var file_dialog = get_node(file_dialog_path)
 
-export var region_object_scene: PackedScene
+export var region_tree_path: NodePath
+onready var region_tree = get_node(region_tree_path)
+
+export var space_object_scene: PackedScene
 
 export var space_display_height: int
 export var space_display_height_margin: int
@@ -19,11 +22,12 @@ var nodes_with_multiples = ["Region", "Location", "Space"]
 
 var module_dict
 
-var region_object_array = []
-var space_dict = {}
-var space_start
+var space_object_array = []
+var space_dict = {} # dictionary of spaces keyed by space ids
+var space_start # space node labeled as the player start
 var space_dict_displayed = [] # array of already-displayed spaces to prevent looping
-var connection_dict = {}
+var connection_dict = {} # array of connections between spaces
+var place_tree = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -116,12 +120,14 @@ func _on_FileDialog_file_selected(path):
 	display_module_dict()
 
 func display_module_dict():
-	_construct_display_tree(module_dict, false, null)
+	_construct_space_dict(module_dict, false, null)
 	space_dict_displayed.append(space_start)
-	_display_tree(space_start, Vector2(0,0))
+	_display_space_dict(space_start, Vector2(0,0))
 	#print(space_dict)
 	#print(space_start)
-	_display_tree_connections(space_start)
+	#print(module_dict)
+	_display_space_dict_connections(space_start)
+	_display_regions_locations_tree()
 
 func _update_tree_connections():
 	for i in connection_dict.keys():
@@ -129,7 +135,7 @@ func _update_tree_connections():
 			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["RegionObject"].rect_size.x,0))
 			connection_dict[i][j].set_point_position(1, space_dict[j]["RegionObject"].rect_position - space_dict[i]["RegionObject"].rect_position)
 
-func _display_tree_connections(current_branch_id):
+func _display_space_dict_connections(current_branch_id):
 	# go through each branch, drawing lines from each connection to it's child
 	var space_object = space_dict[current_branch_id]["RegionObject"]
 	
@@ -143,13 +149,13 @@ func _display_tree_connections(current_branch_id):
 			var new_space_object = space_dict[id]["RegionObject"]
 			new_line.add_point(new_space_object.rect_position)
 			connection_dict[current_branch_id][id] = new_line
-			_display_tree_connections(id)
+			_display_space_dict_connections(id)
 
-func _display_tree(current_branch_id, current_location):
+func _display_space_dict(current_branch_id, current_location):
 	# we want to show space_dict as a branching tree, starting with space_start
 	print("displaying ", current_branch_id)
 	
-	var new_display_object = region_object_scene.instance()
+	var new_display_object = space_object_scene.instance()
 	region_container.add_child(new_display_object)
 	
 	space_dict[current_branch_id]["RegionObject"] = new_display_object # might as well make the object easier to access later
@@ -169,7 +175,7 @@ func _display_tree(current_branch_id, current_location):
 			new_key_text.text = key
 			new_text.text =  space_object[key]["Text"]
 				
-			new_display_object.add_to_region_box(new_key_pair)
+			new_display_object.add_to_space_box(new_key_pair)
 			new_display_object.rect_position = current_location
 			new_display_object.rect_size = Vector2(space_display_width, space_display_height)
 			
@@ -185,15 +191,35 @@ func _display_tree(current_branch_id, current_location):
 	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2.0) - (branch_display_height/2.0))
 	for id in to_display:
 		space_dict_displayed.append(id)
-		_display_tree(id, branch_display_location)
+		_display_space_dict(id, branch_display_location)
 		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
 
-func _construct_display_tree(search_object, inside_space, space_id):
+func _display_regions_locations_tree():
+	var root = region_tree.create_item()
+	root.set_text(0, "Regions")
+	# we'll loop through the module dict to display all the places
+	if module_dict.has("Region"):
+		for region in module_dict["Region"]:
+			var child_region = region_tree.create_item(root)
+			child_region.set_text(0, region["Name"]["Text"])
+			child_region.set_metadata(0, region["Type"])
+			if region.has("Location"):
+				for location in region["Location"]:
+					var child_location = region_tree.create_item(child_region)
+					child_location.set_text(0, location["Name"]["Text"])
+					child_location.set_metadata(0, location["Type"])
+					if location.has("Space"):
+						for space in location["Space"]:
+							var child_space = region_tree.create_item(child_location)
+							child_space.set_text(0, space["Id"]["Text"])
+							child_space.set_metadata(0, space["Type"])
+
+func _construct_space_dict(search_object, inside_space, space_id):
 	# we want to only display options for now and what they link to
-	# we'll traverse the module dict, i guess?
-	#var new_holder_object = holder_object # we change the holder object if we find a space to store children in
+	# we'll traverse the module dict
+	# var new_holder_object = holder_object # we change the holder object if we find a space to store children in
 	
-	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"): # region object means we're in a Space, also text can be empty
+	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
 		if search_object["Type"] == "Option_GoTos":
 			if !space_dict[space_id].has("Gotos"):
 				space_dict[space_id]["Gotos"] = []
@@ -216,17 +242,28 @@ func _construct_display_tree(search_object, inside_space, space_id):
 					
 				item = search_object[key]
 			elif search_object is Array:
-				# print("searching array")
 				item = key
 			else:
 				print("unexpected search object type: ", typeof(search_object))
 				# can't quite figure out how to access the enum to just convert this to the key text, but you can just compare to Variant.Types in GlobalScope
 			
 			if !(item is String): # type is just for checking what sort of object we're in, and it doesn't need to be traversed
-				_construct_display_tree(item, inside_space, space_id)
+				_construct_space_dict(item, inside_space, space_id)
 	else:
 		print("unsearchable object: ", typeof(search_object), " " + search_object)
 
-func highlight_options(destination_text):
-	for region_object in region_object_array:
-		region_object.highlight_destination(destination_text)
+func _highlight_options(selected_item):
+	if selected_item.get_metadata(0) != "Space":
+		var child = selected_item.get_children()
+		while child != null:
+			_highlight_options(child)
+			child = child.get_next()
+	else:
+		var highlighted_space = space_dict[selected_item.get_text(0)]["RegionObject"]
+		#now we have to actually highlight it
+		highlighted_space.highlight()
+
+func _on_RegionTree_item_selected():
+	var selected_item = region_tree.get_selected()
+	_highlight_options(selected_item)
+		

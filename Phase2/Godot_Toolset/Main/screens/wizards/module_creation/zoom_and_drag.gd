@@ -26,7 +26,9 @@ func _gui_input(event):
 			zoom_subcontainer.rect_scale += factor*Vector2(zoom_speed, zoom_speed)
 		elif event.button_index == BUTTON_WHEEL_DOWN:
 			zoom_subcontainer.rect_pivot_offset = lerp(zoom_subcontainer.rect_pivot_offset, get_global_mouse_position(), zoom_offset_power)
-			zoom_subcontainer.rect_scale -= factor*Vector2(zoom_speed, zoom_speed)
+			var new_scale = zoom_subcontainer.rect_scale - factor*Vector2(zoom_speed, zoom_speed)
+			if new_scale.x >= 0 && new_scale.y >= 0:
+				zoom_subcontainer.rect_scale = new_scale
 			
 		elif event.pressed:
 			is_dragging = true

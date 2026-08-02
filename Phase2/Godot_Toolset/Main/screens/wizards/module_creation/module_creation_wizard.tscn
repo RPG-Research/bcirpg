@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://screens/wizards/module_creation/module_creation_wizard.gd" type="Script" id=1]
-[ext_resource path="res://screens/wizards/module_creation/region_object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://screens/wizards/module_creation/space_object.tscn" type="PackedScene" id=2]
 [ext_resource path="res://screens/wizards/module_creation/zoom_and_drag.gd" type="Script" id=3]
 
-[node name="adventure_creation_wizard" type="Control"]
+[node name="module_creation_wizard" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -12,11 +12,12 @@ size_flags_vertical = 3
 script = ExtResource( 1 )
 region_container_path = NodePath("VBoxContainer/ZoomContainer/ZoomSubContainer/RegionContainer")
 file_dialog_path = NodePath("FileDialog")
-region_object_scene = ExtResource( 2 )
+region_tree_path = NodePath("VBoxContainer/ZoomContainer/RegionTreePanel/RegionTree")
+space_object_scene = ExtResource( 2 )
 space_display_height = 256
 space_display_height_margin = 16
 space_display_width = 512
-space_display_width_margin = 16
+space_display_width_margin = 128
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_right = 1.0
@@ -88,7 +89,18 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="RegionTreePanel" type="PanelContainer" parent="VBoxContainer/ZoomContainer"]
+anchor_right = 0.25
+anchor_bottom = 0.25
+
+[node name="RegionTree" type="Tree" parent="VBoxContainer/ZoomContainer/RegionTreePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 249.0
+margin_bottom = 134.75
+
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonLoad" to="." method="_on_ButtonLoad_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonSave" to="." method="_on_ButtonSave_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonNew" to="." method="_on_ButtonNew_pressed"]
+[connection signal="item_selected" from="VBoxContainer/ZoomContainer/RegionTreePanel/RegionTree" to="." method="_on_RegionTree_item_selected"]

@@ -1,6 +1,6 @@
 extends Control
 
-class_name RegionObject
+class_name SpaceObject
 
 onready var container = get_node("ScrollContainer/VBoxContainer")
 
@@ -14,7 +14,7 @@ func _ready():
 	#self.connect("highlight_destination_signal", self, "_highlight_destination")
 	pass
 
-func add_to_region_box(given_node):
+func add_to_space_box(given_node):
 	container.add_child(given_node)
 
 func _gui_input(event):
@@ -77,3 +77,6 @@ func highlight_destination(destination_text):
 		self.theme = highlight_theme
 	else:
 		self.theme = null
+
+func highlight():
+	self.theme = highlight_theme

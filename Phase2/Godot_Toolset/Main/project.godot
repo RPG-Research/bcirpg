@@ -15,13 +15,13 @@ _global_script_classes=[ {
 "path": "res://middleware/conflictResults/conflictResults.gd"
 }, {
 "base": "Control",
-"class": "RegionObject",
+"class": "SpaceObject",
 "language": "GDScript",
-"path": "res://screens/wizards/module_creation/region_object.gd"
+"path": "res://screens/wizards/module_creation/space_object.gd"
 } ]
 _global_script_class_icons={
 "ConflictResultsProcess": "",
-"RegionObject": ""
+"SpaceObject": ""
 }
 
 [application]

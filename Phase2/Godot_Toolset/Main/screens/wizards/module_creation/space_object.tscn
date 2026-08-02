@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://screens/wizards/module_creation/region_object.gd" type="Script" id=1]
+[ext_resource path="res://screens/wizards/module_creation/space_object.gd" type="Script" id=1]
 [ext_resource path="res://assets/panel_highlighted.tres" type="Theme" id=2]
-[ext_resource path="res://screens/wizards/module_creation/region_object_scroll_container.gd" type="Script" id=3]
+[ext_resource path="res://screens/wizards/module_creation/space_object_scroll_container.gd" type="Script" id=3]
 [ext_resource path="res://user_interface/resize_parent.gd" type="Script" id=4]
 
 [node name="region_object" type="Control"]
