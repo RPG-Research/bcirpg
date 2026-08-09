@@ -57,6 +57,7 @@ func get_destination():
 	if destination_text != null:
 		emit_signal("highlight_destination_signal", destination_text) #tells the parent to tell all the children to check if they should be highlighted
 
+# unused at the moment
 func highlight_destination(destination_text):
 	var destination_found = false
 	var check_next_value = false
@@ -80,3 +81,6 @@ func highlight_destination(destination_text):
 
 func highlight():
 	self.theme = highlight_theme
+
+func unhighlight():
+	self.theme = null

@@ -132,12 +132,12 @@ func display_module_dict():
 func _update_tree_connections():
 	for i in connection_dict.keys():
 		for j in connection_dict[i].keys():
-			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["RegionObject"].rect_size.x,0))
-			connection_dict[i][j].set_point_position(1, space_dict[j]["RegionObject"].rect_position - space_dict[i]["RegionObject"].rect_position)
+			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["SpaceObject"].rect_size.x,0))
+			connection_dict[i][j].set_point_position(1, space_dict[j]["SpaceObject"].rect_position - space_dict[i]["SpaceObject"].rect_position)
 
 func _display_space_dict_connections(current_branch_id):
 	# go through each branch, drawing lines from each connection to it's child
-	var space_object = space_dict[current_branch_id]["RegionObject"]
+	var space_object = space_dict[current_branch_id]["SpaceObject"]
 	
 	if !connection_dict.has(current_branch_id):
 		connection_dict[current_branch_id] = {}
@@ -146,7 +146,7 @@ func _display_space_dict_connections(current_branch_id):
 			var new_line = Line2D.new()
 			space_object.add_child(new_line)
 			new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
-			var new_space_object = space_dict[id]["RegionObject"]
+			var new_space_object = space_dict[id]["SpaceObject"]
 			new_line.add_point(new_space_object.rect_position)
 			connection_dict[current_branch_id][id] = new_line
 			_display_space_dict_connections(id)
@@ -158,7 +158,7 @@ func _display_space_dict(current_branch_id, current_location):
 	var new_display_object = space_object_scene.instance()
 	region_container.add_child(new_display_object)
 	
-	space_dict[current_branch_id]["RegionObject"] = new_display_object # might as well make the object easier to access later
+	space_dict[current_branch_id]["SpaceObject"] = new_display_object # might as well make the object easier to access later
 	
 	var space_object = space_dict[current_branch_id]["Object"]
 	
@@ -252,18 +252,29 @@ func _construct_space_dict(search_object, inside_space, space_id):
 	else:
 		print("unsearchable object: ", typeof(search_object), " " + search_object)
 
-func _highlight_options(selected_item):
+func _unhighlight_everything(item):
+	if item.get_metadata(0) != "Space":
+		var child = item.get_children()
+		while child != null:
+			_unhighlight_everything(child)
+			child = child.get_next()
+	else:
+		if space_dict[item.get_text(0)].has("SpaceObject"):
+			var highlighted_space = space_dict[item.get_text(0)]["SpaceObject"]
+			highlighted_space.unhighlight()
+
+func _highlight_selected(selected_item):
 	if selected_item.get_metadata(0) != "Space":
 		var child = selected_item.get_children()
 		while child != null:
-			_highlight_options(child)
+			_highlight_selected(child)
 			child = child.get_next()
 	else:
-		var highlighted_space = space_dict[selected_item.get_text(0)]["RegionObject"]
-		#now we have to actually highlight it
-		highlighted_space.highlight()
+		if space_dict[selected_item.get_text(0)].has("SpaceObject"):
+			var highlighted_space = space_dict[selected_item.get_text(0)]["SpaceObject"]
+			#now we have to actually highlight it
+			highlighted_space.highlight()
 
 func _on_RegionTree_item_selected():
-	var selected_item = region_tree.get_selected()
-	_highlight_options(selected_item)
-		
+	_unhighlight_everything(region_tree.get_root())
+	_highlight_selected(region_tree.get_selected())
