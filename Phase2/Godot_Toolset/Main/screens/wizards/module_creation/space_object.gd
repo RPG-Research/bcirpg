@@ -17,6 +17,9 @@ func _ready():
 func add_to_space_box(given_node):
 	container.add_child(given_node)
 
+func get_space_box():
+	return container
+
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed && event.button_index == BUTTON_LEFT:

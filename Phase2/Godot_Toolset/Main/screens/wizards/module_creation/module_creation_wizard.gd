@@ -40,8 +40,8 @@ var module_dict # massive tree created from the loaded xml file
 
 var space_dict = {} # dictionary of spaces keyed by space ids with links to connected spaces and path to space in the module dict
 # usage:
-# space_dict[id]["Path"] gives you an array of keys that leads to the space in the module dict
-# space_dict[id]["SpaceObject"] gives you the displayed object for the space
+# space_dict[id]["Data"] gives you the associated info from the module dict (should be by reference?)
+# space_dict[id]["Object"] gives you the displayed object for the space
 # space_dict[id]["Gotos"] gives you an array of space ids that the space connects to
 
 var space_start # space node labeled as the player start
@@ -82,10 +82,11 @@ func _on_ButtonSave_pressed():
 func _on_ButtonNew_pressed():
 	pass # Replace with function body.
 	
-
+# uses Godot's XML parser to fill in module_dict
+# see the module_dict variable notes above to help understand the monster that is created
 func _on_FileDialog_file_selected(path):
 	print("file dialog selected")
-	var node_stack = [] #keeps our data
+	var node_stack = [] # keeps our data
 	
 	if file_dialog.get_mode() == FileDialog.MODE_OPEN_FILE:
 		var xml_parser = XMLParser.new()
@@ -150,7 +151,7 @@ func _on_FileDialog_file_selected(path):
 
 # this function puts all the spaces on screen, along with a tree of the various location types
 func display_module_dict():
-	_construct_space_dict(module_dict, false, null, [])
+	_construct_space_dict(module_dict, false, null)
 	space_dict_displayed.append(space_start)
 	_display_space_dict(space_start, Vector2(0,0))
 	_display_space_dict_connections(space_start)
@@ -160,13 +161,13 @@ func display_module_dict():
 func _update_tree_connections():
 	for i in connection_dict.keys():
 		for j in connection_dict[i].keys():
-			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["SpaceObject"].rect_size.x,0))
-			connection_dict[i][j].set_point_position(1, space_dict[j]["SpaceObject"].rect_position - space_dict[i]["SpaceObject"].rect_position)
+			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["Object"].rect_size.x,0))
+			connection_dict[i][j].set_point_position(1, space_dict[j]["Object"].rect_position - space_dict[i]["Object"].rect_position)
 
 # creates lines between spaces that are connected to each other; not very pretty at the moment
 func _display_space_dict_connections(current_branch_id):
 	# go through each branch, drawing lines from each connection to its child
-	var space_object = space_dict[current_branch_id]["SpaceObject"]
+	var space_object = space_dict[current_branch_id]["Object"]
 	
 	if !connection_dict.has(current_branch_id):
 		connection_dict[current_branch_id] = {}
@@ -175,26 +176,26 @@ func _display_space_dict_connections(current_branch_id):
 			var new_line = Line2D.new()
 			space_object.add_child(new_line)
 			new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
-			var new_space_object = space_dict[id]["SpaceObject"]
+			var new_space_object = space_dict[id]["Object"]
 			new_line.add_point(new_space_object.rect_position)
 			connection_dict[current_branch_id][id] = new_line
 			_display_space_dict_connections(id)
 
 # takes the spaces stored in the space dict (which is derived from the module dict) and creates objects to show them
 # starts with the starting space and creates them left to right, where all undisplayed connections to the current space are vertically stacked
-func _display_space_dict(current_branch_id, current_location):
+func _display_space_dict(current_branch_key, current_location):
 # we want to show space_dict as a branching tree, starting with space_start
-	print("displaying ", current_branch_id)
+	print("displaying ", current_branch_key)
 	
 	var new_display_object = space_object_scene.instance()
 	region_container.add_child(new_display_object)
 	
-	space_dict[current_branch_id]["SpaceObject"] = new_display_object # might as well make the object easier to access later
+	space_dict[current_branch_key]["Object"] = new_display_object # might as well make the object easier to access later
 	
-	var space_object = space_dict[current_branch_id]["Object"]
+	var space_object_data = space_dict[current_branch_key]["Data"]
 	
-	for key in space_object:
-		if nodes_with_text.has(key.rstrip("1234567890_")) && space_object[key].has("Text"):
+	for key in space_object_data:
+		if nodes_with_text.has(key.rstrip("1234567890_")) && space_object_data[key].has("Text"):
 			var new_key_pair = HBoxContainer.new()
 			var new_key_text = Label.new()
 			var new_text = LineEdit.new()
@@ -204,17 +205,17 @@ func _display_space_dict(current_branch_id, current_location):
 			new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
 			new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
 			new_key_text.text = key
-			new_text.text =  space_object[key]["Text"]
+			new_text.text =  space_object_data[key]["Text"]
 				
 			new_display_object.add_to_space_box(new_key_pair)
 			new_display_object.rect_position = current_location
 			new_display_object.rect_size = Vector2(space_display_width, space_display_height)
 			
 			# we want any edited text box to send out a signal
-			new_text.connect("text_changed", self, "_on_space_text_changed", [current_branch_id, key])
+			new_text.connect("text_entered", self, "_on_space_text_entered", [current_branch_key, key])
 			
 	var to_display = []
-	for id in space_dict[current_branch_id]["Gotos"]: # determine the branches left to display
+	for id in space_dict[current_branch_key]["Gotos"]: # determine the branches left to display
 		if !space_dict_displayed.has(id):
 			to_display.append(id)
 		else:
@@ -230,15 +231,18 @@ func _display_space_dict(current_branch_id, current_location):
 		
 # recieves a text_changed signal from a LineEdit and updates data structures that need to be updated
 # WIP
-func _on_space_text_changed(text, branch, key):
+func _on_space_text_entered(changed_text, key, parent_key):
 	# here we need to determine what changes need to be made where for functionality
-	print(key)
 	
-	var text_type = key.rstrip(0123456789_)
+	var text_type = parent_key.rstrip("0123456789_")
+	print("text_type: ", text_type)
 	match text_type:
 		"Id":
-			pass
-			# module_dict, space_dict (id and path), (maybe) space_start, space_dict_displayed, connection_dict
+			# search the whole module_dict and replace any instance of the changed id
+			print("changing ids")
+			_replace_id_module_dict(key, changed_text, module_dict)
+			_replace_id_space_dict(key, changed_text)
+			# module_dict, space_dict (id and path), (maybe) space_start
 		"Start":
 			pass
 			# module_dict, space_start
@@ -256,6 +260,39 @@ func _on_space_text_changed(text, branch, key):
 			# module_dict, space_dict, connection_dict
 		_:
 			pass
+
+func _replace_id_module_dict(original_id, new_id, branch):
+	if branch is Dictionary:
+		for key in branch.keys():
+			if key == original_id:
+				if branch[key].has("Start") && (branch[key]["Start"] == "True" || branch[key]["Start"] == "true" || branch[key]["Start"] == true):
+					space_start = key
+				_replace_id_module_dict(original_id, new_id, branch[key])
+				branch[original_id] = branch[key]
+				branch.erase(key)
+	elif branch is Array:
+		for item in branch:
+			_replace_id_module_dict(original_id, new_id, item)
+	elif branch is String:
+		if branch == original_id:
+			branch = new_id
+
+func _replace_id_space_dict(original_id, new_id):
+	for key in space_dict.keys():
+		if space_dict[key].has("Gotos"):
+			space_dict[key]["Gotos"].erase(original_id)
+			space_dict[key]["Gotos"].append(new_id)
+		if space_dict[key].has("Object"): # in case a space object is never created; SHOULD FIX THIS
+			var space_object = space_dict[key]["Object"]
+			for child in space_object.get_space_box().get_children():
+				# we're looking for gotos
+				if child is HBoxContainer && child.get_child(0) is Label && child.get_child(0).text.rstrip("0123456789_") == "Option_GoTos":
+					var goto_lineedit = child.get_child(1)
+					if goto_lineedit.text == original_id:
+						goto_lineedit.text = new_id
+	
+	space_dict[new_id] = space_dict[original_id]
+	space_dict.erase(new_id)
 
 # fills the Godot Tree object with all the nested location nodes so the user knows what is inside what
 func _display_regions_locations_tree():
@@ -280,7 +317,7 @@ func _display_regions_locations_tree():
 
 # creates a dictionary keyed by id of every space that stores connections to other spaces
 # derived from module_dict
-func _construct_space_dict(search_object, inside_space, space_id, current_location_array):
+func _construct_space_dict(search_object, inside_space, space_id):
 	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
 		if search_object["Type"] == "Option_GoTos":
 			if !space_dict[space_id].has("Gotos"):
@@ -300,21 +337,18 @@ func _construct_space_dict(search_object, inside_space, space_id, current_locati
 					space_id = search_object["Id"]["Text"]
 					if !space_dict.has(space_id):
 						space_dict[space_id] = {}
-						space_dict[space_id]["Object"] = search_object
+						space_dict[space_id]["Data"] = search_object
 						# save the location this space is in the module dict for future access
-						# this way, we won't need to search the whole tree every time we want to update a space object in the module_dict
-						space_dict[space_id]["Path"] = current_location_array
-					
+						# this way, we won't need to search the whole tree every time we want to update a space object in the module_dict						space_dict[space_id]["Path"] = current_location_array
 				item = search_object[key]
 			elif search_object is Array:
 				item = key
 			else:
-				print("unexpected search object type: ", typeof(search_object))
+				print("unexpected search data type: ", typeof(search_object))
 				# can't quite figure out how to access the enum to just convert this to the key text, but you can just compare to Variant.Types in GlobalScope
 			
 			if !(item is String): # type is just for checking what sort of object we're in, and it doesn't need to be traversed
-				current_location_array.append(key)
-				_construct_space_dict(item, inside_space, space_id, current_location_array)
+				_construct_space_dict(item, inside_space, space_id)
 	else:
 		print("unsearchable object: ", typeof(search_object), " " + search_object)
 
@@ -326,8 +360,8 @@ func _unhighlight_everything(item):
 			_unhighlight_everything(child)
 			child = child.get_next()
 	else:
-		if space_dict[item.get_text(0)].has("SpaceObject"):
-			var highlighted_space = space_dict[item.get_text(0)]["SpaceObject"]
+		if space_dict[item.get_text(0)].has("Object"):
+			var highlighted_space = space_dict[item.get_text(0)]["Object"]
 			highlighted_space.unhighlight()
 
 # highlights spaces selected in the Godot Tree object and their children
@@ -338,8 +372,8 @@ func _highlight_selected(selected_item):
 			_highlight_selected(child)
 			child = child.get_next()
 	else:
-		if space_dict[selected_item.get_text(0)].has("SpaceObject"):
-			var highlighted_space = space_dict[selected_item.get_text(0)]["SpaceObject"]
+		if space_dict[selected_item.get_text(0)].has("Object"):
+			var highlighted_space = space_dict[selected_item.get_text(0)]["Object"]
 			#now we have to actually highlight it
 			highlighted_space.highlight()
 
