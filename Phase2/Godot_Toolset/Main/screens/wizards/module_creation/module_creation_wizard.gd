@@ -64,7 +64,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if space_start != null:
 		_update_tree_connections()
 	
@@ -101,7 +101,6 @@ func _on_FileDialog_file_selected(path):
 				node_dict_type = node_name.rstrip("0123456789_")
 			
 			# we expect a NODE_UNKNOWN at the top, followed by a series of NODE_ELEMENT, NODE_TEXT, and NODE_ELEMENT_END
-			#print(node_type)
 			match node_type:
 				XMLParser.NODE_ELEMENT:
 					# each node element is its own dictionary
@@ -115,7 +114,6 @@ func _on_FileDialog_file_selected(path):
 						# first, we'll check if this is a node type that should be in an array
 						if nodes_with_multiples.has(node_name): # node is an array type
 							# check if an array for this node type already exists in the parent
-							# print(node_name)
 							if node_stack[-1].has(node_name):
 								#if it exists, we can just add to it
 								node_stack[-1][node_name].append(new_dict)
@@ -131,7 +129,6 @@ func _on_FileDialog_file_selected(path):
 							node_stack[-1][node_name] = new_dict
 							node_stack.append(new_dict)
 				XMLParser.NODE_ELEMENT_END:
-					#print("popping " + node_name)
 					if node_dict_type != node_stack[-1]["Type"]:
 						print("Mismatched node ends: " + node_stack[-1]["Type"] + " and " + node_dict_type)
 					elif node_name == "root":
@@ -174,19 +171,28 @@ func _display_space_dict_connections(current_branch_id):
 		for id in space_dict[current_branch_id]["Gotos"]:
 			#draw a line from the current object to the new one, then do the same for the new object
 			var new_line = Line2D.new()
+			new_line.width = 4
 			space_object.add_child(new_line)
 			new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
 			var new_space_object = space_dict[id]["Object"]
 			new_line.add_point(new_space_object.rect_position)
 			connection_dict[current_branch_id][id] = new_line
 			_display_space_dict_connections(id)
+			
+func _replace_id_connection_dict(original_id, new_id):
+	for i in connection_dict.keys():
+		for j in connection_dict[i].keys():
+			if j == original_id:
+				connection_dict[i][new_id] = connection_dict[i][original_id]
+				connection_dict[i].erase(original_id)
+		if i == original_id:
+			connection_dict[new_id] = connection_dict[original_id]
+			connection_dict.erase(original_id)
 
 # takes the spaces stored in the space dict (which is derived from the module dict) and creates objects to show them
 # starts with the starting space and creates them left to right, where all undisplayed connections to the current space are vertically stacked
 func _display_space_dict(current_branch_key, current_location):
 # we want to show space_dict as a branching tree, starting with space_start
-	print("displaying ", current_branch_key)
-	
 	var new_display_object = space_object_scene.instance()
 	region_container.add_child(new_display_object)
 	
@@ -233,15 +239,16 @@ func _display_space_dict(current_branch_key, current_location):
 # WIP
 func _on_space_text_entered(changed_text, key, parent_key):
 	# here we need to determine what changes need to be made where for functionality
-	
+	print ("changed_text: ", changed_text, ", key: ", key, ", parent_key: ", parent_key)
 	var text_type = parent_key.rstrip("0123456789_")
 	print("text_type: ", text_type)
 	match text_type:
 		"Id":
 			# search the whole module_dict and replace any instance of the changed id
-			print("changing ids")
 			_replace_id_module_dict(key, changed_text, module_dict)
 			_replace_id_space_dict(key, changed_text)
+			_replace_id_connection_dict(key, changed_text)
+			_refresh_locations_tree()
 			# module_dict, space_dict (id and path), (maybe) space_start
 		"Start":
 			pass
@@ -267,15 +274,14 @@ func _replace_id_module_dict(original_id, new_id, branch):
 			if key == original_id:
 				if branch[key].has("Start") && (branch[key]["Start"] == "True" || branch[key]["Start"] == "true" || branch[key]["Start"] == true):
 					space_start = key
-				_replace_id_module_dict(original_id, new_id, branch[key])
 				branch[original_id] = branch[key]
 				branch.erase(key)
+			if branch[key] is String && branch[key] == original_id:
+				branch[key] = new_id
+			_replace_id_module_dict(original_id, new_id, branch[key])
 	elif branch is Array:
 		for item in branch:
 			_replace_id_module_dict(original_id, new_id, item)
-	elif branch is String:
-		if branch == original_id:
-			branch = new_id
 
 func _replace_id_space_dict(original_id, new_id):
 	for key in space_dict.keys():
@@ -286,13 +292,22 @@ func _replace_id_space_dict(original_id, new_id):
 			var space_object = space_dict[key]["Object"]
 			for child in space_object.get_space_box().get_children():
 				# we're looking for gotos
-				if child is HBoxContainer && child.get_child(0) is Label && child.get_child(0).text.rstrip("0123456789_") == "Option_GoTos":
-					var goto_lineedit = child.get_child(1)
-					if goto_lineedit.text == original_id:
-						goto_lineedit.text = new_id
+				if child is HBoxContainer && child.get_child(0) is Label:
+					var current_lineedit = child.get_child(1)
+					var current_type = child.get_child(0).text.rstrip("0123456789_")
+					if current_type == "Option_GoTos" || current_type == "Id":
+						if current_lineedit.text == original_id:
+							current_lineedit.text = new_id
+						if current_lineedit.is_connected("text_entered", self, "_on_space_text_entered"): # update the info that gets sent to _on_space_text_entered
+							current_lineedit.disconnect("text_entered", self, "_on_space_text_entered")
+							current_lineedit.connect("text_entered", self, "_on_space_text_entered", [new_id, "Id"])
 	
-	space_dict[new_id] = space_dict[original_id]
-	space_dict.erase(new_id)
+	space_dict[new_id] = space_dict[original_id] #not done the first time?
+	space_dict.erase(original_id)
+
+func _refresh_locations_tree():
+	region_tree.clear()
+	_display_regions_locations_tree()
 
 # fills the Godot Tree object with all the nested location nodes so the user knows what is inside what
 func _display_regions_locations_tree():
@@ -329,7 +344,6 @@ func _construct_space_dict(search_object, inside_space, space_id):
 		inside_space = true
 
 	if search_object is Dictionary || search_object is Array:
-		#print("looping")
 		for key in search_object:
 			var item
 			if search_object is Dictionary: # if the object is a dictionary, then we need to search by key
