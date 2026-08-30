@@ -163,31 +163,47 @@ func _update_tree_connections():
 
 # creates lines between spaces that are connected to each other; not very pretty at the moment
 func _display_space_dict_connections(current_branch_id):
-	# go through each branch, drawing lines from each connection to its child
-	var space_object = space_dict[current_branch_id]["Object"]
-	
-	if !connection_dict.has(current_branch_id):
-		connection_dict[current_branch_id] = {}
-		for id in space_dict[current_branch_id]["Gotos"]:
-			#draw a line from the current object to the new one, then do the same for the new object
-			var new_line = Line2D.new()
-			new_line.width = 4
-			space_object.add_child(new_line)
-			new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
-			var new_space_object = space_dict[id]["Object"]
-			new_line.add_point(new_space_object.rect_position)
-			connection_dict[current_branch_id][id] = new_line
-			_display_space_dict_connections(id)
+	_display_space_dict_connection_recursive(current_branch_id, [])
 			
-func _replace_id_connection_dict(original_id, new_id):
-	for i in connection_dict.keys():
-		for j in connection_dict[i].keys():
-			if j == original_id:
-				connection_dict[i][new_id] = connection_dict[i][original_id]
-				connection_dict[i].erase(original_id)
-		if i == original_id:
-			connection_dict[new_id] = connection_dict[original_id]
-			connection_dict.erase(original_id)
+func _display_space_dict_connection_recursive(current_branch_id, displayed_array):
+	if displayed_array.has(current_branch_id):
+		return
+	else:
+		displayed_array.append(current_branch_id)
+		
+		# go through each branch, drawing lines from each connection to its child
+		var space_object = space_dict[current_branch_id]["Object"]
+		
+		if !connection_dict.has(current_branch_id):
+			connection_dict[current_branch_id] = {}
+			for id in space_dict[current_branch_id]["Gotos"]:
+				#draw a line from the current object to the new one, then do the same for the new object
+				var new_line = Line2D.new()
+				new_line.width = 4
+				space_object.add_child(new_line)
+				new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
+				var new_space_object = space_dict[id]["Object"]
+				new_line.add_point(new_space_object.rect_position)
+				connection_dict[current_branch_id][id] = new_line
+				_display_space_dict_connections(id)
+		else:
+			for id in space_dict[current_branch_id]["Gotos"]:
+				#print("current_branch_id: ", current_branch_id, ", id: ", id)
+				var line = connection_dict[current_branch_id][id]
+				var new_space_object = space_dict[id]["Object"]
+				line.add_point(new_space_object.rect_position)
+				_display_space_dict_connection_recursive(id, displayed_array)
+	
+			
+#func _replace_id_connection_dict(original_id, new_id):
+#	for i in connection_dict.keys():
+#		for j in connection_dict[i].keys():
+#			if j == original_id:
+#				connection_dict[i][new_id] = connection_dict[i][original_id]
+#				connection_dict[i].erase(original_id)
+#		if i == original_id:
+#			connection_dict[new_id] = connection_dict[original_id]
+#			connection_dict.erase(original_id)
 
 # takes the spaces stored in the space dict (which is derived from the module dict) and creates objects to show them
 # starts with the starting space and creates them left to right, where all undisplayed connections to the current space are vertically stacked
@@ -200,8 +216,21 @@ func _display_space_dict(current_branch_key, current_location):
 	
 	var space_object_data = space_dict[current_branch_key]["Data"]
 	
+	# here, we'll display all the things inside the space
+	# Option_Gotos and Option_Labels are special because they're tied to each other
+	var option_dict = {}
 	for key in space_object_data:
-		if nodes_with_text.has(key.rstrip("1234567890_")) && space_object_data[key].has("Text"):
+		var node_type = key.rstrip("1234567890_")
+		if node_type == "Option_Labels" || node_type == "Option_GoTos" && space_object_data[key].has("Text"):
+			# here, we'll use a dictionary to match options with their gotos
+			var option_number = key.rsplit("_")[-1].to_int()
+			if !option_dict.has(option_number):
+				option_dict[option_number] = [option_number, null, null]
+			if node_type == "Option_Labels":
+				option_dict[option_number][1] = space_object_data[key]["Text"]
+			else: #node_type == "Option_Gotos"
+				option_dict[option_number][2] = space_object_data[key]["Text"]
+		elif nodes_with_text.has(node_type) && space_object_data[key].has("Text"):
 			var new_key_pair = HBoxContainer.new()
 			var new_key_text = Label.new()
 			var new_text = LineEdit.new()
@@ -220,13 +249,35 @@ func _display_space_dict(current_branch_key, current_location):
 			# we want any edited text box to send out a signal
 			new_text.connect("text_entered", self, "_on_space_text_entered", [current_branch_key, key])
 			
+	# now we create a sorted array from the option dict created earlier
+	var option_array = option_dict.keys()
+	option_array.sort()
+	for i in range(0,option_array.size()):
+		option_array[i] = option_dict[option_array[i]]
+		
+	# and we'll use the array we created earlier to make a custom list of options with connection lines
+	connection_dict[current_branch_key] = {}
+	for option in option_array:
+		var new_option_label = LineEdit.new()
+		new_option_label.text = option[1]
+		new_display_object.add_to_space_box(new_option_label)
+		new_display_object.rect_position = current_location
+		new_display_object.rect_size = Vector2(space_display_width, space_display_height)
+		var new_line = Line2D.new()
+		new_line.width = 4
+		#new_line.z_index = 5
+		new_display_object.add_child(new_line)
+		new_line.add_point(new_option_label.rect_position+Vector2(new_option_label.rect_size.x,0))
+		connection_dict[current_branch_key][option[2]] = new_line
+		#print("setting connection_dict[", current_branch_key, "][", option[2], "] to new_line")
+			
 	var to_display = []
 	for id in space_dict[current_branch_key]["Gotos"]: # determine the branches left to display
 		if !space_dict_displayed.has(id):
 			to_display.append(id)
-		else:
-			print(id, " already displayed")
-	print("num gotos: ", to_display.size())
+		#else:
+			#print(id, " already displayed")
+	#print("num gotos: ", to_display.size())
 	
 	var branch_display_height = to_display.size() * space_display_height + (to_display.size() - 1) * space_display_height_margin
 	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2.0) - (branch_display_height/2.0))
@@ -234,7 +285,7 @@ func _display_space_dict(current_branch_key, current_location):
 		space_dict_displayed.append(id)
 		_display_space_dict(id, branch_display_location)
 		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
-		
+
 # recieves a text_changed signal from a LineEdit and updates data structures that need to be updated
 # WIP
 func _on_space_text_entered(changed_text, key, parent_key):
@@ -247,7 +298,7 @@ func _on_space_text_entered(changed_text, key, parent_key):
 			# search the whole module_dict and replace any instance of the changed id
 			_replace_id_module_dict(key, changed_text, module_dict)
 			_replace_id_space_dict(key, changed_text)
-			_replace_id_connection_dict(key, changed_text)
+			#_replace_id_connection_dict(key, changed_text)
 			_refresh_locations_tree()
 			# module_dict, space_dict (id and path), (maybe) space_start
 		"Start":
