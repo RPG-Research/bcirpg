@@ -158,8 +158,8 @@ func display_module_dict():
 func _update_tree_connections():
 	for i in connection_dict.keys():
 		for j in connection_dict[i].keys():
-			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["Object"].rect_size.x,0))
-			connection_dict[i][j].set_point_position(1, space_dict[j]["Object"].rect_position - space_dict[i]["Object"].rect_position)
+			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["Object"].rect_size.x,connection_dict[i][j].get_point_position(0).y))
+			connection_dict[i][j].set_point_position(1, space_dict[j]["Object"].rect_position - space_dict[i]["Object"].rect_position + Vector2(0,space_dict[j]["Object"].rect_size.y/2))
 
 # creates lines between spaces that are connected to each other; not very pretty at the moment
 func _display_space_dict_connections(current_branch_id):
@@ -175,6 +175,7 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 		var space_object = space_dict[current_branch_id]["Object"]
 		
 		if !connection_dict.has(current_branch_id):
+			pass
 			connection_dict[current_branch_id] = {}
 			for id in space_dict[current_branch_id]["Gotos"]:
 				#draw a line from the current object to the new one, then do the same for the new object
@@ -267,7 +268,8 @@ func _display_space_dict(current_branch_key, current_location):
 		new_line.width = 4
 		#new_line.z_index = 5
 		new_display_object.add_child(new_line)
-		new_line.add_point(new_option_label.rect_position+Vector2(new_option_label.rect_size.x,0))
+		new_line.add_point(Vector2(0,0)) #position of added point is relative to line position
+		call_deferred("_update_start_point_position", new_line, new_option_label)
 		connection_dict[current_branch_key][option[2]] = new_line
 		#print("setting connection_dict[", current_branch_key, "][", option[2], "] to new_line")
 			
@@ -285,6 +287,11 @@ func _display_space_dict(current_branch_key, current_location):
 		space_dict_displayed.append(id)
 		_display_space_dict(id, branch_display_location)
 		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
+
+# a helper function for _display_space_dict because the positions aren't set inside a vboxcontainer until later
+func _update_start_point_position(line, position_object):
+	print(position_object.rect_position)
+	line.set_point_position(0, position_object.rect_position + Vector2(0,position_object.rect_size.y/2))
 
 # recieves a text_changed signal from a LineEdit and updates data structures that need to be updated
 # WIP
