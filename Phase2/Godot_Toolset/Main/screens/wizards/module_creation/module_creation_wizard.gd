@@ -1,3 +1,20 @@
+# TODO:
+# right-click space object creation
+#	must be added to module dict, region tree, space dict
+# right-click option creation
+# click and drag option re-ordering
+#	needs to update connection display and option_labels/option_gotos numbering
+# click and drag connection editing
+# 	figure out what to do with connections that don't fit on space display object
+#	re-display edited connections
+# right click action adding with dropdown
+# replace start bool with a more appropriate selector
+# display unconnected spaces
+# integrate third-party text editor
+# saving from module dict
+# fix zooming in/out
+
+
 extends Control
 
 
@@ -259,9 +276,9 @@ func _display_space_dict(current_branch_key, current_location):
 	# and we'll use the array we created earlier to make a custom list of options with connection lines
 	connection_dict[current_branch_key] = {}
 	for option in option_array:
-		var new_option_label = LineEdit.new()
+		var new_option_label = Label.new()
 		new_option_label.text = option[1]
-		new_display_object.add_to_space_box(new_option_label)
+		new_display_object.add_to_option_list(new_option_label)
 		new_display_object.rect_position = current_location
 		new_display_object.rect_size = Vector2(space_display_width, space_display_height)
 		var new_line = Line2D.new()
@@ -290,7 +307,6 @@ func _display_space_dict(current_branch_key, current_location):
 
 # a helper function for _display_space_dict because the positions aren't set inside a vboxcontainer until later
 func _update_start_point_position(line, position_object):
-	print(position_object.rect_position)
 	line.set_point_position(0, position_object.rect_position + Vector2(0,position_object.rect_size.y/2))
 
 # recieves a text_changed signal from a LineEdit and updates data structures that need to be updated

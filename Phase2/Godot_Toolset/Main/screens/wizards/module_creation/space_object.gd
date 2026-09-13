@@ -3,10 +3,9 @@ extends Control
 class_name SpaceObject
 
 onready var container = get_node("ScrollContainer/VBoxContainer")
+onready var option_list = get_node("ScrollContainer/VBoxContainer/OptionList")
 
 export var highlight_theme : Theme
-
-var is_dragging = false
 
 signal highlight_destination_signal(destination_text)
 
@@ -16,21 +15,20 @@ func _ready():
 
 func add_to_space_box(given_node):
 	container.add_child(given_node)
+	container.move_child(option_list, container.get_child_count()-1) #just to keep option_list at the bottom
 
 func get_space_box():
 	return container
 
+func add_to_option_list(given_node):
+	option_list.add_sortable_child(given_node)
+
+func get_option_list():
+	return option_list
+
 func _gui_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed && event.button_index == BUTTON_LEFT:
-			is_dragging = true
-			get_destination()
-		if !event.pressed:
-			is_dragging = false
-				
-	elif event is InputEventMouseMotion:
-		if(is_dragging):
-			rect_position += event.relative
+	if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_LEFT):
+		rect_position += event.relative
 
 # if I click an action with a "Change_Location" action, I should highlight the location somehow
 # that is, send an event that turns any action with the Id == A_Params into a different color
