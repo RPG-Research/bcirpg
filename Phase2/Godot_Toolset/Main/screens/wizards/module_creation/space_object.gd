@@ -20,6 +20,23 @@ func add_to_space_box(given_node):
 func get_space_box():
 	return container
 
+func add_field_pair_and_connect(field_name, field_text, caller, current_branch_key, key):
+	var new_pair = HBoxContainer.new()
+	var field_name_label = Label.new()
+	var field_text_lineedit = LineEdit.new()
+	new_pair.add_child(field_name_label)
+	new_pair.add_child(field_text_lineedit)
+			
+	field_text_lineedit.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+	field_text_lineedit.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+	
+	field_name_label.text = field_name
+	field_text_lineedit.text = field_text
+	
+	add_to_space_box(new_pair)
+	field_text_lineedit.connect("text_entered", caller, "_on_space_text_entered", [current_branch_key, key])
+	return new_pair
+
 func add_to_option_list(given_node):
 	option_list.add_sortable_child(given_node)
 

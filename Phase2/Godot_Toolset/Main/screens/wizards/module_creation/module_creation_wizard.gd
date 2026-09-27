@@ -2,9 +2,14 @@
 # right-click space object creation
 #	must be added to module dict, region tree, space dict
 # right-click option creation
+
 # click and drag option re-ordering
-#	needs to update connection display and option_labels/option_gotos numbering
+#	needs to update connection display and option_labels/option_gotos numbering !!
+#	numbering entails renaming option labels/gotos to match their order in the list
+#	maybe wait until saving for this, as it seems unnecessary beforehand?
+
 # click and drag connection editing
+#	fix connections not being on the right object
 # 	figure out what to do with connections that don't fit on space display object
 #	re-display edited connections
 # right click action adding with dropdown
@@ -23,6 +28,14 @@ onready var region_container = get_node(region_container_path)
 
 export var file_dialog_path: NodePath
 onready var file_dialog = get_node(file_dialog_path)
+
+export var right_click_popup_menu_path: NodePath
+onready var right_click_popup_menu = get_node(right_click_popup_menu_path)
+
+export var new_space_confirmation_dialog_path: NodePath
+onready var new_space_confirmation_dialog = get_node(new_space_confirmation_dialog_path)
+export var new_space_name_textedit_path: NodePath
+onready var new_space_name_textedit = get_node(new_space_name_textedit_path)
 
 export var region_tree_path: NodePath
 onready var region_tree = get_node(region_tree_path)
@@ -83,14 +96,27 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if space_start != null:
-		_update_tree_connections()
-	
+		_update_space_dict_connections()
 
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT and event.pressed:
+			var mouse_pos = get_global_mouse_position()
+			right_click_popup_menu.popup(Rect2(mouse_pos.x, mouse_pos.y, 20, 20)) # i'm not sure what width and height should be set to, so they're both 20 for now
+
+func _on_NewSpaceButton_pressed():
+	new_space_confirmation_dialog.popup_centered()
+
+func _on_NewSpaceConfirmationDialog_confirmed():
+	var new_display_object = space_object_scene.instance()
+	region_container.add_child(new_display_object)
+	new_display_object.rect_size = Vector2(space_display_width, space_display_height) # only works if set after adding to scene tree
+	
+	#space_dict[current_branch_key]["Object"] = new_display_object
 
 func _on_ButtonLoad_pressed():
 	file_dialog.set_mode(FileDialog.MODE_OPEN_FILE)
 	file_dialog.popup_centered()
-
 
 func _on_ButtonSave_pressed():
 	pass # Replace with function body.
@@ -172,16 +198,21 @@ func display_module_dict():
 	_display_regions_locations_tree()
 
 # updates the locations of lines between spaces that link to each other so they move when a space is dragged
-func _update_tree_connections():
+func _update_space_dict_connections():
 	for i in connection_dict.keys():
 		for j in connection_dict[i].keys():
-			connection_dict[i][j].set_point_position(0, Vector2(space_dict[i]["Object"].rect_size.x,connection_dict[i][j].get_point_position(0).y))
-			connection_dict[i][j].set_point_position(1, space_dict[j]["Object"].rect_position - space_dict[i]["Object"].rect_position + Vector2(0,space_dict[j]["Object"].rect_size.y/2))
+			# here we set the line position to be the parent's position plus an offset so it sticks to the right end, halfway down
+			# top_level also means the lines aren't affected by zoom scale, so we need to correct for that, too
+			connection_dict[i][j].transform = connection_dict[i][j].get_parent().get_global_transform().translated(Vector2(connection_dict[i][j].get_parent().rect_size.x,connection_dict[i][j].get_parent().rect_size.y/2))
+			# not quite right, we actually want the difference between line start and space object
+			var line_start_x = .get_transform().xform_inv(connection_dict[i][j].position).x # this line appears to work as intended
+			var point_2_pos = Vector2(space_dict[j]["Object"].rect_position.x, space_dict[j]["Object"].rect_position.y)
+			connection_dict[i][j].set_point_position(1, connection_dict[i][j].get_parent().get_transform().xform_inv(point_2_pos) - space_dict[i]["Object"].rect_position - Vector2(space_dict[i]["Object"].rect_size.x, 0))
 
-# creates lines between spaces that are connected to each other; not very pretty at the moment
+# connects lines between spaces that are connected to each other; not very pretty at the moment
 func _display_space_dict_connections(current_branch_id):
 	_display_space_dict_connection_recursive(current_branch_id, [])
-			
+
 func _display_space_dict_connection_recursive(current_branch_id, displayed_array):
 	if displayed_array.has(current_branch_id):
 		return
@@ -191,37 +222,12 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 		# go through each branch, drawing lines from each connection to its child
 		var space_object = space_dict[current_branch_id]["Object"]
 		
-		if !connection_dict.has(current_branch_id):
-			pass
-			connection_dict[current_branch_id] = {}
-			for id in space_dict[current_branch_id]["Gotos"]:
-				#draw a line from the current object to the new one, then do the same for the new object
-				var new_line = Line2D.new()
-				new_line.width = 4
-				space_object.add_child(new_line)
-				new_line.add_point(space_object.rect_position+Vector2(space_object.rect_size.x,0))
-				var new_space_object = space_dict[id]["Object"]
-				new_line.add_point(new_space_object.rect_position)
-				connection_dict[current_branch_id][id] = new_line
-				_display_space_dict_connections(id)
-		else:
-			for id in space_dict[current_branch_id]["Gotos"]:
-				#print("current_branch_id: ", current_branch_id, ", id: ", id)
-				var line = connection_dict[current_branch_id][id]
-				var new_space_object = space_dict[id]["Object"]
-				line.add_point(new_space_object.rect_position)
-				_display_space_dict_connection_recursive(id, displayed_array)
-	
-			
-#func _replace_id_connection_dict(original_id, new_id):
-#	for i in connection_dict.keys():
-#		for j in connection_dict[i].keys():
-#			if j == original_id:
-#				connection_dict[i][new_id] = connection_dict[i][original_id]
-#				connection_dict[i].erase(original_id)
-#		if i == original_id:
-#			connection_dict[new_id] = connection_dict[original_id]
-#			connection_dict.erase(original_id)
+		for id in space_dict[current_branch_id]["Gotos"]:
+			#print("current_branch_id: ", current_branch_id, ", id: ", id)
+			var line = connection_dict[current_branch_id][id]
+			var new_space_object = space_dict[id]["Object"]
+			line.add_point(new_space_object.rect_position)
+			_display_space_dict_connection_recursive(id, displayed_array)
 
 # takes the spaces stored in the space dict (which is derived from the module dict) and creates objects to show them
 # starts with the starting space and creates them left to right, where all undisplayed connections to the current space are vertically stacked
@@ -246,26 +252,12 @@ func _display_space_dict(current_branch_key, current_location):
 				option_dict[option_number] = [option_number, null, null]
 			if node_type == "Option_Labels":
 				option_dict[option_number][1] = space_object_data[key]["Text"]
-			else: #node_type == "Option_Gotos"
+			else: # node_type == "Option_Gotos"
 				option_dict[option_number][2] = space_object_data[key]["Text"]
 		elif nodes_with_text.has(node_type) && space_object_data[key].has("Text"):
-			var new_key_pair = HBoxContainer.new()
-			var new_key_text = Label.new()
-			var new_text = LineEdit.new()
-			new_key_pair.add_child(new_key_text)
-			new_key_pair.add_child(new_text)
-			
-			new_text.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-			new_text.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-			new_key_text.text = key
-			new_text.text =  space_object_data[key]["Text"]
-				
-			new_display_object.add_to_space_box(new_key_pair)
+			new_display_object.add_field_pair_and_connect(key, space_object_data[key]["Text"], self, current_branch_key, key)
 			new_display_object.rect_position = current_location
 			new_display_object.rect_size = Vector2(space_display_width, space_display_height)
-			
-			# we want any edited text box to send out a signal
-			new_text.connect("text_entered", self, "_on_space_text_entered", [current_branch_key, key])
 			
 	# now we create a sorted array from the option dict created earlier
 	var option_array = option_dict.keys()
@@ -284,9 +276,11 @@ func _display_space_dict(current_branch_key, current_location):
 		var new_line = Line2D.new()
 		new_line.width = 4
 		#new_line.z_index = 5
-		new_display_object.add_child(new_line)
+		#new_display_object.add_child(new_line)
+		new_option_label.add_child(new_line)
+		new_line.set_as_toplevel(true) # setting as top level allows us to bypass clipping settings from the parent
 		new_line.add_point(Vector2(0,0)) #position of added point is relative to line position
-		call_deferred("_update_start_point_position", new_line, new_option_label)
+		#call_deferred("_update_start_point_position", new_line, new_option_label)
 		connection_dict[current_branch_key][option[2]] = new_line
 		#print("setting connection_dict[", current_branch_key, "][", option[2], "] to new_line")
 			
@@ -304,10 +298,7 @@ func _display_space_dict(current_branch_key, current_location):
 		space_dict_displayed.append(id)
 		_display_space_dict(id, branch_display_location)
 		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
-
-# a helper function for _display_space_dict because the positions aren't set inside a vboxcontainer until later
-func _update_start_point_position(line, position_object):
-	line.set_point_position(0, position_object.rect_position + Vector2(0,position_object.rect_size.y/2))
+		
 
 # recieves a text_changed signal from a LineEdit and updates data structures that need to be updated
 # WIP

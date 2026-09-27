@@ -4,7 +4,8 @@ export var zoom_subcontainer_path: NodePath
 onready var zoom_subcontainer = get_node(zoom_subcontainer_path)
 
 var zoom_speed = 0.01
-var zoom_offset_power = 0.5
+var zoom_in_offset_speed = 0.9
+var zoom_out_offset_speed = 0.1
 
 var is_dragging = false
 
@@ -22,10 +23,10 @@ func _gui_input(event):
 			factor = event.factor
 		
 		if event.button_index == BUTTON_WHEEL_UP:
-			zoom_subcontainer.rect_pivot_offset = lerp(zoom_subcontainer.rect_pivot_offset, get_global_mouse_position(), zoom_offset_power)
+			zoom_subcontainer.rect_pivot_offset = lerp(zoom_subcontainer.rect_pivot_offset, get_global_mouse_position(), zoom_in_offset_speed)
 			zoom_subcontainer.rect_scale += factor*Vector2(zoom_speed, zoom_speed)
 		elif event.button_index == BUTTON_WHEEL_DOWN:
-			zoom_subcontainer.rect_pivot_offset = lerp(zoom_subcontainer.rect_pivot_offset, get_global_mouse_position(), zoom_offset_power)
+			zoom_subcontainer.rect_pivot_offset = lerp(zoom_subcontainer.rect_pivot_offset, get_global_mouse_position(), zoom_out_offset_speed)
 			var new_scale = zoom_subcontainer.rect_scale - factor*Vector2(zoom_speed, zoom_speed)
 			if new_scale.x >= 0 && new_scale.y >= 0:
 				zoom_subcontainer.rect_scale = new_scale
