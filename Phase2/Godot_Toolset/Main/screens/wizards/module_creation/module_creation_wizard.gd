@@ -32,10 +32,15 @@ onready var file_dialog = get_node(file_dialog_path)
 export var right_click_popup_menu_path: NodePath
 onready var right_click_popup_menu = get_node(right_click_popup_menu_path)
 
-export var new_space_confirmation_dialog_path: NodePath
-onready var new_space_confirmation_dialog = get_node(new_space_confirmation_dialog_path)
-export var new_space_name_textedit_path: NodePath
-onready var new_space_name_textedit = get_node(new_space_name_textedit_path)
+export var new_space_confirmation_dialog_id_path: NodePath
+onready var new_space_confirmation_dialog_id = get_node(new_space_confirmation_dialog_id_path)
+export var new_space_id_textedit_path: NodePath
+onready var new_space_id_textedit = get_node(new_space_id_textedit_path)
+
+export var new_space_confirmation_dialog_location_path: NodePath
+onready var new_space_confirmation_dialog_location = get_node(new_space_confirmation_dialog_location_path)
+export var new_space_location_selection_tree_path: NodePath
+onready var new_space_location_selection_tree = get_node(new_space_location_selection_tree_path)
 
 export var region_tree_path: NodePath
 onready var region_tree = get_node(region_tree_path)
@@ -99,20 +104,115 @@ func _process(_delta):
 		_update_space_dict_connections()
 
 func _input(event):
+	# we want to make sure the right click menu stays the same for text input
+	# (except where we want to open a text editor instead)
+	# basically, we need to know where we're right clicking
+	# this can probably be done either here or in the right-clicked object itself
+	# (in which case, we'll probably want to consume the event there)
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed:
 			var mouse_pos = get_global_mouse_position()
 			right_click_popup_menu.popup(Rect2(mouse_pos.x, mouse_pos.y, 20, 20)) # i'm not sure what width and height should be set to, so they're both 20 for now
 
 func _on_NewSpaceButton_pressed():
-	new_space_confirmation_dialog.popup_centered()
+	new_space_confirmation_dialog_id.popup_centered()
 
-func _on_NewSpaceConfirmationDialog_confirmed():
-	var new_display_object = space_object_scene.instance()
-	region_container.add_child(new_display_object)
-	new_display_object.rect_size = Vector2(space_display_width, space_display_height) # only works if set after adding to scene tree
+func _on_NewSpaceConfirmationDialogID_confirmed():
+	#var new_display_object = space_object_scene.instance()
+	#region_container.add_child(new_display_object)
+	#new_display_object.rect_size = Vector2(space_display_width, space_display_height) # only works if set after adding to scene tree
+	
+	#var new_space_name = new_space_id_textedit.text
+	
+	# now we want to add the space to the module dictionary
+	
+	#new_display_object.add_field_pair_and_connect("ID", new_space_name)
 	
 	#space_dict[current_branch_key]["Object"] = new_display_object
+	
+	new_space_confirmation_dialog_location.popup_centered()
+	var root = new_space_location_selection_tree.create_item()
+	root.set_text(0, "Regions")
+	root.set_selectable(0, false)
+	# we'll loop through the module dict to display all the places
+	if module_dict.has("Region"):
+		for region in module_dict["Region"]:
+			var child_region = region_tree.create_item(root)
+			child_region.set_text(0, region["Name"]["Text"])
+			child_region.set_metadata(0, region["Type"])
+			child_region.set_selectable(0, false)
+			if region.has("Location"):
+				for location in region["Location"]:
+					var child_location = region_tree.create_item(child_region)
+					child_location.set_text(0, location["Name"]["Text"])
+					child_location.set_metadata(0, location["Type"])
+	
+
+func _on_NewSpaceConfirmationDialogLocation_confirmed():
+	var new_space_id = new_space_id_textedit.text
+	var new_space_location = new_space_location_selection_tree.get_selected() # we can use the parents to create a path to this object in the module dict
+	
+	# first, we'll add our new space to the module_dict
+	var new_space = {}
+	new_space["Id"] = {"Text": new_space_id, "Type": "Id"}
+	new_space["Type"] = "Space"
+	# new_space["Start"] = {"Type": "Start", "Text": "False"}
+	new_space["Action"] = {"Text": "ShowText", "Type": "Action"}
+	new_space["A_Params"] = []
+	new_space["Text"] = {"Text": "", "Type": "Text"}
+	
+	var new_space_location_stack = []
+	var stack_current_location = new_space_location
+	while stack_current_location != new_space_location_selection_tree.get_root() && stack_current_location != null:
+		new_space_location_stack.push_back(stack_current_location.get_text(0))
+		stack_current_location = stack_current_location.get_parent()
+	print(new_space_location_stack)
+	
+	# now we can use the stack we created to get to the correct place in the module dict
+	var current_module_dict_location = module_dict
+	#print(current_module_dict_location)
+	while new_space_location_stack.size() > 0:
+		var next_id = new_space_location_stack.pop_back()
+		print("search loop: ", next_id)
+		if current_module_dict_location.has(next_id):
+			current_module_dict_location = current_module_dict_location[next_id]
+		elif current_module_dict_location.has("Region"):
+			for region in current_module_dict_location["Region"]:
+				print(region["Type"])
+				if region["Name"]["Text"] == next_id:
+					current_module_dict_location = region
+		elif current_module_dict_location.has("Location"):
+			for location in current_module_dict_location["Location"]:
+				if location["Name"]["Text"] == next_id:
+					current_module_dict_location = location
+			
+	
+	print(new_space_location_stack)
+	if !current_module_dict_location.has("Space"):
+		print("No space!")
+		current_module_dict_location["Space"] = []
+	current_module_dict_location["Space"].append(new_space)
+	
+	# second, we'll refresh the region tree
+	_refresh_regions_locations_tree()
+	
+	# third, we'll create the display object
+	var new_space_display_object  = space_object_scene.instance()
+	region_container.add_child(new_space_display_object)
+	
+	for key in new_space:
+		if nodes_with_text.has(key):
+			if new_space[key] is Dictionary && new_space[key].has("Text"):
+				new_space_display_object.add_field_pair_and_connect(key, new_space[key]["Text"], self, new_space_location.get_parent().get_text(0), key)
+				new_space_display_object.rect_position = right_click_popup_menu.rect_position
+				new_space_display_object.rect_size = Vector2(space_display_width, space_display_height)
+			else:
+				print("object at key is not a dictionary or does not have text: ", key)
+				
+	# thirdly, we'll add the new space to the space dictionary
+	space_dict[new_space_id] = {}
+	space_dict[new_space_id]["Data"] = new_space
+	space_dict[new_space_id]["Object"] = new_space_display_object
 
 func _on_ButtonLoad_pressed():
 	file_dialog.set_mode(FileDialog.MODE_OPEN_FILE)
@@ -313,7 +413,7 @@ func _on_space_text_entered(changed_text, key, parent_key):
 			_replace_id_module_dict(key, changed_text, module_dict)
 			_replace_id_space_dict(key, changed_text)
 			#_replace_id_connection_dict(key, changed_text)
-			_refresh_locations_tree()
+			_refresh_regions_locations_tree()
 			# module_dict, space_dict (id and path), (maybe) space_start
 		"Start":
 			pass
@@ -370,7 +470,7 @@ func _replace_id_space_dict(original_id, new_id):
 	space_dict[new_id] = space_dict[original_id] #not done the first time?
 	space_dict.erase(original_id)
 
-func _refresh_locations_tree():
+func _refresh_regions_locations_tree():
 	region_tree.clear()
 	_display_regions_locations_tree()
 
