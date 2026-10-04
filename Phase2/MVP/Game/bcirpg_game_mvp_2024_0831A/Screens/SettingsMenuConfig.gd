@@ -110,7 +110,6 @@ func saveFile():
 	
 	iniFile.set_value("player_preferences", "genre_selection", saveObject.settingsInstance.genre_options[genre_dropdown.get_selected_id()])
 	iniFile.set_value("player_preferences", "game_selection", saveObject.settingsInstance.game_options[game_dropdown.get_selected_id()])
-	
 	iniFile.save("res://_userFiles/PlayerPreferences.cfg")
 
 #DKM TEMP: can this be done at singleton, initial load level instead of here?
