@@ -5,29 +5,29 @@ class_name DieManager
 
 extends Node2D
 
-#Array of the desired dice values to mod god wants
-var desiredDice: Array
+#Array of the desired dice values the mod god wants
+var desiredDice: Array[int]
 
 #User can select the percentage needed for a successful roll
 var neededPercentageToPass: float
 
-var validDieTypes = [4, 6, 8, 10, 12, 20]
+var validDieTypes: Array[int] = [4, 6, 8, 10, 12, 20]
 #boolean for if a percentageroll is taking place
 #we need a boolean for this because the way a percentage roll is calculated
 #with two D10s is different than if one were using other dice
-var isPercentageRoll = false
+var isPercentageRoll: bool = false
 
 #diceUsed holds the dice objects that are rolled
-var diceUsed = []
+var diceUsed: Array[int] = []
 
 #rolledValues holds the integer value rolled from each die
-var rolledValues = []
+var rolledValues: Array[int] = []
 
 #boolean based on whether the overall roll passed or not
-var passedRoll
+var passedRoll: bool
 
 #float holding the degree of success (rolledVal - neededPercentageToPass)
-var degreeOfSuccess
+var degreeOfSuccess: float
 
 #Constructor for diemanager class
 func _init(dice, percent):
@@ -67,7 +67,7 @@ func returnDiePercentage(inputedDie):
 	if len(diceUsed) == 0:
 		push_error("Cannot roll without any dice!")
 		
-	var rolledVal = inputedDie.rollDie()
+	var rolledVal: int = inputedDie.rollDie()
 	
 	#add rolled integer value to array
 	rolledValues.append(rolledVal)
@@ -88,10 +88,10 @@ func rollDice():
 		push_error("Cannot roll without any dice!")
 		
 	#denominator will equal the total number of dice rolled
-	var denominator = 0
+	var denominator: int = 0
 	
 	#sum of floats of all rolled die percentages
-	var sumOfPercentages = 0
+	var sumOfPercentages: float = 0
 	
 	if isPercentageRoll:
 		sumOfPercentages += (returnDiePercentage(diceUsed[0]) / 10.0) + (returnDiePercentage(diceUsed[1]) / 100.0)
@@ -100,7 +100,7 @@ func rollDice():
 			sumOfPercentages += returnDiePercentage(die)
 			denominator += 1
 			
-	var result = []
+	var result: Array = []
 
 	result.append(rolledValues)
 	

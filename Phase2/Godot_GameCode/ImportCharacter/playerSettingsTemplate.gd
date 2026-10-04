@@ -13,14 +13,14 @@ enum ThemeChoice {
 	LIGHTHIGHCONTRAST
 }
 
-var inputName = "none"
-var riskFactor = 0
-var brightness = 3
-var fontSize = 11
-var volume = 6
-var bClosedCaptions = true
-var bdevConsole = false
-var bVirtualKeyboard = false
+var inputName: String = "none"
+var riskFactor: int = 0
+var brightness: int = 3
+var fontSize: int = 11
+var volume: int = 6
+var bClosedCaptions: bool = true
+var bdevConsole: bool = false
+var bVirtualKeyboard: bool = false
 var visualKeyboardLayout = KeyboardLayout.QWERTY
 var preferredTheme = ThemeChoice.DARKHIGHCONTRAST
 

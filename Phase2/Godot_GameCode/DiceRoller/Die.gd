@@ -14,7 +14,7 @@ func _init(value):
 func rollDie():
 	randomize()
 	
-	var rolledNum
+	var rolledNum: int
 	rolledNum = randi() % numFaces + 1
 	return rolledNum
 		
