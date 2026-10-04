@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://globalScripts/game_abilitychecks.gd"
 }, {
+"base": "Reference",
+"class": "BFRPG_Converter",
+"language": "GDScript",
+"path": "res://globalScripts/Convert_BFRPG.gd"
+}, {
 "base": "PanelContainer",
 "class": "Capacity",
 "language": "GDScript",
@@ -86,6 +91,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AbilityChecks": "",
+"BFRPG_Converter": "",
 "Capacity": "",
 "Char_Capability": "",
 "CheckResult": "",
