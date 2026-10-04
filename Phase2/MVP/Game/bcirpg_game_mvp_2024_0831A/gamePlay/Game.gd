@@ -34,6 +34,19 @@ onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSh
 const Ability_Checker_Source := preload("res://globalScripts/game_abilitychecks.gd")
 onready var Ability_Checker = Ability_Checker_Source.new()
 
+#Conflict system (d20; original design by Ning, PR #86). The session classes in
+#	gamePlay/conflict/ own all conflict state. Game only starts a session for the
+#	StartSimpleConflict / StartExtendedConflict module actions, forwards the
+#	"CONFLICT:" option presses to it, and returns to the module when it finishes.
+const Conflict_Rules_Source := preload("res://globalScripts/ConflictManagerD20.gd")
+const Pc_Conflict_Stats_Source := preload("res://gamePlay/conflict/PcConflictStats.gd")
+const Conflict_Session_Source := preload("res://gamePlay/conflict/ConflictSession.gd")
+const Simple_Conflict_Source := preload("res://gamePlay/conflict/SimpleConflict.gd")
+const Extended_Conflict_Source := preload("res://gamePlay/conflict/ExtendedConflict.gd")
+#Name: active_conflict
+#Use: the running ConflictSession, or null when no conflict is in progress.
+var active_conflict = null
+
 #DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
 #	or desired load approach
 onready var module_map = "res://_userFiles/temp_map.save"
@@ -298,7 +311,7 @@ func runXML_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_XML[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	options_container.get_child(0).call_deferred("grab_focus")
+	focus_first_option()
 	return nodeArray_XML
 
 
@@ -339,7 +352,7 @@ func runJSON_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_JSON[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	options_container.get_child(0).grab_focus()
+	focus_first_option()
 	
 	return nodeArray_JSON
 
@@ -411,7 +424,59 @@ func add_option_to_game(optionNew: Control) -> void:
 
 func _on_option_pressed(destinationSelected: String) -> void:
 	#print("Destination node for pressed option is: " + destinationSelected)
+	if destinationSelected.begins_with(Conflict_Session_Source.TOKEN_PREFIX):
+		_forward_conflict_choice(destinationSelected)
+		return
 	change_node(destinationSelected)
+
+#FUNCTION: Focus First Option
+#Params: None
+#Returns: Nothing
+#Notes: Gives focus to the first option button (if there is one), so keyboard and
+#	2-button navigation keep working after the options are rebuilt. Deferred,
+#	because the old buttons are only queued for deletion when this runs.
+func focus_first_option() -> void:
+	if options_container.get_child_count() > 0:
+		options_container.get_child(0).call_deferred("grab_focus")
+
+#FUNCTION: Start Conflict
+#Params: session script to use (SimpleConflict or ExtendedConflict), and the
+#	module space that started it
+#Returns: Nothing; the session draws its own screens from here on
+#Notes: The space's first Option_GoTos is where the player goes once the conflict
+#	ends. A space without one is a module error, and is reported on screen.
+func _start_conflict(session_source: GDScript, start_locale: Locale) -> void:
+	if start_locale.destinations_array.size() < 1:
+		var msg = "Module space '%s' starts a conflict but has no Option_GoTos_001 to return to afterward." % start_locale.locale_name
+		push_error(msg)
+		create_response("[Conflict error] " + msg)
+		return
+	var rules = Conflict_Rules_Source.new()
+	var pc_stats = Pc_Conflict_Stats_Source.new(pSingleton.pc)
+	active_conflict = session_source.new(rules, pc_stats, self)
+	active_conflict.connect("finished", self, "_on_conflict_finished")
+	active_conflict.start(start_locale.locale_action_params, start_locale.destinations_array[0])
+
+#FUNCTION: Forward Conflict Choice
+#Params: the pressed option's destination ("CONFLICT:<kind>:<value>")
+#Returns: Nothing
+#Notes: The session is held in a local variable for the call, so it stays alive
+#	even if it finishes (and active_conflict is cleared) during handle_token().
+func _forward_conflict_choice(token: String) -> void:
+	var session = active_conflict
+	if session == null:
+		var msg = "Conflict option '%s' was pressed, but no conflict is running." % token
+		push_error(msg)
+		create_response("[Conflict error] " + msg)
+		return
+	session.handle_token(token)
+
+#FUNCTION: On Conflict Finished
+#Params: the module space to return to
+#Returns: Nothing; ends the conflict and goes back to the module
+func _on_conflict_finished(return_node: String) -> void:
+	active_conflict = null
+	change_node(return_node)
 	
 func get_node_by_name(nodeName: String) -> Locale:
 	for n in nodeArray:
@@ -505,7 +570,14 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 #		var dice = result[5] 
 
 		#change_node(target_Locale.destinations_array[0])
-	options_container.get_child(0).grab_focus()
+	#Conflict actions (d20 conflict system, see gamePlay/conflict/):
+	elif target_Locale.locale_action == "StartSimpleConflict":
+		_start_conflict(Simple_Conflict_Source, target_Locale)
+		return
+	elif target_Locale.locale_action == "StartExtendedConflict":
+		_start_conflict(Extended_Conflict_Source, target_Locale)
+		return
+	focus_first_option()
 
 #FUNCTION: Find Relocation Location
 #Params: array containing the names of target: 0.region, 1.location, 2.space
