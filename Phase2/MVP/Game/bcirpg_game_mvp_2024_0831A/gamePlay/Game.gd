@@ -30,14 +30,22 @@ onready var options_container = $Background/MarginContainer/Rows/InputArea/Scrol
 onready var pSingleton = get_node("/root/PlayerCharacter")
 onready var charSheet = $Con_charSheet/MarginContainer/VBoxContainer/CharacterSheet
 
-# --- Conflict / Turn system (d20) ---
-var conflict_state = null  # Dictionary state machine or null
-var conflict_return_node = ""  # where to go back after conflict ends
-onready var ConflictMgr = preload("res://globalScripts/ConflictManagerD20.gd").new()
-
 #Ability_Checker are used as passed by module and return Check_Results
 const Ability_Checker_Source := preload("res://globalScripts/game_abilitychecks.gd")
 onready var Ability_Checker = Ability_Checker_Source.new()
+
+#Conflict system (d20; original design by Ning, PR #86). The session classes in
+#	gamePlay/conflict/ own all conflict state. Game only starts a session for the
+#	StartSimpleConflict / StartExtendedConflict module actions, forwards the
+#	"CONFLICT:" option presses to it, and returns to the module when it finishes.
+const Conflict_Rules_Source := preload("res://globalScripts/ConflictManagerD20.gd")
+const Pc_Conflict_Stats_Source := preload("res://gamePlay/conflict/PcConflictStats.gd")
+const Conflict_Session_Source := preload("res://gamePlay/conflict/ConflictSession.gd")
+const Simple_Conflict_Source := preload("res://gamePlay/conflict/SimpleConflict.gd")
+const Extended_Conflict_Source := preload("res://gamePlay/conflict/ExtendedConflict.gd")
+#Name: active_conflict
+#Use: the running ConflictSession, or null when no conflict is in progress.
+var active_conflict = null
 
 #DKM TEMP: this is just a temp file solution for grabbing map/module, will be replaced with DB
 #	or desired load approach
@@ -56,6 +64,7 @@ var regionsArray
 func _ready() -> void: 
 	save_module()
 	theme=load(settings.themeFile)
+	GlobalSaveInstance.load_fontSize(theme)
 	
 	#Sets a default button to grab focus
 	#Node Builders should override this by setting the focused button to the first selectable option
@@ -224,10 +233,10 @@ func loadGameNode(parser:XMLParser)->Locale:
 			match child_node_name:
 				"ID":
 					parser.read()
-					if parser.get_node_type() == XMLParser.NODE_TEXT:
+					if parser.get_node_type() == XMLParser.NODE_TEXT:								
 						var id_node_data = parser.get_node_data()
+						#print("Found Id named: " + id_node_data)
 						spaceNode.locale_name = id_node_data.strip_edges(true,true)
-						print("LOADED SPACE:", spaceNode.locale_name)
 				"START":
 					parser.read()
 					if (parser.get_node_type() == XMLParser.NODE_TEXT) && (parser.get_node_data().strip_edges(true,true).to_upper() == "TRUE"):								
@@ -235,10 +244,10 @@ func loadGameNode(parser:XMLParser)->Locale:
 						spaceNode.is_starting_locale  = true					
 				"ACTION":
 					parser.read()
-					if parser.get_node_type() == XMLParser.NODE_TEXT:
+					if parser.get_node_type() == XMLParser.NODE_TEXT:								
 						var action_node_data = parser.get_node_data()
-						spaceNode.locale_action = action_node_data.strip_edges(true,true)
-						print("  ACTION =", spaceNode.locale_action)
+						#print("Found Action named: " + action_node_data)
+						spaceNode.locale_action  = action_node_data.strip_edges(true,true)
 				"TEXT":
 					parser.read()
 					if parser.get_node_type() == XMLParser.NODE_TEXT:								
@@ -302,9 +311,7 @@ func runXML_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_XML[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	if options_container.get_child_count() > 0:
-		options_container.get_child(0).grab_focus()
-
+	focus_first_option()
 	return nodeArray_XML
 
 
@@ -345,9 +352,7 @@ func runJSON_NodeBuilder(module_file_path:String)->Array:
 		var destArr = nodeArray_JSON[0].destinations_array
 		create_option(option, destArr[i])
 		i = i+1
-	if options_container.get_child_count() > 0:
-		options_container.get_child(0).grab_focus()
-
+	focus_first_option()
 	
 	return nodeArray_JSON
 
@@ -418,12 +423,60 @@ func add_option_to_game(optionNew: Control) -> void:
 #DKM TEMP: these need to be dynamically added with the options themselves
 
 func _on_option_pressed(destinationSelected: String) -> void:
-	# If we are inside a conflict flow, options are "CONFLICT:*" tokens, not locale names.
-	print("OPTION CLICKED:", destinationSelected)
-	if conflict_state != null and destinationSelected.begins_with("CONFLICT:"):
-		_handle_conflict_choice(destinationSelected)
+	#print("Destination node for pressed option is: " + destinationSelected)
+	if destinationSelected.begins_with(Conflict_Session_Source.TOKEN_PREFIX):
+		_forward_conflict_choice(destinationSelected)
 		return
 	change_node(destinationSelected)
+
+#FUNCTION: Focus First Option
+#Params: None
+#Returns: Nothing
+#Notes: Gives focus to the first option button (if there is one), so keyboard and
+#	2-button navigation keep working after the options are rebuilt. Deferred,
+#	because the old buttons are only queued for deletion when this runs.
+func focus_first_option() -> void:
+	if options_container.get_child_count() > 0:
+		options_container.get_child(0).call_deferred("grab_focus")
+
+#FUNCTION: Start Conflict
+#Params: session script to use (SimpleConflict or ExtendedConflict), and the
+#	module space that started it
+#Returns: Nothing; the session draws its own screens from here on
+#Notes: The space's first Option_GoTos is where the player goes once the conflict
+#	ends. A space without one is a module error, and is reported on screen.
+func _start_conflict(session_source: GDScript, start_locale: Locale) -> void:
+	if start_locale.destinations_array.size() < 1:
+		var msg = "Module space '%s' starts a conflict but has no Option_GoTos_001 to return to afterward." % start_locale.locale_name
+		push_error(msg)
+		create_response("[Conflict error] " + msg)
+		return
+	var rules = Conflict_Rules_Source.new()
+	var pc_stats = Pc_Conflict_Stats_Source.new(pSingleton.pc)
+	active_conflict = session_source.new(rules, pc_stats, self)
+	active_conflict.connect("finished", self, "_on_conflict_finished")
+	active_conflict.start(start_locale.locale_action_params, start_locale.destinations_array[0])
+
+#FUNCTION: Forward Conflict Choice
+#Params: the pressed option's destination ("CONFLICT:<kind>:<value>")
+#Returns: Nothing
+#Notes: The session is held in a local variable for the call, so it stays alive
+#	even if it finishes (and active_conflict is cleared) during handle_token().
+func _forward_conflict_choice(token: String) -> void:
+	var session = active_conflict
+	if session == null:
+		var msg = "Conflict option '%s' was pressed, but no conflict is running." % token
+		push_error(msg)
+		create_response("[Conflict error] " + msg)
+		return
+	session.handle_token(token)
+
+#FUNCTION: On Conflict Finished
+#Params: the module space to return to
+#Returns: Nothing; ends the conflict and goes back to the module
+func _on_conflict_finished(return_node: String) -> void:
+	active_conflict = null
+	change_node(return_node)
 	
 func get_node_by_name(nodeName: String) -> Locale:
 	for n in nodeArray:
@@ -516,30 +569,15 @@ func change_node(destinationNode: String, _destinationParams: Array = []) -> voi
 #		var degreeOfSuccess = result[4]
 #		var dice = result[5] 
 
-
-	# --- NEW: d20 conflict hooks (see diagrams) ---
+		#change_node(target_Locale.destinations_array[0])
+	#Conflict actions (d20 conflict system, see gamePlay/conflict/):
 	elif target_Locale.locale_action == "StartSimpleConflict":
-		# Store where to return after the conflict finishes (optional)
-		if target_Locale.destinations_array.size() > 0:
-			conflict_return_node = target_Locale.destinations_array[0]
-		else:
-			conflict_return_node = ""
-
-		_start_simple_conflict(target_Locale.locale_action_params)
+		_start_conflict(Simple_Conflict_Source, target_Locale)
 		return
 	elif target_Locale.locale_action == "StartExtendedConflict":
-		print(">>> HIT StartExtendedConflict <<<")
-		if target_Locale.destinations_array.size() > 0:
-			conflict_return_node = target_Locale.destinations_array[0]
-		else:
-			conflict_return_node = ""
-
-		_start_extended_conflict(target_Locale.locale_action_params)
+		_start_conflict(Extended_Conflict_Source, target_Locale)
 		return
-		#change_node(target_Locale.destinations_array[0])
-	if options_container.get_child_count() > 0:
-		options_container.get_child(0).grab_focus()
-
+	focus_first_option()
 
 #FUNCTION: Find Relocation Location
 #Params: array containing the names of target: 0.region, 1.location, 2.space
@@ -565,456 +603,3 @@ func save_module():
 		scene.pack(self)
 		#var _saveResponse = ResourceSaver.save("user://game_01.tscn", scene)
 		var _saveResponse = ResourceSaver.save("res://_userFiles/game_01.tscn", scene)
-
-
-# ---------------------------------------------------------------------------
-# d20 Conflict / Turn System implementation (MVP)
-# This section implements the flow in your diagrams without changing your UI:
-# we re-use the existing OptionsContainer buttons by emitting destinations that
-# start with "CONFLICT:".
-#
-# Godot 3.5 compatible.
-# ---------------------------------------------------------------------------
-
-func _start_simple_conflict(params: Array) -> void:
-	# params (optional): [npc_name]
-	var npc_name = "Bandit"
-	if params.size() > 0:
-		npc_name = str(params[0])
-
-	var npc = ConflictMgr.make_default_npc(npc_name)
-	conflict_state = {
-		"mode": "simple",
-		"step": "choose_intent",
-		"pc_intent": "",
-		"pc_trait": "",
-		"npc_intent": "",
-		"npc_trait": "",
-		"npc": npc
-	}
-	create_response("[Conflict] Choose your intent (talk / move / do / fight).")
-	clear_prior_options()
-	_render_conflict()
-
-func _start_extended_conflict(params: Array) -> void:
-	var npc_name = "Bandit"
-	if params.size() > 0:
-		npc_name = str(params[0])
-
-	var npc = ConflictMgr.make_default_npc(npc_name)
-	conflict_state = {
-		"mode": "extended",
-		"step": "initiative",
-		"round": 1,
-		"turn": "",
-		"distance": 1, # 1 = in melee range (MVP)
-		"pc_turn": {"moved": false, "acted": false},
-		"pc_status": {"hidden": false, "dodging": false, "disengaged": false, "helping": false, "reaction": ""},
-		"npc": npc
-	}
-	create_response("[Combat] Extended conflict started. Rolling initiative…")
-	clear_prior_options()
-	_render_conflict()
-
-func _handle_conflict_choice(token: String) -> void:
-	# token format: CONFLICT:<type>:<value>
-	var parts = token.split(":", false)
-	if parts.size() < 3:
-		return
-	var kind = parts[1]
-	var value = parts[2]
-
-	if conflict_state == null:
-		return
-
-	match conflict_state["mode"]:
-		"simple":
-			_handle_simple_choice(kind, value)
-		"extended":
-			_handle_extended_choice(kind, value)
-		_:
-			pass
-
-func _render_conflict() -> void:
-	if conflict_state == null:
-		return
-	match conflict_state["mode"]:
-		"simple":
-			_render_simple()
-		"extended":
-			_render_extended()
-		_:
-			pass
-
-# --- SIMPLE CONFLICT (Diagram 1) -------------------------------------------
-
-func _render_simple() -> void:
-	clear_prior_options()
-	match conflict_state["step"]:
-		"choose_intent":
-			create_option("Talk", "CONFLICT:intent:talk")
-			create_option("Move", "CONFLICT:intent:move")
-			create_option("Do", "CONFLICT:intent:do")
-			create_option("Fight", "CONFLICT:intent:fight")
-		"choose_trait":
-			var intent = conflict_state["pc_intent"]
-			create_response("[Conflict] Using what? Pick a trait for intent: " + intent)
-			var caps = _pc_caps_dict()
-			var group = ConflictMgr.intent_cap_group(intent)
-			for cap_name in group:
-				if caps.has(cap_name):
-					create_option(cap_name, "CONFLICT:trait:" + cap_name)
-			create_option("Back", "CONFLICT:nav:back")
-		"end":
-			create_option("Continue", "CONFLICT:end:ok")
-		_:
-			create_option("Continue", "CONFLICT:end:ok")
-
-func _handle_simple_choice(kind: String, value: String) -> void:
-	match kind:
-		"intent":
-			conflict_state["pc_intent"] = value
-			conflict_state["step"] = "choose_trait"
-			_render_conflict()
-		"trait":
-			conflict_state["pc_trait"] = value
-			_resolve_simple_conflict()
-			conflict_state["step"] = "end"
-			_render_conflict()
-		"nav":
-			if value == "back":
-				conflict_state["step"] = "choose_intent"
-				_render_conflict()
-		"end":
-			# exit conflict and go back
-			var return_to = conflict_return_node
-			conflict_state = null
-			conflict_return_node = ""
-			if return_to != "":
-				change_node(return_to)
-			else:
-				# If no return node provided, just rebuild current node options by doing nothing.
-				pass
-		_:
-			pass
-
-func _resolve_simple_conflict() -> void:
-	var pc_intent = str(conflict_state["pc_intent"])
-	var pc_trait = str(conflict_state["pc_trait"])
-
-	# NPC chooses an intent (MVP AI) and best matching trait
-	var npc_intents = ["talk", "move", "do", "fight"]
-	randomize()
-	var npc_intent = npc_intents[randi() % npc_intents.size()]
-	conflict_state["npc_intent"] = npc_intent
-
-	var npc = conflict_state["npc"]
-	var npc_trait = _npc_best_trait(npc, npc_intent)
-	conflict_state["npc_trait"] = npc_trait
-
-	# Calculate trait mods (Diagram: Trait Mods -> Total Mods)
-	var pc_percent = _pc_get_percent(pc_trait)
-	var npc_percent = _npc_get_percent(npc, npc_trait)
-
-	var roll = ConflictMgr.contested_roll(pc_percent, npc_percent, 0, 0)
-
-	var pc_total = roll["pc"]["total"]
-	var npc_total = roll["npc"]["total"]
-	var margin = int(roll["margin"])
-	var outcome = str(roll["outcome"])
-
-	var winner = "TIE"
-	if margin > 0:
-		winner = "PC"
-	elif margin < 0:
-		winner = "NPC"
-
-
-	var msg = "[Conflict Result]\n"
-	msg += "PC intent: %s (using %s)\n" % [pc_intent, pc_trait]
-	msg += "NPC intent: %s (using %s)\n" % [npc_intent, npc_trait]
-	msg += "PC roll %d + mod %d = %d\n" % [roll["pc"]["roll"], roll["pc"]["mod"], pc_total]
-	msg += "NPC roll %d + mod %d = %d\n" % [roll["npc"]["roll"], roll["npc"]["mod"], npc_total]
-	msg += "Outcome: %s (margin %d) => %s\n" % [winner, margin, outcome]
-
-	# If it's a fight intent for either side, apply a tiny MVP damage to show the loop works
-	if pc_intent == "fight" or npc_intent == "fight":
-		var dmg = 1 + int(abs(margin) / 5)
-		if outcome == "CRIT_SUCCESS" or outcome == "CRIT_FAIL":
-			dmg += 2
-		if margin > 0:
-			_npc_take_damage(conflict_state["npc"], dmg)
-			msg += "PC hits %s for %d damage. NPC HP now %d.\n" % [npc["name"], dmg, npc["hp"]]
-		elif margin < 0:
-			_pc_take_damage(dmg)
-			msg += "NPC hits PC for %d damage. PC HP now %d.\n" % [dmg, _pc_get_hp()]
-		else:
-			msg += "No damage (tie).\n"
-
-	create_response(msg)
-
-# --- EXTENDED CONFLICT (Diagrams 2/3/4) ------------------------------------
-
-func _render_extended() -> void:
-	clear_prior_options()
-	match conflict_state["step"]:
-		"initiative":
-			# Initiative Order (Diagram 2)
-			var npc = conflict_state["npc"]
-			var roll = ConflictMgr.contested_roll(_pc_get_percent("AG"), _npc_get_percent(npc, "AG"), 0, 0)
-			if int(roll["margin"]) >= 0:
-				conflict_state["turn"] = "pc"
-			else:
-				conflict_state["turn"] = "npc"
-
-			create_response("[Initiative] PC total %d vs NPC total %d. %s goes first." % [roll["pc"]["total"], roll["npc"]["total"], conflict_state["turn"].to_upper()])
-			conflict_state["step"] = "turn_start"
-			create_option("Continue", "CONFLICT:flow:next")
-		"turn_start":
-			# Reset per-turn flags
-			conflict_state["pc_turn"] = {"moved": false, "acted": false}
-			# Clean up some one-turn statuses
-			conflict_state["pc_status"]["helping"] = false
-			conflict_state["pc_status"]["reaction"] = ""
-			var npc = conflict_state["npc"]
-			create_response("[Round %d] PC HP %d | %s HP %d" % [conflict_state["round"], _pc_get_hp(), npc["name"], npc["hp"]])
-			if conflict_state["turn"] == "pc":
-				conflict_state["step"] = "pc_choose"
-				_render_extended()
-			else:
-				conflict_state["step"] = "npc_act"
-				create_option("Continue", "CONFLICT:flow:next")
-		"pc_choose":
-			# Action Declaration (Diagram 2) + list from Diagram 3
-			create_response("[Your turn] Choose action (you may Move + 1 Action).")
-			create_option("Move", "CONFLICT:act:move")
-			create_option("Attack", "CONFLICT:act:attack")
-			create_option("Hide", "CONFLICT:act:hide")
-			create_option("Dodge", "CONFLICT:act:dodge")
-			create_option("Disengage", "CONFLICT:act:disengage")
-			create_option("Help", "CONFLICT:act:help")
-			create_option("Set reaction", "CONFLICT:act:reaction")
-			create_option("Spell", "CONFLICT:act:spell")
-			create_option("Flee", "CONFLICT:act:flee")
-			# Only allow End Turn if you already moved or acted
-			var moved = conflict_state["pc_turn"]["moved"]
-			var acted = conflict_state["pc_turn"]["acted"]
-			if moved or acted:
-				create_option("End turn", "CONFLICT:act:endturn")
-		"npc_act":
-			create_response(_npc_take_turn())
-			conflict_state["turn"] = "pc"
-			conflict_state["round"] += 1
-			conflict_state["step"] = "turn_start"
-			create_option("Continue", "CONFLICT:flow:next")
-		"end":
-			create_option("Continue", "CONFLICT:end:ok")
-		_:
-			create_option("Continue", "CONFLICT:end:ok")
-
-func _handle_extended_choice(kind: String, value: String) -> void:
-	if kind == "flow":
-		_render_conflict()
-		return
-	if kind == "end":
-		var return_to = conflict_return_node
-		conflict_state = null
-		conflict_return_node = ""
-		if return_to != "":
-			change_node(return_to)
-		return
-	if kind != "act":
-		return
-
-	match value:
-		"move":
-			conflict_state["pc_turn"]["moved"] = true
-			create_response("[Move] You reposition. (MVP: distance stays " + str(conflict_state["distance"]) + ")")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"attack":
-			conflict_state["pc_turn"]["acted"] = true
-			create_response(_pc_attack_npc())
-			if _check_combat_end():
-				conflict_state["step"] = "end"
-				_render_conflict()
-			else:
-				conflict_state["step"] = "pc_choose"
-				_render_conflict()
-		"hide":
-			conflict_state["pc_turn"]["acted"] = true
-			create_response(_pc_try_hide())
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"dodge":
-			conflict_state["pc_turn"]["acted"] = true
-			conflict_state["pc_status"]["dodging"] = true
-			create_response("[Dodge] Until your next turn, attacks against you are harder.")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"disengage":
-			conflict_state["pc_turn"]["acted"] = true
-			conflict_state["pc_status"]["disengaged"] = true
-			create_response("[Disengage] You avoid opportunity attacks this round (MVP flag).")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"help":
-			conflict_state["pc_turn"]["acted"] = true
-			conflict_state["pc_status"]["helping"] = true
-			create_response("[Help] You set up an ally (MVP: stored as a flag).")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"reaction":
-			conflict_state["pc_turn"]["acted"] = true
-			conflict_state["pc_status"]["reaction"] = "basic_reaction"
-			create_response("[Set reaction] Reaction set (MVP placeholder).")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"spell":
-			conflict_state["pc_turn"]["acted"] = true
-			create_response("[Spell] Spell casting placeholder (hook your spell system here).")
-			conflict_state["step"] = "pc_choose"
-			_render_conflict()
-		"flee":
-			create_response("[Flee] You leave the conflict.")
-			conflict_state["step"] = "end"
-			_render_conflict()
-		"endturn":
-			conflict_state["turn"] = "npc"
-			conflict_state["step"] = "npc_act"
-			_render_conflict()
-		_:
-			pass
-
-func _pc_attack_npc() -> String:
-	# Conflict Results Process (Diagram 2):
-	# - Situational modifiers: e.g., target dodging/hidden etc.
-	# - Defender vs Opponent results matrix => we use margin tiers.
-	var npc = conflict_state["npc"]
-	var situ_pc = 0
-	var situ_npc = 0
-	if npc["status"]["dodging"]:
-		situ_pc -= 2
-	var roll = ConflictMgr.contested_roll(_pc_get_percent("ST"), _npc_get_percent(npc, "AG"), situ_pc, situ_npc)
-	var margin = int(roll["margin"])
-	var outcome = str(roll["outcome"])
-
-	var msg = "[Attack]\n"
-	msg += "PC %d vs NPC %d (margin %d => %s)\n" % [roll["pc"]["total"], roll["npc"]["total"], margin, outcome]
-
-	if margin > 0:
-		var dmg = 2 + int(margin / 5)
-		if outcome == "CRIT_SUCCESS":
-			dmg += 3
-		_npc_take_damage(npc, dmg)
-		msg += "Hit! Dealt %d damage. %s HP now %d." % [dmg, npc["name"], npc["hp"]]
-	else:
-		msg += "Miss."
-	return msg
-
-func _npc_take_turn() -> String:
-	var npc = conflict_state["npc"]
-	# Very simple AI for MVP:
-	# - if PC is hidden, NPC tries to "search" (opposed IN vs AG)
-	# - else NPC attacks (opposed ST vs AG) with penalty if PC is dodging
-	if conflict_state["pc_status"]["hidden"]:
-		var roll = ConflictMgr.contested_roll(_npc_get_percent(npc, "IN"), _pc_get_percent("AG"), 0, 0)
-		if int(roll["margin"]) > 0:
-			conflict_state["pc_status"]["hidden"] = false
-			return "[NPC] %s spots you! (You are no longer hidden)" % npc["name"]
-		return "[NPC] %s searches but can’t find you." % npc["name"]
-
-	var situ_npc = 0
-	if conflict_state["pc_status"]["dodging"]:
-		situ_npc -= 2
-	var roll2 = ConflictMgr.contested_roll(_npc_get_percent(npc, "ST"), _pc_get_percent("AG"), situ_npc, 0)
-	var margin2 = int(roll2["margin"])  # NPC - PC
-	# NOTE: contested_roll returns margin as PC - NPC by default, so invert meaning here
-	# We called with (npc, pc) as (pc_percent, npc_percent) in the function, so margin is NPC - PC.
-	if margin2 > 0:
-		var dmg = 2 + int(margin2 / 5)
-		if str(roll2["outcome"]) == "CRIT_SUCCESS":
-			dmg += 3
-		_pc_take_damage(dmg)
-		if _pc_get_hp() <= 0:
-			return "[NPC] %s hits you for %d damage. You are defeated." % [npc["name"], dmg]
-		return "[NPC] %s hits you for %d damage. PC HP now %d." % [npc["name"], dmg, _pc_get_hp()]
-	return "[NPC] %s attacks but misses." % npc["name"]
-
-func _pc_try_hide() -> String:
-	var npc = conflict_state["npc"]
-	var roll = ConflictMgr.contested_roll(_pc_get_percent("AG"), _npc_get_percent(npc, "IN"), 0, 0)
-	if int(roll["margin"]) > 0:
-		conflict_state["pc_status"]["hidden"] = true
-		return "[Hide] Success. You are hidden."
-	return "[Hide] Failed. They keep track of you."
-
-func _check_combat_end() -> bool:
-	var npc = conflict_state["npc"]
-	if npc["hp"] <= 0:
-		create_response("[Combat] %s is defeated." % npc["name"])
-		return true
-	if _pc_get_hp() <= 0:
-		create_response("[Combat] You are defeated.")
-		return true
-	return false
-
-# --- PC/NPC stat helpers ----------------------------------------------------
-
-func _pc_caps_dict() -> Dictionary:
-	var d = {}
-	var p = PlayerCharacter.pc
-	if p == null:
-		return d
-	for cap in p.player_capabilities:
-		d[str(cap.name)] = int(cap.score) + int(cap.modifier)
-	return d
-
-func _pc_get_percent(cap_name: String) -> int:
-	var p = PlayerCharacter.pc
-	if p == null:
-		return 0
-	for cap in p.player_capabilities:
-		if str(cap.name).to_upper() == cap_name.to_upper():
-			return int(cap.score) + int(cap.modifier)
-	return 0
-
-func _pc_get_hp() -> int:
-	var p = PlayerCharacter.pc
-	if p == null:
-		return 0
-	for cap in p.player_capabilities:
-		if str(cap.name) == "Health":
-			return int(cap.score)
-	return 0
-
-func _pc_take_damage(dmg: int) -> void:
-	var p = PlayerCharacter.pc
-	if p == null:
-		return
-	for cap in p.player_capabilities:
-		if str(cap.name) == "Health":
-			cap.score = int(cap.score) - int(dmg)
-			return
-
-func _npc_get_percent(npc: Dictionary, cap_name: String) -> int:
-	if npc.has("caps") and npc["caps"].has(cap_name):
-		return int(npc["caps"][cap_name])
-	return 0
-
-func _npc_best_trait(npc: Dictionary, intent: String) -> String:
-	var group = ConflictMgr.intent_cap_group(intent)
-	var best = ""
-	var best_val = -999
-	for cap_name in group:
-		var v = _npc_get_percent(npc, cap_name)
-		if v > best_val:
-			best_val = v
-			best = cap_name
-	if best != "":
-		return best
-	return group[0]
-
-
-func _npc_take_damage(npc: Dictionary, dmg: int) -> void:
-	npc["hp"] = int(npc["hp"]) - int(dmg)

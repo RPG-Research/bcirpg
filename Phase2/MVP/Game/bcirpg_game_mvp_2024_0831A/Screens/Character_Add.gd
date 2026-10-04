@@ -19,7 +19,7 @@ const Cap_New_Button = preload("res://UserInterface/Option.tscn")
 
 func _ready() -> void:
 	theme=load(settings.themeFile)
-	$Title/But_SaveChar.grab_focus()
+	$Title/But_SaveChar.call_deferred("grab_focus")
 	_populate_output_character_format()
 
 #This function is helper function for name dropdown task and should be added in ImportCharacter.gd file to 

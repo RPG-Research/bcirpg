@@ -38,6 +38,7 @@
         <Option_Labels_008>Try to lift a heavy weight! (Strength check test.)</Option_Labels_008>
         <Option_Labels_009>Examine the hold more closely? (Intuition check test.)</Option_Labels_009>
         <Option_Labels_010>Start extended conflict (combat test)</Option_Labels_010>
+        <Option_Labels_011>Start simple conflict (conflict test)</Option_Labels_011>
         <Option_GoTos_001>Boat_002</Option_GoTos_001>
         <Option_GoTos_002>Shore_001</Option_GoTos_002>
         <Option_GoTos_003>Misc_001</Option_GoTos_003>
@@ -47,7 +48,8 @@
         <Option_GoTos_007>Test_001</Option_GoTos_007>  
         <Option_GoTos_008>Test_002</Option_GoTos_008>  
         <Option_GoTos_009>Test_003</Option_GoTos_009>
-        <Option_GoTos_010>Test_004</Option_GoTos_010>                
+        <Option_GoTos_010>Test_004</Option_GoTos_010>
+        <Option_GoTos_011>Test_005</Option_GoTos_011>
       </Space>
       <Space>
         <Id>Boat_002</Id>
@@ -139,6 +141,14 @@
           <Space>
         <Id>Test_004</Id>
         <Action>StartExtendedConflict</Action>
+        <A_Params>Bandit</A_Params>
+        <Text>NA</Text>
+        <Option_Labels_001>NA</Option_Labels_001>
+        <Option_GoTos_001>Boat_001</Option_GoTos_001>
+      </Space>
+      <Space>
+        <Id>Test_005</Id>
+        <Action>StartSimpleConflict</Action>
         <A_Params>Bandit</A_Params>
         <Text>NA</Text>
         <Option_Labels_001>NA</Option_Labels_001>

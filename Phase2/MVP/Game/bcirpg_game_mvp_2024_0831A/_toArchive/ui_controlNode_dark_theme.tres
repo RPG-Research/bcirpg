@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=2]
 
-[ext_resource path="res://assets/sbf_black.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/Themes/Dark Theme/sbf_black.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/liberation_serif_30pt.tres" type="DynamicFont" id=2]
 
 [resource]

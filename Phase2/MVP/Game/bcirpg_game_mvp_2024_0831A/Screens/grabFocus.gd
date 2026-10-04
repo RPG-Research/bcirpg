@@ -4,4 +4,4 @@ extends Control
 
 
 func _ready() -> void:
-	$Title/But_ChangeScene.grab_focus()
+	$Title/But_ChangeScene.call_deferred("grab_focus")
