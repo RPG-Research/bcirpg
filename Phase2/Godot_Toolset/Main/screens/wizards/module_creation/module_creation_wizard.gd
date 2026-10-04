@@ -1,11 +1,6 @@
 # TODO:
-# right-click space object creation
-#	must be added to module dict, region tree, space dict
-# right-click option creation
-
 # click and drag option re-ordering
-#	needs to update connection display and option_labels/option_gotos numbering !!
-#	numbering entails renaming option labels/gotos to match their order in the list
+#	also needs to rename option labels/gotos to match their order in the list
 #	maybe wait until saving for this, as it seems unnecessary beforehand?
 
 # click and drag connection editing
@@ -13,11 +8,10 @@
 # 	figure out what to do with connections that don't fit on space display object
 #	re-display edited connections
 # right click action adding with dropdown
-# replace start bool with a more appropriate selector
-# display unconnected spaces
+# replace start bool display  with a more appropriate selector
 # integrate third-party text editor
 # saving from module dict
-# fix zooming in/out
+# fix zooming in/out jank
 
 
 extends Control
