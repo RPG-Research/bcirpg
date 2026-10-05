@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "ConflictResultsProcess",
 "language": "GDScript",
 "path": "res://middleware/conflictResults/conflictResults.gd"
+}, {
+"base": "Control",
+"class": "SpaceObject",
+"language": "GDScript",
+"path": "res://screens/wizards/module_creation/space_object.gd"
 } ]
 _global_script_class_icons={
-"ConflictResultsProcess": ""
+"ConflictResultsProcess": "",
+"SpaceObject": ""
 }
 
 [application]
@@ -40,6 +46,13 @@ filters=false
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+wheel={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [physics]
 

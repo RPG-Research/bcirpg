@@ -1,0 +1,165 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://screens/wizards/module_creation/module_creation_wizard.gd" type="Script" id=1]
+[ext_resource path="res://screens/wizards/module_creation/space_object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://screens/wizards/module_creation/zoom_and_drag.gd" type="Script" id=3]
+
+[node name="module_creation_wizard" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+region_container_path = NodePath("VBoxContainer/ZoomContainer/ZoomSubContainer/RegionContainer")
+file_dialog_path = NodePath("FileDialog")
+right_click_popup_menu_path = NodePath("RightClickPopupMenu")
+new_space_confirmation_dialog_id_path = NodePath("NewSpaceConfirmationDialogID")
+new_space_id_textedit_path = NodePath("NewSpaceConfirmationDialogID/TextEdit")
+new_space_confirmation_dialog_location_path = NodePath("NewSpaceConfirmationDialogLocation")
+new_space_location_selection_tree_path = NodePath("NewSpaceConfirmationDialogLocation/LocationSelectionTree")
+region_tree_path = NodePath("VBoxContainer/ZoomContainer/RegionTreePanel/RegionTree")
+space_object_scene = ExtResource( 2 )
+space_display_height = 256
+space_display_height_margin = 16
+space_display_width = 512
+space_display_width_margin = 128
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -59.0
+margin_bottom = -50.0
+access = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="ButtonLoad" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 338.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Load"
+
+[node name="ButtonSave" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+
+[node name="ButtonNew" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "New"
+
+[node name="ZoomContainer" type="Control" parent="VBoxContainer"]
+margin_top = 33.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.95
+script = ExtResource( 3 )
+zoom_subcontainer_path = NodePath("ZoomSubContainer")
+
+[node name="ZoomSubContainer" type="Control" parent="VBoxContainer/ZoomContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="RegionContainer" type="Control" parent="VBoxContainer/ZoomContainer/ZoomSubContainer"]
+margin_right = 1024.0
+margin_bottom = 567.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RegionTreePanel" type="PanelContainer" parent="VBoxContainer/ZoomContainer"]
+anchor_right = 0.25
+anchor_bottom = 0.25
+
+[node name="RegionTree" type="Tree" parent="VBoxContainer/ZoomContainer/RegionTreePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 249.0
+margin_bottom = 134.75
+
+[node name="RightClickPopupMenu" type="PopupMenu" parent="."]
+margin_right = 44.0
+margin_bottom = 20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightClickPopupMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="NewSpaceButton" type="Button" parent="RightClickPopupMenu/VBoxContainer"]
+margin_right = 81.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "New Space"
+
+[node name="NewSpaceButton2" type="Button" parent="RightClickPopupMenu/VBoxContainer"]
+margin_top = 24.0
+margin_right = 81.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+text = "Option 2"
+
+[node name="NewSpaceConfirmationDialogID" type="ConfirmationDialog" parent="."]
+margin_right = 320.0
+margin_bottom = 120.0
+window_title = "New Space"
+resizable = true
+dialog_text = "Please enter a unique ID for your new space."
+
+[node name="TextEdit" type="TextEdit" parent="NewSpaceConfirmationDialogID"]
+margin_left = 8.0
+margin_top = 22.0
+margin_right = 312.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NewSpaceConfirmationDialogLocation" type="ConfirmationDialog" parent="."]
+margin_right = 320.0
+margin_bottom = 120.0
+window_title = "New Space"
+resizable = true
+dialog_text = "Please select the location of your new space."
+
+[node name="LocationSelectionTree" type="Tree" parent="NewSpaceConfirmationDialogLocation"]
+margin_left = 8.0
+margin_top = 22.0
+margin_right = 312.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonLoad" to="." method="_on_ButtonLoad_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonSave" to="." method="_on_ButtonSave_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonNew" to="." method="_on_ButtonNew_pressed"]
+[connection signal="item_selected" from="VBoxContainer/ZoomContainer/RegionTreePanel/RegionTree" to="." method="_on_RegionTree_item_selected"]
+[connection signal="pressed" from="RightClickPopupMenu/VBoxContainer/NewSpaceButton" to="." method="_on_NewSpaceButton_pressed"]
+[connection signal="confirmed" from="NewSpaceConfirmationDialogID" to="." method="_on_NewSpaceConfirmationDialogID_confirmed"]
+[connection signal="confirmed" from="NewSpaceConfirmationDialogLocation" to="." method="_on_NewSpaceConfirmationDialogLocation_confirmed"]
