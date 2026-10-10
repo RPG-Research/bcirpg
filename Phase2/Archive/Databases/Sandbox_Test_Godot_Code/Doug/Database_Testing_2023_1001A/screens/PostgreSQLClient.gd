@@ -642,7 +642,7 @@ func reponce_parser(response: PoolByteArray):
 				
 				# Identifies the message as a data row.
 				
-				# Number of column values ​​that follow (can be zero).
+				# Number of column values that follow (can be zero).
 				var number_of_columns = response_buffer.subarray(5, 6)
 				number_of_columns.invert()
 				
