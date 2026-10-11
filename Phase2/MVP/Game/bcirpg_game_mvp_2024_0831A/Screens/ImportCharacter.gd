@@ -29,16 +29,31 @@ func _ready() -> void:
 	#$VBoxContainer2/But_OpenFile.call_deferred("grab_focus")
 	$But_Play.call_deferred("grab_focus") #This will grab focus on the "Start Game" option by default
 
-func _on_Button_pressed():
-	$FileDialog.popup()
+func _on_OpenFile_Button_pressed():
+	_open_file_dialog()
 
 #takes appropriate action when the custom hotkey is pressed
 func _unhandled_input(event):
 	if Input.is_action_pressed("open_file_hotkey"):
-		$FileDialog.popup()
+		#$FileDialog.popup()
+		_open_file_dialog()
 
 	if Input.is_action_pressed("save_character_file_hotkey"):
 		_save_data_to_singleton()
+
+#FUNCTION open file dialog
+#Params: none
+#Returns: Nothing; all work done in function
+#Notes: decides how to open a file based on whether or not javascript is present (HTML5 build)
+#	non-HTML5 versions continue in _on_FileDialog_file_selected
+#	HTML5 continues in _js_populate_preset_character_format
+func _open_file_dialog():
+	if OS.has_feature('JavaScript'):
+		var file_text = yield(JavaScriptFileManager.open_file_dialog_get_text(), "completed")
+		_clear_char_sheet()
+		_js_populate_preset_character_format(file_text)
+	else:
+		$FileDialog.popup()
 
 #FUNCTION populate preset character format
 #Params: file we have opened and are reading
@@ -159,6 +174,49 @@ func _populate_preset_character_format(file:File):
 		#$VBoxContainer2/But_OpenFile.focus_previous = previous_control.get_path()
 		previous_control.focus_next = $But_Play.get_path()
 
+#FUNCTION populate preset character format (javascript version)
+#Params: string containing the text of the file we read with javascript
+#Returns: Nothing; all work done in function
+#Notes: functionally versy similar to the function above, but takes a string instead of a file
+func _js_populate_preset_character_format(file_text: String):
+	var file_text_split = file_text.split('\n', false,0)
+	#print(file_text_split[0])
+	cust_cap_count = 0
+	
+	var header_array = file_text_split[0].split(',', true, 0)
+	var contents_array = file_text_split[1].split(',', true, 0)
+	
+	for i in header_array.size():
+		#make a new textbox for each header piece
+		var textLine = Label.new()
+		$ScrollContainer/VBoxContainer.add_child(textLine)
+		cust_cap_count = cust_cap_count + 1
+		textLine.text = header_array[i].to_upper()
+		print(header_array[i])
+		
+		#match to content, assuming it exists and aligns
+		if(contents_array.size()>= i):
+			var textBox = LineEdit.new()
+			$ScrollContainer/VBoxContainer.add_child(textBox)
+			cust_cap_count = cust_cap_count + 1
+			textBox.text = contents_array[i]
+				
+		if(textLine.text=="QUOTE"):
+			_add_capability_button()
+	
+	# Set focus order for dynamically created LineEdit fields
+	var previous_control = $VBoxContainer2/Save_Button
+	for child in $ScrollContainer/VBoxContainer.get_children():
+		if child is LineEdit:
+			child.focus_previous = previous_control.get_path()
+			previous_control.focus_next = child.get_path()
+			previous_control = child
+	
+	# Connect the last LineEdit back to the first button
+	if previous_control != $VBoxContainer2/Save_Button:
+		#previous_control.focus_next = $VBoxContainer2/But_OpenFile.get_path()
+		#$VBoxContainer2/But_OpenFile.focus_previous = previous_control.get_path()
+		previous_control.focus_next = $But_Play.get_path()
 
 #FUNCTION clear the character sheet
 #Params: None
@@ -448,12 +506,19 @@ func _save_data_to_singleton() -> void:
 #		for a file name, we need to validate it. 
 func _save_data_to_csv() -> void:
 	var file_path = ""
+	var file # we'll only be using this on the desktop version, not the browser
 	if str(pSingleton.name) != "":
-		file_path = "user://" + str(pSingleton.name) + "_data.csv"
+		file_path = str(pSingleton.name) + "_data.csv"
 	else: 
-		 file_path = "user://character_data.csv"
-	var file = File.new()
-	if file.open(file_path, File.WRITE) == OK:
+		 file_path = "character_data.csv"
+	
+	# if not on the browser, we can save to the user directory
+	# if we ARE in the browser, we have to prompt the user where to save it, so the file path is just the name
+	if !OS.has_feature('JavaScript'):
+		file_path = "user://" + file_path
+		file = File.new() # this only needs to be set in desktop, browser saves using the JavaScript bridge
+	
+	if (!OS.has_feature('JavaScript') && file.open(file_path, File.WRITE) == OK) || OS.has_feature('JavaScript'):
 		var csv_labels = ""
 		#Prior system for labels:
 #		for extra in pSingleton.output_extras:
@@ -489,8 +554,12 @@ func _save_data_to_csv() -> void:
 #			labels_counter = labels_counter +1
 #			csv_labels = csv_labels + ","
 		#TO DO:add the values, too.
-		file.store_string(csv_labels)
-		file.close()
+		if !OS.has_feature('JavaScript'):
+			file.store_string(csv_labels)
+			file.close()
+		else:
+			# for browser saving, we need to convert the string to a PoolByteArray
+			JavaScript.download_buffer(csv_labels.to_utf8(), file_path) # may not be necessary to define MIME type
 		print("Data saved to ", file_path)
 		print(OS.get_data_dir())
 	else:

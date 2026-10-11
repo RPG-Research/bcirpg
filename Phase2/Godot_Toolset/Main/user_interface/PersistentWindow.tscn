@@ -1,0 +1,126 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://user_interface/resize_parent.gd" type="Script" id=1]
+[ext_resource path="res://user_interface/move_parent.gd" type="Script" id=2]
+[ext_resource path="res://user_interface/remove_parent_button.gd" type="Script" id=3]
+
+[node name="PersistentWindow" type="Control"]
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -10.0
+margin_top = -20.0
+margin_right = 10.0
+margin_bottom = 10.0
+
+[node name="move" type="Control" parent="."]
+anchor_right = 1.0
+margin_top = -15.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="move"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="resize top left" type="Control" parent="."]
+margin_left = -15.0
+margin_top = -25.0
+margin_right = 10.0
+script = ExtResource( 1 )
+resize_left = true
+resize_top = true
+
+[node name="resize top right" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -10.0
+margin_top = -25.0
+margin_right = 15.0
+script = ExtResource( 1 )
+resize_right = true
+resize_top = true
+
+[node name="resize bottom left" type="Control" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -15.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 15.0
+script = ExtResource( 1 )
+resize_left = true
+resize_bottom = true
+
+[node name="resize bottom right" type="Control" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 15.0
+margin_bottom = 15.0
+script = ExtResource( 1 )
+resize_right = true
+resize_bottom = true
+
+[node name="resize top" type="Control" parent="."]
+anchor_right = 1.0
+margin_left = 10.0
+margin_top = -25.0
+margin_right = -10.0
+margin_bottom = -15.0
+script = ExtResource( 1 )
+resize_top = true
+
+[node name="resize bottom" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = 15.0
+script = ExtResource( 1 )
+resize_bottom = true
+
+[node name="resize left" type="Control" parent="."]
+anchor_bottom = 1.0
+margin_left = -15.0
+margin_top = 10.0
+margin_right = -5.0
+margin_bottom = -10.0
+script = ExtResource( 1 )
+resize_left = true
+
+[node name="resize right" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 10.0
+margin_right = 15.0
+margin_bottom = -10.0
+script = ExtResource( 1 )
+resize_right = true
+
+[node name="close window" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -10.0
+margin_top = -15.0
+margin_right = 10.0
+margin_bottom = 5.0
+grow_horizontal = 0
+rect_scale = Vector2( 0.75, 0.75 )
+text = "x"
+icon_align = 1
+script = ExtResource( 3 )
+
+[connection signal="button_up" from="close window" to="close window" method="_on_close_window_button_up"]

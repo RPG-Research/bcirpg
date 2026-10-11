@@ -1,0 +1,556 @@
+# TODO:
+# click and drag option re-ordering
+#	also needs to rename option labels/gotos to match their order in the list
+#	maybe wait until saving for this, as it seems unnecessary beforehand?
+
+# click and drag connection editing
+#	fix connections not being on the right object
+# 	figure out what to do with connections that don't fit on space display object
+#	re-display edited connections
+# right click action adding with dropdown
+# replace start bool display  with a more appropriate selector
+# integrate third-party text editor
+# saving from module dict
+# fix zooming in/out jank
+
+
+extends Control
+
+
+export var region_container_path: NodePath
+onready var region_container = get_node(region_container_path)
+
+export var file_dialog_path: NodePath
+onready var file_dialog = get_node(file_dialog_path)
+
+export var right_click_popup_menu_path: NodePath
+onready var right_click_popup_menu = get_node(right_click_popup_menu_path)
+
+export var new_space_confirmation_dialog_id_path: NodePath
+onready var new_space_confirmation_dialog_id = get_node(new_space_confirmation_dialog_id_path)
+export var new_space_id_textedit_path: NodePath
+onready var new_space_id_textedit = get_node(new_space_id_textedit_path)
+
+export var new_space_confirmation_dialog_location_path: NodePath
+onready var new_space_confirmation_dialog_location = get_node(new_space_confirmation_dialog_location_path)
+export var new_space_location_selection_tree_path: NodePath
+onready var new_space_location_selection_tree = get_node(new_space_location_selection_tree_path)
+
+export var region_tree_path: NodePath
+onready var region_tree = get_node(region_tree_path)
+
+export var space_object_scene: PackedScene
+
+export var space_display_height: int
+export var space_display_height_margin: int
+export var space_display_width: int
+export var space_display_width_margin: int
+
+var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "A_Params", "Text", "Option_Labels", "Option_GoTos"]
+var nodes_with_multiples = ["Region", "Location", "Space"]
+
+var module_dict # massive tree created from the loaded xml file
+# usage:
+# nodes_with_multiples above are stored in arrays since they don't have unique IDs and can't be keyed for a dictionary
+# these arrays will be stored in the dict keyed by their type
+# ex) module_dict["Region"] should give you an array of top-level regions
+# each of these arrays contain dictionaries for each nodes_with_multiples object inside
+# each of these dictionaries contain dictionaries for each of their fields
+# ex)
+# module_dict["Region"]["Type"] returns "Region"
+# module_dict["Region"]["Name"] returns a dictionary
+# module_dict["Region"]["Name"]["Type"] returns "Name"
+# module_dict["Region"]["Name"]["Text"] returns the name of the region as a string
+# module_dict["Region"]["Location"] returns an array of location dictionaries
+# 
+# as you can see, "Type" is usually identical to the key of the dictionary, but there is an exception
+# underscores and numbers are stripped from the end of types, so Option_Labels_001 will have the type "Option_Labels"
+
+
+var space_dict = {} # dictionary of spaces keyed by space ids with links to connected spaces and path to space in the module dict
+# usage:
+# space_dict[id]["Data"] gives you the associated info from the module dict (should be by reference?)
+# space_dict[id]["Object"] gives you the displayed object for the space
+# space_dict[id]["Gotos"] gives you an array of space ids that the space connects to
+
+var space_start # space node labeled as the player start
+# usage:
+# space_start is the id of the starting space, can be used to get the player start from the space_dict
+
+var space_dict_displayed = [] # array of already-displayed spaces to prevent looping
+# usage:
+# shows the spaces that already have a space_object.tscn instance created for them
+# this lets me create only one space object per space and not crash the program by infinitely looping through spaces
+
+var connection_dict = {} # array of connection lines between spaces
+# usage:
+# mostly used to update connection lines that have physically moved when a space moves
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	if space_start != null:
+		_update_space_dict_connections()
+
+func _input(event):
+	# we want to make sure the right click menu stays the same for text input
+	# (except where we want to open a text editor instead)
+	# basically, we need to know where we're right clicking
+	# this can probably be done either here or in the right-clicked object itself
+	# (in which case, we'll probably want to consume the event there)
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT and event.pressed:
+			var mouse_pos = get_global_mouse_position()
+			right_click_popup_menu.popup(Rect2(mouse_pos.x, mouse_pos.y, 20, 20)) # i'm not sure what width and height should be set to, so they're both 20 for now
+
+func _on_NewSpaceButton_pressed():
+	new_space_confirmation_dialog_id.popup_centered()
+
+func _on_NewSpaceConfirmationDialogID_confirmed():
+	#var new_display_object = space_object_scene.instance()
+	#region_container.add_child(new_display_object)
+	#new_display_object.rect_size = Vector2(space_display_width, space_display_height) # only works if set after adding to scene tree
+	
+	#var new_space_name = new_space_id_textedit.text
+	
+	# now we want to add the space to the module dictionary
+	
+	#new_display_object.add_field_pair_and_connect("ID", new_space_name)
+	
+	#space_dict[current_branch_key]["Object"] = new_display_object
+	
+	new_space_confirmation_dialog_location.popup_centered()
+	var root = new_space_location_selection_tree.create_item()
+	root.set_text(0, "Regions")
+	root.set_selectable(0, false)
+	# we'll loop through the module dict to display all the places
+	if module_dict.has("Region"):
+		for region in module_dict["Region"]:
+			var child_region = region_tree.create_item(root)
+			child_region.set_text(0, region["Name"]["Text"])
+			child_region.set_metadata(0, region["Type"])
+			child_region.set_selectable(0, false)
+			if region.has("Location"):
+				for location in region["Location"]:
+					var child_location = region_tree.create_item(child_region)
+					child_location.set_text(0, location["Name"]["Text"])
+					child_location.set_metadata(0, location["Type"])
+	
+
+func _on_NewSpaceConfirmationDialogLocation_confirmed():
+	var new_space_id = new_space_id_textedit.text
+	var new_space_location = new_space_location_selection_tree.get_selected() # we can use the parents to create a path to this object in the module dict
+	
+	# first, we'll add our new space to the module_dict
+	var new_space = {}
+	new_space["Id"] = {"Text": new_space_id, "Type": "Id"}
+	new_space["Type"] = "Space"
+	# new_space["Start"] = {"Type": "Start", "Text": "False"}
+	new_space["Action"] = {"Text": "ShowText", "Type": "Action"}
+	new_space["A_Params"] = []
+	new_space["Text"] = {"Text": "", "Type": "Text"}
+	
+	var new_space_location_stack = []
+	var stack_current_location = new_space_location
+	while stack_current_location != new_space_location_selection_tree.get_root() && stack_current_location != null:
+		new_space_location_stack.push_back(stack_current_location.get_text(0))
+		stack_current_location = stack_current_location.get_parent()
+	print(new_space_location_stack)
+	
+	# now we can use the stack we created to get to the correct place in the module dict
+	var current_module_dict_location = module_dict
+	#print(current_module_dict_location)
+	while new_space_location_stack.size() > 0:
+		var next_id = new_space_location_stack.pop_back()
+		print("search loop: ", next_id)
+		if current_module_dict_location.has(next_id):
+			current_module_dict_location = current_module_dict_location[next_id]
+		elif current_module_dict_location.has("Region"):
+			for region in current_module_dict_location["Region"]:
+				print(region["Type"])
+				if region["Name"]["Text"] == next_id:
+					current_module_dict_location = region
+		elif current_module_dict_location.has("Location"):
+			for location in current_module_dict_location["Location"]:
+				if location["Name"]["Text"] == next_id:
+					current_module_dict_location = location
+			
+	
+	print(new_space_location_stack)
+	if !current_module_dict_location.has("Space"):
+		print("No space!")
+		current_module_dict_location["Space"] = []
+	current_module_dict_location["Space"].append(new_space)
+	
+	# second, we'll refresh the region tree
+	_refresh_regions_locations_tree()
+	
+	# third, we'll create the display object
+	var new_space_display_object  = space_object_scene.instance()
+	region_container.add_child(new_space_display_object)
+	
+	for key in new_space:
+		if nodes_with_text.has(key):
+			if new_space[key] is Dictionary && new_space[key].has("Text"):
+				new_space_display_object.add_field_pair_and_connect(key, new_space[key]["Text"], self, new_space_location.get_parent().get_text(0), key)
+				new_space_display_object.rect_position = right_click_popup_menu.rect_position
+				new_space_display_object.rect_size = Vector2(space_display_width, space_display_height)
+			else:
+				print("object at key is not a dictionary or does not have text: ", key)
+				
+	# thirdly, we'll add the new space to the space dictionary
+	space_dict[new_space_id] = {}
+	space_dict[new_space_id]["Data"] = new_space
+	space_dict[new_space_id]["Object"] = new_space_display_object
+
+func _on_ButtonLoad_pressed():
+	file_dialog.set_mode(FileDialog.MODE_OPEN_FILE)
+	file_dialog.popup_centered()
+
+func _on_ButtonSave_pressed():
+	pass # Replace with function body.
+
+
+func _on_ButtonNew_pressed():
+	pass # Replace with function body.
+	
+# uses Godot's XML parser to fill in module_dict
+# see the module_dict variable notes above to help understand the monster that is created
+func _on_FileDialog_file_selected(path):
+	print("file dialog selected")
+	var node_stack = [] # keeps our data
+	
+	if file_dialog.get_mode() == FileDialog.MODE_OPEN_FILE:
+		var xml_parser = XMLParser.new()
+		xml_parser.open(path)
+		
+		while xml_parser.read() != ERR_FILE_EOF:
+			var node_type = xml_parser.get_node_type()
+			var node_name
+			var node_dict_type # NOT the same as the xml parser's node type
+			if node_type != XMLParser.NODE_TEXT:
+				node_name = xml_parser.get_node_name()
+				node_dict_type = node_name.rstrip("0123456789_")
+			
+			# we expect a NODE_UNKNOWN at the top, followed by a series of NODE_ELEMENT, NODE_TEXT, and NODE_ELEMENT_END
+			match node_type:
+				XMLParser.NODE_ELEMENT:
+					# each node element is its own dictionary
+					var new_dict = {}
+					new_dict["Type"] = node_dict_type
+					
+					# a properly-formatted xml has only one root, and we have one dictionary to hold all the smaller dictionaries
+					if node_name == "root":
+						node_stack.append(new_dict) # note that adding a dict to the stack for editing later works because Godot stores dictionaries by reference
+					else:
+						# first, we'll check if this is a node type that should be in an array
+						if nodes_with_multiples.has(node_name): # node is an array type
+							# check if an array for this node type already exists in the parent
+							if node_stack[-1].has(node_name):
+								#if it exists, we can just add to it
+								node_stack[-1][node_name].append(new_dict)
+								node_stack.append(new_dict)
+							else: # if an array for this node type does not exist, we'll have to make one
+								node_stack[-1][node_name] = [new_dict]
+								node_stack.append(new_dict)
+						elif nodes_with_text.has(node_name):
+							# EDIT: we'll store the type of node and the text of the node
+							node_stack[-1][node_name] = new_dict
+							node_stack.append(new_dict)
+						else: # node is not an array, so if anything already exists at node_name, we'll just replace it; this is a fallback, all known nodes fall into the above types
+							node_stack[-1][node_name] = new_dict
+							node_stack.append(new_dict)
+				XMLParser.NODE_ELEMENT_END:
+					if node_dict_type != node_stack[-1]["Type"]:
+						print("Mismatched node ends: " + node_stack[-1]["Type"] + " and " + node_dict_type)
+					elif node_name == "root":
+						print("We should be done now.")
+					else:
+						node_stack.pop_back()
+						# this might be the place to save something?
+				XMLParser.NODE_TEXT:
+					# first make sure we're in an element that should have text
+					for text_node_label in nodes_with_text:
+						if node_stack[-1]["Type"] == text_node_label: # this means we have a valid node for storing text
+							var node_text = xml_parser.get_node_data()
+							node_stack[-1]["Text"] = node_text
+							break
+	module_dict = node_stack[0]
+	display_module_dict()
+
+# this function puts all the spaces on screen, along with a tree of the various location types
+func display_module_dict():
+	_construct_space_dict(module_dict, false, null)
+	space_dict_displayed.append(space_start)
+	_display_space_dict(space_start, Vector2(0,0))
+	_display_space_dict_connections(space_start)
+	_display_regions_locations_tree()
+
+# updates the locations of lines between spaces that link to each other so they move when a space is dragged
+func _update_space_dict_connections():
+	for i in connection_dict.keys():
+		for j in connection_dict[i].keys():
+			# here we set the line position to be the parent's position plus an offset so it sticks to the right end, halfway down
+			# top_level also means the lines aren't affected by zoom scale, so we need to correct for that, too
+			connection_dict[i][j].transform = connection_dict[i][j].get_parent().get_global_transform().translated(Vector2(connection_dict[i][j].get_parent().rect_size.x,connection_dict[i][j].get_parent().rect_size.y/2))
+			# not quite right, we actually want the difference between line start and space object
+			var line_start_x = .get_transform().xform_inv(connection_dict[i][j].position).x # this line appears to work as intended
+			var point_2_pos = Vector2(space_dict[j]["Object"].rect_position.x, space_dict[j]["Object"].rect_position.y)
+			connection_dict[i][j].set_point_position(1, connection_dict[i][j].get_parent().get_transform().xform_inv(point_2_pos) - space_dict[i]["Object"].rect_position - Vector2(space_dict[i]["Object"].rect_size.x, 0))
+
+# connects lines between spaces that are connected to each other; not very pretty at the moment
+func _display_space_dict_connections(current_branch_id):
+	_display_space_dict_connection_recursive(current_branch_id, [])
+
+func _display_space_dict_connection_recursive(current_branch_id, displayed_array):
+	if displayed_array.has(current_branch_id):
+		return
+	else:
+		displayed_array.append(current_branch_id)
+		
+		# go through each branch, drawing lines from each connection to its child
+		var space_object = space_dict[current_branch_id]["Object"]
+		
+		for id in space_dict[current_branch_id]["Gotos"]:
+			#print("current_branch_id: ", current_branch_id, ", id: ", id)
+			var line = connection_dict[current_branch_id][id]
+			var new_space_object = space_dict[id]["Object"]
+			line.add_point(new_space_object.rect_position)
+			_display_space_dict_connection_recursive(id, displayed_array)
+
+# takes the spaces stored in the space dict (which is derived from the module dict) and creates objects to show them
+# starts with the starting space and creates them left to right, where all undisplayed connections to the current space are vertically stacked
+func _display_space_dict(current_branch_key, current_location):
+# we want to show space_dict as a branching tree, starting with space_start
+	var new_display_object = space_object_scene.instance()
+	region_container.add_child(new_display_object)
+	
+	space_dict[current_branch_key]["Object"] = new_display_object # might as well make the object easier to access later
+	
+	var space_object_data = space_dict[current_branch_key]["Data"]
+	
+	# here, we'll display all the things inside the space
+	# Option_Gotos and Option_Labels are special because they're tied to each other
+	var option_dict = {}
+	for key in space_object_data:
+		var node_type = key.rstrip("1234567890_")
+		if node_type == "Option_Labels" || node_type == "Option_GoTos" && space_object_data[key].has("Text"):
+			# here, we'll use a dictionary to match options with their gotos
+			var option_number = key.rsplit("_")[-1].to_int()
+			if !option_dict.has(option_number):
+				option_dict[option_number] = [option_number, null, null]
+			if node_type == "Option_Labels":
+				option_dict[option_number][1] = space_object_data[key]["Text"]
+			else: # node_type == "Option_Gotos"
+				option_dict[option_number][2] = space_object_data[key]["Text"]
+		elif nodes_with_text.has(node_type) && space_object_data[key].has("Text"):
+			new_display_object.add_field_pair_and_connect(key, space_object_data[key]["Text"], self, current_branch_key, key)
+			new_display_object.rect_position = current_location
+			new_display_object.rect_size = Vector2(space_display_width, space_display_height)
+			
+	# now we create a sorted array from the option dict created earlier
+	var option_array = option_dict.keys()
+	option_array.sort()
+	for i in range(0,option_array.size()):
+		option_array[i] = option_dict[option_array[i]]
+		
+	# and we'll use the array we created earlier to make a custom list of options with connection lines
+	connection_dict[current_branch_key] = {}
+	for option in option_array:
+		var new_option_label = Label.new()
+		new_option_label.text = option[1]
+		new_display_object.add_to_option_list(new_option_label)
+		new_display_object.rect_position = current_location
+		new_display_object.rect_size = Vector2(space_display_width, space_display_height)
+		var new_line = Line2D.new()
+		new_line.width = 4
+		#new_line.z_index = 5
+		#new_display_object.add_child(new_line)
+		new_option_label.add_child(new_line)
+		new_line.set_as_toplevel(true) # setting as top level allows us to bypass clipping settings from the parent
+		new_line.add_point(Vector2(0,0)) #position of added point is relative to line position
+		#call_deferred("_update_start_point_position", new_line, new_option_label)
+		connection_dict[current_branch_key][option[2]] = new_line
+		#print("setting connection_dict[", current_branch_key, "][", option[2], "] to new_line")
+			
+	var to_display = []
+	for id in space_dict[current_branch_key]["Gotos"]: # determine the branches left to display
+		if !space_dict_displayed.has(id):
+			to_display.append(id)
+		#else:
+			#print(id, " already displayed")
+	#print("num gotos: ", to_display.size())
+	
+	var branch_display_height = to_display.size() * space_display_height + (to_display.size() - 1) * space_display_height_margin
+	var branch_display_location = Vector2(current_location.x + space_display_width + space_display_width_margin, current_location.y + (space_display_height/2.0) - (branch_display_height/2.0))
+	for id in to_display:
+		space_dict_displayed.append(id)
+		_display_space_dict(id, branch_display_location)
+		branch_display_location += Vector2(0, space_display_height + space_display_height_margin)
+		
+
+# recieves a text_changed signal from a LineEdit and updates data structures that need to be updated
+# WIP
+func _on_space_text_entered(changed_text, key, parent_key):
+	# here we need to determine what changes need to be made where for functionality
+	print ("changed_text: ", changed_text, ", key: ", key, ", parent_key: ", parent_key)
+	var text_type = parent_key.rstrip("0123456789_")
+	print("text_type: ", text_type)
+	match text_type:
+		"Id":
+			# search the whole module_dict and replace any instance of the changed id
+			_replace_id_module_dict(key, changed_text, module_dict)
+			_replace_id_space_dict(key, changed_text)
+			#_replace_id_connection_dict(key, changed_text)
+			_refresh_regions_locations_tree()
+			# module_dict, space_dict (id and path), (maybe) space_start
+		"Start":
+			pass
+			# module_dict, space_start
+		"Action":
+			pass
+			# module_dict
+		"Text":
+			pass
+			# module_dict
+		"Option_Labels":
+			pass
+			# module_dict
+		"Option_Gotos":
+			pass
+			# module_dict, space_dict, connection_dict
+		_:
+			pass
+
+func _replace_id_module_dict(original_id, new_id, branch):
+	if branch is Dictionary:
+		for key in branch.keys():
+			if key == original_id:
+				if branch[key].has("Start") && (branch[key]["Start"] == "True" || branch[key]["Start"] == "true" || branch[key]["Start"] == true):
+					space_start = key
+				branch[original_id] = branch[key]
+				branch.erase(key)
+			if branch[key] is String && branch[key] == original_id:
+				branch[key] = new_id
+			_replace_id_module_dict(original_id, new_id, branch[key])
+	elif branch is Array:
+		for item in branch:
+			_replace_id_module_dict(original_id, new_id, item)
+
+func _replace_id_space_dict(original_id, new_id):
+	for key in space_dict.keys():
+		if space_dict[key].has("Gotos"):
+			space_dict[key]["Gotos"].erase(original_id)
+			space_dict[key]["Gotos"].append(new_id)
+		if space_dict[key].has("Object"): # in case a space object is never created; SHOULD FIX THIS
+			var space_object = space_dict[key]["Object"]
+			for child in space_object.get_space_box().get_children():
+				# we're looking for gotos
+				if child is HBoxContainer && child.get_child(0) is Label:
+					var current_lineedit = child.get_child(1)
+					var current_type = child.get_child(0).text.rstrip("0123456789_")
+					if current_type == "Option_GoTos" || current_type == "Id":
+						if current_lineedit.text == original_id:
+							current_lineedit.text = new_id
+						if current_lineedit.is_connected("text_entered", self, "_on_space_text_entered"): # update the info that gets sent to _on_space_text_entered
+							current_lineedit.disconnect("text_entered", self, "_on_space_text_entered")
+							current_lineedit.connect("text_entered", self, "_on_space_text_entered", [new_id, "Id"])
+	
+	space_dict[new_id] = space_dict[original_id] #not done the first time?
+	space_dict.erase(original_id)
+
+func _refresh_regions_locations_tree():
+	region_tree.clear()
+	_display_regions_locations_tree()
+
+# fills the Godot Tree object with all the nested location nodes so the user knows what is inside what
+func _display_regions_locations_tree():
+	var root = region_tree.create_item()
+	root.set_text(0, "Regions")
+	# we'll loop through the module dict to display all the places
+	if module_dict.has("Region"):
+		for region in module_dict["Region"]:
+			var child_region = region_tree.create_item(root)
+			child_region.set_text(0, region["Name"]["Text"])
+			child_region.set_metadata(0, region["Type"])
+			if region.has("Location"):
+				for location in region["Location"]:
+					var child_location = region_tree.create_item(child_region)
+					child_location.set_text(0, location["Name"]["Text"])
+					child_location.set_metadata(0, location["Type"])
+					if location.has("Space"):
+						for space in location["Space"]:
+							var child_space = region_tree.create_item(child_location)
+							child_space.set_text(0, space["Id"]["Text"])
+							child_space.set_metadata(0, space["Type"])
+
+# creates a dictionary keyed by id of every space that stores connections to other spaces
+# derived from module_dict
+func _construct_space_dict(search_object, inside_space, space_id):
+	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
+		if search_object["Type"] == "Option_GoTos":
+			if !space_dict[space_id].has("Gotos"):
+				space_dict[space_id]["Gotos"] = []
+			space_dict[space_id]["Gotos"].append(search_object["Text"])
+		elif search_object["Type"] == "Start" && search_object["Text"] == "True":
+			space_start = space_id
+	elif search_object is Dictionary && search_object["Type"] == "Space": # this means we have a space
+		inside_space = true
+
+	if search_object is Dictionary || search_object is Array:
+		for key in search_object:
+			var item
+			if search_object is Dictionary: # if the object is a dictionary, then we need to search by key
+				if search_object["Type"] == "Space": # add space to the space dict so we can map connections
+					space_id = search_object["Id"]["Text"]
+					if !space_dict.has(space_id):
+						space_dict[space_id] = {}
+						space_dict[space_id]["Data"] = search_object
+						# save the location this space is in the module dict for future access
+						# this way, we won't need to search the whole tree every time we want to update a space object in the module_dict						space_dict[space_id]["Path"] = current_location_array
+				item = search_object[key]
+			elif search_object is Array:
+				item = key
+			else:
+				print("unexpected search data type: ", typeof(search_object))
+				# can't quite figure out how to access the enum to just convert this to the key text, but you can just compare to Variant.Types in GlobalScope
+			
+			if !(item is String): # type is just for checking what sort of object we're in, and it doesn't need to be traversed
+				_construct_space_dict(item, inside_space, space_id)
+	else:
+		print("unsearchable object: ", typeof(search_object), " " + search_object)
+
+# unhighlights all spaces
+func _unhighlight_everything(item):
+	if item.get_metadata(0) != "Space":
+		var child = item.get_children()
+		while child != null:
+			_unhighlight_everything(child)
+			child = child.get_next()
+	else:
+		if space_dict[item.get_text(0)].has("Object"):
+			var highlighted_space = space_dict[item.get_text(0)]["Object"]
+			highlighted_space.unhighlight()
+
+# highlights spaces selected in the Godot Tree object and their children
+func _highlight_selected(selected_item):
+	if selected_item.get_metadata(0) != "Space":
+		var child = selected_item.get_children()
+		while child != null:
+			_highlight_selected(child)
+			child = child.get_next()
+	else:
+		if space_dict[selected_item.get_text(0)].has("Object"):
+			var highlighted_space = space_dict[selected_item.get_text(0)]["Object"]
+			#now we have to actually highlight it
+			highlighted_space.highlight()
+
+# called when an object is selected in the Godot Tree object
+func _on_RegionTree_item_selected():
+	_unhighlight_everything(region_tree.get_root())
+	_highlight_selected(region_tree.get_selected())
