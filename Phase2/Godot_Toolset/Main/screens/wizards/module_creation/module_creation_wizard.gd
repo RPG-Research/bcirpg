@@ -192,6 +192,7 @@ func _on_NewSpaceConfirmationDialogLocation_confirmed():
 	
 	# third, we'll create the display object
 	var new_space_display_object  = space_object_scene.instance()
+	new_space_display_object.connect("space_option_list_reordered", self, "_on_space_option_list_reordered")
 	region_container.add_child(new_space_display_object)
 	
 	for key in new_space:
@@ -328,6 +329,7 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 func _display_space_dict(current_branch_key, current_location):
 # we want to show space_dict as a branching tree, starting with space_start
 	var new_display_object = space_object_scene.instance()
+	new_display_object.connect("space_option_list_reordered", self, "_on_space_option_list_reordered")
 	region_container.add_child(new_display_object)
 	
 	space_dict[current_branch_key]["Object"] = new_display_object # might as well make the object easier to access later
@@ -554,3 +556,6 @@ func _highlight_selected(selected_item):
 func _on_RegionTree_item_selected():
 	_unhighlight_everything(region_tree.get_root())
 	_highlight_selected(region_tree.get_selected())
+
+func _on_space_option_list_reordered(id, index_from, index_to):
+	print("id: ", id, ", index_from: ", index_from, ", index_to: ", index_to)
