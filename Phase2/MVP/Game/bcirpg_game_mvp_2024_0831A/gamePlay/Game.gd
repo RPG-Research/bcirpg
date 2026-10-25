@@ -97,6 +97,29 @@ func _ready() -> void:
 	
 
 
+#Locales are Nodes that are never added to the tree, so they must be freed by
+#	hand. PREDELETE rather than _exit_tree, because MoreOptions removes this
+#	scene from the tree and adds it back later.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		if regionsArray != null:
+			for region in regionsArray:
+				free_locale_tree(region)
+		#The JSON builder keeps its spaces only in nodeArray, not in regionsArray
+		elif nodeArray != null:
+			for space in nodeArray:
+				free_locale_tree(space)
+
+#FUNCTION: Free Locale Tree
+#Params: a Locale
+#Returns: Nothing
+#Notes: Frees the Locale and every Locale it contains.
+func free_locale_tree(locale: Locale) -> void:
+	for sub_locale in locale.contained_subLocations:
+		free_locale_tree(sub_locale)
+	locale.free()
+
+
 #DKM TEMP: convert JSON file to dictionary for module import:
 func loadJSONToDict(filepath:String)->Dictionary:
 	var file = File.new()
@@ -160,6 +183,7 @@ func loadXMLDemo(filepath:String)->Array:
 						#print ("End of region found")
 						regions_XML.append(newNode)
 						i = i+1
+						break
 				
 	return regions_XML
 
@@ -390,7 +414,9 @@ func create_response(response_text: String):
 func add_response_to_game(response: Control):
 	add_response_to_history(response)
 	if(current_text.get_child_count() > 0):
-		current_text.remove_child(current_text.get_child(0))
+		var prior_response = current_text.get_child(0)
+		current_text.remove_child(prior_response)
+		prior_response.queue_free()
 	current_text.add_child(response)
 
 func add_response_to_history(response: Control) -> void:

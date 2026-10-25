@@ -1,5 +1,5 @@
 #Die class
-extends Node2D
+extends Reference
 
 class_name Die
 
