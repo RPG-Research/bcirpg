@@ -14,56 +14,56 @@
 
 
 # Introduction
-RPG Research is a huge advocate for accessibility and inclusiveness in gaming. Not only through all of our training, advocacy, and accessible mobile facilities, but through our active projects to make gaming accessible to all. RPG Research is a 501(c)3 100% volunteer-run non-profit research charitable research and human services organization. More about RPG Research.
+RPG Research is a huge advocate for accessibility and inclusiveness in gaming. We do this not only through our training, advocacy, and accessible mobile facilities, but also through active projects that make gaming accessible to all. RPG Research is a 100% volunteer-run 501(c)(3) non-profit charitable research and human services organization. [More about RPG Research](https://www.rpgresearch.com).
 
 Main website: www.bcirpg.com - alias: https://www.rpgresearch.com/bcirpg
 
-The opensource github repository: https://github.com/RPG-Research/erpg
+The opensource GitHub repository: https://github.com/RPG-Research/bcirpg
 
-The project Wiki: https://github.com/RPG-Research/erpg/wiki
+The project Wiki: https://github.com/RPG-Research/bcirpg/wiki
 
 
 
 # Background History
-RPG Research's founder, Hawke Robinson, was first involved with role-playing games in 1977, softwware development starting around 1978, and online since 1979. He began software development and engaging in the online community in 1979 (through the early pre-Internet ARPANET and dial-up access via the University of Utah) and various BBSes.
+RPG Research's founder, Hawke Robinson, first got involved with role-playing games in 1977 and began software development around 1978. He joined the online community in 1979, through the early pre-Internet ARPANET, dial-up access via the University of Utah, and various BBSes.
 
-He has been involved with VR equipment and software on and off since the late 1980s using Amigas, VRML websites in the 90s, (still has working Amiga 2000) and other equipment over the decades. Developed Virtual-Reality Markup Language (VRML) websites in the mid-to-late-90s.
+He has worked with VR equipment and software on and off since the late 1980s, starting with Amigas (he still has a working Amiga 2000), and developed Virtual Reality Modeling Language (VRML) websites in the mid-to-late 1990s.
 
-Experimenting with early VR and AR in the late 90s and early 2000s with early PDAs and "smartphones" long before iOS and Android existed (Nokia, Palm phones, etc), combined with early location and GPS technologies.
+In the late 1990s and early 2000s, he experimented with early VR and AR on PDAs and "smartphones" (Nokia, Palm, etc.) long before iOS and Android existed, combined with early location and GPS technologies.
 
-Experimenting with biofeedback and bio-controlled devices since 1996 (a la mouse cursor controlled by single fingertip clip for example).
+He has experimented with biofeedback and bio-controlled devices since 1996, such as a mouse cursor controlled by a single fingertip clip.
 
-Since about 2005 working on integration of electroencephalogram (EEG) and later brain-computer interface (BCI) equipment with computers, mobile devices, VR, and AR. Experimenting with a wide range of VR and AR hardware and software, including used in educational, artistic, social, and therapeutic programs.
+Since about 2005, he has worked on integrating electroencephalogram (EEG) and, later, brain-computer interface (BCI) equipment with computers, mobile devices, VR, and AR, including for educational, artistic, social, and therapeutic programs.
 
 
 # LIS & CLIS - Locked In Syndrome and Complete Locked in State
-Our founder was dramatically motivated to try to find a solution for those people suffering from Locked-in Syndrome (LIS) and Complete Locked-in State (CLIS), starting with caring for a young adult in 1990 as a nurse's aide and LPN trainee, at Doxie Hatch Medical Center, and additionally for many others with various injuries and neurological disorders as a habilitation therapist at Hillcrest Care Center.  Ever since he has wanted to figure out a way to use technology to help them reconnect socially, set them free of their physical prisons of the active minds trapped in their bodies, and gain back some of their lives.
+Our founder was dramatically motivated to try to find a solution for those people suffering from Locked-in Syndrome (LIS) and Complete Locked-in State (CLIS), starting with caring for a young adult in 1990 as a nurse's aide and LPN trainee, at Doxie Hatch Medical Center, and additionally for many others with various injuries and neurological disorders as a habilitation therapist at Hillcrest Care Center.  Ever since, he has wanted to find a way to use technology to help them reconnect socially, free their active minds from the prisons of their bodies, and regain some of their lives.
 
 
 
 
 
 
-The goal, and real-world metrics test, is if someone with profound disabilities, including experiencing locked-in syndrome (LIS) or complete locked-in state (CLIS), can be freed from their prison to engage socially in complex multiplayer social cooperative problem-solving role-playing games.
+The goal, and the real-world test of success, is whether someone with profound disabilities, including locked-in syndrome (LIS) or complete locked-in state (CLIS), can engage socially in complex, multiplayer, cooperative problem-solving role-playing games.
 
-Program phases and updates on our live streams and Github: https://github.com/RPG-Research/
+Program phases and updates on our live streams and GitHub: https://github.com/RPG-Research/
 
 
 
 # Ultimate in RPG Accessibility and Immersion 
-The ultimate in accessibility potential is through the Brain-Computer Interface (BCI) technologies based on Electroencephalogram (EEG) technologies, integrating with AR & VR, (and eventually back into the physical world through robotics), literally allowing a person to interface with computer systems purely with the thoughts of their brain.
+The greatest potential for accessibility lies in brain-computer interface (BCI) technologies based on electroencephalography (EEG). Integrated with AR and VR, and eventually with robotics in the physical world, they let a person control computer systems with their thoughts alone.
 
-Also, when linked with haptics, robotics, AR, VR, and other technologies it is the potential in ultimate immersive experiences.
+Linked with haptics, robotics, AR, VR, and other technologies, BCI also offers the potential for the ultimate immersive experience.
 
 We have been hard at work experimenting with EEG and BCI equipment with music and RPGs since 2004.
 
-Since 2019 our research and development team have been working on Project Ilmatar - https://github.com/rpgresearch/erpg/wiki - an opensource, online, multiplayer, turn-based, cooperative-play, electronic, role-playing game designed from the ground up for maximal accessibility including BCI control support.
+Since 2019 our research and development team have been working on Project Ilmatar - https://github.com/RPG-Research/bcirpg/wiki - an opensource, online, multiplayer, turn-based, cooperative-play, electronic, role-playing game designed from the ground up for maximal accessibility including BCI control support.
 
-Update Fall 2020, migrated to organization Github, moving our content from the previous individual Git: https://github.com/RPG-Research
+Update Fall 2020, migrated to organization GitHub, moving our content from the previous individual Git: https://github.com/RPG-Research
 
 As usual, our projects are little-known, long-running, and have almost no funding. It is thanks to our wonderful volunteers worldwide that we accomplish anything. We hope some day perhaps to have more support financially, but for now we keep leading in innovations thanks to the wonderful efforts of these generous people helping a few hours every week, and we share openly with the world in the truest form of opensource, following our philosophy of "the rising tide of shared knowledge floats all boats" to help improve the human condition globally.
 
-While the software is free, the hardware we have to purchase to realize this technology fully is expensive. We are currently utilizing OpenBCI which still costs from hundreds to even thousands of dollars per headset. The RPG Research board approved $2,500 USD to purchase the full R&D bundle from OpenBCI. We are now working from two directions. The software side and the hardware side, working toward full integration.
+While the software is free, the hardware we have to purchase to realize this technology fully is expensive. We are currently utilizing OpenBCI which still costs from hundreds to even thousands of dollars per headset. The RPG Research board approved $2,500 USD to purchase the full R&D bundle from OpenBCI. We are now working from two directions, software and hardware, toward full integration.
 
 We also hope to loop back from the virtual world and integrate robotic devices controlled through BCI equipment to enable participants with disabilities to more fully engage in all role-playing game formats.
 
@@ -75,21 +75,21 @@ If you miss the live stream, Patreon supporters get access to the recorded video
 # High-level Roadmap Development Phases
 
 
-## Phase 0 - EEG I/O controllers in NWN on LInux
-learn basics of EEG, bio-and-neuro feedback, and computer interaction, then attempt to replace regular keyboard or other I/O controls for PC-based video game (preferably on Linux due to more flexiiblity of I/O controls) and play game with only EEG and/or bio-monitoring inputs. Start with NeverWinter Nights on Linux. - COMPLETE
+## Phase 0 - EEG I/O controllers in NWN on Linux
+Learn basics of EEG, bio-and-neuro feedback, and computer interaction, then attempt to replace regular keyboard or other I/O controls for PC-based video game (preferably on Linux due to more flexibility of I/O controls) and play game with only EEG and/or bio-monitoring inputs. Start with NeverWinter Nights on Linux. - COMPLETE
 
 
-## Phase 1 - Game design prototype in NWN:EE on LInux with EEG/BCI for I/O
-Train new development team on game dev concepts desired with prototype use of Aurora Toolset for NWN. Create new adventure module that will be used as test bed for future prototypes. Choose Shakespeare's The Tempest.. Experiment with controls using EEG and BCI equipment with the Enhanced Edition Neverwinter Nights on Linux.   COMPLETE.
+## Phase 1 - Game design prototype in NWN:EE on Linux with EEG/BCI for I/O
+Train the new development team in game development concepts by prototyping with the NWN Aurora Toolset. Create a new adventure module, based on Shakespeare's The Tempest, to serve as a test bed for future prototypes. Experiment with controls using EEG and BCI equipment with the Enhanced Edition Neverwinter Nights on Linux.   COMPLETE.
 
 
-## Phase 2 - Game from scratch TUI version BCI I/O online turn-based mutiiplayer
-Create from scratch a text-only multiplayer online turn-based cooperative RPG that can be played with only OpenBCI (or similar) equipment. - Currently nearing end of design and documentation steps, and starting actual coding steps. Will use GUI tools with GoDot engine fhe the GM tools, but play must be all TUI and able to be run with the simple inputs of OpenBCI. Use the same adventure bluebrint as Phase 1. Begin incorporating components from the AI RPG and AI GM (ai-rpg.com) projects as needed, especially for NPCs/Creatures, but also options for PCs, world sociopolitical, events, ripple effects from PC actions, etc.- CURRENTLY IN ACTIVE DEVELOPMENT. 
+## Phase 2 - Game from scratch TUI version BCI I/O online turn-based multiplayer
+Create from scratch a text-only multiplayer online turn-based cooperative RPG that can be played with only OpenBCI (or similar) equipment. - Currently nearing end of design and documentation steps, and starting actual coding steps. The GM tools will have a graphical interface built with the Godot engine, but gameplay must be entirely text-based (TUI) and playable with the simple inputs OpenBCI provides. Use the same adventure blueprint as Phase 1. Begin incorporating components from the AI RPG and AI GM (ai-rpg.com) projects as needed, especially for NPCs/Creatures, but also options for PCs, world sociopolitical, events, ripple effects from PC actions, etc.- CURRENTLY IN ACTIVE DEVELOPMENT. 
 
 
 ## Phase 3 - Add GUI
-Add basic graphics real-time gaphics or pre-recorded action videos triggered like Dirk the Daring from Dragon's Lair - on top of existing TUI-based game.
-August 2021: The GUI development has begun for the GM, adventure module, content creation, and server administrator tools. We are remainging with TUI interface for players for now.
+On top of the existing text-based game, add basic real-time graphics or pre-recorded action videos triggered by game events, like Dirk the Daring in Dragon's Lair.
+August 2021: The GUI development has begun for the GM, adventure module, content creation, and server administrator tools. Players will keep the text interface for now.
 
 
 ## Phase 4 - Add VR
@@ -101,7 +101,7 @@ Add AR, GPS, global world location play to game. If viable include "holographic"
 
 
 ## Phase 6 + Add Physical local realm interaction
-Migrate BCI tools to work in physical world through robotics and wireless triggers so can interace with combination of AR and physical devices, including manipulating dice roller devices, robotic arms to pick up and move objects, move miniature tokens around enhanced by AR overlaid animation, so LIS/CLIS can play at the same physical table or larp with other players in the same physical location, not just online.
+Extend the BCI tools into the physical world through robotics and wireless triggers, combining AR with physical devices: dice-rolling machines, robotic arms that pick up and move objects, and miniatures moved around the table and enhanced by AR animation. That way, people with LIS/CLIS can play at the same physical table, or LARP, with other players, not just online.
 
 
 
@@ -119,7 +119,7 @@ Began 2006, functional by 2010, stopped working on it by 2014.
 
 Very rudimentary movement, and on/off menu (or other on/off assigned hotkey) mapped and working. Not sufficient for LIS/CLIS, but helpful for some disabilities. Very high latency and error rate however.
 
-Need greater resolution of signal, frequency ranges, more CPU power. OpenEEG and civilian system power still leaving something to be desired, but getting closer. Not sufficient for AR/VR addition however.
+This needs higher signal resolution, wider frequency ranges, and more CPU power. OpenEEG and consumer hardware were getting closer but still fell short, and were not sufficient for adding AR/VR.
 
 
 # Phase 1 (completed) 2019 - 2020
@@ -130,11 +130,11 @@ Using Windows for Aurora Toolset module development.
 
 Not using EEG or BCI equipment at this phase. Creating prototype adventure that will be used in Phase 2 onward for baseline R&D.
 
-Development prototyping and team training / team building, ue NWN:EE Aurora Toolset to create custom adventure. Began August 2019, completed August 2020 successfully (still adding enhancements over time). Later see if newer generation OpenBCI can be used.
+Used the NWN:EE Aurora Toolset to create a custom adventure, both for development prototyping and for team training and team building. Began August 2019, completed August 2020 successfully (still adding enhancements over time). Later see if newer generation OpenBCI can be used.
 
 
 # Phase 1b - (in-progress) - OpenBCI
-Is it possible to configure OpenBCI to run this game at, or better than, OpenEEG did for NWN Diamon Edition in Phase 0? - Yes.
+Is it possible to configure OpenBCI to run this game at, or better than, OpenEEG did for NWN Diamond Edition in Phase 0? - Yes.
 
 It is not expected that full functionality, or multiplayer features will work. But hoping that the 16-channel higher quality setup may make solo play viable. - Yes, especially if taking menu-driven approach rather than free-range movement approach (at least initially).
 
@@ -147,7 +147,7 @@ Scope and build from ground-up electronic role-playing game (ERPG) that can be c
 ...
 
 
-## GoDot
+## Godot
 ...
 
 
@@ -181,16 +181,16 @@ Electronic role-playing game that can be played with many different adaptive dev
 ...
 
 
-# Cooperative Team-focused
+## Cooperative Team-focused
 ...
 
 
 ## Turn-based
-Turn-selection process in noncombat situations for online multi-player turned based life real-time brain-computer interface controlled role-playing game.
+Turn-selection process in noncombat situations for online multi-player turn-based live real-time brain-computer interface controlled role-playing game.
 
 
 
-## Initially text-only - Later add GUI, AR, VR, and Robtic interfaces
+## Initially text-only - Later add GUI, AR, VR, and Robotic interfaces
 ...
 
 
@@ -203,7 +203,7 @@ At a minimum must be playable on:
  * Online web browser
  * Android
 
-Nice-to-have's but not required:
+Nice-to-haves but not required:
  * iOS
  * Consoles
  * AR devices
@@ -213,7 +213,7 @@ Nice-to-have's but not required:
 
 ## Menu-driven
 
-Due the goal of being playable by LIS/CLIS participants purely through BCI, and since BCI text pick lists are so slow, the game needs to be BCI menu-driven, rather than typed text or keyboard controller driven.
+Due to the goal of being playable by LIS/CLIS participants purely through BCI, and since BCI text pick lists are so slow, the game needs to be BCI menu-driven, rather than typed text or keyboard controller driven.
 A BCI text pick list feature can be added later for chatroom functionality if someone wants to take on adding that feature at some point.
 
 
@@ -237,7 +237,7 @@ Potentially using Matrix-synapse as underlying network communication infrastruct
 
 
 
-Began scoping Phase 1 in August 2019, currently actively in progress.
+Began scoping Phase 1 in August 2019; Phase 1 was completed in August 2020.
 
 
 Meeting weekly (broadcast live).
@@ -260,7 +260,7 @@ More scope details and full documents in Brain Computer Interface Role-Playing G
 
 
 
-## PC / NPC interaction dialog menues for BCI RPG text-based wireframe and example flow
+## PC / NPC interaction dialog menus for BCI RPG text-based wireframe and example flow
 
 
 
@@ -287,7 +287,8 @@ More scope details and full documents in Brain Computer Interface Role-Playing G
 
 
 
-## Graphical User Interface (GUI) for server management of BCI RPG. The use case assumes players are in LIS CLIS, but that DM / GM / Therapist or server admin are able to use full GUI for server administration.
+## Server Management GUI
+This assumes players may have LIS/CLIS, but that the GM, therapist, or server administrator can use a full graphical interface.
 
 
 
@@ -297,7 +298,7 @@ More scope details and full documents in Brain Computer Interface Role-Playing G
 ## Phase 2b - Develop Module Creation Tools with UI (in-progress)
 The module creation toolset is not designed for BCI or LIS/CLIS users. The assumption is that Game Master / Dungeon Master, Educator, or Therapist will use this toolset to create new custom adventures (like the Aurora Toolset is used to create adventures for NWN).
 
-This requires full graphical tools at this point. (Would love down the road to create a BCI-controlled toolset, but that is much more advanced than our current team is ready for. Hopefully we can circle back to this down the road.
+This requires full graphical tools at this point. We would love to eventually create a BCI-controlled toolset, but that is beyond what our current team is ready for. We hope to circle back to it.
 
 
 
@@ -314,7 +315,7 @@ In Phase 2 all the basic play mechanics, and the module creation tools are built
 
 
 # Phase 3 (in-progress August 2021)
-Add graphical interface (instead of just text interface) with audio and video pre-recorded events tied into the text-based events (a la Dragon's Lair). Later add more dynamic graphics/audio/video for smoother experience.Planned to begin early hooks around late 2021.
+Add graphical interface (instead of just text interface) with audio and video pre-recorded events tied into the text-based events (a la Dragon's Lair). Later add more dynamic graphics/audio/video for smoother experience. Early hooks were planned to begin around late 2021.
 
 
 # Phase 4 (pending)
@@ -338,14 +339,13 @@ Integrate "holographic" experiences with robotics, AR, etc.
 
 and other features through the BCI control
 
-But in a TRPG environment rather than online ERPG (but using the tools and code created for this now more well-rounded continually evolving ERPG as the tools to enable TRPG play).
+All of this happens in a tabletop (TRPG) setting rather than an online ERPG, using the tools and code built for the ERPG to enable tabletop play.
 
 
 Your donations mean that more people can have access to our free programs.
 
-Please  to help us with these efforts.
+Please [donate](https://www.rpgresearch.com/donate) to help us with these efforts.
 
-Or !
  
 
 
