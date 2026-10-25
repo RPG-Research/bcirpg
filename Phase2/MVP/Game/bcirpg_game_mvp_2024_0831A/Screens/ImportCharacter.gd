@@ -22,6 +22,9 @@ const Cap_New_Button = preload("res://UserInterface/Option.tscn")
 var charFilePath
 var a
 
+#Browser builds pass csv text through this file to use the built-in csv functions
+const CSV_TEMP_PATH = "user://csv_temp.csv"
+
 func _ready() -> void:
 	theme=load(settings.themeFile)
 	_populate_output_character_format()
@@ -138,28 +141,31 @@ func _populate_output_character_format():
 #	NOTE: this assumes we have matching lines, and our csv matches
 #TODO: Next step  here is run the GSP converted to also update the percentile/singleton
 func _populate_preset_character_format(file:File):
-	while file.eof_reached() == false:
-		var csvStrHeaderArray = file.get_csv_line()
-		var csvStrContentsArray = file.get_csv_line()
-		cust_cap_count = 0
-		for i in csvStrHeaderArray.size():
-			#make a new textbox for each header piece
-			var textLine = Label.new()
-			$ScrollContainer/VBoxContainer.add_child(textLine)
+	#Character files are one header line and one value line; get_csv_line handles quoted fields
+	var csvStrHeaderArray = file.get_csv_line()
+	var csvStrContentsArray = file.get_csv_line()
+	cust_cap_count = 0
+	for i in csvStrHeaderArray.size():
+		#Skip empty headers, e.g. from a trailing comma in older saves
+		if csvStrHeaderArray[i].strip_edges() == "":
+			continue
+		#make a new textbox for each header piece
+		var textLine = Label.new()
+		$ScrollContainer/VBoxContainer.add_child(textLine)
+		cust_cap_count = cust_cap_count + 1
+		textLine.text = csvStrHeaderArray[i].to_upper()
+
+		#match to content, assuming it exists and aligns
+		if(csvStrContentsArray.size() > i):
+			var textBox = LineEdit.new()
+			$ScrollContainer/VBoxContainer.add_child(textBox)
 			cust_cap_count = cust_cap_count + 1
-			textLine.text = csvStrHeaderArray[i].to_upper()
-			
-			#match to content, assuming it exists and aligns
-			if(csvStrContentsArray.size()>= i):
-				var textBox = LineEdit.new()
-				$ScrollContainer/VBoxContainer.add_child(textBox)
-				cust_cap_count = cust_cap_count + 1
-				textBox.text = csvStrContentsArray[i]
-				
-			if(textLine.text=="QUOTE"):
-				_add_capability_button()
-				
-	
+			textBox.text = csvStrContentsArray[i]
+
+		if(textLine.text=="QUOTE"):
+			_add_capability_button()
+
+
 	# Set focus order for dynamically created LineEdit fields
 	var previous_control = $VBoxContainer2/Save_Button
 	for child in $ScrollContainer/VBoxContainer.get_children():
@@ -177,46 +183,17 @@ func _populate_preset_character_format(file:File):
 #FUNCTION populate preset character format (javascript version)
 #Params: string containing the text of the file we read with javascript
 #Returns: Nothing; all work done in function
-#Notes: functionally versy similar to the function above, but takes a string instead of a file
+#Notes: writes the text to a temp file so the browser uses the same built-in csv parsing as desktop
 func _js_populate_preset_character_format(file_text: String):
-	var file_text_split = file_text.split('\n', false,0)
-	#print(file_text_split[0])
-	cust_cap_count = 0
-	
-	var header_array = file_text_split[0].split(',', true, 0)
-	var contents_array = file_text_split[1].split(',', true, 0)
-	
-	for i in header_array.size():
-		#make a new textbox for each header piece
-		var textLine = Label.new()
-		$ScrollContainer/VBoxContainer.add_child(textLine)
-		cust_cap_count = cust_cap_count + 1
-		textLine.text = header_array[i].to_upper()
-		print(header_array[i])
-		
-		#match to content, assuming it exists and aligns
-		if(contents_array.size()>= i):
-			var textBox = LineEdit.new()
-			$ScrollContainer/VBoxContainer.add_child(textBox)
-			cust_cap_count = cust_cap_count + 1
-			textBox.text = contents_array[i]
-				
-		if(textLine.text=="QUOTE"):
-			_add_capability_button()
-	
-	# Set focus order for dynamically created LineEdit fields
-	var previous_control = $VBoxContainer2/Save_Button
-	for child in $ScrollContainer/VBoxContainer.get_children():
-		if child is LineEdit:
-			child.focus_previous = previous_control.get_path()
-			previous_control.focus_next = child.get_path()
-			previous_control = child
-	
-	# Connect the last LineEdit back to the first button
-	if previous_control != $VBoxContainer2/Save_Button:
-		#previous_control.focus_next = $VBoxContainer2/But_OpenFile.get_path()
-		#$VBoxContainer2/But_OpenFile.focus_previous = previous_control.get_path()
-		previous_control.focus_next = $But_Play.get_path()
+	var file = File.new()
+	if file.open(CSV_TEMP_PATH, File.WRITE) != OK:
+		print("Failed to open ", CSV_TEMP_PATH, " for writing.")
+		return
+	file.store_string(file_text)
+	file.close()
+	file.open(CSV_TEMP_PATH, File.READ)
+	_populate_preset_character_format(file)
+	file.close()
 
 #FUNCTION clear the character sheet
 #Params: None
@@ -337,11 +314,20 @@ func _save_data_to_singleton() -> void:
 						box_count = box_count+2
 					#For imported custom capabilities:
 					_:
-						if $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
-							var new_cap = pSingleton.Capability_Source.new()
-							new_cap.name = label_value
-							new_cap.score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
-							pSingleton.player_capabilities.append(new_cap)
+						if label_value != "" && $ScrollContainer/VBoxContainer.get_child_count() >= box_count+1:
+							var import_score = str($ScrollContainer/VBoxContainer.get_child(box_count+1).text)
+							#Defaults (Health, Defense, Vision) are already on the character; update rather than duplicate
+							var existing_cap = null
+							for pc_cap in pSingleton.player_capabilities:
+								if str(pc_cap.name).to_upper() == label_value:
+									existing_cap = pc_cap
+							if existing_cap != null:
+								existing_cap.score = import_score
+							else:
+								var new_cap = pSingleton.Capability_Source.new()
+								new_cap.name = label_value
+								new_cap.score = import_score
+								pSingleton.player_capabilities.append(new_cap)
 						box_count = box_count+2
 				print("DEBUG, current box count is: " + str(box_count))
 			#Capacity object:
@@ -381,12 +367,13 @@ func _save_data_to_singleton() -> void:
 								new_cap.modifier = int(cap_item.text)
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
+		#Derived values must be calculated before they are copied to output:
+		pSingleton.set_health()
+		pSingleton.set_defense()
 		#Set output values for percentile:
 		for set_cap in pSingleton.player_capabilities:
 			set_cap.Game_Name = set_cap.name
 			set_cap.Game_Value = set_cap.score
-		pSingleton.set_health()
-		pSingleton.set_defense()
 		#Now set output values, too:
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
@@ -505,42 +492,36 @@ func _save_data_to_singleton() -> void:
 #	TO DO: this is not safe at all; we can't just take a player entered name
 #		for a file name, we need to validate it. 
 func _save_data_to_csv() -> void:
-	var file_path = ""
-	var file # we'll only be using this on the desktop version, not the browser
+	var file_name = ""
 	if str(pSingleton.name) != "":
-		file_path = str(pSingleton.name) + "_data.csv"
+		file_name = str(pSingleton.name) + "_data.csv"
 	else: 
-		 file_path = "character_data.csv"
+		 file_name = "character_data.csv"
 	
 	# if not on the browser, we can save to the user directory
-	# if we ARE in the browser, we have to prompt the user where to save it, so the file path is just the name
-	if !OS.has_feature('JavaScript'):
-		file_path = "user://" + file_path
-		file = File.new() # this only needs to be set in desktop, browser saves using the JavaScript bridge
+	# if we ARE in the browser, we write a temp file, then prompt the user where to save it
+	var file_path = "user://" + file_name
+	if OS.has_feature('JavaScript'):
+		file_path = CSV_TEMP_PATH
 	
-	if (!OS.has_feature('JavaScript') && file.open(file_path, File.WRITE) == OK) || OS.has_feature('JavaScript'):
-		var csv_labels = ""
+	var file = File.new()
+	if file.open(file_path, File.WRITE) == OK:
 		#Prior system for labels:
 #		for extra in pSingleton.output_extras:
 #			csv_labels = csv_labels + extra + ","
 #		for name in pSingleton.output_labels:
 #			csv_labels = csv_labels + name + ","
-		csv_labels = "Name,Profession,Quote,"
-		for named_ability in pSingleton.player_capabilities:
-			if named_ability.Game_Name != null && named_ability.Game_Name != "NA":
-				csv_labels = csv_labels + named_ability.Game_Name + ","
-		csv_labels = csv_labels + "\n"
-		#Now print the values:
-		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
+		var header_row = PoolStringArray(["Name","Profession","Quote"])
+		var value_row = PoolStringArray([str(pSingleton.name), str(pSingleton.profession), str(pSingleton.quote)])
 		for val in pSingleton.player_capabilities:
 			if val.Game_Name != null && val.Game_Name != "NA":
+				header_row.append(str(val.Game_Name))
 				if val.Game_Raw != null:
-					csv_labels = csv_labels + str(val.Game_Raw)
+					value_row.append(str(val.Game_Raw))
+				elif val.Game_Extras != null:
+					value_row.append(str(int(val.Game_Value)) + "D+" + str(val.Game_Extras))
 				else:
-					csv_labels = csv_labels + str(int(val.Game_Value))
-					if val.Game_Extras != null:
-						csv_labels = csv_labels + "D+" + str(val.Game_Extras)
-				csv_labels = csv_labels + ","
+					value_row.append(str(int(val.Game_Value)))
 		#Prior system for scores:
 		#var labels_counter = 0
 #		for val in pSingleton.output_scores_A:
@@ -553,14 +534,16 @@ func _save_data_to_csv() -> void:
 #					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
 #			labels_counter = labels_counter +1
 #			csv_labels = csv_labels + ","
-		#TO DO:add the values, too.
-		if !OS.has_feature('JavaScript'):
-			file.store_string(csv_labels)
+		#store_csv_line quotes any field containing a comma, quote, or newline
+		file.store_csv_line(header_row)
+		file.store_csv_line(value_row)
+		file.close()
+		if OS.has_feature('JavaScript'):
+			# for browser saving, read the temp file back and download it under the character's file name
+			file.open(file_path, File.READ)
+			JavaScript.download_buffer(file.get_buffer(file.get_len()), file_name) # may not be necessary to define MIME type
 			file.close()
-		else:
-			# for browser saving, we need to convert the string to a PoolByteArray
-			JavaScript.download_buffer(csv_labels.to_utf8(), file_path) # may not be necessary to define MIME type
-		print("Data saved to ", file_path)
+		print("Data saved to ", file_name)
 		print(OS.get_data_dir())
 	else:
 		print("Failed to open", file_path, "for writing.")
