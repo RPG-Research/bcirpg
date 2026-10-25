@@ -36,8 +36,12 @@ func _ready() -> void:
 #	history array. 
 func add_display_to_game(response: Control):
 	if(current_history.get_child_count() > 0):
-		current_history.remove_child(current_history.get_child(0))
-	current_history.add_child(response)
+		var prior_display = current_history.get_child(0)
+		current_history.remove_child(prior_display)
+		prior_display.queue_free()
+	#Show a copy: the history array owns the original, and this scene frees its
+	#	children when it closes.
+	current_history.add_child(response.duplicate())
 	
 func update_pager():
 	if(current_history_page_no >= history_source.output_history_array.size()):

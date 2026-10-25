@@ -3,7 +3,7 @@
 
 class_name DieManager
 
-extends Node2D
+extends Reference
 
 #Array of the desired dice values to mod god wants
 var desiredDice: Array

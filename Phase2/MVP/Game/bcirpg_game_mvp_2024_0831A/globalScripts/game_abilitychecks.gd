@@ -1,7 +1,7 @@
 #Methods here will take a target capacity, mods, amount to beat (optional) and return 
 #	a check_result object
 
-extends Node
+extends Reference
 
 class_name AbilityChecks
 

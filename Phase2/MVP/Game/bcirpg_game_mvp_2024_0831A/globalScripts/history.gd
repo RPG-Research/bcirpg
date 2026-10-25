@@ -20,6 +20,13 @@ func _ready() -> void:
 	#DKM temp:
 	print("Loaded history array size is: " + str(historyScreensSingleton.output_history_array.size()))
 
+#The history array holds Controls that are never in the tree, so free them on quit.
+func _exit_tree() -> void:
+	for history_screen in historyScreensSingleton.output_history_array:
+		if is_instance_valid(history_screen):
+			history_screen.free()
+	historyScreensSingleton.output_history_array.clear()
+
 #DKM TEMP: load using tres format:
 func load_history_file() -> HistoryScreensTemplateSingleton:
 	if ResourceLoader.exists(history_file):
