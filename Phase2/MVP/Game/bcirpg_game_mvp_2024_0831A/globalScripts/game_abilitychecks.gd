@@ -21,7 +21,7 @@ func make_player_check (ability:String, diff_mod:int, to_beat:int = -1)->Check_R
 			var perc_die = [10,10]
 			DiceRoller.dieManager.setDieManager(perc_die, 0.5)
 			var die_handler = DiceRoller.dieManager.rollDice()
-			results.rolled = int(die_handler[1]*100)
+			results.rolled = int(round(die_handler[1]*100))
 			#DKM TEMP: test output only:
 			print("Inside ability check, got these back in my roll array: " + str(results.rolled))
 			if results.rolled >=95:
