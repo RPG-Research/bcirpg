@@ -7,7 +7,7 @@ extends Node
 
 #DKM TEMP: not a cfg? **Cannot use user
 #var history_file = "user://history.tres"
-var history_file = "res://_userFiles.history.tres"
+var history_file = "res://_userFiles/history.tres"
 var historyScreensSingleton 
 var testing = false
 
