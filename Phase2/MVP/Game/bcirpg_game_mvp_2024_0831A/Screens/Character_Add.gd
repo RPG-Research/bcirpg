@@ -320,12 +320,13 @@ func save_data_to_singleton() -> void:
 								new_cap.modifier = int(cap_item.text)
 				print ("Cap values saved as: " + new_cap.to_string())
 				pSingleton.player_capabilities.append(new_cap)
+		#Derived values must be calculated before they are copied to output:
+		pSingleton.set_health()
+		pSingleton.set_defense()
 		#Set output values for percentile:
 		for set_cap in pSingleton.player_capabilities:
 			set_cap.Game_Name = set_cap.name
 			set_cap.Game_Value = set_cap.score
-		pSingleton.set_health()
-		pSingleton.set_defense()
 		#Now set output values, too:
 		pSingleton.is_output_B = false
 		pSingleton.output_A_label = ""
@@ -450,28 +451,22 @@ func save_data_to_csv() -> void:
 		 file_path = "user://character_data.csv"
 	var file = File.new()
 	if file.open(file_path, File.WRITE) == OK:
-		var csv_labels = ""
 		#Prior system for labels:
 #		for extra in pSingleton.output_extras:
 #			csv_labels = csv_labels + extra + ","
 #		for name in pSingleton.output_labels:
 #			csv_labels = csv_labels + name + ","
-		csv_labels = "Name,Profession,Quote,"
-		for named_ability in pSingleton.player_capabilities:
-			if named_ability.Game_Name != null && named_ability.Game_Name != "NA":
-				csv_labels = csv_labels + named_ability.Game_Name + ","
-		csv_labels = csv_labels + "\n"
-		#Now print the values:
-		csv_labels = csv_labels + str(pSingleton.name) + "," + str(pSingleton.profession)+ "," + str(pSingleton.quote)+ ","
+		var header_row = PoolStringArray(["Name","Profession","Quote"])
+		var value_row = PoolStringArray([str(pSingleton.name), str(pSingleton.profession), str(pSingleton.quote)])
 		for val in pSingleton.player_capabilities:
 			if val.Game_Name != null && val.Game_Name != "NA":
+				header_row.append(str(val.Game_Name))
 				if val.Game_Raw != null:
-					csv_labels = csv_labels + str(val.Game_Raw)
+					value_row.append(str(val.Game_Raw))
+				elif val.Game_Extras != null:
+					value_row.append(str(int(val.Game_Value)) + "D+" + str(val.Game_Extras))
 				else:
-					csv_labels = csv_labels + str(int(val.Game_Value))
-					if val.Game_Extras != null:
-						csv_labels = csv_labels + "D+" + str(val.Game_Extras)
-				csv_labels = csv_labels + ","
+					value_row.append(str(int(val.Game_Value)))
 		#Prior system for scores:
 		#var labels_counter = 0
 #		for val in pSingleton.output_scores_A:
@@ -484,8 +479,9 @@ func save_data_to_csv() -> void:
 #					csv_labels = csv_labels + str(pSingleton.output_scores_B[labels_counter])
 #			labels_counter = labels_counter +1
 #			csv_labels = csv_labels + ","
-		#TO DO:add the values, too.
-		file.store_string(csv_labels)
+		#store_csv_line quotes any field containing a comma, quote, or newline
+		file.store_csv_line(header_row)
+		file.store_csv_line(value_row)
 		file.close()
 		print("Data saved to ", file_path)
 		print(OS.get_data_dir())
