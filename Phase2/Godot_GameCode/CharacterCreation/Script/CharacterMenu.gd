@@ -1,9 +1,9 @@
 extends Node2D
 
-var Gender = -1
-var Name = ""
-var Profession = ""
-var Tribe = ""
+var Gender: int = -1
+var Name: String = ""
+var Profession: String = ""
+var Tribe: String = ""
 
 func _ready():
 	profession_add_items()

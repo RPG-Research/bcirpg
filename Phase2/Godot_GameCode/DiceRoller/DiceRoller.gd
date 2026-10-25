@@ -10,7 +10,7 @@ export var desiredDice: Array
 export var neededPercentageToPass: float
 
 #Define dieManager variable
-var dieManager
+var dieManager: DieManager
 
 func _ready():
 	#create diemanager object
@@ -20,16 +20,16 @@ func _ready():
 func _on_Die_button_down():
 	#rollDice function returns an array with the following elements in the following positions:
 	#rollDice result: [[rolledValues], percentRolled, passResult, neededPercent, degreeOfSuccess, dice]
-	var result = dieManager.rollDice()
+	var result: Array = dieManager.rollDice()
 	
 	
 	#assigning variable names to each of them for better clarity
-	var rolledValues = result[0]
-	var percentRolled = result[1]
-	var passResult = result[2]
-	var neededPercent = result[3]
-	var degreeOfSuccess = result[4]
-	var dice = result[5] 
+	var rolledValues: Array[int]= result[0]
+	var percentRolled: float = result[1]
+	var passResult: bool = result[2]
+	var neededPercent: float = result[3]
+	var degreeOfSuccess: float = result[4]
+	var dice: Array[int] = result[5] 
 	
 	
 	#Check if passed or not
