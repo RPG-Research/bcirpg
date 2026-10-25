@@ -146,7 +146,7 @@ func get_conversion_rules() ->void:
 		var file = File.new()
 		var error = file.open(conversion_file_path, file.READ)
 		if error != OK:
-			print("Error finding conversion rules in library " + error)
+			print("Error finding conversion rules in library ", error)
 		else:
 			var Conversion_Class := load(conversion_file_path)
 			conversion_class = Conversion_Class.new()
