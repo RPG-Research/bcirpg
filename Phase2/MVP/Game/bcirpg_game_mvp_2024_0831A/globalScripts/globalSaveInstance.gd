@@ -17,7 +17,10 @@ func load_settings_file():
 		return
 	#Preferences:
 	settingsInstance.inputName = config.get_value("player_preferences", "player_name")
-	settingsInstance.riskFactor = config.get_value("player_preferences", "risk_threshold")		
+	settingsInstance.riskFactor = config.get_value("player_preferences", "risk_threshold")
+	#Genre and game system; fall back to the template defaults for older files without these keys:
+	settingsInstance.genre_selection = config.get_value("player_preferences", "genre_selection", settingsInstance.genre_selection)
+	settingsInstance.game_selection = config.get_value("player_preferences", "game_selection", settingsInstance.game_selection)
 	#Controls:
 	settingsInstance.fontSize = config.get_value("visual_controls", "font_size")
 	settingsInstance.brightness = config.get_value("visual_controls", "brightness")	
