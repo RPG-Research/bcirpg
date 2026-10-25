@@ -16,11 +16,11 @@ func make_settings_file():
 	config.set_value("Player", "brightness", 3)
 	config.set_value("Player", "fontSize", 11)
 	config.set_value("Player", "volume", 6)
-	var bClosedCaptions = config.set_value("player", "bClosedCaptions")
-	var bDevConsole = config.set_value("Player", "bDevConsole")
-	var bVirtualKeyboard = config.set_value("Player", "bVirtualKeyboard", false)
-	var preferredTheme = config.set_value("Player", "preferredTheme", PlayerSettingsTemplate.ThemeChoice.LIGHTHIGHCONTRAST)
-	var visualKeyboardLayout = config.set_value("Player", "visualKeyboardLayout", PlayerSettingsTemplate.KeyboardLayout.QWERTY)
+	var bClosedCaptions = config.get_value("player", "bClosedCaptions")
+	var bDevConsole = config.get_value("Player", "bDevConsole")
+	var bVirtualKeyboard = config.get_value("Player", "bVirtualKeyboard", false)
+	var preferredTheme = config.get_value("Player", "preferredTheme", PlayerSettingsTemplate.ThemeChoice.LIGHTHIGHCONTRAST)
+	var visualKeyboardLayout = config.get_value("Player", "visualKeyboardLayout", PlayerSettingsTemplate.KeyboardLayout.QWERTY)
 	
 	config.save("user://settings.cfg")
 
