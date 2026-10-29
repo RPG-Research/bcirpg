@@ -38,7 +38,7 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			is_dragging = true
-		elif event.is_released():
+		else: # is_released() only exists in Godot 4
 			is_dragging = false
 	
 	if mouse_in_resize_area && event is InputEventMouseMotion:
