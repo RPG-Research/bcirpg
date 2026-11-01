@@ -192,6 +192,7 @@ func _on_NewSpaceConfirmationDialogLocation_confirmed():
 	
 	# third, we'll create the display object
 	var new_space_display_object  = space_object_scene.instance()
+	new_space_display_object.connect("space_option_list_reordered", self, "_on_space_option_list_reordered")
 	region_container.add_child(new_space_display_object)
 	
 	for key in new_space:
@@ -213,7 +214,9 @@ func _on_ButtonLoad_pressed():
 	file_dialog.popup_centered()
 
 func _on_ButtonSave_pressed():
-	pass # Replace with function body.
+	# open file dialog in save mode
+	file_dialog.set_mode(FileDialog.MODE_SAVE_FILE)
+	file_dialog.popup_centered()
 
 
 func _on_ButtonNew_pressed():
@@ -280,8 +283,25 @@ func _on_FileDialog_file_selected(path):
 							var node_text = xml_parser.get_node_data()
 							node_stack[-1]["Text"] = node_text
 							break
-	module_dict = node_stack[0]
-	display_module_dict()
+		module_dict = node_stack[0]
+		display_module_dict()
+	elif file_dialog.get_mode() == FileDialog.MODE_SAVE_FILE:
+		print("saving file")
+		var user_path = file_dialog.get_current_path()
+		
+		# we need to convert module_dict back into an xml
+		# a stack or recursion should work
+		#print(module_dict)
+		var module_string = "hello"
+		module_string = _convert_module_dict_to_string(module_dict, null)
+		
+		module_string = "\n".join(["<root>", module_string, "</root>"])
+		
+		var new_file = File.new()
+		new_file.open(user_path, File.WRITE)
+		new_file.store_string(module_string)
+		new_file.close()
+		
 
 # this function puts all the spaces on screen, along with a tree of the various location types
 func display_module_dict():
@@ -291,6 +311,45 @@ func display_module_dict():
 	_display_space_dict_connections(space_start)
 	_display_regions_locations_tree()
 
+# recursive function to convert the module_dict to string
+# not handling indents yet
+# parent_key is only necessary for arrays
+func _convert_module_dict_to_string(given_struct, parent_key):
+	#var start_tag = "".join(["<", given_type, ">"])
+	#var end_tag = "".join(["<", "/", given_type, ">"])
+	
+	var new_string = ""
+	
+	#var id_type = given_dict["Id"].rstrip("0123456789_")
+	if given_struct is Dictionary:
+		#var type = given_struct["Type"]
+		#if given_struct.has("Name"):
+		#	type = given_struct["Name"]["Text"]
+		#var start_tag = "".join(["<", type, ">"])
+		#var end_tag = "".join(["</", type, ">"])
+		#new_string = start_tag
+		for key in given_struct:
+			if key != "Type": #Type is mostly there for the editor to use, not to save
+				var type = key
+				var start_tag = "".join(["<", type, ">"])
+				var end_tag = "".join(["</", type, ">"])
+				if key == "Text": #Text is used to make the data store better as a dictionary, also not for saving
+					start_tag = ""
+					end_tag = ""
+				if given_struct[key] is Array: #each element in the array is given the same tag, not nested
+					new_string = "\n".join([new_string, _convert_module_dict_to_string(given_struct[key], key)])
+				else: # non-array data should be nested as usual
+					new_string = "\n".join([new_string, start_tag, _convert_module_dict_to_string(given_struct[key], null), end_tag])
+	elif given_struct is Array:
+		var type = parent_key
+		var start_tag = "".join(["<", type, ">"])
+		var end_tag = "".join(["</", type, ">"])
+		for struct in given_struct:
+			new_string = "\n".join([new_string, start_tag, _convert_module_dict_to_string(struct, null), end_tag])
+	elif given_struct is String && given_struct != null:
+		new_string = given_struct
+	return new_string
+
 # updates the locations of lines between spaces that link to each other so they move when a space is dragged
 func _update_space_dict_connections():
 	for i in connection_dict.keys():
@@ -299,7 +358,6 @@ func _update_space_dict_connections():
 			# top_level also means the lines aren't affected by zoom scale, so we need to correct for that, too
 			connection_dict[i][j].transform = connection_dict[i][j].get_parent().get_global_transform().translated(Vector2(connection_dict[i][j].get_parent().rect_size.x,connection_dict[i][j].get_parent().rect_size.y/2))
 			# not quite right, we actually want the difference between line start and space object
-			var line_start_x = .get_transform().xform_inv(connection_dict[i][j].position).x # this line appears to work as intended
 			var point_2_pos = Vector2(space_dict[j]["Object"].rect_position.x, space_dict[j]["Object"].rect_position.y)
 			connection_dict[i][j].set_point_position(1, connection_dict[i][j].get_parent().get_transform().xform_inv(point_2_pos) - space_dict[i]["Object"].rect_position - Vector2(space_dict[i]["Object"].rect_size.x, 0))
 
@@ -314,8 +372,6 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 		displayed_array.append(current_branch_id)
 		
 		# go through each branch, drawing lines from each connection to its child
-		var space_object = space_dict[current_branch_id]["Object"]
-		
 		for id in space_dict[current_branch_id]["Gotos"]:
 			#print("current_branch_id: ", current_branch_id, ", id: ", id)
 			var line = connection_dict[current_branch_id][id]
@@ -328,6 +384,7 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 func _display_space_dict(current_branch_key, current_location):
 # we want to show space_dict as a branching tree, starting with space_start
 	var new_display_object = space_object_scene.instance()
+	new_display_object.connect("space_option_list_reordered", self, "_on_space_option_list_reordered")
 	region_container.add_child(new_display_object)
 	
 	space_dict[current_branch_key]["Object"] = new_display_object # might as well make the object easier to access later
@@ -554,3 +611,43 @@ func _highlight_selected(selected_item):
 func _on_RegionTree_item_selected():
 	_unhighlight_everything(region_tree.get_root())
 	_highlight_selected(region_tree.get_selected())
+
+# should change the options in the module dict to match the ordering in the wizard
+# I'm not sure if it works, but it doesn't give me errors?
+# i'm a very good coder
+func _on_space_option_list_reordered(id, index_from, index_to):
+	print("id: ", id, ", index_from: ", index_from, ", index_to: ", index_to)
+	# find the space corresponding to the given id
+	var space
+	# the proper term for a group of loops is an "abomination"
+	if module_dict.has("Region"):
+		for region in module_dict["Region"]:
+			if region.has("Location"):
+				for location in region["Location"]:
+					if location.has("Space"):
+						for child_space in location["Space"]:
+							if child_space["Id"]["Text"] == id:
+								print("found ", id)
+								space = child_space
+	# now we want to rename the options in the option list to match the new order
+	# reminder: option names start with 1, but our option list starts with 0
+	# the way it's currently set up, options only move one place at a time, but I'd like it to work with any kind of movement
+	var num_from = index_from + 1
+	var num_to = index_to + 1
+	
+	var first_key = "Option_Labels_" + str(num_from).pad_zeros(3)
+	var first_option_text = space[first_key] # probably wrong
+	
+	var add_or_subtract_value = -1
+	if num_from > num_to:
+		add_or_subtract_value = 1
+	var next_option_text
+	for index in range(num_from, num_to, 1): # should already not include the last value, which we want to do differently
+		var current_key = "Option_Labels_" + str(index).pad_zeros(3)
+		var next_key = "Option_Labels_" + str(index+add_or_subtract_value).pad_zeros(3)
+		next_option_text = space[next_key] # probably wrong
+		space[current_key] = next_option_text
+		
+	var last_key = "Option_Labels_" + str(num_to).pad_zeros(3)
+	space[last_key] = first_option_text
+	

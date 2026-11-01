@@ -8,10 +8,11 @@ onready var option_list = get_node("ScrollContainer/VBoxContainer/OptionList")
 export var highlight_theme : Theme
 
 signal highlight_destination_signal(destination_text)
+signal space_option_list_reordered(id, index_from, index_to)
 
 func _ready():
 	#self.connect("highlight_destination_signal", self, "_highlight_destination")
-	pass
+	option_list.connect("option_list_reordered", self, "_on_option_list_reordered")
 
 func add_to_space_box(given_node):
 	container.add_child(given_node)
@@ -46,6 +47,15 @@ func get_option_list():
 func _gui_input(event):
 	if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_LEFT):
 		rect_position += event.relative
+
+func get_id():
+	for child in container.get_children():
+		if child.get_children()[0].text == "Id":
+			return child.get_children()[1].text
+	return null
+
+func _on_option_list_reordered(index_from, index_to):
+	emit_signal("space_option_list_reordered", get_id(), index_from, index_to)
 
 # if I click an action with a "Change_Location" action, I should highlight the location somehow
 # that is, send an event that turns any action with the Id == A_Params into a different color
