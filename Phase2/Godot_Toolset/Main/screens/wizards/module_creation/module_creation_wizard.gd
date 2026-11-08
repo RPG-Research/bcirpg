@@ -293,7 +293,7 @@ func _on_FileDialog_file_selected(path):
 		# a stack or recursion should work
 		#print(module_dict)
 		var module_string = "hello"
-		module_string = _convert_module_dict_to_string(module_dict, null)
+		module_string = _convert_module_dict_to_string(module_dict, null, 0)
 		
 		module_string = "\n".join(["<root>", module_string, "</root>"])
 		
@@ -313,39 +313,36 @@ func display_module_dict():
 
 # recursive function to convert the module_dict to string
 # not handling indents yet
-# parent_key is only necessary for arrays
-func _convert_module_dict_to_string(given_struct, parent_key):
-	#var start_tag = "".join(["<", given_type, ">"])
-	#var end_tag = "".join(["<", "/", given_type, ">"])
-	
+func _convert_module_dict_to_string(given_struct, parent_key, layer):
 	var new_string = ""
+	var contained_string
 	
-	#var id_type = given_dict["Id"].rstrip("0123456789_")
 	if given_struct is Dictionary:
-		#var type = given_struct["Type"]
-		#if given_struct.has("Name"):
-		#	type = given_struct["Name"]["Text"]
-		#var start_tag = "".join(["<", type, ">"])
-		#var end_tag = "".join(["</", type, ">"])
-		#new_string = start_tag
 		for key in given_struct:
 			if key != "Type": #Type is mostly there for the editor to use, not to save
 				var type = key
 				var start_tag = "".join(["<", type, ">"])
 				var end_tag = "".join(["</", type, ">"])
-				if key == "Text": #Text is used to make the data store better as a dictionary, also not for saving
-					start_tag = ""
-					end_tag = ""
-				if given_struct[key] is Array: #each element in the array is given the same tag, not nested
-					new_string = "\n".join([new_string, _convert_module_dict_to_string(given_struct[key], key)])
+				if given_struct[key] is Array || (key == "Text" && parent_key != "Space"): 
+					#Text is used to make the data store better as a dictionary, not to be used as a tag
+						#...unless it's a Space because I'm an idiot
+					#Arrays are treated as separate entries at the same level as on another and shouldn't be nested
+					contained_string = _convert_module_dict_to_string(given_struct[key], key, layer)
+					if contained_string != "":
+						new_string = "".join([new_string, contained_string])
 				else: # non-array data should be nested as usual
-					new_string = "\n".join([new_string, start_tag, _convert_module_dict_to_string(given_struct[key], null), end_tag])
+					contained_string =  _convert_module_dict_to_string(given_struct[key], key, layer+1)
+					if contained_string != "":
+						#new_string = "".join(["  ".repeat(layer), new_string, "\n","  ".repeat(layer),  start_tag, "\n", "  ".repeat(layer), contained_string,"  ".repeat(layer),  "\n", end_tag])
+						new_string = "".join([new_string, "  ".repeat(layer), start_tag, contained_string, end_tag, "\n"])
 	elif given_struct is Array:
 		var type = parent_key
 		var start_tag = "".join(["<", type, ">"])
 		var end_tag = "".join(["</", type, ">"])
 		for struct in given_struct:
-			new_string = "\n".join([new_string, start_tag, _convert_module_dict_to_string(struct, null), end_tag])
+			contained_string = _convert_module_dict_to_string(struct, type, layer+1)
+			if contained_string != "":
+				new_string = "".join([new_string,  start_tag, "\n",  "  ".repeat(layer), contained_string, "\n","  ".repeat(layer),  end_tag, "\n"])
 	elif given_struct is String && given_struct != null:
 		new_string = given_struct
 	return new_string
