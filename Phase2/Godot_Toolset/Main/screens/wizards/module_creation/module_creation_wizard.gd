@@ -46,8 +46,8 @@ export var space_display_height_margin: int
 export var space_display_width: int
 export var space_display_width_margin: int
 
-var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "A_Params", "Text", "Option_Labels", "Option_GoTos"]
-var nodes_with_multiples = ["Region", "Location", "Space"]
+var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "Text", "Option_Labels", "Option_GoTos", "A_Params"]
+var nodes_with_multiples = ["Region", "Location", "Space", "A_Params"]
 
 var module_dict # massive tree created from the loaded xml file
 # usage:
@@ -214,7 +214,9 @@ func _on_ButtonLoad_pressed():
 	file_dialog.popup_centered()
 
 func _on_ButtonSave_pressed():
-	pass # Replace with function body.
+	# open file dialog in save mode
+	file_dialog.set_mode(FileDialog.MODE_SAVE_FILE)
+	file_dialog.popup_centered()
 
 
 func _on_ButtonNew_pressed():
@@ -281,8 +283,25 @@ func _on_FileDialog_file_selected(path):
 							var node_text = xml_parser.get_node_data()
 							node_stack[-1]["Text"] = node_text
 							break
-	module_dict = node_stack[0]
-	display_module_dict()
+		module_dict = node_stack[0]
+		display_module_dict()
+	elif file_dialog.get_mode() == FileDialog.MODE_SAVE_FILE:
+		print("saving file")
+		var user_path = file_dialog.get_current_path()
+		
+		# we need to convert module_dict back into an xml
+		# a stack or recursion should work
+		#print(module_dict)
+		var module_string = "hello"
+		module_string = _convert_module_dict_to_string(module_dict, null, 0)
+		
+		module_string = "\n".join(["<root>", module_string, "</root>"])
+		
+		var new_file = File.new()
+		new_file.open(user_path, File.WRITE)
+		new_file.store_string(module_string)
+		new_file.close()
+		
 
 # this function puts all the spaces on screen, along with a tree of the various location types
 func display_module_dict():
@@ -292,6 +311,42 @@ func display_module_dict():
 	_display_space_dict_connections(space_start)
 	_display_regions_locations_tree()
 
+# recursive function to convert the module_dict to string
+# not handling indents yet
+func _convert_module_dict_to_string(given_struct, parent_key, layer):
+	var new_string = ""
+	var contained_string
+	
+	if given_struct is Dictionary:
+		for key in given_struct:
+			if key != "Type": #Type is mostly there for the editor to use, not to save
+				var type = key
+				var start_tag = "".join(["<", type, ">"])
+				var end_tag = "".join(["</", type, ">"])
+				if given_struct[key] is Array || (key == "Text" && parent_key != "Space"): 
+					#Text is used to make the data store better as a dictionary, not to be used as a tag
+						#...unless it's a Space because I'm an idiot
+					#Arrays are treated as separate entries at the same level as on another and shouldn't be nested
+					contained_string = _convert_module_dict_to_string(given_struct[key], key, layer)
+					if contained_string != "":
+						new_string = "".join([new_string, contained_string])
+				else: # non-array data should be nested as usual
+					contained_string =  _convert_module_dict_to_string(given_struct[key], key, layer+1)
+					if contained_string != "":
+						#new_string = "".join(["  ".repeat(layer), new_string, "\n","  ".repeat(layer),  start_tag, "\n", "  ".repeat(layer), contained_string,"  ".repeat(layer),  "\n", end_tag])
+						new_string = "".join([new_string, "  ".repeat(layer), start_tag, contained_string, end_tag, "\n"]) #will cause extra newline at the end
+	elif given_struct is Array:
+		var type = parent_key
+		var start_tag = "".join(["<", type, ">"])
+		var end_tag = "".join(["</", type, ">"])
+		for struct in given_struct:
+			contained_string = _convert_module_dict_to_string(struct, type, layer+1)
+			if contained_string != "":
+				new_string = "".join([new_string, "  ".repeat(layer),  start_tag, "\n",  "  ".repeat(layer), contained_string, "\n","  ".repeat(layer),  end_tag, "\n"]) # another extra newline
+	elif given_struct is String && given_struct != null:
+		new_string = given_struct
+	return new_string
+
 # updates the locations of lines between spaces that link to each other so they move when a space is dragged
 func _update_space_dict_connections():
 	for i in connection_dict.keys():
@@ -300,7 +355,6 @@ func _update_space_dict_connections():
 			# top_level also means the lines aren't affected by zoom scale, so we need to correct for that, too
 			connection_dict[i][j].transform = connection_dict[i][j].get_parent().get_global_transform().translated(Vector2(connection_dict[i][j].get_parent().rect_size.x,connection_dict[i][j].get_parent().rect_size.y/2))
 			# not quite right, we actually want the difference between line start and space object
-			var line_start_x = .get_transform().xform_inv(connection_dict[i][j].position).x # this line appears to work as intended
 			var point_2_pos = Vector2(space_dict[j]["Object"].rect_position.x, space_dict[j]["Object"].rect_position.y)
 			connection_dict[i][j].set_point_position(1, connection_dict[i][j].get_parent().get_transform().xform_inv(point_2_pos) - space_dict[i]["Object"].rect_position - Vector2(space_dict[i]["Object"].rect_size.x, 0))
 
@@ -315,8 +369,6 @@ func _display_space_dict_connection_recursive(current_branch_id, displayed_array
 		displayed_array.append(current_branch_id)
 		
 		# go through each branch, drawing lines from each connection to its child
-		var space_object = space_dict[current_branch_id]["Object"]
-		
 		for id in space_dict[current_branch_id]["Gotos"]:
 			#print("current_branch_id: ", current_branch_id, ", id: ", id)
 			var line = connection_dict[current_branch_id][id]
@@ -499,7 +551,7 @@ func _display_regions_locations_tree():
 # creates a dictionary keyed by id of every space that stores connections to other spaces
 # derived from module_dict
 func _construct_space_dict(search_object, inside_space, space_id):
-	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
+	if inside_space && search_object.has("Type") && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
 		if search_object["Type"] == "Option_GoTos":
 			if !space_dict[space_id].has("Gotos"):
 				space_dict[space_id]["Gotos"] = []
