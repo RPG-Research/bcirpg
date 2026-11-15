@@ -2,10 +2,10 @@
 <Region>
   <Name>Realm of Tempestia</Name>
   <Description>A mystical fantasy landscape, where characters speak often in verse!</Description>
-<Location>
+  <Location>
       <Name>Island of Sorrows</Name>
     <Description>Setting for this module</Description>
-<Space>
+    <Space>
           <Id>Boat_000</Id>
       <Start>True</Start>
       <Action>ShowText</Action>
@@ -22,7 +22,7 @@
       <Option_GoTos_005>Misc_003</Option_GoTos_005>
 
     </Space>
-<Space>
+    <Space>
           <Id>Boat_001</Id>
       <Action>ShowText</Action>
       <Text>The boat rocks gently. You can leave the **/boat** through a **/hatch**. There are also now three new test options.</Text>
@@ -50,7 +50,7 @@
       <Option_GoTos_011>Test_005</Option_GoTos_011>
 
     </Space>
-<Space>
+    <Space>
           <Id>Boat_002</Id>
       <Action>ShowText</Action>
       <Text>The **/boat** is old and wrecked.</Text>
@@ -58,7 +58,7 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Boat_003</Id>
       <Action>ShowText</Action>
       <Text>The **/boat** contains a secret room and you've found it! Sadly, it's not yet built into the game... check back later!</Text>
@@ -66,7 +66,7 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Shore_001</Id>
       <Action>ShowText</Action>
       <Text>You've reached the shore!</Text>
@@ -74,7 +74,7 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Misc_001</Id>
       <Action>ShowText</Action>
       <Text>You pull a fiddle from your sack and play it, while dancing around merrily.  Great fun is had.</Text>
@@ -82,7 +82,7 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Misc_002</Id>
       <Action>ShowText</Action>
       <Text>You pull out a blanket, settle your burdens and take a short rest.</Text>
@@ -90,7 +90,7 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Misc_003</Id>
       <Action>ShowText</Action>
       <Text>You find a quiet corner on the **/boat**, put down your burden, and feel the rocking of the **/boat**.  You rest mind and body, and really I'm experimenting with options and sizes of them, added via XML here.  So in your meditation you have a vision: a sparrow flies high over the mountains and reveals a castle!  After this reverie, you awake.</Text>
@@ -98,37 +98,60 @@
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_000</Id>
       <Action>TestDieRollAction</Action>
-      <A_Params>6</A_Params>
+      <A_Params>
+      4
+      </A_Params>
+      <A_Params>
+      6
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_001</Id>
       <Action>ChangeLocation</Action>
-      <A_Params>The_Wits_End</A_Params>
+      <A_Params>
+      Faerun
+      </A_Params>
+      <A_Params>
+      Waterdeep
+      </A_Params>
+      <A_Params>
+      The_Wits_End
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_002</Id>
       <Action>TestAbilityCheck</Action>
-      <A_Params>-10</A_Params>
+      <A_Params>
+      ST
+      </A_Params>
+      <A_Params>
+      -10
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_003</Id>
       <Action>AbilityCheck_Conditional</Action>
-      <A_Params>+10</A_Params>
+      <A_Params>
+      IN
+      </A_Params>
+      <A_Params>
+      +10
+      </A_Params>
       <Text>You search the hold carefully? (Ability check)</Text>
       <Option_Labels_001>You find nothing interesting.</Option_Labels_001>
       <Option_GoTos_001>Boat_002</Option_GoTos_001>
@@ -136,19 +159,23 @@
       <Option_GoTos_002>Boat_003</Option_GoTos_002>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_004</Id>
       <Action>StartExtendedConflict</Action>
-      <A_Params>Bandit</A_Params>
+      <A_Params>
+      Bandit
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Test_005</Id>
       <Action>StartSimpleConflict</Action>
-      <A_Params>Bandit</A_Params>
+      <A_Params>
+      Bandit
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
@@ -156,10 +183,10 @@
     </Space>
 
   </Location>
-<Location>
+  <Location>
       <Name>Tempestuous Seas</Name>
     <Description>A test location away from the island; rampant with sea monsters and storms!</Description>
-<Space>
+    <Space>
           <Id>Water_000</Id>
       <Start>False</Start>
       <Action>ShowText</Action>
@@ -168,7 +195,7 @@
       <Option_GoTos_001>Water_001</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Water_001</Id>
       <Action>ShowText</Action>
       <Text>You try to survive but cannot. You die.</Text>
@@ -183,15 +210,15 @@
 <Region>
   <Name>Faerun</Name>
   <Description>The Forgotten Realms, only here as a test.</Description>
-<Location>
+  <Location>
       <Name>Baldur's Gate</Name>
     <Description>Setting of an entirely different series of games...</Description>
 
   </Location>
-<Location>
+  <Location>
       <Name>Waterdeep</Name>
     <Description>One gigantic city!</Description>
-<Space>
+    <Space>
           <Id>The_Wits_End</Id>
       <Action>ShowText</Action>
       <Text>POOF! You've teleported into a tavern! Fire crackles in the hearth, assorted fantasy characters abound getting food and drinks, eyeing each other suspiciously. You have the sense you're not in the Tempest anymore... better get back.</Text>
@@ -199,10 +226,18 @@
       <Option_GoTos_001>Resume_000</Option_GoTos_001>
 
     </Space>
-<Space>
+    <Space>
           <Id>Resume_000</Id>
       <Action>ChangeLocation</Action>
-      <A_Params>Boat_001</A_Params>
+      <A_Params>
+      Realm of Tempestia
+      </A_Params>
+      <A_Params>
+      Island of Sorrows
+      </A_Params>
+      <A_Params>
+      Boat_001
+      </A_Params>
       <Text>NA</Text>
       <Option_Labels_001>NA</Option_Labels_001>
       <Option_GoTos_001>Boat_001</Option_GoTos_001>
@@ -210,7 +245,7 @@
     </Space>
 
   </Location>
-<Location>
+  <Location>
       <Name>Icewind Dale</Name>
     <Description>A frosty land with a famous Drow resident.</Description>
 

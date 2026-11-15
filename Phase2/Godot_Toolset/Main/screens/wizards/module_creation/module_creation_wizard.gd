@@ -46,8 +46,8 @@ export var space_display_height_margin: int
 export var space_display_width: int
 export var space_display_width_margin: int
 
-var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "A_Params", "Text", "Option_Labels", "Option_GoTos"]
-var nodes_with_multiples = ["Region", "Location", "Space"]
+var nodes_with_text = ["Name", "Description", "Id", "Start", "Action", "Text", "Option_Labels", "Option_GoTos", "A_Params"]
+var nodes_with_multiples = ["Region", "Location", "Space", "A_Params"]
 
 var module_dict # massive tree created from the loaded xml file
 # usage:
@@ -334,7 +334,7 @@ func _convert_module_dict_to_string(given_struct, parent_key, layer):
 					contained_string =  _convert_module_dict_to_string(given_struct[key], key, layer+1)
 					if contained_string != "":
 						#new_string = "".join(["  ".repeat(layer), new_string, "\n","  ".repeat(layer),  start_tag, "\n", "  ".repeat(layer), contained_string,"  ".repeat(layer),  "\n", end_tag])
-						new_string = "".join([new_string, "  ".repeat(layer), start_tag, contained_string, end_tag, "\n"])
+						new_string = "".join([new_string, "  ".repeat(layer), start_tag, contained_string, end_tag, "\n"]) #will cause extra newline at the end
 	elif given_struct is Array:
 		var type = parent_key
 		var start_tag = "".join(["<", type, ">"])
@@ -342,7 +342,7 @@ func _convert_module_dict_to_string(given_struct, parent_key, layer):
 		for struct in given_struct:
 			contained_string = _convert_module_dict_to_string(struct, type, layer+1)
 			if contained_string != "":
-				new_string = "".join([new_string,  start_tag, "\n",  "  ".repeat(layer), contained_string, "\n","  ".repeat(layer),  end_tag, "\n"])
+				new_string = "".join([new_string, "  ".repeat(layer),  start_tag, "\n",  "  ".repeat(layer), contained_string, "\n","  ".repeat(layer),  end_tag, "\n"]) # another extra newline
 	elif given_struct is String && given_struct != null:
 		new_string = given_struct
 	return new_string
@@ -546,7 +546,7 @@ func _display_regions_locations_tree():
 # creates a dictionary keyed by id of every space that stores connections to other spaces
 # derived from module_dict
 func _construct_space_dict(search_object, inside_space, space_id):
-	if inside_space && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
+	if inside_space && search_object.has("Type") && nodes_with_text.has(search_object["Type"]) && search_object.has("Text"):
 		if search_object["Type"] == "Option_GoTos":
 			if !space_dict[space_id].has("Gotos"):
 				space_dict[space_id]["Gotos"] = []
