@@ -2,6 +2,7 @@ extends VBoxContainer
 
 var total_mouse_drag
 # create an event for clicking and dragging each child?
+signal option_list_reordered(index_from, index_to)
 
 func add_sortable_child(child_object):
 	self.add_child(child_object)
@@ -18,16 +19,19 @@ func _child_gui_input(event, child):
 		total_mouse_drag += event.relative
 		
 		# while we can probably assume the children are all the same size, we probably shouldn't
-		var prev_index = child.get_index()-1
-		var next_index = child.get_index()+1
+		var index = child.get_index()
+		var prev_index = index-1
+		var next_index = index+1
 		
 		if prev_index >= 0:
 			var prev_object_height = get_child(prev_index).rect_size.y
 			if -1*total_mouse_drag.y >= prev_object_height:
 				move_child(child, prev_index)
 				total_mouse_drag = Vector2(0,0)
+				emit_signal("option_list_reordered", index, prev_index)
 		if next_index < get_child_count():
 			var next_object_height = get_child(next_index).rect_size.y
 			if total_mouse_drag.y >= next_object_height:
 				move_child(child, next_index)
 				total_mouse_drag = Vector2(0,0)
+				emit_signal("option_list_reordered", index, next_index)
